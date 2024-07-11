@@ -1,0 +1,38 @@
+.card {
+    padding: 4px;
+    margin-top: 1rem;
+    max-width: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.image {
+    position: relative;
+    width: 100%;
+    height: 240px;
+}
+.image img {
+    width: 100%;
+    object-fit: cover;
+}
+.name {
+    position: absolute;
+    background-color: #027373d5;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 1.5rem;
+}
+
+.stats {
+    display: flex;
+    font-size: 1.2rem;
+    align-items: center;
+    gap: 8px;
+    margin: 2px 0 2px 0;
+}
+.stats span {
+    font-size: 1rem;
+}

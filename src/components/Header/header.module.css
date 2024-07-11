@@ -1,0 +1,22 @@
+.header {
+    padding: 5px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: #5fcdd9 solid 1px;
+    box-shadow: inset 0 -5px 10px #5fcdd957;
+    gap: 20px;
+}
+
+.title {
+    text-transform: uppercase;
+    font-size: 2.2rem;
+}
+
+.logo {
+    width: 60px;
+    border-radius: 8px;
+}
+.logo img {
+    width: 100%;
+}
