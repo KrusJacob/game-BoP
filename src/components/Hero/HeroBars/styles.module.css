@@ -23,16 +23,16 @@
 }
 .fullBar::after {
     content: "";
-    height: 100%;
+    height: 140%;
     /* width: 100%; */
     z-index: 0;
     position: relative;
     display: block;
-    background: linear-gradient(128deg, transparent 94.5%, #242424 95%);
-    margin-top: -34px;
+    background: linear-gradient(122deg, transparent 94.5%, #242424 95%);
+    margin-top: -40px;
 }
 .enemy::after {
-    background: linear-gradient(52deg, #242424 5%, transparent 5.5%);
+    background: linear-gradient(58deg, #242424 5%, transparent 5.5%);
     /* transform: scale(-1, 1); */
 }
 
@@ -44,6 +44,16 @@
     width: 100%;
     border-radius: inherit;
     transition: all 0.3s;
+}
+.barrierBar {
+    width: 100%;
+    height: 120%;
+    position: absolute;
+    top: -10%;
+    border-radius: inherit;
+    transition: all 0.3s;
+
+    background: linear-gradient(-180deg, rgb(182, 205, 253, 0.1) 0%, rgb(40, 66, 184, 0.4) 80%);
 }
 
 .enemy .HPBar {

@@ -30,9 +30,9 @@ const STATS_COOK: heroBaseStats = {
   power: 50,
   agility: 50,
   intellect: 50,
-  attack: 110,
-  def: 18,
-  maxHp: 1400,
+  attack: 115,
+  def: 20,
+  maxHp: 1450,
   attackSpeed: 0.8,
 };
 const STATS_HAIRDRESSER: heroBaseStats = {

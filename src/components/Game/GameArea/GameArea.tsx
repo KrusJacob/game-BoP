@@ -2,20 +2,23 @@ import HeroCard from "@/components/Hero/HeroCard/HeroCard";
 import { IHero } from "@/types/hero.types";
 import WrapperBar from "@/components/Hero/HeroBars/WrapperBar";
 import styles from "./styles.module.css";
-import GameFiled from "../GameField/GameFiled";
+import GameField from "../GameField/GameField";
+import { useHeroContext } from "@/context/HeroContext";
 
 interface Props {
   hero: IHero;
 }
 
 const GameArea = ({ hero }: Props) => {
+  const { enemy } = useHeroContext();
+
   return (
     <div>
       <WrapperBar />
       <div className={styles.gameArea}>
         <HeroCard hero={hero} isChoosed />
-        <GameFiled />
-        <HeroCard hero={hero} />
+        <GameField />
+        {enemy && <HeroCard hero={enemy} />}
       </div>
     </div>
   );

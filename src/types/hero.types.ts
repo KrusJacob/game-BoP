@@ -4,6 +4,7 @@ export interface IHero {
   type: heroType;
   baseStats: heroBaseStats;
   HP: number;
+  barrier: number;
   buffs: heroBuffs;
   attack: heroGoAttack;
 }
