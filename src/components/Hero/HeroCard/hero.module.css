@@ -1,10 +1,9 @@
 .card {
-    padding: 4px;
-    margin-top: 1rem;
+    min-width: 210px;
     max-width: 240px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
 .image {
@@ -15,6 +14,7 @@
 .image img {
     width: 100%;
     object-fit: cover;
+    border-radius: var(--borderRadius);
 }
 .name {
     position: absolute;
@@ -22,16 +22,25 @@
     width: 100%;
     bottom: 0;
     right: 0;
-    padding: 10px;
+    padding: 6px;
     font-size: 1.5rem;
+    border-bottom-left-radius: var(--borderRadius);
+    border-bottom-right-radius: var(--borderRadius);
+}
+
+.level {
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 .stats {
+    margin-top: 4px;
     display: flex;
     font-size: 1.2rem;
     align-items: center;
-    gap: 8px;
-    margin: 2px 0 2px 0;
+    gap: 4px;
+    margin: 8px 0 8px 0;
 }
 .stats span {
     font-size: 1rem;

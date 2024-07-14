@@ -1,0 +1,6 @@
+.gameFiled {
+    background-color: rgba(104, 206, 206, 0.384);
+    width: 100%;
+    min-width: 460px;
+    border-radius: var(--borderRadius);
+}
