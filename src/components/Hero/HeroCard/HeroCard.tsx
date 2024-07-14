@@ -34,7 +34,7 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         <p className={styles.stats}>
           <FaHeart />
           <span>Здоровье:</span>
-          {hero.HP}
+          {hero.baseStats.maxHp}
         </p>
         <p className={styles.stats}>
           <GiMuscleUp />

@@ -1,0 +1,23 @@
+.talentField {
+    background-color: rgb(12, 31, 31);
+    width: 100%;
+    height: 100%;
+    border-radius: var(--borderRadius);
+}
+
+.talentList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.talentItem {
+    width: 84px;
+    height: 84px;
+    border: 4px solid #c4dfe6;
+    border-radius: var(--borderRadius);
+    background-color: #66a5ae;
+}

@@ -1,0 +1,11 @@
+.homeField {
+    background-color: rgb(12, 31, 31);
+    width: 100%;
+    height: 100%;
+    border-radius: var(--borderRadius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 4px;
+}

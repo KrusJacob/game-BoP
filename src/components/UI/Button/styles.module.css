@@ -16,3 +16,13 @@
 .button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
+
+.small {
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+}
+
+.big {
+    padding: 0.8rem 1.4rem;
+    font-size: 1.4rem;
+}

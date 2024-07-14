@@ -1,10 +1,10 @@
 import TextBar from "./TextBar";
 import styles from "./styles.module.css";
 
-const HPBar = () => {
+const HPBar = ({ hp }: { hp: number }) => {
   return (
     <div className={styles.HPBar}>
-      <TextBar />
+      <TextBar hp={hp} />
     </div>
   );
 };

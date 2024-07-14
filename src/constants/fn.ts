@@ -6,6 +6,7 @@ export class HeroClass implements IHero {
     this.type = type;
     this.baseStats = getStatsToHero(type);
     this.HP = this.baseStats.maxHp;
+    this.barrier = 0;
     this.buffs = {
       damage: 0,
       def: 0,
@@ -17,6 +18,7 @@ export class HeroClass implements IHero {
     this.attack = goAttack;
   }
   HP: number;
+  barrier: number;
   readonly type: heroType;
   baseStats: heroBaseStats;
   buffs: heroBuffs;
@@ -67,7 +69,28 @@ function getBuffDef(this: IHero["buffs"]) {
 
 function goAttack(this: IHero, target: IHero) {
   const calcAttack = this.baseStats.attack * this.buffs.getBuffDamage();
-  const result = calcAttack * target.buffs.getBuffDef();
+  const potentialAttack = calcAttack * target.buffs.getBuffDef();
+  const result = (potentialAttack - target.baseStats.def) * target.buffs.getBuffDef();
   target.HP -= result;
-  console.log(target.type, `урон: ${result}, осталось: ${target.baseStats.maxHp}`);
+  // console.log(target.type, `урон: ${result}, осталось: ${target.HP}`);
+  console.log(`Удар по ${target.type} на ${result} урона, осталось ${target.HP} HP`);
+}
+
+export function fight(hero: IHero, enemy: IHero) {
+  const tickHero = setInterval(() => {
+    hero.attack(enemy);
+    if (enemy.HP <= 0) {
+      clearInterval(tickHero);
+      clearInterval(tickEnemy);
+      console.log(hero.type, "win!");
+    }
+  }, 1000 / hero.baseStats.attackSpeed);
+  const tickEnemy = setInterval(() => {
+    enemy.attack(hero);
+    if (hero.HP <= 0) {
+      clearInterval(tickHero);
+      clearInterval(tickEnemy);
+      console.log(enemy.type, "win!");
+    }
+  }, 1000 / enemy.baseStats.attackSpeed);
 }

@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { HeroClass } from "./constants/fn";
 import { IHero, heroType } from "./types/hero.types";
-import HeroCard from "./components/Hero/HeroCard/HeroCard";
 import { ALL_HEROES } from "./constants/hero";
 import HeroList from "./components/Hero/HeroList/HeroList";
 import Header from "./components/Header/Header";
 import { motion } from "framer-motion";
-
 import DoorLayout from "./layout/DoorLayout";
-import WrapperBar from "./components/Hero/HeroBars/WrapperBar";
+
 import GameArea from "./components/Game/GameArea/GameArea";
+import { useHeroContext } from "./context/HeroContext";
 
 function App() {
   const [hero, setHero] = useState<null | IHero>(null);
+  const contextHero = useHeroContext();
 
   const chooseHero = (hero: IHero) => {
     // const newHero = new HeroClass(hero);
     setHero(hero);
+    contextHero.setHero(hero);
   };
 
   return (
