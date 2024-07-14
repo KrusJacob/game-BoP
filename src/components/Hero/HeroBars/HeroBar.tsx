@@ -1,3 +1,4 @@
+import { IHero } from "@/types/hero.types";
 import BarrierBar from "./BarrierBar";
 import HPBar from "./HPBar";
 import styles from "./styles.module.css";
@@ -5,19 +6,18 @@ import cn from "classnames";
 
 interface Props {
   isEnemy?: boolean;
-  hp: number;
-  barrier: number;
+  target: IHero;
 }
 
-const HeroBar = ({ isEnemy, hp, barrier }: Props) => {
+const HeroBar = ({ isEnemy, target }: Props) => {
   return (
     <div
       className={cn(styles.fullBar, {
         [styles.enemy]: isEnemy,
       })}
     >
-      <HPBar hp={hp} />
-      {barrier > 0 && <BarrierBar barrier={barrier} />}
+      <HPBar target={target} />
+      {target.barrier > 0 && <BarrierBar barrier={target.barrier} />}
     </div>
   );
 };

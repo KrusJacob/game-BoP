@@ -72,7 +72,6 @@ function goAttack(this: IHero, target: IHero) {
   const potentialAttack = calcAttack * target.buffs.getBuffDef();
   const result = (potentialAttack - target.baseStats.def) * target.buffs.getBuffDef();
   target.HP -= result;
-  // console.log(target.type, `урон: ${result}, осталось: ${target.HP}`);
   console.log(`Удар по ${target.type} на ${result} урона, осталось ${target.HP} HP`);
 }
 

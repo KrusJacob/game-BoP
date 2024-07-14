@@ -3,14 +3,24 @@ import styles from "./styles.module.css";
 import { useHeroContext } from "@/context/HeroContext";
 import { HeroClass, fight } from "@/constants/fn";
 import { heroType } from "@/types/hero.types";
+import { useEffect } from "react";
 
 const HomeField = () => {
-  const { hero, setEnemy } = useHeroContext();
+  const { hero, setEnemy, enemy } = useHeroContext();
 
-  const onGoFight = (enemy: heroType) => {
-    const newEnemy = new HeroClass(enemy);
+  useEffect(() => {
+    const newEnemy = new HeroClass("boxer");
     setEnemy(newEnemy);
-    fight(hero, newEnemy);
+  }, []);
+
+  const onGoFight = (aenemy: heroType) => {
+    // const newEnemy = new HeroClass(enemy);
+    if (enemy) {
+      hero.attack(enemy);
+      setEnemy(enemy);
+    }
+
+    // fight(hero, newEnemy);
   };
 
   return (

@@ -8,7 +8,7 @@ const WrapperBar = () => {
 
   return (
     <div className={styles.wrapper}>
-      <HeroBar hp={hero.HP} barrier={hero.barrier} />
+      <HeroBar target={hero} />
 
       {enemy && (
         <>
@@ -18,7 +18,7 @@ const WrapperBar = () => {
           >
             VS
           </motion.span>
-          <HeroBar hp={enemy?.HP || 0} barrier={enemy?.barrier} isEnemy />
+          <HeroBar target={enemy} isEnemy />
         </>
       )}
     </div>
