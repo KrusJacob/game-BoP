@@ -8,13 +8,15 @@
     cursor: pointer;
     transition: all 0.25s;
 }
-.button:hover {
+.button:hover:not([disabled]) {
     border-color: #646cff;
     background-color: #5fcdd9;
 }
 .button:focus,
 .button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+}
+.button:disabled {
 }
 
 .small {

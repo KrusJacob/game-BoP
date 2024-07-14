@@ -6,8 +6,8 @@ import HeroProvider from "./context/HeroContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   // <React.StrictMode>
-  <HeroProvider>
-    <App />
-  </HeroProvider>
+  // <HeroProvider>
+  <App />
+  // </HeroProvider>
   // </React.StrictMode>
 );

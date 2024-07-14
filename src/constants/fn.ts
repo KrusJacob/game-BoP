@@ -67,18 +67,40 @@ function getBuffDef(this: IHero["buffs"]) {
   return (100 - this.def) / 100;
 }
 
-function goAttack(this: IHero, target: IHero) {
+function goAttack(this: IHero, target: IHero, fn: (target: IHero) => void) {
   const calcAttack = this.baseStats.attack * this.buffs.getBuffDamage();
   const potentialAttack = calcAttack * target.buffs.getBuffDef();
   const result = (potentialAttack - target.baseStats.def) * target.buffs.getBuffDef();
-  target.HP -= result;
-  // console.log(target.type, `урон: ${result}, осталось: ${target.HP}`);
+
+  if (target.barrier) {
+    damageToBarrier(target, result);
+  } else {
+    damageToHP(target, result);
+  }
+  fn(target);
+
   console.log(`Удар по ${target.type} на ${result} урона, осталось ${target.HP} HP`);
 }
 
-export function fight(hero: IHero, enemy: IHero) {
+function damageToBarrier(target: IHero, dmg: number) {
+  if (target.barrier - dmg <= 0) {
+    target.barrier = 0;
+  } else {
+    target.barrier -= dmg;
+  }
+}
+
+function damageToHP(target: IHero, dmg: number) {
+  if (target.HP - dmg <= 0) {
+    target.HP = 0;
+  } else {
+    target.HP -= dmg;
+  }
+}
+
+export function fight(hero: IHero, enemy: IHero, fn: (target: IHero) => void, fn2: (target: IHero) => void) {
   const tickHero = setInterval(() => {
-    hero.attack(enemy);
+    hero.attack(enemy, fn2);
     if (enemy.HP <= 0) {
       clearInterval(tickHero);
       clearInterval(tickEnemy);
@@ -86,7 +108,7 @@ export function fight(hero: IHero, enemy: IHero) {
     }
   }, 1000 / hero.baseStats.attackSpeed);
   const tickEnemy = setInterval(() => {
-    enemy.attack(hero);
+    enemy.attack(hero, fn);
     if (hero.HP <= 0) {
       clearInterval(tickHero);
       clearInterval(tickEnemy);

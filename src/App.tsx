@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { IHero, heroType } from "./types/hero.types";
+import { IHero } from "./types/hero.types";
 import { ALL_HEROES } from "./constants/hero";
 import HeroList from "./components/Hero/HeroList/HeroList";
 import Header from "./components/Header/Header";
@@ -7,16 +6,15 @@ import { motion } from "framer-motion";
 import DoorLayout from "./layout/DoorLayout";
 
 import GameArea from "./components/Game/GameArea/GameArea";
-import { useHeroContext } from "./context/HeroContext";
+import { useGameStore } from "./store/gameStore";
 
 function App() {
-  const [hero, setHero] = useState<null | IHero>(null);
-  const contextHero = useHeroContext();
+  const hero = useGameStore((state) => state.hero);
+  const setHero = useGameStore((state) => state.setHero);
 
   const chooseHero = (hero: IHero) => {
-    // const newHero = new HeroClass(hero);
     setHero(hero);
-    contextHero.setHero(hero);
+    console.log(hero);
   };
 
   return (
