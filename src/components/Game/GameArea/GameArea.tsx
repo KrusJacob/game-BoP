@@ -3,14 +3,15 @@ import { IHero } from "@/types/hero.types";
 import WrapperBar from "@/components/Hero/HeroBars/WrapperBar";
 import styles from "./styles.module.css";
 import GameField from "../GameField/GameField";
-import { useHeroContext } from "@/context/HeroContext";
+
+import { useGameStore } from "@/store/gameStore";
 
 interface Props {
   hero: IHero;
 }
 
 const GameArea = ({ hero }: Props) => {
-  const { enemy } = useHeroContext();
+  const enemy = useGameStore((state) => state.enemy);
 
   return (
     <div>

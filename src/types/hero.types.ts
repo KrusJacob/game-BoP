@@ -31,4 +31,4 @@ export interface heroBuffs {
   getBuffDamage: () => number;
   getBuffDef: () => number;
 }
-export type heroGoAttack = (target: IHero) => void;
+export type heroGoAttack = (target: IHero, fn: (tarher: IHero) => void) => void;

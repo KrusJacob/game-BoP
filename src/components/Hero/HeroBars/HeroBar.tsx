@@ -17,7 +17,7 @@ const HeroBar = ({ isEnemy, target }: Props) => {
       })}
     >
       <HPBar target={target} />
-      {target.barrier > 0 && <BarrierBar barrier={target.barrier} />}
+      {target.barrier > 0 && <BarrierBar target={target} />}
     </div>
   );
 };

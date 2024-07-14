@@ -1,12 +1,11 @@
 import { PiSwordLight } from "react-icons/pi";
-import { IHero, heroType } from "../../../types/hero.types";
+import { IHero } from "../../../types/hero.types";
 import { MdShield } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { GiBrain, GiMuscleUp, GiSpinningSword, GiWalkingBoot } from "react-icons/gi";
 
 import styles from "./hero.module.css";
 
-import WrapperBar from "../HeroBars/WrapperBar";
 import Button from "@/components/UI/Button/Button";
 import Badge from "@/components/UI/Badge/Badge";
 

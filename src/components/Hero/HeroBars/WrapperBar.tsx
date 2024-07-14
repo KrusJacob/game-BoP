@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
 import HeroBar from "./HeroBar";
 import styles from "./styles.module.css";
-import { useHeroContext } from "@/context/HeroContext";
+import { useGameStore } from "@/store/gameStore";
 
 const WrapperBar = () => {
-  const { enemy, hero } = useHeroContext();
+  const hero = useGameStore((state) => state.hero);
+  const enemy = useGameStore((state) => state.enemy);
 
   return (
     <div className={styles.wrapper}>
-      <HeroBar target={hero} />
+      {hero && <HeroBar target={hero} />}
 
       {enemy && (
         <>
