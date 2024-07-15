@@ -1,4 +1,5 @@
 import { ALL_HEROES } from "../constants/hero";
+import { IEnemy } from "./enemy.types";
 
 export interface IHero {
   type: heroType;
@@ -47,4 +48,4 @@ export interface heroBuffs {
   getBuffDamage: () => number;
   getBuffDef: () => number;
 }
-export type heroGoAttack = (target: IHero, fn: (tarher: IHero) => void) => void;
+export type heroGoAttack = (target: IEnemy | IHero, fn: (target: IHero | IEnemy) => void) => void;

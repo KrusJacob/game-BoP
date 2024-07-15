@@ -1,5 +1,5 @@
 import { PiSwordLight } from "react-icons/pi";
-import { IHero } from "../../../types/hero.types";
+import { IHero, heroSkills } from "../../../types/hero.types";
 import { MdShield } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import { GiBrain, GiMuscleUp, GiSpinningSword, GiWalkingBoot } from "react-icons/gi";
@@ -9,9 +9,13 @@ import styles from "./hero.module.css";
 import Button from "@/components/UI/Button/Button";
 import Badge from "@/components/UI/Badge/Badge";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
+import { IEnemy, enemySkills } from "@/types/enemy.types";
+import { HeroClass } from "@/constants/fn";
+import HeroStat from "./HeroStat";
+import { useState } from "react";
 
 interface Props {
-  hero: IHero;
+  hero: IHero | IEnemy;
   isChoosed?: boolean;
   chooseHero?: (hero: IHero) => void;
 }
@@ -31,48 +35,50 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         )}
       </div>
       <div>
-        <p className={styles.stats}>
-          <FaHeart />
-          <span>Здоровье:</span>
-          {hero.baseStats.maxHp}
-        </p>
-        <p className={styles.stats}>
-          <GiMuscleUp />
-          <span>Cила:</span>
-          {hero.baseStats.power}
-        </p>
-        <p className={styles.stats}>
-          <GiWalkingBoot />
-          <span>Ловкость:</span>
-          {hero.baseStats.agility}
-        </p>
-        <p className={styles.stats}>
-          <GiBrain />
-          <span>Интеллект:</span> {hero.baseStats.intellect}
-        </p>
-        <p className={styles.stats}>
-          <PiSwordLight /> <span>Атака:</span>
-          {hero.baseStats.attack}
-        </p>
-        <p className={styles.stats}>
-          <MdShield /> <span>Защита:</span>
-          {hero.baseStats.def}
-        </p>
-        <p className={styles.stats}>
-          <GiSpinningSword /> <span>Скорость атаки:</span>
-          {hero.baseStats.attackSpeed}
-        </p>
-        <div className={styles.skillList}>
-          {hero.skills.data.map((item, i) => (
-            <div className={styles.skillItem} key={i}>
-              <Tooltip title="Описание способности. В разработке...">
-                <img src={item.img} alt={item.img} />
-              </Tooltip>
-            </div>
-          ))}
-        </div>
+        <HeroStat Icon={FaHeart} value={hero.baseStats.maxHp}>
+          Здоровье
+        </HeroStat>
+        <HeroStat Icon={GiMuscleUp} value={hero.baseStats.power}>
+          Cила
+        </HeroStat>
+        <HeroStat Icon={GiWalkingBoot} value={hero.baseStats.agility}>
+          Ловкость
+        </HeroStat>
+        <HeroStat Icon={GiBrain} value={hero.baseStats.intellect}>
+          Интеллект
+        </HeroStat>
+        <HeroStat Icon={PiSwordLight} value={hero.baseStats.attack}>
+          Атака
+        </HeroStat>
+        <HeroStat Icon={MdShield} value={hero.baseStats.def}>
+          Защита
+        </HeroStat>
+        <HeroStat Icon={GiSpinningSword} value={hero.baseStats.attackSpeed}>
+          Скорость атаки
+        </HeroStat>
+        <SkillList skills={hero.skills} />
       </div>
-      {chooseHero && <Button onClick={() => chooseHero(hero)}>Выбрать</Button>}
+      {chooseHero && hero instanceof HeroClass && <Button onClick={() => chooseHero(hero)}>Выбрать</Button>}
+    </div>
+  );
+};
+
+const SkillList = ({ skills }: { skills: heroSkills | enemySkills }) => {
+  const [title, setTitle] = useState("");
+
+  return (
+    <div className={styles.skillList}>
+      {title && <div className={styles.skillTitle}>{title}</div>}
+      {skills.data.map((item, i) => (
+        <div
+          onMouseEnter={() => setTitle("Описание способности. В разработке...")}
+          onMouseLeave={() => setTitle("")}
+          className={styles.skillItem}
+          key={i}
+        >
+          <img src={item.img} alt={item.img} />
+        </div>
+      ))}
     </div>
   );
 };

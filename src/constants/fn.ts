@@ -1,14 +1,40 @@
-import {
-  IHero,
-  heroBaseStats,
-  heroBuffs,
-  heroGoAttack,
-  heroResources,
-  heroSkills,
-  heroType,
-} from "../types/hero.types";
+import { IEnemy, enemyBaseStats, enemyBuffs, enemyGoAttack, enemySkills, enemyType } from "@/types/enemy.types";
+import { IHero, heroBaseStats, heroBuffs, heroGoAttack, heroSkills, heroType } from "../types/hero.types";
 import { STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER } from "./hero";
-import { SKILLS_BOXER, SKILLS_COOK, SKILLS_HAIRDRESSER, SKILLS_PROGRAMMER } from "./skill/skills";
+import { SKILLS_BOXER, SKILLS_COOK, SKILLS_HAIRDRESSER, SKILLS_PROGRAMMER } from "./skill/heroSkills";
+import { STATS_ROGUE, STATS_ROGUE_2, STATS_ROGUE_3, STATS_ROGUE_4 } from "./enemy";
+import { SKILLS_ROGUE } from "./skill/enemySkills";
+
+export class EnemyClass implements IEnemy {
+  constructor(type: enemyType, level = 1) {
+    this.type = type;
+    this.level = level;
+    this.baseStats = getStatsToEnemy(type);
+    this.HP = this.baseStats.maxHp;
+    this.buffs = {
+      damage: 0,
+      def: 0,
+      incDamage: incHeroDamage,
+      incDef: incHeroDef,
+      getBuffDamage: getBuffDamage,
+      getBuffDef: getBuffDef,
+    };
+    this.attack = goAttack;
+    this.skills = getSkillsToEnemy(type);
+  }
+  readonly type: enemyType;
+  level: number;
+  HP: number;
+  barrier = 0;
+  baseStats: enemyBaseStats;
+  buffs: enemyBuffs;
+  attack: enemyGoAttack;
+  skills: enemySkills;
+  resources = {
+    gold: 0,
+    skillPoints: 0,
+  };
+}
 
 export class HeroClass implements IHero {
   constructor(type: heroType) {
@@ -40,6 +66,21 @@ export class HeroClass implements IHero {
   };
 }
 
+function getStatsToEnemy(type: enemyType): enemyBaseStats {
+  switch (type) {
+    case "rogue":
+      return STATS_ROGUE;
+    case "rogue_2":
+      return STATS_ROGUE_2;
+    case "rogue_3":
+      return STATS_ROGUE_3;
+    case "rogue_4":
+      return STATS_ROGUE_4;
+    default:
+      return STATS_ROGUE;
+  }
+}
+
 function getStatsToHero(type: heroType): heroBaseStats {
   switch (type) {
     case "boxer":
@@ -52,6 +93,15 @@ function getStatsToHero(type: heroType): heroBaseStats {
       return STATS_HAIRDRESSER;
     default:
       return STATS_BOXER;
+  }
+}
+
+function getSkillsToEnemy(type: enemyType) {
+  switch (type) {
+    case "rogue":
+      return SKILLS_ROGUE;
+    default:
+      return SKILLS_ROGUE;
   }
 }
 
@@ -97,7 +147,7 @@ function getBuffDef(this: IHero["buffs"]) {
   return (100 - this.def) / 100;
 }
 
-function goAttack(this: IHero, target: IHero, fn: (target: IHero) => void) {
+function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, fn: (target: IHero | IEnemy) => void) {
   const calcAttack = this.baseStats.attack * this.buffs.getBuffDamage();
   const potentialAttack = calcAttack * target.buffs.getBuffDef();
   const result = (potentialAttack - target.baseStats.def) * target.buffs.getBuffDef();
@@ -112,7 +162,7 @@ function goAttack(this: IHero, target: IHero, fn: (target: IHero) => void) {
   console.log(`Удар по ${target.type} на ${result} урона, осталось ${target.HP} HP`);
 }
 
-function damageToBarrier(target: IHero, dmg: number) {
+function damageToBarrier(target: IHero | IEnemy, dmg: number) {
   if (target.barrier - dmg <= 0) {
     target.barrier = 0;
   } else {
@@ -120,7 +170,7 @@ function damageToBarrier(target: IHero, dmg: number) {
   }
 }
 
-function damageToHP(target: IHero, dmg: number) {
+function damageToHP(target: IHero | IEnemy, dmg: number) {
   if (target.HP - dmg <= 0) {
     target.HP = 0;
   } else {
@@ -128,8 +178,14 @@ function damageToHP(target: IHero, dmg: number) {
   }
 }
 
-export function fight(hero: IHero, enemy: IHero, fn: (target: IHero) => void, fn2: (target: IHero) => void) {
+export function fight(
+  hero: IHero,
+  enemy: IHero | IEnemy,
+  fn: (target: IHero) => void,
+  fn2: (target: IEnemy) => void
+) {
   const tickHero = setInterval(() => {
+    // @ts-ignore
     hero.attack(enemy, fn2);
     if (enemy.HP <= 0) {
       clearInterval(tickHero);
@@ -138,6 +194,7 @@ export function fight(hero: IHero, enemy: IHero, fn: (target: IHero) => void, fn
     }
   }, 1000 / hero.baseStats.attackSpeed);
   const tickEnemy = setInterval(() => {
+    //  @ts-ignore
     enemy.attack(hero, fn);
     if (hero.HP <= 0) {
       clearInterval(tickHero);

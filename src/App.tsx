@@ -14,7 +14,6 @@ function App() {
 
   const chooseHero = (hero: IHero) => {
     setHero(hero);
-    console.log(hero);
   };
 
   return (

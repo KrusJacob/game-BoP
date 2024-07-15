@@ -15,7 +15,7 @@ const GameArea = ({ hero }: Props) => {
 
   return (
     <div>
-      <WrapperBar />
+      {hero && <WrapperBar hero={hero} enemy={enemy} />}
       <div className={styles.gameArea}>
         <HeroCard hero={hero} isChoosed />
         <GameField />

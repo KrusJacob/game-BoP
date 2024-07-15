@@ -10,11 +10,17 @@ interface Props {
 
 type ButtonSize = "small" | "default" | "big";
 
-const Button = ({ children, onClick, size, disabled }: Props & ButtonHTMLAttributes<HTMLButtonElement>) => {
+const Button = ({
+  children,
+  onClick,
+  size,
+  disabled,
+  className,
+}: Props & ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
       disabled={disabled}
-      className={cn(styles.button, {
+      className={cn(styles.button, className, {
         [styles.small]: size === "small",
         [styles.big]: size === "big",
       })}

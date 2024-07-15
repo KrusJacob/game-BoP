@@ -4,19 +4,25 @@ import styles from "./styles.module.css";
 import { IHero } from "@/types/hero.types";
 import { useGameStore } from "@/store/gameStore";
 import { calcWidthBar } from "@/utils/calcWidthBar";
+import { IEnemy } from "@/types/enemy.types";
 
-const HPBar = ({ target }: { target: IHero }) => {
+interface Props {
+  value: number;
+  max: number;
+}
+
+const HPBar = ({ value, max }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current) {
-      calcWidthBar(ref.current, target.baseStats.maxHp, target.HP);
+      calcWidthBar(ref.current, max, value);
     }
-  }, [target]);
+  }, [value]);
 
   return (
     <div ref={ref} className={styles.HPBar}>
-      <TextBar hp={target.HP} />
+      <TextBar hp={value} />
     </div>
   );
 };

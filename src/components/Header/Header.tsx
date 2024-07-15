@@ -1,5 +1,5 @@
 import styles from "./header.module.css";
-import logo from "@assets/logo.jfif";
+import logo from "@assets/game-logo.png";
 
 const Header = () => {
   return (

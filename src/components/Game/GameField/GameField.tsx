@@ -5,6 +5,7 @@ import { useState } from "react";
 import SkillField from "../Skill/SkillField";
 import ShopField from "../Shop/ShopField";
 import HomeField from "../Home/HomeField";
+import TestField from "../Test/TestField";
 
 const GameField = () => {
   return (
@@ -16,7 +17,7 @@ const GameField = () => {
 
 //
 
-type TabsField = "Главная" | "Навыки" | "Таланты" | "Maгазин";
+type TabsField = "Главная" | "Навыки" | "Таланты" | "Maгазин" | "Test";
 interface ITabsBtn {
   label: TabsField;
 }
@@ -32,6 +33,9 @@ const TabsBtns: ITabsBtn[] = [
   },
   {
     label: "Maгазин",
+  },
+  {
+    label: "Test",
   },
 ];
 
@@ -55,6 +59,7 @@ const Tabs = () => {
       {tab === "Таланты" && <TalentField />}
       {tab === "Навыки" && <SkillField />}
       {tab === "Maгазин" && <ShopField />}
+      {tab === "Test" && <TestField />}
     </>
   );
 };

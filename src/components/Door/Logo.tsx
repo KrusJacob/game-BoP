@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import logo from "@assets/logo.jfif";
+import logo from "@assets/game-logo.png";
 
 const Logo = () => {
   return (

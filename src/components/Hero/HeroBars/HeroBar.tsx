@@ -3,21 +3,23 @@ import BarrierBar from "./BarrierBar";
 import HPBar from "./HPBar";
 import styles from "./styles.module.css";
 import cn from "classnames";
+import { IEnemy } from "@/types/enemy.types";
 
 interface Props {
   isEnemy?: boolean;
-  target: IHero;
+  value: number;
+  max: number;
 }
 
-const HeroBar = ({ isEnemy, target }: Props) => {
+const HeroBar = ({ isEnemy, value, max }: Props) => {
   return (
     <div
       className={cn(styles.fullBar, {
         [styles.enemy]: isEnemy,
       })}
     >
-      <HPBar target={target} />
-      {target.barrier > 0 && <BarrierBar target={target} />}
+      <HPBar value={value} max={max} />
+      {/* {target.barrier > 0 && <BarrierBar target={target} />} */}
     </div>
   );
 };
