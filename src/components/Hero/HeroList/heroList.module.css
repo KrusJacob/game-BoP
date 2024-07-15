@@ -1,6 +1,6 @@
 .heroList {
     display: flex;
     gap: 8px;
-    overflow: auto;
+    /* overflow: auto; */
     margin: 0 0 10px 0;
 }

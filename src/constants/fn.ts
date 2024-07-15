@@ -1,12 +1,20 @@
-import { IHero, heroBaseStats, heroBuffs, heroGoAttack, heroType } from "../types/hero.types";
+import {
+  IHero,
+  heroBaseStats,
+  heroBuffs,
+  heroGoAttack,
+  heroResources,
+  heroSkills,
+  heroType,
+} from "../types/hero.types";
 import { STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER } from "./hero";
+import { SKILLS_BOXER, SKILLS_COOK, SKILLS_HAIRDRESSER, SKILLS_PROGRAMMER } from "./skill/skills";
 
 export class HeroClass implements IHero {
   constructor(type: heroType) {
     this.type = type;
     this.baseStats = getStatsToHero(type);
     this.HP = this.baseStats.maxHp;
-    this.barrier = 0;
     this.buffs = {
       damage: 0,
       def: 0,
@@ -16,13 +24,20 @@ export class HeroClass implements IHero {
       getBuffDef: getBuffDef,
     };
     this.attack = goAttack;
+    this.skills = getSkillsToHero(type);
   }
+  level = 1;
   HP: number;
-  barrier: number;
+  barrier = 0;
   readonly type: heroType;
   baseStats: heroBaseStats;
   buffs: heroBuffs;
   attack: heroGoAttack;
+  skills: heroSkills;
+  resources = {
+    gold: 0,
+    skillPoints: 0,
+  };
 }
 
 function getStatsToHero(type: heroType): heroBaseStats {
@@ -37,6 +52,21 @@ function getStatsToHero(type: heroType): heroBaseStats {
       return STATS_HAIRDRESSER;
     default:
       return STATS_BOXER;
+  }
+}
+
+function getSkillsToHero(type: heroType) {
+  switch (type) {
+    case "boxer":
+      return SKILLS_BOXER;
+    case "programmer":
+      return SKILLS_PROGRAMMER;
+    case "cook":
+      return SKILLS_COOK;
+    case "hairdresser":
+      return SKILLS_HAIRDRESSER;
+    default:
+      return SKILLS_BOXER;
   }
 }
 

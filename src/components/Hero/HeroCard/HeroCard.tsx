@@ -8,6 +8,7 @@ import styles from "./hero.module.css";
 
 import Button from "@/components/UI/Button/Button";
 import Badge from "@/components/UI/Badge/Badge";
+import Tooltip from "@/components/UI/Tooltip/Tooltip";
 
 interface Props {
   hero: IHero;
@@ -25,7 +26,7 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         <div className={styles.name}>{hero.baseStats.name}</div>
         {isChoosed && (
           <div className={styles.level}>
-            <Badge>1</Badge>
+            <Badge>{hero.level}</Badge>
           </div>
         )}
       </div>
@@ -61,8 +62,16 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
           <GiSpinningSword /> <span>Скорость атаки:</span>
           {hero.baseStats.attackSpeed}
         </p>
+        <div className={styles.skillList}>
+          {hero.skills.data.map((item, i) => (
+            <div className={styles.skillItem} key={i}>
+              <Tooltip title="Описание способности. В разработке...">
+                <img src={item.img} alt={item.img} />
+              </Tooltip>
+            </div>
+          ))}
+        </div>
       </div>
-
       {chooseHero && <Button onClick={() => chooseHero(hero)}>Выбрать</Button>}
     </div>
   );

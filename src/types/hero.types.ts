@@ -2,11 +2,14 @@ import { ALL_HEROES } from "../constants/hero";
 
 export interface IHero {
   type: heroType;
+  level: number;
   baseStats: heroBaseStats;
   HP: number;
   barrier: number;
   buffs: heroBuffs;
   attack: heroGoAttack;
+  skills: heroSkills;
+  resources: heroResources;
 }
 
 export type heroType = (typeof ALL_HEROES)[number];
@@ -23,6 +26,19 @@ export interface heroBaseStats {
   readonly maxHp: number;
   readonly attackSpeed: number;
 }
+
+export interface heroResources {
+  gold: number;
+  skillPoints: number;
+}
+
+export interface heroSkills {
+  data: {
+    label: string;
+    img: string;
+  }[];
+}
+
 export interface heroBuffs {
   damage: number;
   def: number;

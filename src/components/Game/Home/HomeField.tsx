@@ -16,7 +16,7 @@ const HomeField = () => {
 
   const onGoFight = () => {
     if (enemy && hero) {
-      hero.barrier += hero.baseStats.maxHp;
+      // hero.barrier += hero.baseStats.maxHp;
       fight(hero, enemy, setHero, setEnemy);
     }
   };
