@@ -1,36 +1,20 @@
 import Button from "@/components/UI/Button/Button";
 import styles from "./styles.module.css";
-
-import { EnemyClass, HeroClass, fight } from "@/constants/fn";
-import { heroType } from "@/types/hero.types";
-import { useEffect } from "react";
 import { useGameStore } from "@/store/gameStore";
-import { enemyType } from "@/types/enemy.types";
 
 import img from "@assets/bg_home.jpg";
 import { BiSolidCoinStack } from "react-icons/bi";
 import { GiFlowerEmblem } from "react-icons/gi";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 
-const HomeField = () => {
+import { TabsWithFight } from "../GameField/GameField";
+
+const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const hero = useGameStore((state) => state.hero);
 
-  // const onSetEnemy = (enemy: heroType | enemyType) => {
-  //   if (enemy !== "boxer" && enemy !== "programmer" && enemy !== "cook" && enemy !== "hairdresser") {
-  //     const newEnemy = new EnemyClass(enemy);
-  //     setEnemy(newEnemy);
-  //   } else {
-  //     const newEnemy = new HeroClass(enemy);
-  //     setEnemy(newEnemy);
-  //   }
-  // };
-
-  // const onGoFight = () => {
-  //   if (enemy && hero) {
-  //     // hero.barrier += hero.baseStats.maxHp;
-  //     fight(hero, enemy, setHero, setEnemy);
-  //   }
-  // };
+  const onGoWay = () => {
+    onSetTab("Бой");
+  };
 
   return (
     <div className={styles.homeField}>
@@ -48,7 +32,9 @@ const HomeField = () => {
           </Tooltip>
         </div>
         <Button className={styles.castle}>В Замок</Button>
-        <Button className={styles.way}>В путь</Button>
+        <Button onClick={onGoWay} className={styles.way}>
+          В Путь
+        </Button>
         <Button className={styles.tomb}>В Гробницу</Button>
       </>
     </div>

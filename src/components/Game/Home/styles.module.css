@@ -36,9 +36,10 @@
 .castle,
 .way,
 .tomb {
-    background-color: rgba(255, 228, 196, 0.45);
+    background-color: rgba(255, 228, 196, 0.3);
     position: absolute;
     font-weight: 700;
+    backdrop-filter: blur(1px);
 }
 
 .castle {

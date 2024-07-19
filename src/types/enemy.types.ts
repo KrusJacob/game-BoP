@@ -3,7 +3,9 @@ import { IHero, heroBaseStats, heroBuffs, heroResources, heroSkills } from "./he
 
 export interface IEnemy {
   type: enemyType;
-  level: number;
+  level: {
+    value: number;
+  };
   baseStats: enemyBaseStats;
   HP: number;
   barrier: number;
@@ -11,6 +13,12 @@ export interface IEnemy {
   attack: enemyGoAttack;
   skills: enemySkills;
   resources: enemyResources;
+}
+
+export interface enemyResources {
+  gold: number;
+  skillPoints: number;
+  exp: number;
 }
 
 export interface enemyResources extends heroResources {}

@@ -23,7 +23,7 @@
     bottom: 0;
     right: 0;
     padding: 6px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     border-bottom-left-radius: var(--borderRadius);
     border-bottom-right-radius: var(--borderRadius);
 }
@@ -39,7 +39,7 @@
     display: flex;
     font-size: 1.2rem;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     margin: 8px 0 8px 0;
 }
 .stats span {

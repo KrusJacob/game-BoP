@@ -1,9 +1,10 @@
 import Button from "@/components/UI/Button/Button";
 import styles from "./styles.module.css";
-import { EnemyClass, HeroClass, fight } from "@/constants/fn";
+import { fight } from "@/constants/fn";
 import { heroType } from "@/types/hero.types";
 import { useGameStore } from "@/store/gameStore";
 import { enemyType } from "@/types/enemy.types";
+import { EnemyClass, HeroClass } from "@/constants/class";
 
 const TestField = () => {
   const { hero, enemy, setHero, setEnemy } = useGameStore((state) => state);
@@ -27,6 +28,18 @@ const TestField = () => {
 
   return (
     <div className={styles.testField}>
+      <div>
+        <Button
+          onClick={() => {
+            if (hero) {
+              hero?.level.incExp(100);
+              setHero(hero);
+            }
+          }}
+        >
+          Дать 100 опыта
+        </Button>
+      </div>
       <div>
         <p>Тест против:</p>
         <div>

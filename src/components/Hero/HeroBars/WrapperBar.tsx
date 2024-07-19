@@ -7,7 +7,7 @@ import { IEnemy } from "@/types/enemy.types";
 
 interface Props {
   hero: IHero;
-  enemy: IHero | IEnemy | undefined;
+  enemy: IHero | IEnemy | null;
 }
 
 const WrapperBar = ({ hero, enemy }: Props) => {

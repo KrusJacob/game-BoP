@@ -3,7 +3,7 @@ import { IEnemy } from "./enemy.types";
 
 export interface IHero {
   type: heroType;
-  level: number;
+  level: heroLevel;
   baseStats: heroBaseStats;
   HP: number;
   barrier: number;
@@ -11,6 +11,13 @@ export interface IHero {
   attack: heroGoAttack;
   skills: heroSkills;
   resources: heroResources;
+}
+
+export interface heroLevel {
+  value: number;
+  exp: number;
+  expToNextLevel: number;
+  incExp: (exp: number) => void;
 }
 
 export type heroType = (typeof ALL_HEROES)[number];

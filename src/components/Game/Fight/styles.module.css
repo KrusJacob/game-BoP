@@ -1,0 +1,29 @@
+.fightField {
+    background-color: rgb(12, 31, 31);
+    width: 100%;
+    height: 100%;
+    border-radius: var(--borderRadius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    gap: 18px;
+}
+
+.enemies {
+    display: flex;
+    gap: 10px;
+}
+
+.enemy {
+    border: 4px solid #3e6565;
+    width: 200px;
+    cursor: pointer;
+}
+.enemy.active {
+    border: 4px solid #e02f2f;
+}
+.enemy.hide {
+    opacity: 0.5;
+}

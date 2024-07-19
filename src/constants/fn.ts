@@ -1,126 +1,25 @@
-import { IEnemy, enemyBaseStats, enemyBuffs, enemyGoAttack, enemySkills, enemyType } from "@/types/enemy.types";
-import { IHero, heroBaseStats, heroBuffs, heroGoAttack, heroSkills, heroType } from "../types/hero.types";
-import { STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER } from "./hero";
-import { SKILLS_BOXER, SKILLS_COOK, SKILLS_HAIRDRESSER, SKILLS_PROGRAMMER } from "./skill/heroSkills";
-import { STATS_ROGUE, STATS_ROGUE_2, STATS_ROGUE_3, STATS_ROGUE_4 } from "./enemy";
-import { SKILLS_ROGUE } from "./skill/enemySkills";
+import { IEnemy, enemyType } from "@/types/enemy.types";
+import { IHero, heroLevel } from "../types/hero.types";
+import { getRandom } from "@/utils/getRandom";
+import { EnemyClass } from "./class";
+import { ENEMIES_TO_WAY } from "./enemy";
 
-export class EnemyClass implements IEnemy {
-  constructor(type: enemyType, level = 1) {
-    this.type = type;
-    this.level = level;
-    this.baseStats = getStatsToEnemy(type);
-    this.HP = this.baseStats.maxHp;
-    this.buffs = {
-      damage: 0,
-      def: 0,
-      incDamage: incHeroDamage,
-      incDef: incHeroDef,
-      getBuffDamage: getBuffDamage,
-      getBuffDef: getBuffDef,
-    };
-    this.attack = goAttack;
-    this.skills = getSkillsToEnemy(type);
-  }
-  readonly type: enemyType;
-  level: number;
-  HP: number;
-  barrier = 0;
-  baseStats: enemyBaseStats;
-  buffs: enemyBuffs;
-  attack: enemyGoAttack;
-  skills: enemySkills;
-  resources = {
-    gold: 0,
-    skillPoints: 0,
-  };
-}
-
-export class HeroClass implements IHero {
-  constructor(type: heroType) {
-    this.type = type;
-    this.baseStats = getStatsToHero(type);
-    this.HP = this.baseStats.maxHp;
-    this.buffs = {
-      damage: 0,
-      def: 0,
-      incDamage: incHeroDamage,
-      incDef: incHeroDef,
-      getBuffDamage: getBuffDamage,
-      getBuffDef: getBuffDef,
-    };
-    this.attack = goAttack;
-    this.skills = getSkillsToHero(type);
-  }
-  level = 1;
-  HP: number;
-  barrier = 0;
-  readonly type: heroType;
-  baseStats: heroBaseStats;
-  buffs: heroBuffs;
-  attack: heroGoAttack;
-  skills: heroSkills;
-  resources = {
-    gold: 0,
-    skillPoints: 0,
-  };
-}
-
-function getStatsToEnemy(type: enemyType): enemyBaseStats {
-  switch (type) {
-    case "rogue":
-      return STATS_ROGUE;
-    case "rogue_2":
-      return STATS_ROGUE_2;
-    case "rogue_3":
-      return STATS_ROGUE_3;
-    case "rogue_4":
-      return STATS_ROGUE_4;
-    default:
-      return STATS_ROGUE;
+export function incExp(this: heroLevel, exp = 0) {
+  if (this.exp + exp >= this.expToNextLevel) {
+    this.value += 1;
+    const remains = exp - this.expToNextLevel;
+    this.expToNextLevel = setMaxLevelExp(this.expToNextLevel);
+    this.incExp(remains);
+  } else {
+    this.exp += exp;
   }
 }
 
-function getStatsToHero(type: heroType): heroBaseStats {
-  switch (type) {
-    case "boxer":
-      return STATS_BOXER;
-    case "programmer":
-      return STATS_PROGRAMMER;
-    case "cook":
-      return STATS_COOK;
-    case "hairdresser":
-      return STATS_HAIRDRESSER;
-    default:
-      return STATS_BOXER;
-  }
+export function setMaxLevelExp(exp: number) {
+  return Math.round(exp * 1.2);
 }
 
-function getSkillsToEnemy(type: enemyType) {
-  switch (type) {
-    case "rogue":
-      return SKILLS_ROGUE;
-    default:
-      return SKILLS_ROGUE;
-  }
-}
-
-function getSkillsToHero(type: heroType) {
-  switch (type) {
-    case "boxer":
-      return SKILLS_BOXER;
-    case "programmer":
-      return SKILLS_PROGRAMMER;
-    case "cook":
-      return SKILLS_COOK;
-    case "hairdresser":
-      return SKILLS_HAIRDRESSER;
-    default:
-      return SKILLS_BOXER;
-  }
-}
-
-function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
+export function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
   if (!duration) {
     this.damage += value;
   } else {
@@ -130,7 +29,7 @@ function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
     }, duration);
   }
 }
-function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
+export function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
   if (!duration) {
     this.def += value;
   } else {
@@ -140,14 +39,14 @@ function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
     }, duration);
   }
 }
-function getBuffDamage(this: IHero["buffs"]) {
+export function getBuffDamage(this: IHero["buffs"]) {
   return this.damage / 100 + 1;
 }
-function getBuffDef(this: IHero["buffs"]) {
+export function getBuffDef(this: IHero["buffs"]) {
   return (100 - this.def) / 100;
 }
 
-function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, fn: (target: IHero | IEnemy) => void) {
+export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, fn: (target: IHero | IEnemy) => void) {
   const calcAttack = this.baseStats.attack * this.buffs.getBuffDamage();
   const potentialAttack = calcAttack * target.buffs.getBuffDef();
   const result = (potentialAttack - target.baseStats.def) * target.buffs.getBuffDef();
@@ -162,7 +61,7 @@ function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, fn: (target: IHe
   console.log(`Удар по ${target.type} на ${result} урона, осталось ${target.HP} HP`);
 }
 
-function damageToBarrier(target: IHero | IEnemy, dmg: number) {
+export function damageToBarrier(target: IHero | IEnemy, dmg: number) {
   if (target.barrier - dmg <= 0) {
     target.barrier = 0;
   } else {
@@ -170,7 +69,7 @@ function damageToBarrier(target: IHero | IEnemy, dmg: number) {
   }
 }
 
-function damageToHP(target: IHero | IEnemy, dmg: number) {
+export function damageToHP(target: IHero | IEnemy, dmg: number) {
   if (target.HP - dmg <= 0) {
     target.HP = 0;
   } else {
@@ -191,6 +90,8 @@ export function fight(
       clearInterval(tickHero);
       clearInterval(tickEnemy);
       console.log(hero.type, "win!");
+      getReward(hero, enemy);
+      fn(hero);
     }
   }, 1000 / hero.baseStats.attackSpeed);
   const tickEnemy = setInterval(() => {
@@ -202,4 +103,33 @@ export function fight(
       console.log(enemy.type, "win!");
     }
   }, 1000 / enemy.baseStats.attackSpeed);
+}
+
+export function getReward(hero: IHero, enemy: IEnemy | IHero) {
+  if (enemy instanceof EnemyClass) {
+    hero.resources.gold += enemy.resources.gold;
+    hero.level.incExp(enemy.resources.exp);
+    hero.resources.skillPoints += enemy.resources.skillPoints;
+    hero.HP += 200;
+  }
+}
+
+let minEnemy = 1;
+let maxEnemy = 2;
+
+export function searchEnemy(arr: typeof ENEMIES_TO_WAY) {
+  const arrEnemies = [...arr];
+  const res: enemyType[] = [];
+
+  for (let i = 1; i <= 2; i++) {
+    const enemyId = getRandom(Math.min(minEnemy, arrEnemies.length - 1), Math.min(maxEnemy, arrEnemies.length));
+    res.push(arrEnemies.splice(enemyId - 1, 1).join("") as enemyType);
+  }
+  incСomplexity();
+  return res;
+}
+
+function incСomplexity() {
+  minEnemy += 0.7;
+  maxEnemy += 0.8;
 }

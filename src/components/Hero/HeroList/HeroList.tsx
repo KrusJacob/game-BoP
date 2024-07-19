@@ -2,7 +2,7 @@ import { IHero, heroType } from "@/types/hero.types";
 
 import HeroCard from "../HeroCard/HeroCard";
 import styles from "./heroList.module.css";
-import { HeroClass } from "@/constants/fn";
+import { HeroClass } from "@/constants/class";
 
 interface Props {
   heroes: readonly heroType[];

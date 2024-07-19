@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { IconType } from "react-icons";
 import styles from "./hero.module.css";
+import Tooltip from "@/components/UI/Tooltip/Tooltip";
 
 interface Props {
   Icon: IconType;
@@ -10,11 +11,11 @@ interface Props {
 
 const HeroStat = ({ Icon, children, value }: Props) => {
   return (
-    <p className={styles.stats}>
+    <div className={styles.stats}>
       <Icon />
       <span>{children}:</span>
       {value}
-    </p>
+    </div>
   );
 };
 

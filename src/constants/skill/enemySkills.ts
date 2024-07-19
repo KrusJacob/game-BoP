@@ -20,3 +20,23 @@ export const SKILLS_ROGUE: enemySkills = {
     },
   ],
 };
+export const SKILLS_GNOME: enemySkills = {
+  data: [
+    {
+      label: "",
+      img: "/src/assets/skill/lock.png",
+    },
+    {
+      label: "",
+      img: "/src/assets/skill/lock.png",
+    },
+    {
+      label: "",
+      img: "/src/assets/skill/lock.png",
+    },
+    {
+      label: "",
+      img: "/src/assets/skill/lock.png",
+    },
+  ],
+};
