@@ -16,6 +16,8 @@ function App() {
     setHero(hero);
   };
 
+  console.log(hero?.HP);
+
   return (
     <main>
       <DoorLayout>
@@ -27,11 +29,6 @@ function App() {
           className="container"
         >
           {hero ? <GameArea hero={hero} /> : <HeroList heroes={ALL_HEROES} chooseHero={chooseHero} />}
-          {/* <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident accusantium, inventore corrupti
-            iusto adipisci dolorum sed error, ratione minus quasi fuga delectus! Quae odio accusantium aperiam
-            ratione eos perspiciatis perferendis.
-          </p> */}
         </motion.div>
       </DoorLayout>
     </main>

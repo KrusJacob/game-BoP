@@ -8,10 +8,10 @@ const STATS_BOXER: heroBaseStats = {
   power: 70,
   agility: 45,
   intellect: 15,
-  attack: 140,
-  def: 13,
+  attack: 135,
+  def: 12,
   maxHp: 1200,
-  attackSpeed: 1.1,
+  attackSpeed: 0.9,
 };
 const STATS_PROGRAMMER: heroBaseStats = {
   img: "/src/assets/hero/programmist.png",
@@ -22,7 +22,7 @@ const STATS_PROGRAMMER: heroBaseStats = {
   attack: 100,
   def: 8,
   maxHp: 1000,
-  attackSpeed: 1,
+  attackSpeed: 0.8,
 };
 const STATS_COOK: heroBaseStats = {
   img: "/src/assets/hero/cook.png",
@@ -33,7 +33,7 @@ const STATS_COOK: heroBaseStats = {
   attack: 115,
   def: 20,
   maxHp: 1450,
-  attackSpeed: 0.8,
+  attackSpeed: 0.65,
 };
 const STATS_HAIRDRESSER: heroBaseStats = {
   img: "/src/assets/hero/hairdresser.png",
@@ -44,7 +44,7 @@ const STATS_HAIRDRESSER: heroBaseStats = {
   attack: 100,
   def: 6,
   maxHp: 1100,
-  attackSpeed: 1.35,
+  attackSpeed: 1.15,
 };
 
 export { ALL_HEROES, STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER };

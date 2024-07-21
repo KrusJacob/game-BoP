@@ -11,6 +11,11 @@ export interface IHero {
   attack: heroGoAttack;
   skills: heroSkills;
   resources: heroResources;
+  status: heroStatus;
+}
+
+export interface heroStatus {
+  death: boolean;
 }
 
 export interface heroLevel {

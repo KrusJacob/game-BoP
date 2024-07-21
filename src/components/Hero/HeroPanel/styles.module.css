@@ -1,0 +1,33 @@
+.heroPanel {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    gap: 16px;
+    width: 100%;
+    border-top: 3px solid #3e6565;
+}
+.heroSkills {
+    display: flex;
+    gap: 8px;
+}
+.heroSkill {
+    width: 90px;
+    cursor: pointer;
+}
+
+.heroSkills img {
+    width: 100%;
+}
+.heroBag {
+    display: flex;
+    gap: 8px;
+}
+.heroBag div {
+    border-radius: var(--borderRadius);
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+    cursor: pointer;
+}

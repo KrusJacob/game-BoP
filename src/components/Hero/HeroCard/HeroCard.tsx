@@ -13,6 +13,7 @@ import HeroStat from "./HeroStat";
 import { useState } from "react";
 import { useGameStore } from "@/store/gameStore";
 import { HeroClass } from "@/constants/class";
+import Tooltip from "@/components/UI/Tooltip/Tooltip";
 
 interface Props {
   hero: IHero | IEnemy;
@@ -23,7 +24,7 @@ interface Props {
 //https://www.pngitem.com/pimgs/m/240-2409533_hero-silhouette-free-png-transparent-png.png
 
 const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
-  const heroLevel = useGameStore((state) => state.hero?.level.value);
+  // const heroLevel = useGameStore((state) => state.hero?.level.value);
 
   return (
     <div className={styles.card}>
@@ -32,7 +33,9 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         <div className={styles.name}>{hero.baseStats.name}</div>
         {isChoosed && (
           <div className={styles.level}>
-            <Badge>{heroLevel}</Badge>
+            <Tooltip title={hero instanceof HeroClass ? `${hero.level.exp} / ${hero.level.expToNextLevel}` : ""}>
+              <Badge>{hero.level.value}</Badge>
+            </Tooltip>
           </div>
         )}
       </div>

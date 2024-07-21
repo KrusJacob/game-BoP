@@ -48,6 +48,9 @@ export class EnemyClass implements IEnemy {
   attack: enemyGoAttack;
   skills: enemySkills;
   resources: enemyResources;
+  status = {
+    death: false,
+  };
 }
 
 export class HeroClass implements IHero {
@@ -82,5 +85,8 @@ export class HeroClass implements IHero {
   resources = {
     gold: 0,
     skillPoints: 0,
+  };
+  status = {
+    death: false,
   };
 }

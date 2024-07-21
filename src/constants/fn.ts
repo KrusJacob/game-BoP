@@ -3,6 +3,15 @@ import { IHero, heroLevel } from "../types/hero.types";
 import { getRandom } from "@/utils/getRandom";
 import { EnemyClass } from "./class";
 import { ENEMIES_TO_WAY } from "./enemy";
+import {
+  maxEnemy,
+  minEnemy,
+  incСomplexity,
+  HP_REST,
+  HP_REST_PERCENT,
+  MULTIPLIER_CRITICAL_DAMAGE,
+  MULTIPLIER_COUNTER_ATTACK_DAMAGE,
+} from "./setup";
 
 export function incExp(this: heroLevel, exp = 0) {
   if (this.exp + exp >= this.expToNextLevel) {
@@ -47,18 +56,29 @@ export function getBuffDef(this: IHero["buffs"]) {
 }
 
 export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, fn: (target: IHero | IEnemy) => void) {
-  const calcAttack = this.baseStats.attack * this.buffs.getBuffDamage();
-  const potentialAttack = calcAttack * target.buffs.getBuffDef();
-  const result = (potentialAttack - target.baseStats.def) * target.buffs.getBuffDef();
+  const damage = calcDamage(this, target);
 
   if (target.barrier) {
-    damageToBarrier(target, result);
+    damageToBarrier(target, damage);
   } else {
-    damageToHP(target, result);
+    damageToHP(target, damage);
   }
   fn(target);
 
-  console.log(`Удар по ${target.type} на ${result} урона, осталось ${target.HP} HP`);
+  console.log(`Удар по ${target.type} на ${damage} урона, осталось ${target.HP} HP`);
+}
+
+function calcDamage(attacker: IHero | IEnemy, target: IHero | IEnemy) {
+  let result;
+  if (CheckForEvade(8)) {
+    result = 0;
+  } else {
+    let calcAttack = attacker.baseStats.attack * attacker.buffs.getBuffDamage();
+    calcAttack = CheckForCrit(8) ? goCriticalDamage(calcAttack) : calcAttack;
+    // let potentialAttack = calcAttack * target.buffs.getBuffDef();
+    result = (calcAttack - target.baseStats.def) * target.buffs.getBuffDef();
+  }
+  return result;
 }
 
 export function damageToBarrier(target: IHero | IEnemy, dmg: number) {
@@ -72,6 +92,7 @@ export function damageToBarrier(target: IHero | IEnemy, dmg: number) {
 export function damageToHP(target: IHero | IEnemy, dmg: number) {
   if (target.HP - dmg <= 0) {
     target.HP = 0;
+    target.status.death = true;
   } else {
     target.HP -= dmg;
   }
@@ -86,7 +107,7 @@ export function fight(
   const tickHero = setInterval(() => {
     // @ts-ignore
     hero.attack(enemy, fn2);
-    if (enemy.HP <= 0) {
+    if (enemy.status.death) {
       clearInterval(tickHero);
       clearInterval(tickEnemy);
       console.log(hero.type, "win!");
@@ -97,7 +118,7 @@ export function fight(
   const tickEnemy = setInterval(() => {
     //  @ts-ignore
     enemy.attack(hero, fn);
-    if (hero.HP <= 0) {
+    if (hero.status.death) {
       clearInterval(tickHero);
       clearInterval(tickEnemy);
       console.log(enemy.type, "win!");
@@ -110,12 +131,9 @@ export function getReward(hero: IHero, enemy: IEnemy | IHero) {
     hero.resources.gold += enemy.resources.gold;
     hero.level.incExp(enemy.resources.exp);
     hero.resources.skillPoints += enemy.resources.skillPoints;
-    hero.HP += 200;
+    restHero(hero);
   }
 }
-
-let minEnemy = 1;
-let maxEnemy = 2;
 
 export function searchEnemy(arr: typeof ENEMIES_TO_WAY) {
   const arrEnemies = [...arr];
@@ -129,7 +147,32 @@ export function searchEnemy(arr: typeof ENEMIES_TO_WAY) {
   return res;
 }
 
-function incСomplexity() {
-  minEnemy += 0.7;
-  maxEnemy += 0.8;
+function restHero(hero: IHero) {
+  const healValue = Math.round(hero.baseStats.maxHp * (HP_REST_PERCENT / 100) + HP_REST);
+  getHeal(hero, healValue);
+}
+
+function getHeal(hero: IHero | IEnemy, value: number) {
+  hero.HP += Math.min(hero.baseStats.maxHp - hero.HP, value);
+}
+
+// skills
+
+function goCriticalDamage(value: number) {
+  return value * MULTIPLIER_CRITICAL_DAMAGE;
+}
+
+function CheckForCrit(chance: number) {
+  return chance >= getRandom(1, 100);
+}
+
+function CheckForEvade(chance: number) {
+  return chance >= getRandom(1, 100);
+}
+
+function goCounterAttack(value: number) {
+  return value * MULTIPLIER_COUNTER_ATTACK_DAMAGE;
+}
+function goEvadeDamage() {
+  return 0;
 }

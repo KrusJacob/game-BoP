@@ -27,3 +27,20 @@
 .enemy.hide {
     opacity: 0.5;
 }
+
+.enemyDownWrapper {
+    padding: 20px;
+    background-color: #086666;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.enemyDownWrapper h3 {
+    font-size: 2rem;
+}
+.resources p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

@@ -1,7 +1,6 @@
 import Button from "@/components/UI/Button/Button";
 import styles from "./styles.module.css";
 import { fight, searchEnemy } from "@/constants/fn";
-import cn from "classnames";
 
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
@@ -9,6 +8,12 @@ import { useEffect, useState } from "react";
 import { ENEMIES_TO_WAY } from "@/constants/enemy";
 import { EnemyClass } from "@/constants/class";
 import { TabsWithFight } from "../GameField/GameField";
+import FoundEnemies from "./FoundEnemies";
+import { IHero } from "@/types/hero.types";
+import OverLay from "@/layout/OverLay";
+import { BiSolidCoinStack } from "react-icons/bi";
+import { GiFlowerEmblem } from "react-icons/gi";
+import HeroPanel from "@/components/Hero/HeroPanel/HeroPanel";
 
 const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const [isFight, setFight] = useState(false);
@@ -22,20 +27,12 @@ const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) =>
     setEnemies([enemy_1, enemy_2]);
   }, []);
 
-  useEffect(() => {
-    if (enemy && enemy?.HP <= 0) {
-      onSetTab("Главная");
-      setEnemy(null);
-    }
-  }, [enemy?.HP]);
-
   const onGoFight = () => {
     if (enemy && hero) {
       fight(hero, enemy, setHero, setEnemy);
       setFight(true);
     }
   };
-  console.log("render 1");
 
   return (
     <div className={styles.fightField}>
@@ -47,31 +44,46 @@ const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) =>
           </Button>
         </>
       )}
+      {isFight && hero && <HeroPanel heroSkills={hero?.skills} />}
+      {enemy?.status.death && (
+        <EnemyDown onSetTab={onSetTab} setEnemy={setEnemy} enemy={enemy instanceof EnemyClass ? enemy : null} />
+      )}
     </div>
   );
 };
 
-const FoundEnemies = ({ enemies }: { enemies: IEnemy[] }) => {
-  const { enemy, setEnemy } = useGameStore((state) => state);
+interface Props {
+  onSetTab: (tab: TabsWithFight) => void;
+  setEnemy: (enemy: IEnemy | IHero | null) => void;
+  enemy: IEnemy | null;
+}
+
+const EnemyDown = ({ onSetTab, setEnemy, enemy }: Props) => {
   return (
-    <div>
-      {enemies.length !== 0 && (
-        <div className={styles.enemies}>
-          {enemies.map((enemyItem, i) => (
-            <img
-              className={cn(styles.enemy, {
-                [styles.active]: enemyItem.type === enemy?.type,
-                [styles.hide]: enemyItem.type !== enemy?.type && enemy,
-              })}
-              key={i}
-              onClick={() => setEnemy(enemyItem)}
-              src={enemyItem.baseStats.img}
-              alt={enemyItem.type}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    <OverLay>
+      <div className={styles.enemyDownWrapper}>
+        <h3>Вы победили!</h3>
+        {enemy && (
+          <div className={styles.resources}>
+            <p>+ {enemy.resources.exp} Опыта</p>
+            <p>
+              + {enemy.resources.gold} <BiSolidCoinStack />
+            </p>
+            <p>
+              + {enemy.resources.skillPoints} <GiFlowerEmblem />
+            </p>
+          </div>
+        )}
+        <Button
+          onClick={() => {
+            onSetTab("Главная");
+            setEnemy(null);
+          }}
+        >
+          OK
+        </Button>
+      </div>
+    </OverLay>
   );
 };
 

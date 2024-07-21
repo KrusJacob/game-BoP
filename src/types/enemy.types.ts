@@ -1,5 +1,5 @@
 import { ALL_ENEMIES } from "@/constants/enemy";
-import { IHero, heroBaseStats, heroBuffs, heroResources, heroSkills } from "./hero.types";
+import { IHero, heroBaseStats, heroBuffs, heroResources, heroSkills, heroStatus } from "./hero.types";
 
 export interface IEnemy {
   type: enemyType;
@@ -13,6 +13,7 @@ export interface IEnemy {
   attack: enemyGoAttack;
   skills: enemySkills;
   resources: enemyResources;
+  status: enemyStatus;
 }
 
 export interface enemyResources {
@@ -21,6 +22,7 @@ export interface enemyResources {
   exp: number;
 }
 
+interface enemyStatus extends heroStatus {}
 export interface enemyResources extends heroResources {}
 export interface enemyBuffs extends heroBuffs {}
 export interface enemySkills extends heroSkills {}

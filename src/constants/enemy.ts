@@ -22,7 +22,7 @@ export const STATS_GNOME: enemyBaseStats = {
   attack: 90,
   def: 4,
   maxHp: 700,
-  attackSpeed: 0.7,
+  attackSpeed: 0.6,
 };
 export const RESOURCES_GNOME: enemyResources = {
   exp: 60,
@@ -38,7 +38,7 @@ export const STATS_GNOME_2: enemyBaseStats = {
   attack: 80,
   def: 8,
   maxHp: 800,
-  attackSpeed: 1.1,
+  attackSpeed: 0.9,
 };
 export const RESOURCES_GNOME_2: enemyResources = {
   exp: 80,
@@ -55,7 +55,7 @@ export const STATS_GNOME_3: enemyBaseStats = {
   attack: 120,
   def: 20,
   maxHp: 1200,
-  attackSpeed: 0.7,
+  attackSpeed: 0.6,
 };
 export const RESOURCES_GNOME_3: enemyResources = {
   exp: 100,
@@ -71,7 +71,7 @@ export const STATS_GNOME_4: enemyBaseStats = {
   attack: 150,
   def: 10,
   maxHp: 1000,
-  attackSpeed: 1,
+  attackSpeed: 0.8,
 };
 export const RESOURCES_GNOME_4: enemyResources = {
   exp: 60,
@@ -88,7 +88,7 @@ export const STATS_ROGUE: enemyBaseStats = {
   attack: 70,
   def: 5,
   maxHp: 800,
-  attackSpeed: 1.2,
+  attackSpeed: 1.1,
 };
 export const RESOURCES_ROGUE: enemyResources = {
   exp: 60,
@@ -104,7 +104,7 @@ export const STATS_ROGUE_2: enemyBaseStats = {
   attack: 80,
   def: 10,
   maxHp: 1200,
-  attackSpeed: 1.3,
+  attackSpeed: 1.2,
 };
 export const RESOURCES_ROGUE_2: enemyResources = {
   exp: 100,
@@ -120,7 +120,7 @@ export const STATS_ROGUE_3: enemyBaseStats = {
   attack: 110,
   def: 14,
   maxHp: 1350,
-  attackSpeed: 1.2,
+  attackSpeed: 1.1,
 };
 export const RESOURCES_ROGUE_3: enemyResources = {
   exp: 150,
@@ -136,7 +136,7 @@ export const STATS_ROGUE_4: enemyBaseStats = {
   attack: 145,
   def: 17,
   maxHp: 1550,
-  attackSpeed: 1.6,
+  attackSpeed: 1.5,
 };
 export const RESOURCES_ROGUE_4: enemyResources = {
   exp: 300,
