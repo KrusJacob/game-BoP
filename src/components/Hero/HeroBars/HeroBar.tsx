@@ -9,9 +9,10 @@ interface Props {
   isEnemy?: boolean;
   value: number;
   max: number;
+  barrier: number;
 }
 
-const HeroBar = ({ isEnemy, value, max }: Props) => {
+const HeroBar = ({ isEnemy, value, max, barrier }: Props) => {
   return (
     <div
       className={cn(styles.fullBar, {
@@ -19,7 +20,7 @@ const HeroBar = ({ isEnemy, value, max }: Props) => {
       })}
     >
       <HPBar value={value} max={max} />
-      {/* {target.barrier > 0 && <BarrierBar target={target} />} */}
+      {barrier > 0 && <BarrierBar barrier={barrier} max={max} />}
     </div>
   );
 };

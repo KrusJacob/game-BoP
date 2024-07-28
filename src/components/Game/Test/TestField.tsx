@@ -22,7 +22,7 @@ const TestField = () => {
   const onGoFight = () => {
     if (enemy && hero) {
       // hero.barrier += hero.baseStats.maxHp;
-      fight(hero, enemy, setHero, setEnemy);
+      fight(hero, enemy);
     }
   };
 

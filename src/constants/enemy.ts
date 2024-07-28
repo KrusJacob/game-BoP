@@ -11,7 +11,13 @@ export const ALL_ENEMIES = [
   "rogue_4",
 ] as const;
 
-export const ENEMIES_TO_WAY = ["gnome", "rogue", "gnome_2", "rogue_2", "gnome_3", "rogue_3"];
+export const ENEMIES_TO_DARK_FOREST = ["rogue", "rogue_2", "rogue_3"];
+export const ENEMIES_TO_HIDDEN_CAVE = ["gnome", "gnome_2", "gnome_3"];
+export const ENEMIES_TO_AZURE_COAST = ["gnome", "rogue", "gnome_2"];
+export const ENEMIES_TO_SNOW_MOUNTAINS = ["gnome", "rogue", "gnome_2"];
+// Hidden Cave
+// azure coast
+// snow mountains
 
 export const STATS_GNOME: enemyBaseStats = {
   img: "/src/assets/enemy/gnome.png",
@@ -20,8 +26,8 @@ export const STATS_GNOME: enemyBaseStats = {
   agility: 25,
   intellect: 60,
   attack: 90,
-  def: 4,
-  maxHp: 700,
+  def: 7,
+  maxHp: 650,
   attackSpeed: 0.6,
 };
 export const RESOURCES_GNOME: enemyResources = {
@@ -35,8 +41,8 @@ export const STATS_GNOME_2: enemyBaseStats = {
   power: 40,
   agility: 55,
   intellect: 40,
-  attack: 80,
-  def: 8,
+  attack: 75,
+  def: 14,
   maxHp: 800,
   attackSpeed: 0.9,
 };
@@ -52,15 +58,15 @@ export const STATS_GNOME_3: enemyBaseStats = {
   power: 80,
   agility: 25,
   intellect: 40,
-  attack: 120,
-  def: 20,
+  attack: 110,
+  def: 30,
   maxHp: 1200,
   attackSpeed: 0.6,
 };
 export const RESOURCES_GNOME_3: enemyResources = {
   exp: 100,
   gold: 170,
-  skillPoints: 1,
+  skillPoints: 2,
 };
 export const STATS_GNOME_4: enemyBaseStats = {
   img: "/src/assets/enemy/gnome_4.png",
@@ -69,14 +75,14 @@ export const STATS_GNOME_4: enemyBaseStats = {
   agility: 50,
   intellect: 90,
   attack: 150,
-  def: 10,
+  def: 18,
   maxHp: 1000,
   attackSpeed: 0.8,
 };
 export const RESOURCES_GNOME_4: enemyResources = {
-  exp: 60,
-  gold: 120,
-  skillPoints: 1,
+  exp: 250,
+  gold: 350,
+  skillPoints: 5,
 };
 
 export const STATS_ROGUE: enemyBaseStats = {
@@ -86,8 +92,8 @@ export const STATS_ROGUE: enemyBaseStats = {
   agility: 65,
   intellect: 20,
   attack: 70,
-  def: 5,
-  maxHp: 800,
+  def: 9,
+  maxHp: 750,
   attackSpeed: 1.1,
 };
 export const RESOURCES_ROGUE: enemyResources = {
@@ -101,9 +107,9 @@ export const STATS_ROGUE_2: enemyBaseStats = {
   power: 30,
   agility: 75,
   intellect: 30,
-  attack: 80,
-  def: 10,
-  maxHp: 1200,
+  attack: 75,
+  def: 16,
+  maxHp: 1300,
   attackSpeed: 1.2,
 };
 export const RESOURCES_ROGUE_2: enemyResources = {
@@ -118,8 +124,8 @@ export const STATS_ROGUE_3: enemyBaseStats = {
   agility: 90,
   intellect: 40,
   attack: 110,
-  def: 14,
-  maxHp: 1350,
+  def: 19,
+  maxHp: 1400,
   attackSpeed: 1.1,
 };
 export const RESOURCES_ROGUE_3: enemyResources = {
@@ -134,8 +140,8 @@ export const STATS_ROGUE_4: enemyBaseStats = {
   agility: 130,
   intellect: 70,
   attack: 145,
-  def: 17,
-  maxHp: 1550,
+  def: 24,
+  maxHp: 1700,
   attackSpeed: 1.5,
 };
 export const RESOURCES_ROGUE_4: enemyResources = {

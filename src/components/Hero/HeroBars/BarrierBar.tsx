@@ -4,15 +4,15 @@ import { IHero } from "@/types/hero.types";
 import { calcWidthBar } from "@/utils/calcWidthBar";
 import { IEnemy } from "@/types/enemy.types";
 
-const BarrierBar = ({ target }: { target: IHero | IEnemy }) => {
+const BarrierBar = ({ barrier, max }: { barrier: number; max: number }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (ref.current) {
       // calcHP(ref.current, target);
-      calcWidthBar(ref.current, target.baseStats.maxHp, target.barrier);
+      calcWidthBar(ref.current, max, barrier);
     }
-  }, [target]);
+  }, [barrier]);
 
   return <div ref={ref} className={styles.barrierBar}></div>;
 };

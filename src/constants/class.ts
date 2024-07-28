@@ -1,14 +1,6 @@
-import {
-  IEnemy,
-  enemyType,
-  enemyBaseStats,
-  enemyBuffs,
-  enemyGoAttack,
-  enemySkills,
-  enemyResources,
-} from "@/types/enemy.types";
-import { IHero, heroType, heroBaseStats, heroBuffs, heroGoAttack, heroSkills } from "@/types/hero.types";
-import { incHeroDamage, incHeroDef, getBuffDamage, getBuffDef, goAttack, incExp } from "./fn";
+import { IEnemy, enemyType, enemyBaseStats, enemyBuffs, enemySkills, enemyResources } from "@/types/enemy.types";
+import { IHero, heroType, heroBaseStats, heroBuffs, heroSkills } from "@/types/hero.types";
+import { incHeroDamage, incHeroDef, getBuffDamage, getBuffDef, goAttack, incExp, getBarrier, getHeal } from "./fn";
 import {
   getStatsToEnemy,
   getSkillsToEnemy,
@@ -26,6 +18,9 @@ export class EnemyClass implements IEnemy {
     this.baseStats = getStatsToEnemy(type);
     this.HP = this.baseStats.maxHp;
     this.buffs = {
+      nextAttack: {
+        ignoreDef: 0,
+      },
       damage: 0,
       def: 0,
       incDamage: incHeroDamage,
@@ -33,7 +28,7 @@ export class EnemyClass implements IEnemy {
       getBuffDamage: getBuffDamage,
       getBuffDef: getBuffDef,
     };
-    this.attack = goAttack;
+    // this.attack = goAttack;
     this.skills = getSkillsToEnemy(type);
     this.resources = getResourcesToEnemy(type);
   }
@@ -45,12 +40,16 @@ export class EnemyClass implements IEnemy {
   barrier = 0;
   baseStats: enemyBaseStats;
   buffs: enemyBuffs;
-  attack: enemyGoAttack;
-  skills: enemySkills;
+  attack = goAttack;
+  getBarrier = getBarrier;
+  getHeal = getHeal;
+  skills: enemySkills[];
   resources: enemyResources;
   status = {
     death: false,
+    stun: 0,
   };
+  update = () => {};
 }
 
 export class HeroClass implements IHero {
@@ -59,6 +58,9 @@ export class HeroClass implements IHero {
     this.baseStats = getStatsToHero(type);
     this.HP = this.baseStats.maxHp;
     this.buffs = {
+      nextAttack: {
+        ignoreDef: 0,
+      },
       damage: 0,
       def: 0,
       incDamage: incHeroDamage,
@@ -66,8 +68,8 @@ export class HeroClass implements IHero {
       getBuffDamage: getBuffDamage,
       getBuffDef: getBuffDef,
     };
-    this.attack = goAttack;
     this.skills = getSkillsToHero(type);
+    // registerSkill(this.skills.data[2].fn!, "afterHeroAttack");
   }
   level = {
     value: 1,
@@ -80,13 +82,17 @@ export class HeroClass implements IHero {
   readonly type: heroType;
   baseStats: heroBaseStats;
   buffs: heroBuffs;
-  attack: heroGoAttack;
-  skills: heroSkills;
+  attack = goAttack;
+  getBarrier = getBarrier;
+  getHeal = getHeal;
+  skills: heroSkills[];
   resources = {
     gold: 0,
     skillPoints: 0,
   };
   status = {
     death: false,
+    stun: 0,
   };
+  update = () => {};
 }

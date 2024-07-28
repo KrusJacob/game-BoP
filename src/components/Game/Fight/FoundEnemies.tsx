@@ -2,11 +2,26 @@ import cn from "classnames";
 import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
+import Button from "@/components/UI/Button/Button";
 
-const FoundEnemies = ({ enemies }: { enemies: IEnemy[] }) => {
+interface Props {
+  enemies: IEnemy[];
+  disabled: boolean;
+  onGoFight: () => void;
+}
+
+const FoundEnemies = ({ enemies, disabled, onGoFight }: Props) => {
   const { enemy, setEnemy } = useGameStore((state) => state);
+
+  const onSetEnemy = (enemy: IEnemy) => {
+    enemy.update = function () {
+      setEnemy(this);
+    };
+    enemy.update();
+  };
+
   return (
-    <div>
+    <div className={styles.foundEnemies}>
       {enemies.length !== 0 && (
         <div className={styles.enemies}>
           {enemies.map((enemyItem, i) => (
@@ -16,13 +31,16 @@ const FoundEnemies = ({ enemies }: { enemies: IEnemy[] }) => {
                 [styles.hide]: enemyItem.type !== enemy?.type && enemy,
               })}
               key={i}
-              onClick={() => setEnemy(enemyItem)}
+              onClick={() => onSetEnemy(enemyItem)}
               src={enemyItem.baseStats.img}
               alt={enemyItem.type}
             />
           ))}
         </div>
       )}
+      <Button disabled={disabled} onClick={onGoFight} size="big">
+        {enemy ? "Начать бой" : "Выберете врага"}
+      </Button>
     </div>
   );
 };

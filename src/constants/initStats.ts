@@ -1,5 +1,5 @@
 import { enemyType, enemyBaseStats } from "@/types/enemy.types";
-import { heroType, heroBaseStats } from "@/types/hero.types";
+import { heroType, heroBaseStats, heroSkills } from "@/types/hero.types";
 import {
   STATS_ROGUE,
   STATS_ROGUE_2,
@@ -21,6 +21,7 @@ import {
 import { STATS_BOXER, STATS_PROGRAMMER, STATS_COOK, STATS_HAIRDRESSER } from "./hero";
 import { SKILLS_ROGUE, SKILLS_GNOME } from "./skill/enemySkills";
 import { SKILLS_BOXER, SKILLS_PROGRAMMER, SKILLS_COOK, SKILLS_HAIRDRESSER } from "./skill/heroSkills";
+import { registerSkill } from "./fn";
 
 export function getStatsToEnemy(type: enemyType): enemyBaseStats {
   switch (type) {

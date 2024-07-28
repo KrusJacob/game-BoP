@@ -68,15 +68,15 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
   );
 };
 
-const SkillList = ({ skills }: { skills: heroSkills | enemySkills }) => {
+const SkillList = ({ skills }: { skills: heroSkills[] | enemySkills[] }) => {
   const [title, setTitle] = useState("");
 
   return (
     <div className={styles.skillList}>
       {title && <div className={styles.skillTitle}>{title}</div>}
-      {skills.data.map((item, i) => (
+      {skills.map((item, i) => (
         <div
-          onMouseEnter={() => setTitle("Описание способности. В разработке...")}
+          onMouseEnter={() => setTitle(item.label())}
           onMouseLeave={() => setTitle("")}
           className={styles.skillItem}
           key={i}

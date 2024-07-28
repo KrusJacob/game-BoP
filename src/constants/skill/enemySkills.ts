@@ -1,42 +1,70 @@
 import { enemySkills } from "@/types/enemy.types";
+import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "../setup";
 
-export const SKILLS_ROGUE: enemySkills = {
-  data: [
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+export const SKILLS_ROGUE: enemySkills[] = [
+  {
+    label: function () {
+      return `Описание способности. В разработке...`;
     },
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+    img: "/src/assets/skill/lock.png",
+    value: {},
+  },
+  {
+    label: function () {
+      return `Описание способности. В разработке...`;
     },
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+    img: "/src/assets/skill/lock.png",
+    value: {},
+  },
+  {
+    label: function () {
+      return `Описание способности. В разработке...`;
     },
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+    img: "/src/assets/skill/lock.png",
+    value: {},
+  },
+  {
+    label: function () {
+      return `Шанс критического удара: ${this.value?.chanceCritDamage}%, Шанс уклонения: ${this.value?.chanceEvade}% `;
     },
-  ],
-};
-export const SKILLS_GNOME: enemySkills = {
-  data: [
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+    img: "/src/assets/skill/chances.png",
+    value: {
+      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
+      chanceEvade: CHANCE_EVADE,
     },
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+  },
+];
+
+export const SKILLS_GNOME: enemySkills[] = [
+  {
+    label: function () {
+      return `Описание способности. В разработке...`;
     },
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+    img: "/src/assets/skill/lock.png",
+    value: {},
+  },
+  {
+    label: function () {
+      return `Описание способности. В разработке...`;
     },
-    {
-      label: "",
-      img: "/src/assets/skill/lock.png",
+    img: "/src/assets/skill/lock.png",
+    value: {},
+  },
+  {
+    label: function () {
+      return `Описание способности. В разработке...`;
     },
-  ],
-};
+    img: "/src/assets/skill/lock.png",
+    value: {},
+  },
+  {
+    label: function () {
+      return `Шанс критического удара: ${this.value?.chanceCritDamage}%, Шанс уклонения: ${this.value?.chanceEvade}% `;
+    },
+    img: "/src/assets/skill/chances.png",
+    value: {
+      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
+      chanceEvade: CHANCE_EVADE,
+    },
+  },
+];

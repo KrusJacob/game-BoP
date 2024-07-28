@@ -7,16 +7,19 @@ import DoorLayout from "./layout/DoorLayout";
 
 import GameArea from "./components/Game/GameArea/GameArea";
 import { useGameStore } from "./store/gameStore";
+import { registerAllSkills } from "./constants/fn";
 
 function App() {
   const hero = useGameStore((state) => state.hero);
   const setHero = useGameStore((state) => state.setHero);
 
   const chooseHero = (hero: IHero) => {
-    setHero(hero);
+    hero.update = function () {
+      setHero(this);
+    };
+    hero.update();
+    registerAllSkills(hero.skills);
   };
-
-  console.log(hero?.HP);
 
   return (
     <main>

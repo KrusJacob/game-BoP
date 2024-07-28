@@ -9,13 +9,17 @@ export interface IHero {
   barrier: number;
   buffs: heroBuffs;
   attack: heroGoAttack;
-  skills: heroSkills;
+  skills: heroSkills[];
   resources: heroResources;
   status: heroStatus;
+  getBarrier: (this: IHero | IEnemy, value: number) => void;
+  getHeal: (this: IHero | IEnemy, value: number) => void;
+  update: Function;
 }
 
 export interface heroStatus {
   death: boolean;
+  stun: number;
 }
 
 export interface heroLevel {
@@ -46,13 +50,17 @@ export interface heroResources {
 }
 
 export interface heroSkills {
-  data: {
-    label: string;
-    img: string;
-  }[];
+  label: () => string;
+  img: string;
+  value: Record<string, number>;
+  trigger?: keyof TypeSkillTrigger;
+  fn?: Function;
 }
 
 export interface heroBuffs {
+  nextAttack: {
+    ignoreDef: number;
+  };
   damage: number;
   def: number;
   incDamage: (value: number, duration?: number) => void;
@@ -60,4 +68,29 @@ export interface heroBuffs {
   getBuffDamage: () => number;
   getBuffDef: () => number;
 }
-export type heroGoAttack = (target: IEnemy | IHero, fn: (target: IHero | IEnemy) => void) => void;
+export interface attackInfo {
+  damage: number;
+  isEvade: boolean;
+  isCritical: boolean;
+  isStunned: boolean;
+}
+export type heroGoAttack = (target: IEnemy | IHero, options?: attackOptions) => attackInfo;
+
+export interface TypeSkillTrigger {
+  active: Function[];
+  inBeginFight: Function[];
+  beforeHeroAttack: Function[];
+  afterHeroAttack: Function[];
+  beforeEnemyAttack: Function[];
+  afterEnemyAttack: Function[];
+  afterHeroAwade: Function[];
+  afterEnemyAwade: Function[];
+  afterHeroCrit: Function[];
+  afterEnemyCrit: Function[];
+}
+
+export interface attackOptions {
+  modifier?: number;
+  ignoreDef?: number;
+  isIgnoreAvade?: boolean;
+}

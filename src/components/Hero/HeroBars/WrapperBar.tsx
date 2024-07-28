@@ -15,10 +15,12 @@ const WrapperBar = ({ hero, enemy }: Props) => {
   const heroMaxHP = useGameStore((state) => state.hero?.baseStats.maxHp);
   const enemyHP = useGameStore((state) => state.enemy?.HP);
   const enemyMaxHP = useGameStore((state) => state.enemy?.baseStats.maxHp);
+  const heroBarrier = useGameStore((state) => state.hero?.barrier);
+  const enemyBarrier = useGameStore((state) => state.enemy?.barrier);
 
   return (
     <div className={styles.wrapper}>
-      {hero && <HeroBar value={heroHP || 0} max={heroMaxHP || 0} />}
+      {hero && <HeroBar value={heroHP || 0} max={heroMaxHP || 0} barrier={heroBarrier || 0} />}
       {enemy && (
         <>
           <motion.span
@@ -27,7 +29,7 @@ const WrapperBar = ({ hero, enemy }: Props) => {
           >
             VS
           </motion.span>
-          <HeroBar value={enemyHP || 0} max={enemyMaxHP || 0} isEnemy />
+          <HeroBar value={enemyHP || 0} max={enemyMaxHP || 0} barrier={enemyBarrier || 0} isEnemy />
         </>
       )}
     </div>

@@ -4,8 +4,8 @@ import { fight, searchEnemy } from "@/constants/fn";
 
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
-import { useEffect, useState } from "react";
-import { ENEMIES_TO_WAY } from "@/constants/enemy";
+import { useState } from "react";
+
 import { EnemyClass } from "@/constants/class";
 import { TabsWithFight } from "../GameField/GameField";
 import FoundEnemies from "./FoundEnemies";
@@ -14,37 +14,42 @@ import OverLay from "@/layout/OverLay";
 import { BiSolidCoinStack } from "react-icons/bi";
 import { GiFlowerEmblem } from "react-icons/gi";
 import HeroPanel from "@/components/Hero/HeroPanel/HeroPanel";
+import LocationList from "../Location/LocationList";
+import { locationItem } from "@/types/location.types";
 
 const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const [isFight, setFight] = useState(false);
+  const [isLocationSelected, setLocationSelected] = useState(false);
   const [enemies, setEnemies] = useState<IEnemy[]>([]);
   const { hero, enemy, setHero, setEnemy } = useGameStore((state) => state);
 
-  useEffect(() => {
-    const enemies = searchEnemy(ENEMIES_TO_WAY);
+  const onGoFight = () => {
+    if (enemy && hero) {
+      fight(hero, enemy);
+      setFight(true);
+    }
+  };
+  const onSelectLocation = (locationName: locationItem["name"]) => {
+    const enemies = searchEnemy(locationName);
     const enemy_1 = new EnemyClass(enemies[0]);
     const enemy_2 = new EnemyClass(enemies[1]);
     setEnemies([enemy_1, enemy_2]);
-  }, []);
+    setLocationSelected(true);
+  };
 
-  const onGoFight = () => {
-    if (enemy && hero) {
-      fight(hero, enemy, setHero, setEnemy);
-      setFight(true);
-    }
+  const onClickSkill = () => {
+    // skillTrigger.active[0].call(hero?.skills, hero, enemy);
   };
 
   return (
     <div className={styles.fightField}>
-      {!isFight && (
-        <>
-          <FoundEnemies enemies={enemies} />
-          <Button disabled={!hero || !enemy} onClick={onGoFight} size="big">
-            {enemy ? "Начать бой" : "Выберете врага"}
-          </Button>
-        </>
+      {!isLocationSelected && (
+        <LocationList onSelectLocation={onSelectLocation} heroLevel={hero?.level.value || 0} />
       )}
-      {isFight && hero && <HeroPanel heroSkills={hero?.skills} />}
+      {isLocationSelected && !isFight && (
+        <FoundEnemies disabled={!hero || !enemy} enemies={enemies} onGoFight={onGoFight} />
+      )}
+      {isFight && hero && <HeroPanel heroSkills={hero?.skills} onClickSkill={onClickSkill} />}
       {enemy?.status.death && (
         <EnemyDown onSetTab={onSetTab} setEnemy={setEnemy} enemy={enemy instanceof EnemyClass ? enemy : null} />
       )}

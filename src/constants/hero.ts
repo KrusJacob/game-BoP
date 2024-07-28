@@ -9,7 +9,7 @@ const STATS_BOXER: heroBaseStats = {
   agility: 45,
   intellect: 15,
   attack: 135,
-  def: 12,
+  def: 13,
   maxHp: 1200,
   attackSpeed: 0.9,
 };
@@ -20,7 +20,7 @@ const STATS_PROGRAMMER: heroBaseStats = {
   agility: 40,
   intellect: 90,
   attack: 100,
-  def: 8,
+  def: 10,
   maxHp: 1000,
   attackSpeed: 0.8,
 };
@@ -31,7 +31,7 @@ const STATS_COOK: heroBaseStats = {
   agility: 50,
   intellect: 50,
   attack: 115,
-  def: 20,
+  def: 22,
   maxHp: 1450,
   attackSpeed: 0.65,
 };
@@ -41,8 +41,8 @@ const STATS_HAIRDRESSER: heroBaseStats = {
   power: 30,
   agility: 80,
   intellect: 30,
-  attack: 100,
-  def: 6,
+  attack: 105,
+  def: 8,
   maxHp: 1100,
   attackSpeed: 1.15,
 };

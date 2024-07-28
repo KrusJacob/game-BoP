@@ -1,5 +1,13 @@
 import { ALL_ENEMIES } from "@/constants/enemy";
-import { IHero, heroBaseStats, heroBuffs, heroResources, heroSkills, heroStatus } from "./hero.types";
+import {
+  IHero,
+  attackOptions,
+  heroBaseStats,
+  heroBuffs,
+  heroResources,
+  heroSkills,
+  heroStatus,
+} from "./hero.types";
 
 export interface IEnemy {
   type: enemyType;
@@ -11,9 +19,11 @@ export interface IEnemy {
   barrier: number;
   buffs: enemyBuffs;
   attack: enemyGoAttack;
-  skills: enemySkills;
+  skills: enemySkills[];
   resources: enemyResources;
   status: enemyStatus;
+  getBarrier: (this: IHero | IEnemy, value: number) => void;
+  update: Function;
 }
 
 export interface enemyResources {
@@ -27,6 +37,6 @@ export interface enemyResources extends heroResources {}
 export interface enemyBuffs extends heroBuffs {}
 export interface enemySkills extends heroSkills {}
 export interface enemyBaseStats extends heroBaseStats {}
-export type enemyGoAttack = (target: IHero | IEnemy, fn: (target: IHero | IEnemy) => void) => void;
+export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => void;
 
 export type enemyType = (typeof ALL_ENEMIES)[number];
