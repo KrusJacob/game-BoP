@@ -47,6 +47,6 @@
     border-radius: var(--borderRadius);
     width: 70px;
     height: 70px;
-    background-color: #fff;
+    background-color: rgba(241, 241, 241, 0.5);
     cursor: pointer;
 }

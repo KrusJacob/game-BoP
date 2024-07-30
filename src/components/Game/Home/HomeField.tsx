@@ -10,7 +10,7 @@ import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import { TabsWithFight } from "../GameField/GameField";
 
 const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
-  const hero = useGameStore((state) => state.hero);
+  const heroResources = useGameStore((state) => state.hero?.resources);
 
   const onGoWay = () => {
     onSetTab("Бой");
@@ -23,12 +23,12 @@ const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
         <div className={styles.header}>
           <Tooltip size="small" title="Золото">
             <BiSolidCoinStack />
-            {hero?.resources.gold}
+            {heroResources?.gold}
           </Tooltip>
 
           <Tooltip size="small" title="Очки навыков">
             <GiFlowerEmblem />
-            {hero?.resources.skillPoints}
+            {heroResources?.skillPoints}
           </Tooltip>
         </div>
         <Button className={styles.castle}>В Замок</Button>

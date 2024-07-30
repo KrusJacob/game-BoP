@@ -5,7 +5,7 @@
     height: 80%;
     gap: 16px;
     width: max-content;
-    padding: 0 16px 0 16px;
+    padding: 0 80px 0 20px;
 }
 .locationItem {
     text-align: center;
@@ -23,7 +23,7 @@
 }
 .locationItem:hover {
     transform: scale(1.05);
-    width: 240px;
+    width: 250px;
 }
 .locationItem > button {
     position: absolute;
@@ -44,6 +44,7 @@
 .locationItem p {
     text-shadow: 2px 2px black;
     z-index: 10;
+    width: min-content;
 }
 .locationItem img {
     position: absolute;

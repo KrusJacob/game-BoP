@@ -1,8 +1,15 @@
-import { IEnemy, enemyType } from "@/types/enemy.types";
+import { IEnemy, enemyInfo, enemyType } from "@/types/enemy.types";
 import { IHero, TypeSkillTrigger, attackInfo, attackOptions, heroLevel, heroSkills } from "../types/hero.types";
 import { getRandom } from "@/utils/getRandom";
 import { EnemyClass } from "./class";
-import { maxEnemy, minEnemy, incСomplexity, HP_REST, HP_REST_PERCENT, MULTIPLIER_CRITICAL_DAMAGE } from "./setup";
+import {
+  incСomplexityLocation,
+  HP_REST,
+  HP_REST_PERCENT,
+  MULTIPLIER_CRITICAL_DAMAGE,
+  CHANCE_TO_LEGEND_ENEMY,
+  COMLEXITY_LOCATIONS,
+} from "./setup";
 import { getPercent } from "@/utils/getPercent";
 import { locationItem } from "@/types/location.types";
 import { getEnemiesLocations } from "./location";
@@ -56,6 +63,10 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     isCritical: false,
     isStunned: false,
   };
+
+  if (this.status.death) {
+    return attackInfo;
+  }
 
   if (checkForStun(this)) {
     attackInfo.isStunned = true;
@@ -170,19 +181,40 @@ export function getReward(hero: IHero, enemy: IEnemy | IHero) {
   }
 }
 
-export function searchEnemy(location: locationItem["name"]) {
-  const arrEnemies = getEnemiesLocations(location);
-  console.log(arrEnemies);
-  // const arrEnemies = [...arr];
-  const res: enemyType[] = [];
+function getMinMaxEnemies(location: locationItem["name"]) {
+  return Math.floor(COMLEXITY_LOCATIONS[location].comlexity);
+}
 
-  for (let i = 1; i <= 2; i++) {
-    const enemyId = getRandom(Math.min(minEnemy, arrEnemies.length - 1), Math.min(maxEnemy, arrEnemies.length));
-    res.push(arrEnemies.splice(enemyId - 1, 1).join("") as enemyType);
+export function searchEnemy(location: locationItem["name"]) {
+  const res: enemyType[] = [];
+  const arrEnemies = getEnemiesLocations(location);
+  const comlexity = getMinMaxEnemies(location);
+  const chanceToLegend = getRandom(0, 100);
+  let enemiesInComlexity = arrEnemies[comlexity].enemies;
+
+  if (chanceToLegend <= CHANCE_TO_LEGEND_ENEMY && arrEnemies[comlexity].legendEnemies.length) {
+    pushEnemy(res, arrEnemies[comlexity].legendEnemies);
+    pushEnemy(res, enemiesInComlexity);
+  } else {
+    pushEnemy(res, enemiesInComlexity);
+    pushEnemy(res, enemiesInComlexity);
   }
-  console.log(res);
-  incСomplexity();
+
+  incСomplexityLocation(location);
   return res;
+}
+
+function pushEnemy(res: enemyType[], enemiesArr: enemyInfo[]) {
+  const enemyId = getRandom(0, enemiesArr.length - 1);
+  if (res[0] === enemiesArr[enemyId].name) {
+    res.push(enemiesArr[Math.abs(enemyId - 1)].name);
+  } else {
+    res.push(enemiesArr[enemyId].name);
+  }
+
+  if (enemiesArr[enemyId].unique) {
+    enemiesArr.splice(enemyId, 1);
+  }
 }
 
 export function getBarrier(this: IHero | IEnemy, value: number) {

@@ -1,16 +1,17 @@
 import { locationItem } from "@/types/location.types";
 import {
-  ENEMIES_TO_AZURE_COAST,
+  // ENEMIES_TO_AZURE_COAST,
   ENEMIES_TO_DARK_FOREST,
   ENEMIES_TO_HIDDEN_CAVE,
-  ENEMIES_TO_SNOW_MOUNTAINS,
+  // ENEMIES_TO_HIDDEN_CAVE,
+  // ENEMIES_TO_SNOW_MOUNTAINS,
 } from "./enemy";
 
 export const LOCATIONS: locationItem[] = [
   {
     name: "darkForest",
     label: "Темный Лес",
-    reqLevel: 0,
+    reqLevel: 1,
     img: "/src/assets/location/dark_forest.png",
   },
   {
@@ -39,9 +40,11 @@ export function getEnemiesLocations(location: locationItem["name"]) {
       return ENEMIES_TO_DARK_FOREST;
     case "hiddenCave":
       return ENEMIES_TO_HIDDEN_CAVE;
-    case "azureCoast":
-      return ENEMIES_TO_AZURE_COAST;
-    case "snowMountains":
-      return ENEMIES_TO_SNOW_MOUNTAINS;
+    default:
+      return ENEMIES_TO_DARK_FOREST;
+    // case "azureCoast":
+    //   return ENEMIES_TO_AZURE_COAST;
+    // case "snowMountains":
+    //   return ENEMIES_TO_SNOW_MOUNTAINS;
   }
 }

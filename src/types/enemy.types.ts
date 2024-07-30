@@ -40,3 +40,12 @@ export interface enemyBaseStats extends heroBaseStats {}
 export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => void;
 
 export type enemyType = (typeof ALL_ENEMIES)[number];
+
+export interface enemiesToLocation {
+  enemies: enemyInfo[];
+  legendEnemies: enemyInfo[];
+}
+export interface enemyInfo {
+  name: enemyType;
+  unique?: boolean;
+}
