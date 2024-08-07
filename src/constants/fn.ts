@@ -31,29 +31,29 @@ export function setMaxLevelExp(exp: number) {
 
 export function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
   if (!duration) {
-    this.damage += value;
+    this._damage += value;
   } else {
-    this.damage += value;
+    this._damage += value;
     setTimeout(() => {
-      this.damage -= value;
+      this._damage -= value;
     }, duration);
   }
 }
 export function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
   if (!duration) {
-    this.def += value;
+    this._def += value;
   } else {
-    this.def += value;
+    this._def += value;
     setTimeout(() => {
-      this.def -= value;
+      this._def -= value;
     }, duration);
   }
 }
 export function getBuffDamage(this: IHero["buffs"]) {
-  return this.damage / 100 + 1;
+  return this._damage / 100 + 1;
 }
 export function getBuffDef(this: IHero["buffs"]) {
-  return (100 - this.def) / 100;
+  return (100 - this._def) / 100;
 }
 
 export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?: attackOptions): attackInfo {
@@ -86,7 +86,7 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     attackInfo.isCritical = true;
     attackInfo.damage = goCriticalDamage(attackInfo.damage);
   }
-  attackInfo.damage = calcDamageWithDef(attackInfo.damage, target.baseStats.def, this, options);
+  attackInfo.damage = calcDamageWithDef(attackInfo.damage, target.getters.getDef(), this, options);
   attackInfo.damage = attackInfo.damage * target.buffs.getBuffDef();
 
   if (target.barrier) {
@@ -108,7 +108,7 @@ function calcDamageWithOptions(damage: number, options?: attackOptions) {
 }
 
 function getDamageWithBuffs(attacker: IHero | IEnemy) {
-  return attacker.baseStats.attack * attacker.buffs.getBuffDamage();
+  return attacker.getters.getAttack() * attacker.buffs.getBuffDamage();
 }
 
 function calcDamageWithDef(damage: number, def: number, hero: IHero | IEnemy, options?: attackOptions) {
@@ -120,7 +120,7 @@ function calcDamageWithDef(damage: number, def: number, hero: IHero | IEnemy, op
     ignoreDef += hero.buffs.nextAttack.ignoreDef;
     hero.buffs.nextAttack.ignoreDef = 0;
   }
-  console.log(ignoreDef, "ignoreDef");
+  console.log(ignoreDef, "%", "ignoreDef");
   return Math.floor(damage - (def - getPercent(def, ignoreDef)));
 }
 
@@ -158,7 +158,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
 
       skillTrigger.afterHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
     }
-  }, 1000 / hero.baseStats.attackSpeed);
+  }, 1000 / hero.getters.getAttackSpeed());
   const tickEnemy = setInterval(() => {
     if (hero.status.death) {
       clearInterval(tickHero);
@@ -169,7 +169,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
 
       skillTrigger.afterEnemyAttack.map((fn) => fn.call(hero.skills, hero, enemy));
     }
-  }, 1000 / enemy.baseStats.attackSpeed);
+  }, 1000 / enemy.getters.getAttackSpeed());
 }
 
 export function getReward(hero: IHero, enemy: IEnemy | IHero) {
@@ -218,16 +218,17 @@ function pushEnemy(res: enemyType[], enemiesArr: enemyInfo[]) {
 }
 
 export function getBarrier(this: IHero | IEnemy, value: number) {
-  this.barrier += Math.min(value, this.baseStats.maxHp);
+  this.barrier += Math.min(value, this.getters.getMaxHp() - this.barrier);
 }
 
 function restHero(hero: IHero) {
-  const healValue = Math.round(hero.baseStats.maxHp * (HP_REST_PERCENT / 100) + HP_REST);
+  const healValue = Math.round(hero.getters.getMaxHp() * (HP_REST_PERCENT / 100) + HP_REST);
+
   hero.getHeal(healValue);
 }
 
 export function getHeal(this: IHero | IEnemy, value: number) {
-  this.HP += Math.min(this.baseStats.maxHp - this.HP, value);
+  this.HP += Math.min(this.getters.getMaxHp() - this.HP, value);
 }
 
 // skills

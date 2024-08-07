@@ -5,6 +5,7 @@ export interface IHero {
   type: heroType;
   level: heroLevel;
   baseStats: heroBaseStats;
+  incStats: heroIncStats;
   HP: number;
   barrier: number;
   buffs: heroBuffs;
@@ -15,6 +16,8 @@ export interface IHero {
   getBarrier: (this: IHero | IEnemy, value: number) => void;
   getHeal: (this: IHero | IEnemy, value: number) => void;
   update: Function;
+  getters: heroGetters;
+  setters: heroSetters;
 }
 
 export interface heroStatus {
@@ -42,6 +45,20 @@ export interface heroBaseStats {
   readonly def: number;
   readonly maxHp: number;
   readonly attackSpeed: number;
+  readonly powerSkill: number;
+}
+export interface heroIncStats {
+  power: number;
+  agility: number;
+  intellect: number;
+  attack: number;
+  def: number;
+  maxHp: number;
+  attackSpeed: number;
+  powerSkill: number;
+  maxHpFromPower: number;
+  attackSpeedFromAgility: number;
+  powerSkillFromIntellect: number;
 }
 
 export interface heroResources {
@@ -49,10 +66,32 @@ export interface heroResources {
   skillPoints: number;
 }
 
+export interface heroGetters {
+  getMaxHp: () => number;
+  getPower: () => number;
+  getAgility: () => number;
+  getIntellect: () => number;
+  getAttack: () => number;
+  getDef: () => number;
+  getAttackSpeed: () => number;
+  getPowerSkill: () => number;
+}
+
+export interface heroSetters {
+  incMaxHp: (value: number) => void;
+  incPower: (value: number) => void;
+  incAgility: (value: number) => void;
+  incIntellect: (value: number) => void;
+  incAttack: (value: number) => void;
+  incDef: (value: number) => void;
+  incAttackSpeed: (value: number) => void;
+  incPowerSkill: (value: number) => void;
+}
+
 export interface heroSkills {
   label: () => string;
   img: string;
-  value: Record<string, number>;
+  value: Record<string, any>;
   trigger?: keyof TypeSkillTrigger;
   fn?: Function;
 }
@@ -61,8 +100,8 @@ export interface heroBuffs {
   nextAttack: {
     ignoreDef: number;
   };
-  damage: number;
-  def: number;
+  _damage: number;
+  _def: number;
   incDamage: (value: number, duration?: number) => void;
   incDef: (value: number, duration?: number) => void;
   getBuffDamage: () => number;

@@ -3,6 +3,7 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "../setup";
 import { IEnemy } from "@/types/enemy.types";
 import { getRandom } from "@/utils/getRandom";
 import { getPercent } from "@/utils/getPercent";
+import { applyPowerSkill } from "./utils";
 
 const SKILLS_BOXER: heroSkills[] = [
   {
@@ -59,7 +60,6 @@ const SKILLS_BOXER: heroSkills[] = [
       const chance = getRandom(1, 100);
       if (chance <= this[2].value.chance) {
         setTimeout(() => {
-          console.log("skill 2");
           hero.attack(target, { modifier: this[2].value.modifier });
           target.update();
         }, 300);
@@ -88,17 +88,17 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
   },
   {
     label: function () {
-      return `Брандмауэр. В Начале боя активирует барьер, поглощающий входящий урон. Обьем барьера зависит от интеллекта`;
+      return `Брандмауэр. В Начале боя активирует барьер, поглощающий входящий урон. Обьем барьера зависит от интеллекта и силы умений`;
     },
     img: "/src/assets/skill/skill_programmer_2.png",
     value: {
-      modifier: 3.5,
+      modifier: 3,
       barrierValue: 150,
     },
     trigger: "inBeginFight",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
-      console.log(this[1]);
-      const totalBarrier = hero.baseStats.intellect * this[1].value.modifier + this[1].value.barrierValue;
+      let totalBarrier = hero.getters.getIntellect() * this[1].value.modifier + this[1].value.barrierValue;
+      totalBarrier = applyPowerSkill(totalBarrier, hero.getters.getPowerSkill());
       hero.getBarrier(totalBarrier);
       hero.update();
     },
@@ -132,21 +132,29 @@ const SKILLS_COOK: heroSkills[] = [
   },
   {
     label: function () {
-      return `Сиропчик. После любого действия противника есть ${this.value.chance}% восстановить часть здоровья`;
+      return `Сиропчик. После любого действия противника есть ${this.value.chance}% - шанс восстановить часть здоровья. Перезарядка: ${this.value.cooldownCount} с.`;
     },
     img: "/src/assets/skill/skill_cook_2.png",
     value: {
-      chance: 15,
+      chance: 20,
       healNumber: 50,
-      healPercent: 6,
+      healPercent: 5,
+      cooldownCount: 5,
+      isCooldown: false,
     },
     trigger: "afterEnemyAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const chance = getRandom(1, 100);
-      if (chance <= this[1].value.chance) {
+      const value = this[1].value;
+      if (chance <= value.chance && !value.isCooldown) {
         console.log("heal");
+        value.isCooldown = true;
         setTimeout(() => {
-          const healValue = this[1].value.healNumber + getPercent(hero.baseStats.maxHp, this[1].value.healPercent);
+          value.isCooldown = false;
+        }, value.cooldownCount * 1000);
+        setTimeout(() => {
+          let healValue = value.healNumber + getPercent(hero.getters.getMaxHp(), value.healPercent);
+          healValue = applyPowerSkill(healValue, hero.getters.getPowerSkill());
           hero.getHeal(healValue);
           hero.update();
         }, 300);

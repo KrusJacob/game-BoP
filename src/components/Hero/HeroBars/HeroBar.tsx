@@ -1,9 +1,7 @@
-import { IHero } from "@/types/hero.types";
 import BarrierBar from "./BarrierBar";
 import HPBar from "./HPBar";
 import styles from "./styles.module.css";
 import cn from "classnames";
-import { IEnemy } from "@/types/enemy.types";
 
 interface Props {
   isEnemy?: boolean;

@@ -12,9 +12,9 @@ interface Props {
 
 const WrapperBar = ({ hero, enemy }: Props) => {
   const heroHP = useGameStore((state) => state.hero?.HP);
-  const heroMaxHP = useGameStore((state) => state.hero?.baseStats.maxHp);
+  const heroMaxHP = useGameStore((state) => state.hero?.getters.getMaxHp());
   const enemyHP = useGameStore((state) => state.enemy?.HP);
-  const enemyMaxHP = useGameStore((state) => state.enemy?.baseStats.maxHp);
+  const enemyMaxHP = useGameStore((state) => state.enemy?.getters.getMaxHp());
   const heroBarrier = useGameStore((state) => state.hero?.barrier);
   const enemyBarrier = useGameStore((state) => state.enemy?.barrier);
 

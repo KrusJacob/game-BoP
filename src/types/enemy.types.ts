@@ -4,7 +4,10 @@ import {
   attackOptions,
   heroBaseStats,
   heroBuffs,
+  heroGetters,
+  heroIncStats,
   heroResources,
+  heroSetters,
   heroSkills,
   heroStatus,
 } from "./hero.types";
@@ -15,6 +18,7 @@ export interface IEnemy {
     value: number;
   };
   baseStats: enemyBaseStats;
+  incStats: enemyIncStats;
   HP: number;
   barrier: number;
   buffs: enemyBuffs;
@@ -23,7 +27,10 @@ export interface IEnemy {
   resources: enemyResources;
   status: enemyStatus;
   getBarrier: (this: IHero | IEnemy, value: number) => void;
+  getHeal: (this: IHero | IEnemy, value: number) => void;
   update: Function;
+  getters: enemyGetters;
+  setters: enemySetters;
 }
 
 export interface enemyResources {
@@ -37,6 +44,9 @@ export interface enemyResources extends heroResources {}
 export interface enemyBuffs extends heroBuffs {}
 export interface enemySkills extends heroSkills {}
 export interface enemyBaseStats extends heroBaseStats {}
+export interface enemyIncStats extends heroIncStats {}
+export interface enemyGetters extends heroGetters {}
+export interface enemySetters extends heroSetters {}
 export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => void;
 
 export type enemyType = (typeof ALL_ENEMIES)[number];

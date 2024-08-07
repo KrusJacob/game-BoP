@@ -2,7 +2,7 @@ import { PiSwordLight } from "react-icons/pi";
 import { IHero, heroSkills } from "../../../types/hero.types";
 import { MdShield } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
-import { GiBrain, GiMuscleUp, GiSpinningSword, GiWalkingBoot } from "react-icons/gi";
+import { GiBrain, GiMuscleUp, GiSpinningSword, GiWalkingBoot, GiWizardStaff } from "react-icons/gi";
 
 import styles from "./hero.module.css";
 
@@ -11,7 +11,7 @@ import Badge from "@/components/UI/Badge/Badge";
 import { IEnemy, enemySkills } from "@/types/enemy.types";
 import HeroStat from "./HeroStat";
 import { useState } from "react";
-import { useGameStore } from "@/store/gameStore";
+
 import { HeroClass } from "@/constants/class";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 
@@ -40,26 +40,29 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         )}
       </div>
       <div>
-        <HeroStat Icon={FaHeart} value={hero.baseStats.maxHp}>
+        <HeroStat Icon={FaHeart} value={hero.getters.getMaxHp()}>
           Здоровье
         </HeroStat>
-        <HeroStat Icon={GiMuscleUp} value={hero.baseStats.power}>
+        <HeroStat Icon={GiMuscleUp} value={hero.getters.getPower()}>
           Cила
         </HeroStat>
-        <HeroStat Icon={GiWalkingBoot} value={hero.baseStats.agility}>
+        <HeroStat Icon={GiWalkingBoot} value={hero.getters.getAgility()}>
           Ловкость
         </HeroStat>
-        <HeroStat Icon={GiBrain} value={hero.baseStats.intellect}>
+        <HeroStat Icon={GiBrain} value={hero.getters.getIntellect()}>
           Интеллект
         </HeroStat>
-        <HeroStat Icon={PiSwordLight} value={hero.baseStats.attack}>
+        <HeroStat Icon={PiSwordLight} value={hero.getters.getAttack()}>
           Атака
         </HeroStat>
-        <HeroStat Icon={MdShield} value={hero.baseStats.def}>
+        <HeroStat Icon={MdShield} value={hero.getters.getDef()}>
           Защита
         </HeroStat>
-        <HeroStat Icon={GiSpinningSword} value={hero.baseStats.attackSpeed}>
+        <HeroStat Icon={GiSpinningSword} value={hero.getters.getAttackSpeed()}>
           Скорость атаки
+        </HeroStat>
+        <HeroStat Icon={GiWizardStaff} value={hero.getters.getPowerSkill()}>
+          Сила умений
         </HeroStat>
         <SkillList skills={hero.skills} />
       </div>

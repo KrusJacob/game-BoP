@@ -74,13 +74,14 @@ export const ENEMIES_TO_HIDDEN_CAVE: enemiesToLocation[] = [
 export const STATS_BEAST: enemyBaseStats = {
   img: "/src/assets/enemy/beast.png",
   name: "Вепрь",
-  power: 50,
-  agility: 20,
+  power: 40,
+  agility: 25,
   intellect: 10,
-  attack: 80,
-  def: 14,
+  attack: 85,
+  def: 16,
   maxHp: 800,
-  attackSpeed: 0.7,
+  attackSpeed: 0.5,
+  powerSkill: 0,
 };
 export const RESOURCES_BEAST: enemyResources = {
   exp: 70,
@@ -90,13 +91,14 @@ export const RESOURCES_BEAST: enemyResources = {
 export const STATS_ROGUE: enemyBaseStats = {
   img: "/src/assets/enemy/rogue.png",
   name: "Грабитель",
-  power: 25,
-  agility: 65,
+  power: 20,
+  agility: 50,
   intellect: 20,
   attack: 70,
   def: 9,
-  maxHp: 750,
-  attackSpeed: 1.1,
+  maxHp: 800,
+  attackSpeed: 0.7,
+  powerSkill: 0,
 };
 export const RESOURCES_ROGUE: enemyResources = {
   exp: 60,
@@ -106,13 +108,14 @@ export const RESOURCES_ROGUE: enemyResources = {
 export const STATS_BEAST_2: enemyBaseStats = {
   img: "/src/assets/enemy/beast_2.png",
   name: "Волк",
-  power: 40,
+  power: 45,
   agility: 65,
   intellect: 20,
-  attack: 85,
+  attack: 100,
   def: 18,
-  maxHp: 1200,
-  attackSpeed: 1,
+  maxHp: 1000,
+  attackSpeed: 0.5,
+  powerSkill: 0,
 };
 export const RESOURCES_BEAST_2: enemyResources = {
   exp: 120,
@@ -122,13 +125,14 @@ export const RESOURCES_BEAST_2: enemyResources = {
 export const STATS_ROGUE_2: enemyBaseStats = {
   img: "/src/assets/enemy/rogue_2.png",
   name: "Разбойник",
-  power: 30,
+  power: 35,
   agility: 75,
   intellect: 30,
-  attack: 75,
+  attack: 85,
   def: 16,
-  maxHp: 1300,
-  attackSpeed: 1.2,
+  maxHp: 1000,
+  attackSpeed: 0.7,
+  powerSkill: 0,
 };
 export const RESOURCES_ROGUE_2: enemyResources = {
   exp: 100,
@@ -143,8 +147,9 @@ export const STATS_BEAST_3: enemyBaseStats = {
   intellect: 30,
   attack: 160,
   def: 28,
-  maxHp: 1600,
+  maxHp: 1200,
   attackSpeed: 0.5,
+  powerSkill: 0,
 };
 export const RESOURCES_BEAST_3: enemyResources = {
   exp: 180,
@@ -159,8 +164,9 @@ export const STATS_ROGUE_3: enemyBaseStats = {
   intellect: 40,
   attack: 110,
   def: 19,
-  maxHp: 1400,
-  attackSpeed: 1.1,
+  maxHp: 1200,
+  attackSpeed: 0.7,
+  powerSkill: 0,
 };
 export const RESOURCES_ROGUE_3: enemyResources = {
   exp: 150,
@@ -175,8 +181,9 @@ export const STATS_BEAST_4: enemyBaseStats = {
   intellect: 45,
   attack: 180,
   def: 30,
-  maxHp: 1800,
-  attackSpeed: 1.1,
+  maxHp: 1500,
+  attackSpeed: 0.7,
+  powerSkill: 10,
 };
 export const RESOURCES_BEAST_4: enemyResources = {
   exp: 400,
@@ -186,13 +193,14 @@ export const RESOURCES_BEAST_4: enemyResources = {
 export const STATS_ROGUE_4: enemyBaseStats = {
   img: "/src/assets/enemy/rogue_4.png",
   name: "Воплощение обмана",
-  power: 60,
+  power: 45,
   agility: 130,
   intellect: 70,
   attack: 145,
-  def: 24,
-  maxHp: 1800,
-  attackSpeed: 1.5,
+  def: 22,
+  maxHp: 1500,
+  attackSpeed: 0.7,
+  powerSkill: 10,
 };
 export const RESOURCES_ROGUE_4: enemyResources = {
   exp: 320,
@@ -212,6 +220,7 @@ export const STATS_GOBLIN: enemyBaseStats = {
   def: 15,
   maxHp: 1350,
   attackSpeed: 1.3,
+  powerSkill: 0,
 };
 export const RESOURCES_GOBLIN: enemyResources = {
   exp: 180,
@@ -228,6 +237,7 @@ export const STATS_GNOME: enemyBaseStats = {
   def: 20,
   maxHp: 1600,
   attackSpeed: 1.1,
+  powerSkill: 0,
 };
 export const RESOURCES_GNOME: enemyResources = {
   exp: 180,
@@ -245,6 +255,7 @@ export const STATS_GOBLIN_2: enemyBaseStats = {
   def: 24,
   maxHp: 1300,
   attackSpeed: 1.4,
+  powerSkill: 0,
 };
 export const RESOURCES_GOBLIN_2: enemyResources = {
   exp: 280,
@@ -261,6 +272,7 @@ export const STATS_GNOME_2: enemyBaseStats = {
   def: 17,
   maxHp: 1700,
   attackSpeed: 1.3,
+  powerSkill: 0,
 };
 export const RESOURCES_GNOME_2: enemyResources = {
   exp: 240,
@@ -278,6 +290,7 @@ export const STATS_GOBLIN_3: enemyBaseStats = {
   def: 25,
   maxHp: 1900,
   attackSpeed: 0.8,
+  powerSkill: 0,
 };
 export const RESOURCES_GOBLIN_3: enemyResources = {
   exp: 320,
@@ -294,6 +307,7 @@ export const STATS_GNOME_3: enemyBaseStats = {
   def: 35,
   maxHp: 1800,
   attackSpeed: 1,
+  powerSkill: 0,
 };
 export const RESOURCES_GNOME_3: enemyResources = {
   exp: 290,
@@ -310,6 +324,7 @@ export const STATS_GOBLIN_4: enemyBaseStats = {
   def: 28,
   maxHp: 2500,
   attackSpeed: 1.6,
+  powerSkill: 10,
 };
 export const RESOURCES_GOBLIN_4: enemyResources = {
   exp: 600,
@@ -326,6 +341,7 @@ export const STATS_GNOME_4: enemyBaseStats = {
   def: 24,
   maxHp: 2900,
   attackSpeed: 0.8,
+  powerSkill: 40,
 };
 export const RESOURCES_GNOME_4: enemyResources = {
   exp: 500,

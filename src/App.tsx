@@ -17,6 +17,8 @@ function App() {
     hero.update = function () {
       setHero(this);
     };
+    // hero.setters.incMaxHp(200);
+    // hero.setters.incAttack(40);
     hero.update();
     registerAllSkills(hero.skills);
   };

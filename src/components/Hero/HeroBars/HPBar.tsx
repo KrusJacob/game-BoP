@@ -2,9 +2,8 @@ import { useEffect, useRef } from "react";
 import TextBar from "./TextBar";
 import styles from "./styles.module.css";
 import { IHero } from "@/types/hero.types";
-import { useGameStore } from "@/store/gameStore";
+
 import { calcWidthBar } from "@/utils/calcWidthBar";
-import { IEnemy } from "@/types/enemy.types";
 
 interface Props {
   value: number;

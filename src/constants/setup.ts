@@ -4,6 +4,11 @@ import { LOCATION } from "@/types/location.types";
 export const HP_REST = 100;
 export const HP_REST_PERCENT = 10;
 
+// HERO MAIN STATS
+export const MAX_HP_FROM_1_POWER = 10;
+export const ATTACK_SPD_FROM_1_AGILITY = 0.01;
+export const POWER_SKILL_FROM_1_INTELLECT = 0.7;
+
 // HERO CHANCE
 export const MULTIPLIER_CRITICAL_DAMAGE = 2;
 export const CHANCE_CRITICAL_DAMAGE = 8;

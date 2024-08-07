@@ -1,5 +1,5 @@
 import { enemyType, enemyBaseStats } from "@/types/enemy.types";
-import { heroType, heroBaseStats, heroSkills } from "@/types/hero.types";
+import { heroType, heroBaseStats, heroSkills, heroIncStats } from "@/types/hero.types";
 import {
   STATS_ROGUE,
   STATS_ROGUE_2,
@@ -159,4 +159,20 @@ export function getSkillsToHero(type: heroType) {
     default:
       return SKILLS_BOXER;
   }
+}
+
+export function getIncStatsToHero(): heroIncStats {
+  return {
+    agility: 0,
+    attack: 0,
+    attackSpeed: 0,
+    def: 0,
+    intellect: 0,
+    maxHp: 0,
+    power: 0,
+    powerSkill: 0,
+    maxHpFromPower: 0,
+    attackSpeedFromAgility: 0,
+    powerSkillFromIntellect: 0,
+  };
 }
