@@ -17,7 +17,7 @@ const HPBar = ({ value, max }: Props) => {
     if (ref.current) {
       calcWidthBar(ref.current, max, value);
     }
-  }, [value]);
+  }, [value, max]);
 
   return (
     <div ref={ref} className={styles.HPBar}>

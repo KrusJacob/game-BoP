@@ -7,6 +7,7 @@ import ShopField from "../Shop/ShopField";
 import HomeField from "../Home/HomeField";
 import TestField from "../Test/TestField";
 import FightField from "../Fight/FightField";
+import HeroField from "../Hero/HeroField";
 
 const GameField = () => {
   return (
@@ -18,13 +19,16 @@ const GameField = () => {
 
 //
 
-type TabsField = "Главная" | "Навыки" | "Таланты" | "Maгазин" | "Test";
+type TabsField = "Главная" | "Герой" | "Навыки" | "Таланты" | "Maгазин" | "Test";
 interface ITabsBtn {
   label: TabsField;
 }
 const TabsBtns: ITabsBtn[] = [
   {
     label: "Главная",
+  },
+  {
+    label: "Герой",
   },
   {
     label: "Навыки",
@@ -63,6 +67,7 @@ const Tabs = () => {
         ))}
       </div>
       {tab === "Главная" && <HomeField onSetTab={onSetTab} />}
+      {tab === "Герой" && <HeroField />}
       {tab === "Таланты" && <TalentField />}
       {tab === "Навыки" && <SkillField />}
       {tab === "Maгазин" && <ShopField />}

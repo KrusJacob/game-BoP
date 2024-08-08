@@ -32,12 +32,12 @@ const TestField = () => {
         <Button
           onClick={() => {
             if (hero) {
-              hero?.level.incExp(100);
+              hero?.level.incExp.call(hero, 200);
               setHero(hero);
             }
           }}
         >
-          Дать 100 опыта
+          Дать 200 опыта
         </Button>
       </div>
       <div>

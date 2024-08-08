@@ -9,20 +9,26 @@ import {
   MULTIPLIER_CRITICAL_DAMAGE,
   CHANCE_TO_LEGEND_ENEMY,
   COMLEXITY_LOCATIONS,
+  PARAMETER_POINT_LEVEL,
 } from "./setup";
 import { getPercent } from "@/utils/getPercent";
 import { locationItem } from "@/types/location.types";
 import { getEnemiesLocations } from "./location";
 
-export function incExp(this: heroLevel, exp = 0) {
-  if (this.exp + exp >= this.expToNextLevel) {
-    this.value += 1;
-    const remains = exp - this.expToNextLevel;
-    this.expToNextLevel = setMaxLevelExp(this.expToNextLevel);
-    this.incExp(remains);
+export function incExp(this: IHero, exp = 0) {
+  if (this.level.exp + exp >= this.level.expToNextLevel) {
+    incLevel.call(this);
+    const remains = exp - this.level.expToNextLevel;
+    this.level.expToNextLevel = setMaxLevelExp(this.level.expToNextLevel);
+    this.level.incExp.call(this, remains);
   } else {
-    this.exp += exp;
+    this.level.exp += exp;
   }
+}
+
+function incLevel(this: IHero) {
+  this.level.value += 1;
+  this.resources.parameterPoints += PARAMETER_POINT_LEVEL;
 }
 
 export function setMaxLevelExp(exp: number) {
@@ -175,7 +181,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
 export function getReward(hero: IHero, enemy: IEnemy | IHero) {
   if (enemy instanceof EnemyClass) {
     hero.resources.gold += enemy.resources.gold;
-    hero.level.incExp(enemy.resources.exp);
+    hero.setters.incExp.call(hero, enemy.resources.exp);
     hero.resources.skillPoints += enemy.resources.skillPoints;
     restHero(hero);
   }

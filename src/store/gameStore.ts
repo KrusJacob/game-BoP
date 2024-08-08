@@ -15,6 +15,6 @@ type Actions = {
 export const useGameStore = create<State & Actions>((set) => ({
   hero: null,
   enemy: null,
-  setHero: (hero) => set((state) => ({ hero })),
-  setEnemy: (enemy) => set((state) => ({ enemy })),
+  setHero: (hero) => set(() => ({ hero })),
+  setEnemy: (enemy) => set(() => ({ enemy })),
 }));

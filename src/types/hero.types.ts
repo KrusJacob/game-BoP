@@ -64,6 +64,7 @@ export interface heroIncStats {
 export interface heroResources {
   gold: number;
   skillPoints: number;
+  parameterPoints: number;
 }
 
 export interface heroGetters {
@@ -86,6 +87,7 @@ export interface heroSetters {
   incDef: (value: number) => void;
   incAttackSpeed: (value: number) => void;
   incPowerSkill: (value: number) => void;
+  incExp: (value: number) => void;
 }
 
 export interface heroSkills {

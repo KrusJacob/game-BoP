@@ -1,7 +1,7 @@
 .gameField {
     background-color: rgba(104, 206, 206, 0.384);
     width: 100%;
-    min-width: 480px;
+    min-width: 500px;
     border-radius: var(--borderRadius);
     padding: 6px;
     display: flex;
@@ -13,4 +13,5 @@
     width: 100%;
     display: flex;
     gap: 4px;
+    overflow-x: auto;
 }

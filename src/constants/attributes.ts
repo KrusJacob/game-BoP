@@ -43,7 +43,6 @@ export function updateMainStats(hero: IHero | IEnemy, stat: "power" | "agility" 
 function updatePower(hero: IHero | IEnemy) {
   const maxHpFromPower = Math.round(hero.getters.getPower() * MAX_HP_FROM_1_POWER);
   hero.incStats.maxHpFromPower = maxHpFromPower;
-  hero.getHeal(maxHpFromPower);
 }
 function updateAgility(hero: IHero | IEnemy) {
   const attackSpeedFromAgility = +(hero.getters.getAgility() * ATTACK_SPD_FROM_1_AGILITY).toFixed(2);

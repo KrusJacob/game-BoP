@@ -18,7 +18,17 @@ import {
   heroGetters,
   heroSetters,
 } from "@/types/hero.types";
-import { incHeroDamage, incHeroDef, getBuffDamage, getBuffDef, goAttack, incExp, getBarrier, getHeal } from "./fn";
+import {
+  incHeroDamage,
+  incHeroDef,
+  getBuffDamage,
+  getBuffDef,
+  goAttack,
+  getBarrier,
+  getHeal,
+  setMaxLevelExp,
+  incExp,
+} from "./fn";
 import {
   getStatsToEnemy,
   getSkillsToEnemy,
@@ -53,8 +63,8 @@ export class EnemyClass implements IEnemy {
     this.resources = getResourcesToEnemy(type);
     this.getters = getters.call(this);
     this.setters = setters.call(this);
-    this.HP = this.getters.getMaxHp();
     updateMainStats(this, "all");
+    this.HP = this.getters.getMaxHp();
   }
   readonly type: enemyType;
   level: {
@@ -99,8 +109,8 @@ export class HeroClass implements IHero {
     this.skills = getSkillsToHero(type);
     this.getters = getters.call(this);
     this.setters = setters.call(this);
-    this.HP = this.getters.getMaxHp();
     updateMainStats(this, "all");
+    this.HP = this.getters.getMaxHp();
     // registerSkill(this.skills.data[2].fn!, "afterHeroAttack");
   }
   level = {
@@ -122,6 +132,7 @@ export class HeroClass implements IHero {
   resources = {
     gold: 0,
     skillPoints: 0,
+    parameterPoints: 0,
   };
   status = {
     death: false,
@@ -197,5 +208,6 @@ function setters(this: IHero | IEnemy): heroSetters {
     incPowerSkill: function (value: number) {
       hero.incStats.intellect += value;
     },
+    incExp: incExp,
   };
 }

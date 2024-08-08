@@ -8,6 +8,7 @@ import { GiFlowerEmblem } from "react-icons/gi";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 
 import { TabsWithFight } from "../GameField/GameField";
+import { TbSquareRoundedPlus, TbSquareRoundedPlusFilled } from "react-icons/tb";
 
 const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const heroResources = useGameStore((state) => state.hero?.resources);
@@ -24,6 +25,11 @@ const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
           <Tooltip size="small" title="Золото">
             <BiSolidCoinStack />
             {heroResources?.gold}
+          </Tooltip>
+
+          <Tooltip size="small" title="Очки характеристик">
+            <TbSquareRoundedPlusFilled />
+            {heroResources?.parameterPoints}
           </Tooltip>
 
           <Tooltip size="small" title="Очки навыков">
