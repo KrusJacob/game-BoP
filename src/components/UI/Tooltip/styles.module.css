@@ -8,13 +8,18 @@
     z-index: 200;
     bottom: 110%;
     width: max-content;
-    border: 1px solid gray;
+
     /* transform: translateX(-50%); */
 }
 
 .tooltip div {
+    border: 1px solid gray;
     padding: 10px;
     width: 100%;
+    max-width: 300px;
+}
+.tooltip div p {
+    margin-top: 6px;
 }
 
 .small div {

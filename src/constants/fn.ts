@@ -14,6 +14,7 @@ import {
 import { getPercent } from "@/utils/getPercent";
 import { locationItem } from "@/types/location.types";
 import { getEnemiesLocations } from "./location";
+import { getTalent } from "./talent";
 
 export function incExp(this: IHero, exp = 0) {
   if (this.level.exp + exp >= this.level.expToNextLevel) {
@@ -29,6 +30,7 @@ export function incExp(this: IHero, exp = 0) {
 function incLevel(this: IHero) {
   this.level.value += 1;
   this.resources.parameterPoints += PARAMETER_POINT_LEVEL;
+  getTalent(this);
 }
 
 export function setMaxLevelExp(exp: number) {
@@ -118,10 +120,11 @@ function getDamageWithBuffs(attacker: IHero | IEnemy) {
 }
 
 function calcDamageWithDef(damage: number, def: number, hero: IHero | IEnemy, options?: attackOptions) {
-  if (!options?.ignoreDef && !hero.buffs.nextAttack.ignoreDef) {
+  if (!options?.ignoreDef && !hero.buffs.nextAttack.ignoreDef && hero.getters.getIgnoreDef() === 0) {
     return Math.floor(damage - def);
   }
   let ignoreDef = options?.ignoreDef || 0;
+  ignoreDef += hero.getters.getIgnoreDef();
   if (hero.buffs.nextAttack.ignoreDef) {
     ignoreDef += hero.buffs.nextAttack.ignoreDef;
     hero.buffs.nextAttack.ignoreDef = 0;

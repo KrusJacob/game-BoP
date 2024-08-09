@@ -174,5 +174,6 @@ export function getIncStatsToHero(): heroIncStats {
     maxHpFromPower: 0,
     attackSpeedFromAgility: 0,
     powerSkillFromIntellect: 0,
+    ignoreDef: 0,
   };
 }

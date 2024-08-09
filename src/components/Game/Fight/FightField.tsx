@@ -4,7 +4,7 @@ import { fight, searchEnemy } from "@/constants/fn";
 
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { EnemyClass } from "@/constants/class";
 import { TabsWithFight } from "../GameField/GameField";

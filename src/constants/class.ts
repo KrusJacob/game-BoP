@@ -174,6 +174,9 @@ function getters(this: IHero | IEnemy): heroGetters {
     getPowerSkill: function () {
       return hero.baseStats.powerSkill + hero.incStats.powerSkill + hero.incStats.powerSkillFromIntellect;
     },
+    getIgnoreDef: function () {
+      return hero.incStats.ignoreDef;
+    },
   };
 }
 
@@ -206,7 +209,16 @@ function setters(this: IHero | IEnemy): heroSetters {
       hero.incStats.attackSpeed += value;
     },
     incPowerSkill: function (value: number) {
-      hero.incStats.intellect += value;
+      hero.incStats.powerSkill += value;
+    },
+    incChanceEvade: function (value: number) {
+      hero.skills[3].value.chanceEvade += value;
+    },
+    incChanceCritDamage: function (value: number) {
+      hero.skills[3].value.chanceCritDamage += value;
+    },
+    incIgnoreDef: function (value: number) {
+      hero.incStats.ignoreDef += value;
     },
     incExp: incExp,
   };

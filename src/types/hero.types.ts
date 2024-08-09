@@ -59,6 +59,7 @@ export interface heroIncStats {
   maxHpFromPower: number;
   attackSpeedFromAgility: number;
   powerSkillFromIntellect: number;
+  ignoreDef: number;
 }
 
 export interface heroResources {
@@ -76,6 +77,7 @@ export interface heroGetters {
   getDef: () => number;
   getAttackSpeed: () => number;
   getPowerSkill: () => number;
+  getIgnoreDef: () => number;
 }
 
 export interface heroSetters {
@@ -88,6 +90,9 @@ export interface heroSetters {
   incAttackSpeed: (value: number) => void;
   incPowerSkill: (value: number) => void;
   incExp: (value: number) => void;
+  incChanceEvade: (value: number) => void;
+  incChanceCritDamage: (value: number) => void;
+  incIgnoreDef: (value: number) => void;
 }
 
 export interface heroSkills {

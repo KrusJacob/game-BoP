@@ -5,10 +5,11 @@ import cn from "classnames";
 interface Props {
   children: ReactNode;
   title: string;
+  descr?: string;
   size?: "default" | "small";
 }
 
-const Tooltip = ({ children, title, size }: Props) => {
+const Tooltip = ({ children, title, size, descr }: Props) => {
   const [isShow, setShow] = useState(false);
 
   return (
@@ -18,7 +19,12 @@ const Tooltip = ({ children, title, size }: Props) => {
           [styles.small]: size === "small",
         })}
       >
-        {isShow && <div>{title}</div>}
+        {isShow && (
+          <div>
+            <b>{title}</b>
+            {descr && <p>{descr}</p>}
+          </div>
+        )}
       </div>
       <div onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
         {children}
