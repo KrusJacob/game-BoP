@@ -5,7 +5,8 @@ import {
   ENEMIES_TO_HIDDEN_CAVE,
   // ENEMIES_TO_HIDDEN_CAVE,
   // ENEMIES_TO_SNOW_MOUNTAINS,
-} from "./enemy";
+} from "./enemies";
+import { enemiesToLocation } from "@/types/enemy.types";
 
 export const LOCATIONS: locationItem[] = [
   {
@@ -34,7 +35,7 @@ export const LOCATIONS: locationItem[] = [
   },
 ];
 
-export function getEnemiesLocations(location: locationItem["name"]) {
+export function getEnemiesLocations(location: locationItem["name"]): enemiesToLocation {
   switch (location) {
     case "darkForest":
       return ENEMIES_TO_DARK_FOREST;

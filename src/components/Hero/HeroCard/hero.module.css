@@ -41,6 +41,7 @@
     align-items: center;
     gap: 6px;
     margin: 8px 0 8px 0;
+    cursor: default;
 }
 .stats span {
     font-size: 1rem;
@@ -75,7 +76,14 @@
 .skillTitle {
     position: absolute;
     bottom: 110%;
-    background: rgba(11, 13, 39, 0.9);
+    background: rgba(11, 13, 39, 0.95);
     padding: 8px;
     width: 100%;
+}
+
+.skillTitle p {
+    font-size: 1.1rem;
+    /* margin-top: 4px; */
+    text-decoration: underline;
+    margin-bottom: 4px;
 }

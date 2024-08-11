@@ -1,6 +1,7 @@
-import { ALL_ENEMIES } from "@/constants/enemy";
+import { ALL_ENEMIES } from "@/constants/enemies";
 import {
   IHero,
+  attackInfo,
   attackOptions,
   heroBaseStats,
   heroBuffs,
@@ -40,19 +41,19 @@ export interface enemyResources {
 }
 
 interface enemyStatus extends heroStatus {}
-export interface enemyResources extends heroResources {}
+
 export interface enemyBuffs extends heroBuffs {}
 export interface enemySkills extends heroSkills {}
 export interface enemyBaseStats extends heroBaseStats {}
 export interface enemyIncStats extends heroIncStats {}
 export interface enemyGetters extends heroGetters {}
 export interface enemySetters extends heroSetters {}
-export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => void;
+export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => attackInfo;
 
 export type enemyType = (typeof ALL_ENEMIES)[number];
 
 export interface enemiesToLocation {
-  enemies: enemyInfo[];
+  enemies: enemyInfo[][];
   legendEnemies: enemyInfo[];
 }
 export interface enemyInfo {

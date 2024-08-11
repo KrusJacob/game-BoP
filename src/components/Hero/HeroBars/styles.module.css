@@ -47,7 +47,7 @@
     transition: all 0.3s;
 }
 .barrierBar {
-    width: 100%;
+    width: 0%;
     height: 120%;
     position: absolute;
     top: -10%;

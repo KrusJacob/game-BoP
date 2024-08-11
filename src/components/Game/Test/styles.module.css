@@ -10,3 +10,9 @@
     font-size: 1.5rem;
     gap: 18px;
 }
+
+.enemies {
+    display: grid;
+    grid-template-columns: 2;
+    gap: 4px;
+}

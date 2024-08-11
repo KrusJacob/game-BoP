@@ -59,7 +59,19 @@ const TestField = () => {
       </div>
       <div>
         <p>Бой против:</p>
-        <div>
+        <div className={styles.enemies}>
+          <Button size="small" onClick={() => onSetEnemy("beast")}>
+            Зверь 1
+          </Button>
+          <Button size="small" onClick={() => onSetEnemy("beast_2")}>
+            Зверь 2
+          </Button>
+          <Button size="small" onClick={() => onSetEnemy("beast_3")}>
+            Зверь 3
+          </Button>
+          <Button size="small" onClick={() => onSetEnemy("beast_4")}>
+            Зверь 4
+          </Button>
           <Button size="small" onClick={() => onSetEnemy("rogue")}>
             Разбойник 1
           </Button>
@@ -71,6 +83,12 @@ const TestField = () => {
           </Button>
           <Button size="small" onClick={() => onSetEnemy("rogue_4")}>
             Разбойник 4
+          </Button>
+          <Button size="small" onClick={() => onSetEnemy("golden-pig")}>
+            Золотая свинка
+          </Button>
+          <Button size="small" onClick={() => onSetEnemy("gnome-trader")}>
+            Торговец
           </Button>
         </div>
       </div>

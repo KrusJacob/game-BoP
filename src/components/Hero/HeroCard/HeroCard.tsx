@@ -65,7 +65,11 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         <HeroStat Icon={GiSpinningSword} value={hero.getters.getAttackSpeed()}>
           Скорость атаки
         </HeroStat>
-        <HeroStat Icon={GiWizardStaff} value={hero.getters.getPowerSkill()}>
+        <HeroStat
+          title={"Влияет на урон способностей и исцеление"}
+          Icon={GiWizardStaff}
+          value={hero.getters.getPowerSkill()}
+        >
           Сила умений
         </HeroStat>
         <SkillList skills={hero.skills} />
@@ -76,15 +80,24 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
 };
 
 const SkillList = ({ skills }: { skills: heroSkills[] | enemySkills[] }) => {
-  const [title, setTitle] = useState("");
+  const [label, setLabel] = useState("");
+  const [descr, setDescr] = useState("");
 
   return (
     <div className={styles.skillList}>
-      {title && <div className={styles.skillTitle}>{title}</div>}
+      {descr && (
+        <div className={styles.skillTitle}>
+          <p>{label}</p>
+          <span>{descr}</span>
+        </div>
+      )}
       {skills.map((item, i) => (
         <div
-          onMouseEnter={() => setTitle(item.label())}
-          onMouseLeave={() => setTitle("")}
+          onMouseEnter={() => {
+            setLabel(item.label);
+            setDescr(item.descr());
+          }}
+          onMouseLeave={() => setDescr("")}
           className={styles.skillItem}
           key={i}
         >

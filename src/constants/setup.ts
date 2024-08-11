@@ -2,7 +2,7 @@ import { LOCATION } from "@/types/location.types";
 
 // REST HP
 export const HP_REST = 100;
-export const HP_REST_PERCENT = 10;
+export const HP_REST_PERCENT = 15;
 
 // LEVEL
 

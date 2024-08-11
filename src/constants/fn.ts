@@ -34,7 +34,7 @@ function incLevel(this: IHero) {
 }
 
 export function setMaxLevelExp(exp: number) {
-  return Math.round(exp * 1.2);
+  return Math.round(exp * 1.1 + 20);
 }
 
 export function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
@@ -44,7 +44,7 @@ export function incHeroDamage(this: IHero["buffs"], value: number, duration?: nu
     this._damage += value;
     setTimeout(() => {
       this._damage -= value;
-    }, duration);
+    }, duration * 1000);
   }
 }
 export function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
@@ -54,7 +54,7 @@ export function incHeroDef(this: IHero["buffs"], value: number, duration?: numbe
     this._def += value;
     setTimeout(() => {
       this._def -= value;
-    }, duration);
+    }, duration * 1000);
   }
 }
 export function getBuffDamage(this: IHero["buffs"]) {
@@ -62,6 +62,22 @@ export function getBuffDamage(this: IHero["buffs"]) {
 }
 export function getBuffDef(this: IHero["buffs"]) {
   return (100 - this._def) / 100;
+}
+
+export function goDotDmg(target: IHero | IEnemy, value: number, duration: number) {
+  setTimeout(() => {
+    setTimeout(() => {
+      clearInterval(dotDmg);
+    }, duration * 1000);
+    const dotDmg = setInterval(() => {
+      if (target.status.death) {
+        clearInterval(dotDmg);
+      } else {
+        goDamage(target, value);
+        console.log("dot damage", value);
+      }
+    }, 1000);
+  }, 300);
 }
 
 export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?: attackOptions): attackInfo {
@@ -82,7 +98,7 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     return attackInfo;
   }
 
-  if (checkForEvade(this.skills[3].value.chanceEvade) && !options?.isIgnoreAvade) {
+  if (checkForEvade(this.skills[3].data.chanceEvade) && !options?.isIgnoreAvade) {
     attackInfo.isEvade = true;
     console.log(`${this.type} промахнулся`);
     return attackInfo;
@@ -90,22 +106,32 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
 
   attackInfo.damage = getDamageWithBuffs(this);
   attackInfo.damage = calcDamageWithOptions(attackInfo.damage, options);
-  if (checkForCrit(this.skills[3].value.chanceCritDamage)) {
+  if (checkForCrit(this.skills[3].data.chanceCritDamage)) {
     attackInfo.isCritical = true;
     attackInfo.damage = goCriticalDamage(attackInfo.damage);
   }
   attackInfo.damage = calcDamageWithDef(attackInfo.damage, target.getters.getDef(), this, options);
   attackInfo.damage = attackInfo.damage * target.buffs.getBuffDef();
 
-  if (target.barrier) {
-    damageToBarrier(target, attackInfo.damage);
-  } else {
-    damageToHP(target, attackInfo.damage);
-  }
-  target.update();
+  // if (target.barrier) {
+  //   damageToBarrier(target, attackInfo.damage);
+  // } else {
+  //   damageToHP(target, attackInfo.damage);
+  // }
+  // target.update();
+  goDamage(target, attackInfo.damage);
 
   console.log(`Удар по ${target.type} на ${attackInfo.damage} урона, осталось ${target.HP} HP`);
   return attackInfo;
+}
+
+function goDamage(target: IHero | IEnemy, value: number) {
+  if (target.barrier) {
+    damageToBarrier(target, value);
+  } else {
+    damageToHP(target, value);
+  }
+  target.update();
 }
 
 function calcDamageWithOptions(damage: number, options?: attackOptions) {
@@ -163,7 +189,9 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
     } else {
       skillTrigger.beforeHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
 
-      !hero.status.death && hero.attack(enemy);
+      if (!hero.status.death) {
+        const attackInfo = hero.attack(enemy);
+      }
 
       skillTrigger.afterHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
     }
@@ -174,7 +202,10 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
       clearInterval(tickEnemy);
       console.log(enemy.type, "win!");
     } else {
-      !enemy.status.death && enemy.attack(hero);
+      if (!enemy.status.death) {
+        const attackInfo = enemy.attack(hero);
+        attackInfo.isEvade && skillTrigger.afterHeroAwade.map((fn) => fn.call(hero.skills, hero, enemy));
+      }
 
       skillTrigger.afterEnemyAttack.map((fn) => fn.call(hero.skills, hero, enemy));
     }
@@ -190,25 +221,37 @@ export function getReward(hero: IHero, enemy: IEnemy | IHero) {
   }
 }
 
-function getMinMaxEnemies(location: locationItem["name"]) {
+function getComlexityEnemies(location: locationItem["name"]) {
   return Math.floor(COMLEXITY_LOCATIONS[location].comlexity);
 }
 
 export function searchEnemy(location: locationItem["name"]) {
+  // const res: enemyType[] = [];
+  // const arrEnemies = getEnemiesLocations(location);
+  // const comlexity = getMinMaxEnemies(location);
+  // const chanceToLegend = getRandom(0, 100);
+  // let enemiesInComlexity = arrEnemies[comlexity].enemies;
+  // if (chanceToLegend <= CHANCE_TO_LEGEND_ENEMY && arrEnemies[comlexity].legendEnemies.length) {
+  //   pushEnemy(res, arrEnemies[comlexity].legendEnemies);
+  //   pushEnemy(res, enemiesInComlexity);
+  // } else {
+  //   pushEnemy(res, enemiesInComlexity);
+  //   pushEnemy(res, enemiesInComlexity);
+  // }
+  // incСomplexityLocation(location);
+  // return res;
   const res: enemyType[] = [];
   const arrEnemies = getEnemiesLocations(location);
-  const comlexity = getMinMaxEnemies(location);
+  const comlexity = getComlexityEnemies(location);
   const chanceToLegend = getRandom(0, 100);
-  let enemiesInComlexity = arrEnemies[comlexity].enemies;
-
-  if (chanceToLegend <= CHANCE_TO_LEGEND_ENEMY && arrEnemies[comlexity].legendEnemies.length) {
-    pushEnemy(res, arrEnemies[comlexity].legendEnemies);
+  let enemiesInComlexity = arrEnemies.enemies[comlexity];
+  if (chanceToLegend <= CHANCE_TO_LEGEND_ENEMY && arrEnemies.legendEnemies.length) {
+    pushEnemy(res, arrEnemies.legendEnemies);
     pushEnemy(res, enemiesInComlexity);
   } else {
     pushEnemy(res, enemiesInComlexity);
     pushEnemy(res, enemiesInComlexity);
   }
-
   incСomplexityLocation(location);
   return res;
 }
@@ -227,7 +270,13 @@ function pushEnemy(res: enemyType[], enemiesArr: enemyInfo[]) {
 }
 
 export function getBarrier(this: IHero | IEnemy, value: number) {
-  this.barrier += Math.min(value, this.getters.getMaxHp() - this.barrier);
+  console.log("getBarrier");
+  const barrierValue = Math.min(value, this.getters.getMaxHp() - this.barrier);
+  this.barrier += barrierValue;
+
+  if (this.barrier < 0) {
+    this.barrier = 0;
+  }
 }
 
 function restHero(hero: IHero) {
@@ -237,7 +286,9 @@ function restHero(hero: IHero) {
 }
 
 export function getHeal(this: IHero | IEnemy, value: number) {
-  this.HP += Math.min(this.getters.getMaxHp() - this.HP, value);
+  if (!this.status.death) {
+    this.HP += Math.min(this.getters.getMaxHp() - this.HP, value);
+  }
 }
 
 // skills

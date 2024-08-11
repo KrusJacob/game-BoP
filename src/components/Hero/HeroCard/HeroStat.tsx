@@ -1,17 +1,17 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IconType } from "react-icons";
 import styles from "./hero.module.css";
-import Tooltip from "@/components/UI/Tooltip/Tooltip";
 
 interface Props {
   Icon: IconType;
   children: ReactNode;
   value: number;
+  title?: string;
 }
 
-const HeroStat = ({ Icon, children, value }: Props) => {
+const HeroStat = ({ Icon, children, value, title }: Props) => {
   return (
-    <div className={styles.stats}>
+    <div title={title} className={styles.stats}>
       <Icon />
       <span>{children}:</span>
       {value}

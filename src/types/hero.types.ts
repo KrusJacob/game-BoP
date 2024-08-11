@@ -96,9 +96,10 @@ export interface heroSetters {
 }
 
 export interface heroSkills {
-  label: () => string;
+  label: string;
+  descr: () => string;
   img: string;
-  value: Record<string, any>;
+  data: Record<string, any>;
   trigger?: keyof TypeSkillTrigger;
   fn?: Function;
 }
