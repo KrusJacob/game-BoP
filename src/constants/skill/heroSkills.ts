@@ -2,7 +2,6 @@ import { IHero, heroSkills } from "@/types/hero.types";
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "../setup";
 import { IEnemy } from "@/types/enemy.types";
 import { getRandom } from "@/utils/getRandom";
-import { getPercent } from "@/utils/getPercent";
 import { applyPowerSkill, healHeroOfSkill } from "./utils";
 import { goDotDmg } from "../fn";
 
@@ -53,7 +52,7 @@ const SKILLS_BOXER: heroSkills[] = [
       isCooldown: false,
     },
     trigger: "afterHeroAwade",
-    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+    fn: function (this: heroSkills[], hero: IHero) {
       const data = this[1].data;
       if (!data.isCooldown) {
         data.isCooldown = true;
@@ -123,7 +122,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       barrierValue: 120,
     },
     trigger: "inBeginFight",
-    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+    fn: function (this: heroSkills[], hero: IHero) {
       console.log("barrier");
       let totalBarrier =
         hero.getters.getIntellect() * this[1].data.modifierOfIntellect + this[1].data.barrierValue;
@@ -146,7 +145,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       duration: 6,
     },
     trigger: "afterHeroAttack",
-    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+    fn: function (this: heroSkills[], target: IHero | IEnemy) {
       const data = this[2].data;
       const chance = getRandom(1, 100);
 
@@ -198,7 +197,7 @@ const SKILLS_COOK: heroSkills[] = [
       isCooldown: false,
     },
     trigger: "afterEnemyAttack",
-    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+    fn: function (this: heroSkills[], hero: IHero) {
       const chance = getRandom(1, 100);
       const data = this[1].data;
       if (chance <= data.chance && !data.isCooldown) {
@@ -277,7 +276,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
       currentCount: 1,
     },
     trigger: "beforeHeroAttack",
-    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+    fn: function (this: heroSkills[], hero: IHero) {
       if (this[1].data.currentCount >= this[1].data.count) {
         hero.buffs.nextAttack.ignoreDef += 50;
         this[1].data.currentCount = 1;
@@ -299,7 +298,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
       duration: 5,
     },
     trigger: "inBeginFight",
-    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+    fn: function (this: heroSkills[], hero: IHero) {
       const data = this[2].data;
       console.log("heal");
       healHeroOfSkill(hero, data.healValue, data.healPercent);

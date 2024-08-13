@@ -7,7 +7,6 @@ import {
   heroBuffs,
   heroGetters,
   heroIncStats,
-  heroResources,
   heroSetters,
   heroSkills,
   heroStatus,

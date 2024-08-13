@@ -28,6 +28,7 @@ import {
   getIncStatsToHero,
 } from "./initStats";
 import { updateMainStats } from "./attributes";
+import { ALL_BAG_ITEMS } from "./bag";
 
 export class EnemyClass implements IEnemy {
   constructor(type: enemyType, level = 1) {
@@ -119,9 +120,10 @@ export class HeroClass implements IHero {
   getHeal = getHeal;
   skills: heroSkills[];
   resources = {
-    gold: 0,
+    gold: 100,
     skillPoints: 0,
     parameterPoints: 0,
+    bag: ALL_BAG_ITEMS,
   };
   status = {
     death: false,

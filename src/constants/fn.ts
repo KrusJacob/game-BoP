@@ -1,5 +1,5 @@
 import { IEnemy, enemyInfo, enemyType } from "@/types/enemy.types";
-import { IHero, TypeSkillTrigger, attackInfo, attackOptions, heroLevel, heroSkills } from "../types/hero.types";
+import { IHero, TypeSkillTrigger, attackInfo, attackOptions, heroSkills } from "../types/hero.types";
 import { getRandom } from "@/utils/getRandom";
 import { EnemyClass } from "./class";
 import {
@@ -183,14 +183,18 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
     if (enemy.status.death) {
       clearInterval(tickHero);
       clearInterval(tickEnemy);
-      console.log(hero.type, "win!");
-      getReward(hero, enemy);
-      hero.update();
+      // console.log(hero.type, "win!");
+      // getReward(hero, enemy);
+      // hero.update();
     } else {
       skillTrigger.beforeHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
 
       if (!hero.status.death) {
-        const attackInfo = hero.attack(enemy);
+        hero.attack(enemy);
+        if (enemy.status.death) {
+          console.log(hero.type, "win!");
+          getReward(hero, enemy);
+        }
       }
 
       skillTrigger.afterHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
@@ -288,6 +292,7 @@ function restHero(hero: IHero) {
 export function getHeal(this: IHero | IEnemy, value: number) {
   if (!this.status.death) {
     this.HP += Math.min(this.getters.getMaxHp() - this.HP, value);
+    this.update();
   }
 }
 

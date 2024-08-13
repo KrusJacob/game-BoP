@@ -1,5 +1,6 @@
 import { ALL_HEROES } from "../constants/hero";
 import { IEnemy } from "./enemy.types";
+import { bagItemType } from "./shop.types";
 
 export interface IHero {
   type: heroType;
@@ -66,6 +67,7 @@ export interface heroResources {
   gold: number;
   skillPoints: number;
   parameterPoints: number;
+  bag: Array<bagItemType>;
 }
 
 export interface heroGetters {

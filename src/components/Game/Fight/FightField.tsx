@@ -4,7 +4,7 @@ import { fight, searchEnemy } from "@/constants/fn";
 
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { EnemyClass } from "@/constants/class";
 import { TabsWithFight } from "../GameField/GameField";
@@ -16,6 +16,7 @@ import { GiFlowerEmblem } from "react-icons/gi";
 import HeroPanel from "@/components/Hero/HeroPanel/HeroPanel";
 import LocationList from "../Location/LocationList";
 import { locationItem } from "@/types/location.types";
+import { motion } from "framer-motion";
 
 const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const [isFight, setFight] = useState(false);
@@ -49,7 +50,7 @@ const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) =>
       {isLocationSelected && !isFight && (
         <FoundEnemies disabled={!hero || !enemy} enemies={enemies} onGoFight={onGoFight} />
       )}
-      {isFight && hero && <HeroPanel heroSkills={hero?.skills} onClickSkill={onClickSkill} />}
+      {isFight && hero && <HeroPanel hero={hero} onClickSkill={onClickSkill} />}
       {enemy?.status.death && (
         <EnemyDown onSetTab={onSetTab} setEnemy={setEnemy} enemy={enemy instanceof EnemyClass ? enemy : null} />
       )}
@@ -66,7 +67,11 @@ interface Props {
 const EnemyDown = ({ onSetTab, setEnemy, enemy }: Props) => {
   return (
     <OverLay>
-      <div className={styles.enemyDownWrapper}>
+      <motion.div
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className={styles.enemyDownWrapper}
+      >
         <h3>Вы победили!</h3>
         {enemy && (
           <div className={styles.resources}>
@@ -87,7 +92,7 @@ const EnemyDown = ({ onSetTab, setEnemy, enemy }: Props) => {
         >
           OK
         </Button>
-      </div>
+      </motion.div>
     </OverLay>
   );
 };

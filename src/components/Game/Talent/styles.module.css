@@ -1,11 +1,21 @@
 .talentField {
+    position: relative;
     background-color: rgb(12, 31, 31);
     width: 100%;
+    height: 100%;
+    border-radius: var(--borderRadius);
+}
+.talentField img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+}
+.talentWrapper {
     height: 100%;
     display: flex;
     flex-direction: column;
     padding: 10px;
-    border-radius: var(--borderRadius);
 }
 .info {
     padding: 4px;
@@ -39,7 +49,7 @@
 }
 
 .talentItem img {
-    opacity: 0.1;
+    opacity: 0.25;
     width: 100%;
     height: 100%;
 }

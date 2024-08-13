@@ -22,6 +22,10 @@ interface Props {
   chooseHero?: (hero: IHero) => void;
 }
 
+function getImgUrl(name: string) {
+  return new URL(`${name}`, import.meta.url).href;
+}
+
 //https://www.pngitem.com/pimgs/m/240-2409533_hero-silhouette-free-png-transparent-png.png
 
 const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {

@@ -1,4 +1,3 @@
-import React, { ReactNode } from "react";
 import styles from "./styles.module.css";
 import Button from "@/components/UI/Button/Button";
 import { locationItem } from "@/types/location.types";

@@ -3,15 +3,15 @@ import { heroBaseStats } from "../types/hero.types";
 const ALL_HEROES = ["boxer", "programmer", "cook", "hairdresser"] as const;
 
 const STATS_BOXER: heroBaseStats = {
-  img: "/src/assets/hero/boxer.png",
+  img: "/src/assets/boxer.png",
   name: "Боксер",
-  power: 60,
+  power: 55,
   agility: 40,
   intellect: 15,
   attack: 130,
-  def: 13,
+  def: 12,
   maxHp: 1000,
-  attackSpeed: 0.5,
+  attackSpeed: 0.45,
   powerSkill: 0,
 };
 const STATS_PROGRAMMER: heroBaseStats = {
@@ -47,7 +47,7 @@ const STATS_HAIRDRESSER: heroBaseStats = {
   attack: 105,
   def: 9,
   maxHp: 1050,
-  attackSpeed: 0.6,
+  attackSpeed: 0.5,
   powerSkill: 0,
 };
 

@@ -1,14 +1,12 @@
 import Button from "@/components/UI/Button/Button";
 import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
-
 import img from "@assets/bg_home.jpg";
 import { BiSolidCoinStack } from "react-icons/bi";
 import { GiFlowerEmblem } from "react-icons/gi";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
-
 import { TabsWithFight } from "../GameField/GameField";
-import { TbSquareRoundedPlus, TbSquareRoundedPlusFilled } from "react-icons/tb";
+import { TbSquareRoundedPlusFilled } from "react-icons/tb";
 
 const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const heroResources = useGameStore((state) => state.hero?.resources);

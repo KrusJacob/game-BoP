@@ -29,6 +29,10 @@ const FoundEnemies = ({ enemies, disabled, onGoFight }: Props) => {
               className={cn(styles.enemy, {
                 [styles.active]: enemyItem.type === enemy?.type,
                 [styles.hide]: enemyItem.type !== enemy?.type && enemy,
+                [styles.enemy_2]: enemyItem.type.slice(-1) === "2",
+                [styles.enemy_3]: enemyItem.type.slice(-1) === "3",
+                [styles.enemy_4]: enemyItem.type.slice(-1) === "4",
+                [styles.enemy_5]: enemyItem.type.slice(-1) === "5",
               })}
               key={i}
               onClick={() => onSetEnemy(enemyItem)}

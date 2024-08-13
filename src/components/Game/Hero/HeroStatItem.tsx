@@ -1,6 +1,6 @@
 import cn from "classnames";
 import styles from "./styles.module.css";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { typeStatItem } from "./HeroStatList";
 
 interface Props {

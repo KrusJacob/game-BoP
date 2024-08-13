@@ -22,7 +22,7 @@
 
 .enemies {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     justify-content: center;
 }
 
@@ -31,8 +31,21 @@
     width: 200px;
     cursor: pointer;
 }
+.enemy_2 {
+    border-color: green;
+}
+.enemy_3 {
+    border-color: blue;
+}
+.enemy_4 {
+    border-color: blueviolet;
+}
+.enemy_5 {
+    border-color: gold;
+}
+
 .enemy.active {
-    border: 4px solid #e02f2f;
+    box-shadow: 0 0 12px 3px #5fcdd9;
 }
 .enemy.hide {
     opacity: 0.5;

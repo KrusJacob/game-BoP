@@ -30,23 +30,14 @@
 .heroSkills img {
     width: 100%;
 }
-.heroSkills span {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    font-size: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .heroBag {
     display: flex;
     gap: 8px;
+    font-size: 1rem;
 }
-.heroBag div {
-    border-radius: var(--borderRadius);
-    width: 70px;
-    height: 70px;
-    background-color: rgba(241, 241, 241, 0.5);
-    cursor: pointer;
+
+.heroBag img {
+    height: 100%;
+    width: 100%;
 }
