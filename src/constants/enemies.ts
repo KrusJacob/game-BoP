@@ -3,6 +3,7 @@ import { enemiesToLocation } from "@/types/enemy.types";
 export const ALL_ENEMIES = [
   "golden-pig",
   "gnome-trader",
+  "seaMonster",
   "beast",
   "beast_2",
   "beast_3",
@@ -23,6 +24,11 @@ export const ALL_ENEMIES = [
   "goblin_3",
   "goblin_4",
   "goblin_5",
+  "naga",
+  "naga_2",
+  "naga_3",
+  "naga_4",
+  "naga_5",
 ] as const;
 
 // export const ENEMIES_TO_DARK_FOREST = ["beast", "rogue", "beast_2", "rogue_2", "beast_3", "rogue_3"];
@@ -64,6 +70,16 @@ export const ENEMIES_TO_HIDDEN_CAVE: enemiesToLocation = {
     [{ name: "gnome_3" }, { name: "gnome_4" }],
   ],
   legendEnemies: [{ name: "gnome-trader", unique: true }],
+};
+export const ENEMIES_TO_AZURE_COAST: enemiesToLocation = {
+  enemies: [
+    [{ name: "naga" }, { name: "naga_2" }],
+    [{ name: "naga" }, { name: "naga_2" }, { name: "naga_3" }],
+    [{ name: "naga_2" }, { name: "naga_3" }],
+    [{ name: "naga_2" }, { name: "naga_3" }, { name: "naga_4" }],
+    [{ name: "naga_3" }, { name: "naga_4" }],
+  ],
+  legendEnemies: [{ name: "seaMonster", unique: true }],
 };
 // Hidden Cave
 // azure coast

@@ -108,13 +108,42 @@ const RESOURCES_GNOME_5: enemyResources = {
   gold: 1000,
   skillPoints: 3,
 };
+const RESOURCES_NAGA: enemyResources = {
+  exp: 520,
+  gold: 375,
+  skillPoints: 1,
+};
+
+const RESOURCES_NAGA_2: enemyResources = {
+  exp: 560,
+  gold: 390,
+  skillPoints: 1,
+};
+
+const RESOURCES_NAGA_3: enemyResources = {
+  exp: 600,
+  gold: 415,
+  skillPoints: 1,
+};
+
+const RESOURCES_NAGA_4: enemyResources = {
+  exp: 640,
+  gold: 430,
+  skillPoints: 1,
+};
+
+const RESOURCES_NAGA_5: enemyResources = {
+  exp: 1250,
+  gold: 1250,
+  skillPoints: 3,
+};
 
 // legends
 
 const RESOURCES_GNOME_TRADER: enemyResources = {
   exp: 50,
   gold: 1500,
-  skillPoints: 2,
+  skillPoints: 1,
 };
 
 const RESOURCES_GODLEN_PIG: enemyResources = {
@@ -122,10 +151,16 @@ const RESOURCES_GODLEN_PIG: enemyResources = {
   gold: 1000,
   skillPoints: 0,
 };
+const RESOURCES_SEA_MONSTER: enemyResources = {
+  exp: 2000,
+  gold: 300,
+  skillPoints: 2,
+};
 
 export const enemiesResources = {
   goldenPig: RESOURCES_GODLEN_PIG,
   gnomeTrader: RESOURCES_GNOME_TRADER,
+  seaMonster: RESOURCES_SEA_MONSTER,
   beast: RESOURCES_BEAST,
   beast_2: RESOURCES_BEAST_2,
   beast_3: RESOURCES_BEAST_3,
@@ -146,4 +181,9 @@ export const enemiesResources = {
   gnome_3: RESOURCES_GNOME_3,
   gnome_4: RESOURCES_GNOME_4,
   gnome_5: RESOURCES_GNOME_5,
+  naga: RESOURCES_NAGA,
+  naga_2: RESOURCES_NAGA_2,
+  naga_3: RESOURCES_NAGA_3,
+  naga_4: RESOURCES_NAGA_4,
+  naga_5: RESOURCES_NAGA_5,
 };

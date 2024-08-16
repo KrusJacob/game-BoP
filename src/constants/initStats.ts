@@ -9,9 +9,11 @@ import {
   SKILLS_GOBLIN,
   SKILLS_GOLDEN_PIG,
   SKILLS_GNOME_TRADER,
+  SKILLS_NAGA,
+  SKILLS_SEA_MONSTER,
 } from "./skill/enemySkills";
 import { SKILLS_BOXER, SKILLS_PROGRAMMER, SKILLS_COOK, SKILLS_HAIRDRESSER } from "./skill/heroSkills";
-import { statsBeast, statsGnome, statsGoblin, statsLegend, statsRogue } from "./enemy";
+import { statsBeast, statsGnome, statsGoblin, statsLegend, statsNaga, statsRogue } from "./enemy";
 import { enemiesResources } from "./resources";
 import {
   getBuffAttackSpeed,
@@ -68,6 +70,18 @@ export function getStatsToEnemy(type: enemyName): enemyBaseStats {
       return statsGnome.gnome_4;
     case "gnome_5":
       return statsGnome.gnome_5;
+    case "naga":
+      return statsNaga.naga;
+    case "naga_2":
+      return statsNaga.naga_2;
+    case "naga_3":
+      return statsNaga.naga_3;
+    case "naga_4":
+      return statsNaga.naga_4;
+    case "naga_5":
+      return statsNaga.naga_5;
+    case "seaMonster":
+      return statsLegend.seaMonster;
     default:
       return statsRogue.rogue;
   }
@@ -94,6 +108,8 @@ export function getSkillsToEnemy(type: enemyName) {
       return SKILLS_GOLDEN_PIG;
     case "gnome-trader":
       return SKILLS_GNOME_TRADER;
+    case "seaMonster":
+      return SKILLS_SEA_MONSTER;
     case "beast":
     case "beast_2":
     case "beast_3":
@@ -118,6 +134,12 @@ export function getSkillsToEnemy(type: enemyName) {
     case "goblin_4":
     case "goblin_5":
       return SKILLS_GOBLIN;
+    case "naga":
+    case "naga_2":
+    case "naga_3":
+    case "naga_4":
+    case "naga_5":
+      return SKILLS_NAGA;
     default:
       return SKILLS_ROGUE;
   }

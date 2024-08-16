@@ -17,21 +17,9 @@ import {
   heroIncStats,
   heroGetters,
   heroSetters,
-  heroDebuffStack,
   heroType,
 } from "@/types/hero.types";
-import {
-  incHeroDamage,
-  incHeroDef,
-  getBuffDamage,
-  getBuffDef,
-  goAttack,
-  getBarrier,
-  getHeal,
-  incExp,
-  incHeroAttackSpeed,
-  getBuffAttackSpeed,
-} from "./fn";
+import { goAttack, getBarrier, getHeal, incExp } from "./fn";
 import {
   getStatsToEnemy,
   getSkillsToEnemy,
@@ -108,7 +96,7 @@ export class HeroClass implements IHero {
   }
   type: heroType;
   level = {
-    value: 1,
+    value: 0,
     exp: 0,
     incExp: incExp,
     expToNextLevel: 100,

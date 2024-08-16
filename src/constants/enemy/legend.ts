@@ -23,3 +23,15 @@ export const STATS_GNOME_TRADER: enemyBaseStats = {
   attackSpeed: 0.5,
   powerSkill: 0,
 };
+export const STATS_SEA_MONSTER: enemyBaseStats = {
+  img: "/src/assets/enemy/gnome-trader.png",
+  name: "Морское чудовище",
+  power: 200,
+  agility: 20,
+  intellect: 50,
+  attack: 300,
+  def: 50,
+  maxHp: 4800,
+  attackSpeed: 0.5,
+  powerSkill: 0,
+};

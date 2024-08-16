@@ -152,6 +152,80 @@ export const SKILLS_GOBLIN: enemySkills[] = [
     },
   },
 ];
+export const SKILLS_NAGA: enemySkills[] = [
+  {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/src/assets/skill/lock.png",
+    data: {},
+  },
+  {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/src/assets/skill/lock.png",
+    data: {},
+  },
+  {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/src/assets/skill/lock.png",
+    data: {},
+  },
+  {
+    label: "",
+    descr: function () {
+      return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
+    },
+    img: "/src/assets/skill/chances.png",
+    data: {
+      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
+      chanceEvade: CHANCE_EVADE,
+    },
+  },
+];
+export const SKILLS_SEA_MONSTER: enemySkills[] = [
+  {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/src/assets/skill/lock.png",
+    data: {},
+  },
+  {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/src/assets/skill/lock.png",
+    data: {},
+  },
+  {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/src/assets/skill/lock.png",
+    data: {},
+  },
+  {
+    label: "",
+    descr: function () {
+      return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
+    },
+    img: "/src/assets/skill/chances.png",
+    data: {
+      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
+      chanceEvade: CHANCE_EVADE,
+    },
+  },
+];
 export const SKILLS_GOLDEN_PIG: enemySkills[] = [
   {
     label: "Полностью из золота?",

@@ -1,5 +1,6 @@
 import { locationItem } from "@/types/location.types";
 import {
+  ENEMIES_TO_AZURE_COAST,
   // ENEMIES_TO_AZURE_COAST,
   ENEMIES_TO_DARK_FOREST,
   ENEMIES_TO_HIDDEN_CAVE,
@@ -41,10 +42,10 @@ export function getEnemiesLocations(location: locationItem["name"]): enemiesToLo
       return ENEMIES_TO_DARK_FOREST;
     case "hiddenCave":
       return ENEMIES_TO_HIDDEN_CAVE;
+    case "azureCoast":
+      return ENEMIES_TO_AZURE_COAST;
     default:
       return ENEMIES_TO_DARK_FOREST;
-    // case "azureCoast":
-    //   return ENEMIES_TO_AZURE_COAST;
     // case "snowMountains":
     //   return ENEMIES_TO_SNOW_MOUNTAINS;
   }
