@@ -6,6 +6,7 @@
 }
 .top {
     bottom: 110%;
+    /* transform: translate(-25%); */
 }
 .bot {
     top: 110%;

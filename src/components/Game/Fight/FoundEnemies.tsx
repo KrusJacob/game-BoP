@@ -27,17 +27,17 @@ const FoundEnemies = ({ enemies, disabled, onGoFight }: Props) => {
           {enemies.map((enemyItem, i) => (
             <img
               className={cn(styles.enemy, {
-                [styles.active]: enemyItem.type === enemy?.type,
-                [styles.hide]: enemyItem.type !== enemy?.type && enemy,
-                [styles.enemy_2]: enemyItem.type.slice(-1) === "2",
-                [styles.enemy_3]: enemyItem.type.slice(-1) === "3",
-                [styles.enemy_4]: enemyItem.type.slice(-1) === "4",
-                [styles.enemy_5]: enemyItem.type.slice(-1) === "5",
+                [styles.active]: enemyItem.name === enemy?.name,
+                [styles.hide]: enemyItem.name !== enemy?.name && enemy,
+                [styles.enemy_2]: enemyItem.name.slice(-1) === "2",
+                [styles.enemy_3]: enemyItem.name.slice(-1) === "3",
+                [styles.enemy_4]: enemyItem.name.slice(-1) === "4",
+                [styles.enemy_5]: enemyItem.name.slice(-1) === "5",
               })}
               key={i}
               onClick={() => onSetEnemy(enemyItem)}
               src={enemyItem.baseStats.img}
-              alt={enemyItem.type}
+              alt={enemyItem.name}
             />
           ))}
         </div>

@@ -16,6 +16,19 @@
     object-fit: cover;
     border-radius: var(--borderRadius);
 }
+
+.statusBar {
+    border-radius: var(--borderRadius);
+    display: flex;
+    padding: 3px 3px 0 3px;
+    gap: 8px;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    font-size: 1.3rem;
+    background-color: #1f1d1d75;
+}
+
 .name {
     position: absolute;
     background-color: #027373d5;

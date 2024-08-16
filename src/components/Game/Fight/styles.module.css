@@ -9,7 +9,7 @@
     flex-direction: column;
     font-size: 1.5rem;
     gap: 18px;
-    overflow-x: auto;
+    /* overflow-x: auto; */
 }
 
 .foundEnemies {

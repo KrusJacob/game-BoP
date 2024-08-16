@@ -4,7 +4,7 @@ import { fight, searchEnemy } from "@/constants/fn";
 
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { EnemyClass } from "@/constants/class";
 import { TabsWithFight } from "../GameField/GameField";
@@ -42,15 +42,19 @@ const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) =>
     // skillTrigger.active[0].call(hero?.skills, hero, enemy);
   };
 
+  if (!hero) {
+    return null;
+  }
+
   return (
     <div className={styles.fightField}>
       {!isLocationSelected && (
-        <LocationList onSelectLocation={onSelectLocation} heroLevel={hero?.level.value || 0} />
+        <LocationList onSelectLocation={onSelectLocation} heroLevel={hero.level.value || 0} />
       )}
       {isLocationSelected && !isFight && (
         <FoundEnemies disabled={!hero || !enemy} enemies={enemies} onGoFight={onGoFight} />
       )}
-      {isFight && hero && <HeroPanel hero={hero} onClickSkill={onClickSkill} />}
+      {isFight && enemy && <HeroPanel hero={hero} enemy={enemy} onClickSkill={onClickSkill} />}
       {enemy?.status.death && (
         <EnemyDown onSetTab={onSetTab} setEnemy={setEnemy} enemy={enemy instanceof EnemyClass ? enemy : null} />
       )}
@@ -65,6 +69,16 @@ interface Props {
 }
 
 const EnemyDown = ({ onSetTab, setEnemy, enemy }: Props) => {
+  const [isBtnEnable, setBtnEnable] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setBtnEnable(true);
+
+      return () => clearTimeout(timeout);
+    }, 500);
+  }, []);
+
   return (
     <OverLay>
       <motion.div
@@ -85,6 +99,7 @@ const EnemyDown = ({ onSetTab, setEnemy, enemy }: Props) => {
           </div>
         )}
         <Button
+          disabled={!isBtnEnable}
           onClick={() => {
             onSetTab("Главная");
             setEnemy(null);

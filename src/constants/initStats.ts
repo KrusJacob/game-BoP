@@ -1,5 +1,5 @@
-import { enemyType, enemyBaseStats } from "@/types/enemy.types";
-import { heroType, heroBaseStats, heroIncStats } from "@/types/hero.types";
+import { enemyName, enemyBaseStats } from "@/types/enemy.types";
+import { heroName, heroBaseStats, heroIncStats, heroBuffs } from "@/types/hero.types";
 
 import { STATS_BOXER, STATS_PROGRAMMER, STATS_COOK, STATS_HAIRDRESSER } from "./hero";
 import {
@@ -13,8 +13,16 @@ import {
 import { SKILLS_BOXER, SKILLS_PROGRAMMER, SKILLS_COOK, SKILLS_HAIRDRESSER } from "./skill/heroSkills";
 import { statsBeast, statsGnome, statsGoblin, statsLegend, statsRogue } from "./enemy";
 import { enemiesResources } from "./resources";
+import {
+  getBuffAttackSpeed,
+  getBuffDamage,
+  getBuffDef,
+  incHeroAttackSpeed,
+  incHeroDamage,
+  incHeroDef,
+} from "./fn";
 
-export function getStatsToEnemy(type: enemyType): enemyBaseStats {
+export function getStatsToEnemy(type: enemyName): enemyBaseStats {
   switch (type) {
     case "golden-pig":
       return statsLegend.goldenPig;
@@ -65,7 +73,7 @@ export function getStatsToEnemy(type: enemyType): enemyBaseStats {
   }
 }
 
-export function getStatsToHero(type: heroType): heroBaseStats {
+export function getStatsToHero(type: heroName): heroBaseStats {
   switch (type) {
     case "boxer":
       return STATS_BOXER;
@@ -80,7 +88,7 @@ export function getStatsToHero(type: heroType): heroBaseStats {
   }
 }
 
-export function getSkillsToEnemy(type: enemyType) {
+export function getSkillsToEnemy(type: enemyName) {
   switch (type) {
     case "golden-pig":
       return SKILLS_GOLDEN_PIG;
@@ -115,7 +123,7 @@ export function getSkillsToEnemy(type: enemyType) {
   }
 }
 
-export function getResourcesToEnemy(type: enemyType) {
+export function getResourcesToEnemy(type: enemyName) {
   switch (type) {
     case "golden-pig":
       return enemiesResources.goldenPig;
@@ -166,7 +174,7 @@ export function getResourcesToEnemy(type: enemyType) {
   }
 }
 
-export function getSkillsToHero(type: heroType) {
+export function getSkillsToHero(type: heroName) {
   switch (type) {
     case "boxer":
       return SKILLS_BOXER;
@@ -179,6 +187,23 @@ export function getSkillsToHero(type: heroType) {
     default:
       return SKILLS_BOXER;
   }
+}
+
+export function getBuffsToHero(): heroBuffs {
+  return {
+    nextAttack: {
+      ignoreDef: 0,
+    },
+    _attackSpeed: 0,
+    _damage: 0,
+    _def: 0,
+    incDamage: incHeroDamage,
+    incDef: incHeroDef,
+    incAttackSpeed: incHeroAttackSpeed,
+    getBuffDamage: getBuffDamage,
+    getBuffDef: getBuffDef,
+    getBuffAttackSpeed: getBuffAttackSpeed,
+  };
 }
 
 export function getIncStatsToHero(): heroIncStats {

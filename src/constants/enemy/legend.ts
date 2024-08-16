@@ -6,8 +6,8 @@ export const STATS_GODLEN_PIG: enemyBaseStats = {
   agility: 10,
   intellect: 10,
   attack: 50,
-  def: 10,
-  maxHp: 1250,
+  def: 30,
+  maxHp: 1000,
   attackSpeed: 0.5,
   powerSkill: 0,
 };

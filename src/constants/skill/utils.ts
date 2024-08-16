@@ -7,7 +7,9 @@ export function applyPowerSkill(value: number, powerSkill: number) {
 
 export function healHeroOfSkill(hero: IHero, healValue = 0, healPercent = 0) {
   let heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
-  heal = applyPowerSkill(healValue, hero.getters.getPowerSkill());
+
+  heal = applyPowerSkill(heal, hero.getters.getPowerSkill());
+  console.log(heal);
   hero.getHeal(heal);
   // hero.update();
 }

@@ -1,5 +1,6 @@
 .gameArea {
     display: grid;
+    min-height: 600px;
     /* position: relative; */
     /* display: flex; */
     grid-template-columns: 1fr 2.5fr 1fr;

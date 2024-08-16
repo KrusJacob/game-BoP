@@ -1,15 +1,15 @@
 import Button from "@/components/UI/Button/Button";
 import styles from "./styles.module.css";
 import { fight } from "@/constants/fn";
-import { heroType } from "@/types/hero.types";
+import { heroName } from "@/types/hero.types";
 import { useGameStore } from "@/store/gameStore";
-import { enemyType } from "@/types/enemy.types";
+import { enemyName } from "@/types/enemy.types";
 import { EnemyClass, HeroClass } from "@/constants/class";
 
 const TestField = () => {
   const { hero, enemy, setHero, setEnemy } = useGameStore((state) => state);
 
-  const onSetEnemy = (enemy: heroType | enemyType) => {
+  const onSetEnemy = (enemy: heroName | enemyName) => {
     if (enemy !== "boxer" && enemy !== "programmer" && enemy !== "cook" && enemy !== "hairdresser") {
       const newEnemy = new EnemyClass(enemy);
       setEnemy(newEnemy);

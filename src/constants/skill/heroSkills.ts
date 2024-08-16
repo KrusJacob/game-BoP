@@ -81,7 +81,7 @@ const SKILLS_BOXER: heroSkills[] = [
     trigger: "afterHeroAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const chance = getRandom(1, 100);
-      if (chance <= this[2].data.chance) {
+      if (chance <= this[2].data.chance && !target.status.death) {
         setTimeout(() => {
           hero.attack(target, { modifier: this[2].data.modifier });
           target.update();
@@ -238,7 +238,7 @@ const SKILLS_COOK: heroSkills[] = [
 
         let poisinValue = Math.round(hero.getters.getIntellect() * data.modifierOfIntellect + data.initalValue);
         poisinValue = applyPowerSkill(poisinValue, hero.getters.getPowerSkill());
-        goDotDmg(target, poisinValue, data.duration);
+        goDotDmg(hero, target, poisinValue, data.duration);
       }
     },
   },

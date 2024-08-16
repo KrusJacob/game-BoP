@@ -9,6 +9,8 @@ export interface shopItemType {
 }
 
 export interface bagItemType extends shopItemType {
+  bagSlotId: number;
   quantity: number;
   empty: boolean;
+  isActiveBag: boolean;
 }

@@ -2,6 +2,7 @@ import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
 import { useState } from "react";
 import HeroStatList from "./HeroStatList";
+import HeroBagList from "@/components/Hero/HeroBag/HeroBagList";
 
 const HeroField = () => {
   const hero = useGameStore((state) => state.hero);
@@ -19,21 +20,23 @@ const HeroField = () => {
 
   return (
     <div className={styles.heroField}>
-      <p className={styles.title}>{hero?.level.value} Уровень</p>
-      <p className={styles.points}>У вас имеется {totalPoint} очков характеристик</p>
-      {hero && (
-        <HeroStatList
-          totalPoint={totalPoint}
-          setTotalPoint={setTotalPoint}
-          hero={hero}
-          getFinishPoints={getFinishPoints}
-        />
-      )}
-      <div className={styles.info}>
-        <p>Сила - влияет на максимальный запас здоровья</p>
-        <p>Ловкость - влияет на скорость атаки</p>
-        <p>Интеллект - влияет на силу умений</p>
+      <div className={styles.heroWrapper}>
+        <p className={styles.points}>У вас имеется {totalPoint} очков характеристик</p>
+        {hero && (
+          <HeroStatList
+            totalPoint={totalPoint}
+            setTotalPoint={setTotalPoint}
+            hero={hero}
+            getFinishPoints={getFinishPoints}
+          />
+        )}
+        <div className={styles.info}>
+          <p>Сила - влияет на максимальный запас здоровья</p>
+          <p>Ловкость - влияет на скорость атаки</p>
+          <p>Интеллект - влияет на силу умений</p>
+        </div>
       </div>
+      {hero && <HeroBagList resources={hero?.resources} />}
     </div>
   );
 };

@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
 import styles from "./hero.module.css";
+import { useGameStore } from "@/store/gameStore";
 
 interface Props {
   Icon: IconType;
   children: ReactNode;
-  value: number;
+  value?: number;
   title?: string;
 }
 

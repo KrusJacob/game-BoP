@@ -11,16 +11,18 @@ const LocationList = ({
   onSelectLocation: (location: locationItem["name"]) => void;
 }) => {
   return (
-    <div className={styles.locationList}>
-      {LOCATIONS.map((location) => (
-        <LocationItem
-          location={location}
-          onSelectLocation={onSelectLocation}
-          disabled={heroLevel < location.reqLevel}
-          reqLevel={location.reqLevel}
-          key={location.name}
-        />
-      ))}
+    <div className={styles.locationWpapper}>
+      <div className={styles.locationList}>
+        {LOCATIONS.map((location) => (
+          <LocationItem
+            location={location}
+            onSelectLocation={onSelectLocation}
+            disabled={heroLevel < location.reqLevel}
+            reqLevel={location.reqLevel}
+            key={location.name}
+          />
+        ))}
+      </div>
     </div>
   );
 };

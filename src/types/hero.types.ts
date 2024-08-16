@@ -4,12 +4,14 @@ import { bagItemType } from "./shop.types";
 
 export interface IHero {
   type: heroType;
+  name: heroName;
   level: heroLevel;
   baseStats: heroBaseStats;
   incStats: heroIncStats;
   HP: number;
   barrier: number;
   buffs: heroBuffs;
+  debuffStack: heroDebuffStack;
   attack: heroGoAttack;
   skills: heroSkills[];
   resources: heroResources;
@@ -23,7 +25,13 @@ export interface IHero {
 
 export interface heroStatus {
   death: boolean;
-  stun: number;
+  isStun: boolean;
+  isFreeze: boolean;
+  isPoisoned: boolean;
+}
+
+export interface heroDebuffStack {
+  posion: number;
 }
 
 export interface heroLevel {
@@ -33,8 +41,8 @@ export interface heroLevel {
   incExp: (exp: number) => void;
 }
 
-export type heroType = (typeof ALL_HEROES)[number];
-// export type heroType = "warrior" | "mage" | "rogue";
+export type heroName = (typeof ALL_HEROES)[number];
+export type heroType = "hero" | "enemy";
 
 export interface heroBaseStats {
   img: string;
@@ -68,6 +76,7 @@ export interface heroResources {
   skillPoints: number;
   parameterPoints: number;
   bag: Array<bagItemType>;
+  bagActivePanel: Array<bagItemType>;
 }
 
 export interface heroGetters {
@@ -112,9 +121,12 @@ export interface heroBuffs {
   };
   _damage: number;
   _def: number;
+  _attackSpeed: number;
   incDamage: (value: number, duration?: number) => void;
+  incAttackSpeed: (value: number, duration?: number) => void;
   incDef: (value: number, duration?: number) => void;
   getBuffDamage: () => number;
+  getBuffAttackSpeed: () => number;
   getBuffDef: () => number;
 }
 export interface attackInfo {

@@ -16,7 +16,7 @@ const RESOURCES_BEAST_3: enemyResources = {
   skillPoints: 0,
 };
 const RESOURCES_BEAST_4: enemyResources = {
-  exp: 140,
+  exp: 150,
   gold: 120,
   skillPoints: 0,
 };
@@ -27,22 +27,22 @@ const RESOURCES_BEAST_5: enemyResources = {
 };
 
 const RESOURCES_ROGUE: enemyResources = {
-  exp: 165,
+  exp: 170,
   gold: 140,
   skillPoints: 0,
 };
 const RESOURCES_ROGUE_2: enemyResources = {
-  exp: 185,
+  exp: 195,
   gold: 160,
   skillPoints: 0,
 };
 const RESOURCES_ROGUE_3: enemyResources = {
-  exp: 210,
+  exp: 220,
   gold: 180,
   skillPoints: 0,
 };
 const RESOURCES_ROGUE_4: enemyResources = {
-  exp: 235,
+  exp: 245,
   gold: 200,
   skillPoints: 0,
 };
@@ -55,53 +55,57 @@ const RESOURCES_ROGUE_5: enemyResources = {
 //
 
 const RESOURCES_GOBLIN: enemyResources = {
-  exp: 300,
-  gold: 200,
-  skillPoints: 1,
-};
-const RESOURCES_GNOME: enemyResources = {
   exp: 280,
-  gold: 220,
+  gold: 210,
   skillPoints: 1,
 };
 const RESOURCES_GOBLIN_2: enemyResources = {
-  exp: 340,
-  gold: 230,
-  skillPoints: 1,
-};
-const RESOURCES_GNOME_2: enemyResources = {
-  exp: 320,
-  gold: 250,
+  exp: 310,
+  gold: 235,
   skillPoints: 1,
 };
 const RESOURCES_GOBLIN_3: enemyResources = {
-  exp: 380,
-  gold: 250,
-  skillPoints: 1,
-};
-const RESOURCES_GNOME_3: enemyResources = {
-  exp: 270,
-  gold: 270,
+  exp: 345,
+  gold: 255,
   skillPoints: 1,
 };
 const RESOURCES_GOBLIN_4: enemyResources = {
-  exp: 415,
+  exp: 380,
   gold: 270,
   skillPoints: 1,
 };
-const RESOURCES_GNOME_4: enemyResources = {
-  exp: 405,
-  gold: 280,
-  skillPoints: 1,
-};
 const RESOURCES_GOBLIN_5: enemyResources = {
-  exp: 850,
-  gold: 500,
+  exp: 900,
+  gold: 700,
   skillPoints: 3,
 };
+const RESOURCES_GNOME: enemyResources = {
+  exp: 405,
+  gold: 290,
+  skillPoints: 1,
+};
+
+const RESOURCES_GNOME_2: enemyResources = {
+  exp: 430,
+  gold: 315,
+  skillPoints: 1,
+};
+
+const RESOURCES_GNOME_3: enemyResources = {
+  exp: 455,
+  gold: 335,
+  skillPoints: 1,
+};
+
+const RESOURCES_GNOME_4: enemyResources = {
+  exp: 480,
+  gold: 350,
+  skillPoints: 1,
+};
+
 const RESOURCES_GNOME_5: enemyResources = {
-  exp: 850,
-  gold: 500,
+  exp: 1000,
+  gold: 1000,
   skillPoints: 3,
 };
 

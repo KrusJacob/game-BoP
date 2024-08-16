@@ -5,8 +5,10 @@ export const HP_REST = 100;
 export const HP_REST_PERCENT = 15;
 
 // LEVEL
-
 export const PARAMETER_POINT_LEVEL = 3;
+
+// START
+export const START_GOLD_HERO = 0;
 
 // HERO MAIN STATS
 export const MAX_HP_FROM_1_POWER = 10;

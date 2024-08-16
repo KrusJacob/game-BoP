@@ -14,6 +14,7 @@ import ShopHeader from "./ShopHeader";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import React from "react";
 import HeroBagItem from "@/components/Hero/HeroBag/HeroBagItem";
+import HeroBagList from "@/components/Hero/HeroBag/HeroBagList";
 
 const ShopField = () => {
   const [update, setUpdate] = useState(false);
@@ -43,39 +44,8 @@ const ShopField = () => {
         <ShopList onSelectItem={onSelectItem} />
         <ShopSelectItem item={selectItem} onByeItem={onByeItem} />
       </div>
-      {heroResources && <BagOfHero resources={heroResources} />}
+      {heroResources && <HeroBagList resources={heroResources} />}
     </div>
-  );
-};
-
-const BagOfHero = ({ resources }: { resources: heroResources }) => {
-  const [isOpen, setOpen] = useState(false);
-  const bagHero = useGameStore((state) => state.hero?.resources.bag);
-
-  console.log(resources, "bag");
-
-  if (!bagHero) {
-    return null;
-  }
-
-  return (
-    <motion.div
-      exit={{ bottom: "-30%" }}
-      initial={{ bottom: "-30%" }}
-      animate={{ bottom: isOpen ? 0 : "-30%" }}
-      className={styles.bag}
-    >
-      <p className={styles.bagAnchor} onClick={() => setOpen(!isOpen)}>
-        <MdOutlineKeyboardDoubleArrowUp style={{ transform: isOpen ? "rotate(180deg)" : "none" }} />
-        Инвентарь героя
-        <MdOutlineKeyboardDoubleArrowUp style={{ transform: isOpen ? "rotate(180deg)" : "none" }} />
-      </p>
-      <div className={styles.bagList}>
-        {bagHero.map((item, i) => (
-          <HeroBagItem item={item} key={i} />
-        ))}
-      </div>
-    </motion.div>
   );
 };
 

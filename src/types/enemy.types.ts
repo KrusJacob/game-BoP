@@ -5,15 +5,18 @@ import {
   attackOptions,
   heroBaseStats,
   heroBuffs,
+  heroDebuffStack,
   heroGetters,
   heroIncStats,
   heroSetters,
   heroSkills,
   heroStatus,
+  heroType,
 } from "./hero.types";
 
 export interface IEnemy {
-  type: enemyType;
+  type: heroType;
+  name: enemyName;
   level: {
     value: number;
   };
@@ -22,6 +25,7 @@ export interface IEnemy {
   HP: number;
   barrier: number;
   buffs: enemyBuffs;
+  debuffStack: enemyDebuffStack;
   attack: enemyGoAttack;
   skills: enemySkills[];
   resources: enemyResources;
@@ -42,6 +46,7 @@ export interface enemyResources {
 interface enemyStatus extends heroStatus {}
 
 export interface enemyBuffs extends heroBuffs {}
+export interface enemyDebuffStack extends heroDebuffStack {}
 export interface enemySkills extends heroSkills {}
 export interface enemyBaseStats extends heroBaseStats {}
 export interface enemyIncStats extends heroIncStats {}
@@ -49,13 +54,13 @@ export interface enemyGetters extends heroGetters {}
 export interface enemySetters extends heroSetters {}
 export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => attackInfo;
 
-export type enemyType = (typeof ALL_ENEMIES)[number];
+export type enemyName = (typeof ALL_ENEMIES)[number];
 
 export interface enemiesToLocation {
   enemies: enemyInfo[][];
   legendEnemies: enemyInfo[];
 }
 export interface enemyInfo {
-  name: enemyType;
+  name: enemyName;
   unique?: boolean;
 }

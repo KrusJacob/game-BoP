@@ -64,7 +64,7 @@
     height: 100%;
 }
 .shopItem span {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     background-color: rgba(12, 31, 31, 0.4);
     position: absolute;
     bottom: 0;
@@ -74,29 +74,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.bag {
-    background-color: rgba(156, 118, 65, 0.75);
-    padding: 10px;
-    position: absolute;
-}
-.bagAnchor {
-    font-size: 1.4rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-}
-.bagList {
-    margin-top: 16px;
-    display: flex;
-    flex-wrap: wrap;
-
-    gap: 8px;
-    justify-content: center;
-    align-items: center;
 }
 
 .shopSelectItem {

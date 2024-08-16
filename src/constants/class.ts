@@ -1,6 +1,6 @@
 import {
   IEnemy,
-  enemyType,
+  enemyName,
   enemyBaseStats,
   enemyBuffs,
   enemySkills,
@@ -10,15 +10,28 @@ import {
 } from "@/types/enemy.types";
 import {
   IHero,
-  heroType,
+  heroName,
   heroBaseStats,
   heroBuffs,
   heroSkills,
   heroIncStats,
   heroGetters,
   heroSetters,
+  heroDebuffStack,
+  heroType,
 } from "@/types/hero.types";
-import { incHeroDamage, incHeroDef, getBuffDamage, getBuffDef, goAttack, getBarrier, getHeal, incExp } from "./fn";
+import {
+  incHeroDamage,
+  incHeroDef,
+  getBuffDamage,
+  getBuffDef,
+  goAttack,
+  getBarrier,
+  getHeal,
+  incExp,
+  incHeroAttackSpeed,
+  getBuffAttackSpeed,
+} from "./fn";
 import {
   getStatsToEnemy,
   getSkillsToEnemy,
@@ -26,38 +39,32 @@ import {
   getStatsToHero,
   getSkillsToHero,
   getIncStatsToHero,
+  getBuffsToHero,
 } from "./initStats";
 import { updateMainStats } from "./attributes";
-import { ALL_BAG_ITEMS } from "./bag";
+import { ACTIVE_BAG_PANEL, ALL_BAG_ITEMS } from "./bag";
+import { START_GOLD_HERO } from "./setup";
 
 export class EnemyClass implements IEnemy {
-  constructor(type: enemyType, level = 1) {
-    this.type = type;
+  constructor(name: enemyName, level = 1) {
+    this.type = "enemy";
+    this.name = name;
     this.level = {
       value: level,
     };
-    this.baseStats = getStatsToEnemy(type);
+    this.baseStats = getStatsToEnemy(name);
     this.incStats = getIncStatsToHero();
-    this.buffs = {
-      nextAttack: {
-        ignoreDef: 0,
-      },
-      _damage: 0,
-      _def: 0,
-      incDamage: incHeroDamage,
-      incDef: incHeroDef,
-      getBuffDamage: getBuffDamage,
-      getBuffDef: getBuffDef,
-    };
+    this.buffs = getBuffsToHero();
     // this.attack = goAttack;
-    this.skills = getSkillsToEnemy(type);
-    this.resources = getResourcesToEnemy(type);
+    this.skills = getSkillsToEnemy(name);
+    this.resources = getResourcesToEnemy(name);
     this.getters = getters.call(this);
     this.setters = setters.call(this);
     updateMainStats(this, "all");
     this.HP = this.getters.getMaxHp();
   }
-  readonly type: enemyType;
+  type: heroType;
+  readonly name: enemyName;
   level: {
     value: number;
   };
@@ -66,6 +73,9 @@ export class EnemyClass implements IEnemy {
   barrier = 0;
   baseStats: enemyBaseStats;
   buffs: enemyBuffs;
+  debuffStack = {
+    posion: 0,
+  };
   attack = goAttack;
   getBarrier = getBarrier;
   getHeal = getHeal;
@@ -73,7 +83,9 @@ export class EnemyClass implements IEnemy {
   resources: enemyResources;
   status = {
     death: false,
-    stun: 0,
+    isStun: false,
+    isFreeze: false,
+    isPoisoned: false,
   };
   update = () => {};
   getters: enemyGetters;
@@ -81,28 +93,20 @@ export class EnemyClass implements IEnemy {
 }
 
 export class HeroClass implements IHero {
-  constructor(type: heroType) {
-    this.type = type;
-    this.baseStats = getStatsToHero(type);
+  constructor(name: heroName) {
+    this.type = "hero";
+    this.name = name;
+    this.baseStats = getStatsToHero(name);
     this.incStats = getIncStatsToHero();
 
-    this.buffs = {
-      nextAttack: {
-        ignoreDef: 0,
-      },
-      _damage: 0,
-      _def: 0,
-      incDamage: incHeroDamage,
-      incDef: incHeroDef,
-      getBuffDamage: getBuffDamage,
-      getBuffDef: getBuffDef,
-    };
-    this.skills = getSkillsToHero(type);
+    this.buffs = getBuffsToHero();
+    this.skills = getSkillsToHero(name);
     this.getters = getters.call(this);
     this.setters = setters.call(this);
     updateMainStats(this, "all");
     this.HP = this.getters.getMaxHp();
   }
+  type: heroType;
   level = {
     value: 1,
     exp: 0,
@@ -112,22 +116,28 @@ export class HeroClass implements IHero {
   incStats: heroIncStats;
   HP: number;
   barrier = 0;
-  readonly type: heroType;
+  readonly name: heroName;
   baseStats: heroBaseStats;
   buffs: heroBuffs;
+  debuffStack = {
+    posion: 0,
+  };
   attack = goAttack;
   getBarrier = getBarrier;
   getHeal = getHeal;
   skills: heroSkills[];
   resources = {
-    gold: 100,
+    gold: START_GOLD_HERO,
     skillPoints: 0,
     parameterPoints: 0,
     bag: ALL_BAG_ITEMS,
+    bagActivePanel: ACTIVE_BAG_PANEL,
   };
   status = {
     death: false,
-    stun: 0,
+    isStun: false,
+    isFreeze: false,
+    isPoisoned: false,
   };
   update = () => {};
   getters: heroGetters;
@@ -157,9 +167,8 @@ function getters(this: IHero | IEnemy): heroGetters {
     },
     getAttackSpeed: function () {
       return +(
-        hero.baseStats.attackSpeed +
-        hero.incStats.attackSpeed +
-        hero.incStats.attackSpeedFromAgility
+        (hero.baseStats.attackSpeed + hero.incStats.attackSpeed + hero.incStats.attackSpeedFromAgility) *
+        hero.buffs.getBuffAttackSpeed()
       ).toFixed(2);
     },
     getPowerSkill: function () {
