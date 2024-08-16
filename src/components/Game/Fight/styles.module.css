@@ -52,6 +52,7 @@
 }
 
 .enemyDownWrapper {
+    border: 2px solid #fff;
     padding: 20px;
     background-color: #086666;
     display: flex;

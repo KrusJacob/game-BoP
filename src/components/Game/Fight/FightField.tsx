@@ -17,6 +17,7 @@ import HeroPanel from "@/components/Hero/HeroPanel/HeroPanel";
 import LocationList from "../Location/LocationList";
 import { locationItem } from "@/types/location.types";
 import { motion } from "framer-motion";
+import TextList from "@/components/Text/TextList";
 
 const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const [isFight, setFight] = useState(false);
@@ -54,7 +55,12 @@ const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) =>
       {isLocationSelected && !isFight && (
         <FoundEnemies disabled={!hero || !enemy} enemies={enemies} onGoFight={onGoFight} />
       )}
-      {isFight && enemy && <HeroPanel hero={hero} enemy={enemy} onClickSkill={onClickSkill} />}
+      {isFight && enemy && (
+        <>
+          <TextList />
+          <HeroPanel hero={hero} enemy={enemy} onClickSkill={onClickSkill} />
+        </>
+      )}
       {enemy?.status.death && (
         <EnemyDown onSetTab={onSetTab} setEnemy={setEnemy} enemy={enemy instanceof EnemyClass ? enemy : null} />
       )}

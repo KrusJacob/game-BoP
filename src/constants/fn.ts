@@ -15,6 +15,7 @@ import { getPercent } from "@/utils/getPercent";
 import { locationItem } from "@/types/location.types";
 import { getEnemiesLocations } from "./location";
 import { getTalent } from "./talent";
+import { ALL_TEXT } from "./text";
 
 export function incExp(this: IHero, exp = 0) {
   if (this.level.exp + exp >= this.level.expToNextLevel) {
@@ -142,6 +143,7 @@ export function goStun(target: IHero | IEnemy, duration: number) {
 
 export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?: attackOptions): attackInfo {
   const attackInfo = {
+    type: this.type,
     damage: 0,
     isEvade: false,
     isCritical: false,
@@ -246,12 +248,23 @@ export function damageToHP(target: IHero | IEnemy, dmg: number) {
   }
 }
 
+function clearText(mode: "full" | "one") {
+  if (mode === "full") {
+    ALL_TEXT.length = 0;
+  } else {
+    ALL_TEXT.length >= 10 && ALL_TEXT.shift();
+  }
+}
+
 export function fight(hero: IHero, enemy: IHero | IEnemy) {
+  clearText("full");
   // console.log(skillTrigger);
   skillTrigger.inBeginFight.map((fn) => fn.call(hero.skills, hero, enemy));
   attackHero();
   attackEnemy();
   function attackHero() {
+    // clearText("one");
+
     setTimeout(() => {
       if (enemy.status.death) {
         console.log(hero.name, "win!");
@@ -261,9 +274,14 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
         skillTrigger.beforeHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
 
         if (!hero.status.death) {
-          hero.attack(enemy);
+          const attackInfo = hero.attack(enemy);
+          if (!attackInfo.isStunned) {
+            ALL_TEXT.push(attackInfo);
+          }
+
           if (enemy.status.death) {
             console.log(hero.name, "win!");
+
             getReward(hero, enemy);
             return;
           }
@@ -275,12 +293,17 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
   }
 
   function attackEnemy() {
+    // clearText("one");
+
     setTimeout(() => {
       if (hero.status.death) {
         console.log(enemy.name, "win!");
       } else {
         if (!enemy.status.death) {
           const attackInfo = enemy.attack(hero);
+          if (!attackInfo.isStunned) {
+            ALL_TEXT.push(attackInfo);
+          }
           attackInfo.isEvade && skillTrigger.afterHeroAwade.map((fn) => fn.call(hero.skills, hero, enemy));
 
           attackEnemy();

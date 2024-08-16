@@ -1,0 +1,32 @@
+.textList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    overflow: hidden;
+}
+
+.textItem {
+    padding: 4px 12px;
+    border: 1px solid #808080;
+    width: fit-content;
+    font-size: 1.2rem;
+}
+.textItem p {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.textItem span {
+    font-size: 1.3rem;
+}
+
+.textHero {
+    background-color: #3e6565;
+    border-radius: 0 var(--borderRadius) var(--borderRadius) var(--borderRadius);
+}
+.textEnemy {
+    background-color: #550707;
+    margin-left: auto;
+    border-radius: var(--borderRadius) 0 var(--borderRadius) var(--borderRadius);
+}

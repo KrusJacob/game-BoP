@@ -130,6 +130,7 @@ export interface heroBuffs {
   getBuffDef: () => number;
 }
 export interface attackInfo {
+  type: heroType;
   damage: number;
   isEvade: boolean;
   isCritical: boolean;
