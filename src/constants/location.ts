@@ -1,7 +1,6 @@
 import { locationItem } from "@/types/location.types";
 import {
   ENEMIES_TO_AZURE_COAST,
-  // ENEMIES_TO_AZURE_COAST,
   ENEMIES_TO_DARK_FOREST,
   ENEMIES_TO_HIDDEN_CAVE,
   // ENEMIES_TO_HIDDEN_CAVE,
@@ -19,19 +18,19 @@ export const LOCATIONS: locationItem[] = [
   {
     name: "hiddenCave",
     label: "Скрытая Пещера",
-    reqLevel: 8,
+    reqLevel: 10,
     img: "/src/assets/location/hidden_cave.png",
   },
   {
     name: "azureCoast",
     label: "Лазурное Прибережье",
-    reqLevel: 16,
+    reqLevel: 20,
     img: "/src/assets/location/azure_coast.png",
   },
   {
     name: "snowMountains",
     label: "Заснеженные Горы",
-    reqLevel: 24,
+    reqLevel: 30,
     img: "/src/assets/location/snow_mountains.png",
   },
 ];

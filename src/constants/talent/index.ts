@@ -1,6 +1,10 @@
-import { IHero } from "@/types/hero.types";
+import { IHero, TypeSkillTrigger, heroSkills } from "@/types/hero.types";
 import { talentType } from "@/types/talent.types";
 import { getRandom } from "@/utils/getRandom";
+import { IEnemy } from "@/types/enemy.types";
+import { getPercent } from "@/utils/getPercent";
+import { goStun } from "../func/fight";
+import { registerSkill } from "../skill";
 
 export const ALL_TALENTS: talentType[] = [
   {
@@ -9,7 +13,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
 
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает атаку героя на ${text}`;
     },
     data: {
@@ -25,7 +29,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
 
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает защиту героя на ${text}`;
     },
     data: {
@@ -41,7 +45,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
 
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает максимальный запас героя на ${text}`;
     },
     data: {
@@ -57,7 +61,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
 
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает силу героя на ${text}`;
     },
     data: {
@@ -73,7 +77,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
 
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает ловкость героя на ${text}`;
     },
     data: {
@@ -89,7 +93,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
 
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает интеллект героя на ${text}`;
     },
     data: {
@@ -105,7 +109,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
 
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает скорость атаки героя на ${text}`;
     },
     data: {
@@ -120,7 +124,7 @@ export const ALL_TALENTS: talentType[] = [
     img: "/src/assets/talent/powerSkill.png",
     level: 0,
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает силу умений героя на ${text}`;
     },
     data: {
@@ -135,7 +139,7 @@ export const ALL_TALENTS: talentType[] = [
     img: "/src/assets/talent/chanceEvade.png",
     level: 0,
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает шанс уклонения героя на ${text}`;
     },
     data: {
@@ -150,7 +154,7 @@ export const ALL_TALENTS: talentType[] = [
     img: "/src/assets/talent/chanceCritDamage.png",
     level: 0,
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Увеличивает шанс критического удара героя на ${text}`;
     },
     data: {
@@ -165,7 +169,7 @@ export const ALL_TALENTS: talentType[] = [
     img: "/src/assets/talent/ignoreDef.png",
     level: 0,
     descr: function () {
-      const text = getText.call(this);
+      const text = getText.call(this, "value");
       return `Ваши атаки игнорируют ${text}% защиты противника`;
     },
     data: {
@@ -175,10 +179,112 @@ export const ALL_TALENTS: talentType[] = [
       hero.setters.incIgnoreDef(getValue(this));
     },
   },
+  {
+    name: "Оглушающие удары",
+    img: "/src/assets/talent/stun.png",
+    level: 0,
+    descr: function () {
+      const chance = getText.call(this, "chance");
+      const duration = getText.call(this, "duration");
+      return `Ваши атаки c ${chance}% шансом могут оглушить противника на ${duration} секунд`;
+    },
+    data: {
+      chance: [0, 5, 7, 9, 11, 12],
+      duration: [0, 2, 2, 2, 2, 3],
+    },
+    trigger: "afterHeroAttack",
+    fn(hero: IHero) {
+      if (this.level === 1) {
+        registerTalent(this, activeTalent, this.trigger!);
+        function activeTalent(this: talentType, hero: IHero, target: IHero | IEnemy) {
+          const data = this.data;
+          const level = this.level;
+          const chance = getRandom(1, 100);
+          console.log(chance, "chance");
+          if (chance <= data.chance[level]) {
+            console.log("Оглушен");
+            goStun(target, data.duration[level]);
+          }
+        }
+      }
+    },
+  },
+  {
+    name: "Целебные потоки",
+    img: "/src/assets/talent/heal.png",
+    level: 0,
+    descr: function () {
+      const cooldown = getText.call(this, "cooldown");
+      const healValue = getText.call(this, "healValue");
+      const healPercent = getText.call(this, "healPercent");
+      return `Каждые ${cooldown} секунд в бою, вы воостанавливаете ${healValue} ед. здоровья + ${healPercent}% от максимального запаса здоровья `;
+    },
+    data: {
+      healValue: [0, 40, 55, 70, 85, 100],
+      healPercent: [0, 2, 3, 4, 5, 5],
+      cooldown: [0, 5, 5, 5, 5, 4],
+    },
+    trigger: "inBeginFight",
+    fn(hero: IHero) {
+      if (this.level === 1) {
+        registerTalent(this, activeTalent, this.trigger!);
+        function activeTalent(this: talentType, hero: IHero, target: IHero | IEnemy) {
+          console.log("inBeginFight");
+          const data = this.data;
+          const level = this.level;
+          const timeoutId = setInterval(() => {
+            if (!target.status.death && !hero.status.death) {
+              const heal = data.healValue[level] + getPercent(hero.getters.getMaxHp(), data.healPercent[level]);
+              console.log("heal talent", heal);
+              hero.getHeal(heal);
+            } else {
+              clearInterval(timeoutId);
+            }
+          }, data.cooldown[level] * 1000);
+        }
+      }
+    },
+  },
+  {
+    name: "Впитывание знаний",
+    img: "/src/assets/talent/exp.png",
+    level: 0,
+    descr: function () {
+      const text = getText.call(this, "value");
+      return `Увеличивает получаемый опыт на ${text}%`;
+    },
+    data: {
+      value: [0, 12, 18, 22, 26, 30],
+    },
+    trigger: "afterHeroAttack",
+    fn(hero: IHero) {
+      hero.boost.exp += getValue(this);
+    },
+  },
+  {
+    name: "Золотая лихорадка",
+    img: "/src/assets/talent/gold.png",
+    level: 0,
+    descr: function () {
+      const text = getText.call(this, "value");
+      return `Увеличивает получаемое золото на ${text}%`;
+    },
+    data: {
+      value: [0, 12, 18, 22, 26, 30],
+    },
+    trigger: "afterHeroAttack",
+    fn(hero: IHero) {
+      hero.boost.gold += getValue(this);
+    },
+  },
 ];
 
-function getText(this: talentType) {
-  return this.data.value[this.level];
+function registerTalent(talent: talentType, fn: Function, trigger: keyof TypeSkillTrigger) {
+  registerSkill(fn.bind(talent), trigger);
+}
+
+function getText(this: talentType, value: string) {
+  return this.data[value][this.level];
 }
 function getValue(talent: talentType) {
   return talent.data.value[talent.level] - talent.data.value[talent.level - 1];

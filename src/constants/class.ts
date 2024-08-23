@@ -18,8 +18,9 @@ import {
   heroGetters,
   heroSetters,
   heroType,
+  heroBoost,
 } from "@/types/hero.types";
-import { goAttack, getBarrier, getHeal, incExp } from "./fn";
+import { getBarrier, getHeal } from "./fn";
 import {
   getStatsToEnemy,
   getSkillsToEnemy,
@@ -32,6 +33,8 @@ import {
 import { updateMainStats } from "./attributes";
 import { ACTIVE_BAG_PANEL, ALL_BAG_ITEMS } from "./bag";
 import { START_GOLD_HERO } from "./setup";
+import { goAttack } from "./func/fight";
+import { incExp } from "./func/reward";
 
 export class EnemyClass implements IEnemy {
   constructor(name: enemyName, level = 1) {
@@ -96,7 +99,7 @@ export class HeroClass implements IHero {
   }
   type: heroType;
   level = {
-    value: 0,
+    value: 1,
     exp: 0,
     incExp: incExp,
     expToNextLevel: 100,
@@ -115,11 +118,22 @@ export class HeroClass implements IHero {
   getHeal = getHeal;
   skills: heroSkills[];
   resources = {
+    drop: {
+      fangsBeast: 0,
+      rogueItem: 0,
+      goblinItem: 0,
+      gnomeItem: 0,
+      gillsNaga: 0,
+    },
     gold: START_GOLD_HERO,
     skillPoints: 0,
     parameterPoints: 0,
     bag: ALL_BAG_ITEMS,
     bagActivePanel: ACTIVE_BAG_PANEL,
+  };
+  boost = {
+    exp: 0,
+    gold: 0,
   };
   status = {
     death: false,

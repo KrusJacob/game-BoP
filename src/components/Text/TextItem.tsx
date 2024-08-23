@@ -4,8 +4,10 @@ import React, { memo } from "react";
 import cn from "classnames";
 import { motion } from "framer-motion";
 import { BsLightningFill } from "react-icons/bs";
+import { PiSpiralLight } from "react-icons/pi";
 
 const TextItem = memo(({ item }: { item: attackInfo }) => {
+  // console.log("TextItem");
   return (
     <motion.div
       initial={{ x: item.type === "hero" ? "-100%" : "100%" }}
@@ -15,20 +17,36 @@ const TextItem = memo(({ item }: { item: attackInfo }) => {
         [styles.textEnemy]: item.type === "enemy",
       })}
     >
-      <p>
-        {item.isEvade ? (
-          "Промах"
-        ) : (
-          <>
-            {item.type === "hero" ? `Вы нанесли ` : `Противник нанес `}
-            <span>{item.damage}</span>
-            {item.isCritical && <BsLightningFill />}
-            {" урона"}
-          </>
-        )}
-      </p>
+      <p>{item.isEvade ? "Промах" : <TextInfo item={item} />}</p>
     </motion.div>
   );
 });
+
+const TextInfo = ({ item }: { item: attackInfo }) => {
+  if (item.isStunned) {
+    return (
+      <>
+        Оглушен
+        <PiSpiralLight color="gold" />
+      </>
+    );
+  }
+  if (item.type === "hero") {
+    return (
+      <>
+        Вы нанесли {item.damage}
+        {item.isCritical && <BsLightningFill />} урона;
+      </>
+    );
+  }
+  if (item.type === "enemy") {
+    return (
+      <>
+        Противник нанес {item.damage}
+        {item.isCritical && <BsLightningFill />} урона;
+      </>
+    );
+  }
+};
 
 export default TextItem;

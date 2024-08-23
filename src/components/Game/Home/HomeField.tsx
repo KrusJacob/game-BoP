@@ -15,6 +15,9 @@ const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
     onSetTab("Бой");
   };
 
+  const onGoTomb = () => {
+    onSetTab("Гробница");
+  };
   return (
     <div className={styles.homeField}>
       <>
@@ -39,7 +42,9 @@ const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
         <Button onClick={onGoWay} className={styles.way}>
           В Путь
         </Button>
-        <Button className={styles.tomb}>В Гробницу</Button>
+        <Button onClick={onGoTomb} className={styles.tomb}>
+          В Гробницу
+        </Button>
       </>
     </div>
   );

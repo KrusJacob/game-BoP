@@ -9,7 +9,7 @@ export const STATS_GNOME: enemyBaseStats = {
   attack: 165,
   def: 35,
   maxHp: 2000,
-  attackSpeed: 0.6,
+  attackSpeed: 0.5,
   powerSkill: 0,
 };
 export const STATS_GNOME_2: enemyBaseStats = {
@@ -21,7 +21,7 @@ export const STATS_GNOME_2: enemyBaseStats = {
   attack: 130,
   def: 45,
   maxHp: 2100,
-  attackSpeed: 0.6,
+  attackSpeed: 0.5,
   powerSkill: 0,
 };
 export const STATS_GNOME_3: enemyBaseStats = {
@@ -33,7 +33,7 @@ export const STATS_GNOME_3: enemyBaseStats = {
   attack: 190,
   def: 55,
   maxHp: 2200,
-  attackSpeed: 0.6,
+  attackSpeed: 0.5,
   powerSkill: 0,
 };
 export const STATS_GNOME_4: enemyBaseStats = {
@@ -45,7 +45,7 @@ export const STATS_GNOME_4: enemyBaseStats = {
   attack: 200,
   def: 40,
   maxHp: 2300,
-  attackSpeed: 0.6,
+  attackSpeed: 0.5,
   powerSkill: 0,
 };
 export const STATS_GNOME_5: enemyBaseStats = {
@@ -57,6 +57,6 @@ export const STATS_GNOME_5: enemyBaseStats = {
   attack: 220,
   def: 30,
   maxHp: 4100,
-  attackSpeed: 0.6,
+  attackSpeed: 0.5,
   powerSkill: 0,
 };

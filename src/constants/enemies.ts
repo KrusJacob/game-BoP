@@ -1,4 +1,8 @@
-import { enemiesToLocation } from "@/types/enemy.types";
+import { enemiesToLocation, enemiesToTomb, enemyInfo, enemyName } from "@/types/enemy.types";
+import { locationItem } from "@/types/location.types";
+import { getRandom } from "@/utils/getRandom";
+import { getEnemiesLocations } from "./location";
+import { COMLEXITY_LOCATIONS, CHANCE_TO_LEGEND_ENEMY, incСomplexityLocation } from "./setup";
 
 export const ALL_ENEMIES = [
   "golden-pig",
@@ -36,6 +40,50 @@ export const ALL_ENEMIES = [
 // export const ENEMIES_TO_AZURE_COAST = ["gnome", "rogue", "gnome_2"];
 // export const ENEMIES_TO_SNOW_MOUNTAINS = ["gnome", "rogue", "gnome_2"];
 // export const ENEMIES_TO_DARK_FOREST: enemiesToLocation[] = [
+
+export const ENEMIES_TO_TOBM: enemiesToTomb[] = [
+  {
+    name: "beast_5",
+    resource: {
+      label: "Клык зверя",
+      type: "fangsBeast",
+      value: [30],
+    },
+  },
+  {
+    name: "rogue_5",
+    resource: {
+      label: "Кольцо убийцы",
+      type: "rogueItem",
+      value: [30],
+    },
+  },
+  {
+    name: "goblin_5",
+    resource: {
+      label: "Эмблема гоблина",
+      type: "goblinItem",
+      value: [30],
+    },
+  },
+  {
+    name: "gnome_5",
+    resource: {
+      label: "Монета гнома",
+      type: "gnomeItem",
+      value: [30],
+    },
+  },
+  {
+    name: "naga_5",
+    resource: {
+      label: "Подводное сокровище",
+      type: "gillsNaga",
+      value: [30],
+    },
+  },
+];
+//
 
 export const ENEMIES_TO_DARK_FOREST: enemiesToLocation = {
   enemies: [
@@ -84,3 +132,37 @@ export const ENEMIES_TO_AZURE_COAST: enemiesToLocation = {
 // Hidden Cave
 // azure coast
 // snow mountains
+function getComlexityEnemies(location: locationItem["name"]) {
+  return Math.floor(COMLEXITY_LOCATIONS[location].comlexity);
+}
+
+export function searchEnemy(location: locationItem["name"]) {
+  const res: enemyName[] = [];
+  const arrEnemies = getEnemiesLocations(location);
+  const comlexity = getComlexityEnemies(location);
+  const chanceToLegend = getRandom(0, 100);
+  let enemiesInComlexity = arrEnemies.enemies[comlexity];
+
+  if (chanceToLegend <= CHANCE_TO_LEGEND_ENEMY && arrEnemies.legendEnemies.length) {
+    pushEnemy(res, arrEnemies.legendEnemies);
+    pushEnemy(res, enemiesInComlexity);
+  } else {
+    pushEnemy(res, enemiesInComlexity);
+    pushEnemy(res, enemiesInComlexity);
+  }
+  incСomplexityLocation(location, arrEnemies.enemies.length - 1);
+  return res;
+}
+
+function pushEnemy(res: enemyName[], enemiesArr: enemyInfo[]) {
+  const enemyId = getRandom(0, enemiesArr.length - 1);
+  if (res[0] === enemiesArr[enemyId].name) {
+    res.push(enemiesArr[Math.abs(enemyId - 1)].name);
+  } else {
+    res.push(enemiesArr[enemyId].name);
+  }
+
+  if (enemiesArr[enemyId].unique) {
+    enemiesArr.splice(enemyId, 1);
+  }
+}

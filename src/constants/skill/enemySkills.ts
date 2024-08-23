@@ -109,8 +109,8 @@ export const SKILLS_GNOME: enemySkills[] = [
     },
     img: "/src/assets/skill/chances.png",
     data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
+      chanceCritDamage: CHANCE_CRITICAL_DAMAGE + 1,
+      chanceEvade: CHANCE_EVADE + 1,
     },
   },
 ];
@@ -147,8 +147,8 @@ export const SKILLS_GOBLIN: enemySkills[] = [
     },
     img: "/src/assets/skill/chances.png",
     data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
+      chanceCritDamage: CHANCE_CRITICAL_DAMAGE + 1,
+      chanceEvade: CHANCE_EVADE + 1,
     },
   },
 ];
@@ -184,8 +184,8 @@ export const SKILLS_NAGA: enemySkills[] = [
     },
     img: "/src/assets/skill/chances.png",
     data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
+      chanceCritDamage: CHANCE_CRITICAL_DAMAGE + 2,
+      chanceEvade: CHANCE_EVADE + 2,
     },
   },
 ];

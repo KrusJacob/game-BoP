@@ -3,7 +3,7 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "../setup";
 import { IEnemy } from "@/types/enemy.types";
 import { getRandom } from "@/utils/getRandom";
 import { applyPowerSkill, healHeroOfSkill } from "./utils";
-import { goDotDmg } from "../fn";
+import { goDotDmg } from "../func/fight";
 
 const SKILLS_BOXER: heroSkills[] = [
   {
@@ -118,8 +118,8 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     },
     img: "/src/assets/skill/skill_programmer_2.png",
     data: {
-      modifierOfIntellect: 3,
-      barrierValue: 120,
+      modifierOfIntellect: 3.5,
+      barrierValue: 100,
     },
     trigger: "inBeginFight",
     fn: function (this: heroSkills[], hero: IHero) {
@@ -145,7 +145,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       duration: 6,
     },
     trigger: "afterHeroAttack",
-    fn: function (this: heroSkills[], target: IHero | IEnemy) {
+    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[2].data;
       const chance = getRandom(1, 100);
 

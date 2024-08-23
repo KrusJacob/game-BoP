@@ -3,14 +3,15 @@ import { shopItemType } from "@/types/shop.types";
 import { bagItemType } from "@/types/shop.types";
 import { EMPTY_BAG_SLOT } from "../bag";
 import { IEnemy } from "@/types/enemy.types";
-import { goDotDmg, goFreeze, goStun } from "../fn";
+import { goDotDmg, goFreeze, goStun } from "../func/fight";
 
 export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 0,
     name: "Пузырек лечебного зелья",
     img: "/src/assets/shop/heal_potion_1.png",
-    cost: 175,
+    cost: 170,
+    quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
@@ -27,8 +28,8 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 1,
     name: "Флакон лечебного зелья",
     img: "/src/assets/shop/heal_potion_2.png",
-    cost: 380,
-
+    cost: 375,
+    quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
@@ -46,7 +47,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     name: "Бутыль лечебного зелья",
     img: "/src/assets/shop/heal_potion_3.png",
     cost: 750,
-
+    quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
@@ -63,8 +64,8 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Кирпич",
     img: "/src/assets/shop/brick.png",
-    cost: 550,
-
+    cost: 525,
+    quantity: 1,
     descr: function () {
       const text = this.data.duration;
       return `Оглушает врага на ${text} секунд`;
@@ -81,8 +82,8 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Зелье заморозки",
     img: "/src/assets/shop/freeze_potion.png",
-    cost: 500,
-
+    cost: 475,
+    quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Снижает скорость атаки врага на ${text}% на ${this.data.duration} секунд `;
@@ -100,8 +101,8 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Зелье c ядом",
     img: "/src/assets/shop/posion_potion.png",
-    cost: 450,
-
+    cost: 425,
+    quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Отравляет врага, нанося ему ${text} урона в секунду в течении ${this.data.duration} cекунд`;
@@ -120,7 +121,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     name: "Зелье ярости",
     img: "/src/assets/shop/rage_potion.png",
     cost: 1100,
-
+    quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Увеличивает урон и скорость атаки героя на ${text}% на ${this.data.duration} секунд`;
@@ -140,8 +141,8 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Зелье оглушения",
     img: "/src/assets/shop/stun_potion.png",
-    cost: 750,
-
+    cost: 725,
+    quantity: 1,
     descr: function () {
       const text = this.data.duration;
       return `Оглушает врага на ${text} секунд`;
@@ -159,7 +160,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     name: "Зелье смерти (!)",
     img: "/src/assets/shop/death_potion.png",
     cost: 9999,
-
+    quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Никто никогда не осмеливался купить это зелье...`;
@@ -184,15 +185,21 @@ export function byeShopItem(resources: IHero["resources"], item: shopItemType) {
   }
   console.log("купилось");
   resources.gold -= item.cost;
-  const bagItem = { ...item, quantity: 1, empty: false, isActiveBag: false };
+  const isSuccess = addItemToBag(resources, item);
+  return isSuccess;
+}
+
+export function addItemToBag(resources: IHero["resources"], item: shopItemType | bagItemType, place = "begin") {
+  const bagItem = { ...item, quantity: item.quantity, empty: false, isActiveBag: false };
 
   for (let i = 0; i < resources.bag.length; i++) {
-    if (resources.bag[i].name === bagItem.name) {
-      resources.bag[i].quantity += 1;
+    let index = place === "begin" ? i : resources.bag.length - i - 1;
+    if (resources.bag[index].name === bagItem.name) {
+      resources.bag[index].quantity += bagItem.quantity;
       return true;
     }
-    if (resources.bag[i].empty) {
-      resources.bag[i] = { ...bagItem, bagSlotId: i };
+    if (resources.bag[index].empty) {
+      resources.bag[index] = { ...bagItem, bagSlotId: i, isMoved: place === "begin" ? true : false };
       return true;
     }
   }
@@ -210,6 +217,9 @@ export function moveBagItem(resources: IHero["resources"], item: bagItemType) {
 }
 
 function moveToActivePanel(resources: IHero["resources"], bagItem: bagItemType) {
+  if (!bagItem.isMoved) {
+    return;
+  }
   const indexSameItem = resources.bagActivePanel.findIndex((item) => item.name === bagItem.name);
   if (indexSameItem >= 0) {
     resources.bagActivePanel[indexSameItem].quantity += bagItem.quantity;

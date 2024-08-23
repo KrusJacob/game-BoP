@@ -1,10 +1,11 @@
 import Button from "@/components/UI/Button/Button";
 import styles from "./styles.module.css";
-import { fight } from "@/constants/fn";
+
 import { heroName } from "@/types/hero.types";
 import { useGameStore } from "@/store/gameStore";
 import { enemyName } from "@/types/enemy.types";
 import { EnemyClass, HeroClass } from "@/constants/class";
+import { fight } from "@/constants/func/fight";
 
 const TestField = () => {
   const { hero, enemy, setHero, setEnemy } = useGameStore((state) => state);

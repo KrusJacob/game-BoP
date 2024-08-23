@@ -1,5 +1,5 @@
 import { ALL_HEROES } from "../constants/hero";
-import { IEnemy } from "./enemy.types";
+import { IEnemy, enemyDrop, enemyTypeDrop } from "./enemy.types";
 import { bagItemType } from "./shop.types";
 
 export interface IHero {
@@ -21,6 +21,12 @@ export interface IHero {
   update: Function;
   getters: heroGetters;
   setters: heroSetters;
+  boost: heroBoost;
+}
+
+export interface heroBoost {
+  exp: number;
+  gold: number;
 }
 
 export interface heroStatus {
@@ -75,6 +81,7 @@ export interface heroResources {
   gold: number;
   skillPoints: number;
   parameterPoints: number;
+  drop: Record<enemyTypeDrop, number>;
   bag: Array<bagItemType>;
   bagActivePanel: Array<bagItemType>;
 }
@@ -100,7 +107,7 @@ export interface heroSetters {
   incDef: (value: number) => void;
   incAttackSpeed: (value: number) => void;
   incPowerSkill: (value: number) => void;
-  incExp: (value: number) => void;
+  incExp: (value: number) => number;
   incChanceEvade: (value: number) => void;
   incChanceCritDamage: (value: number) => void;
   incIgnoreDef: (value: number) => void;
@@ -155,4 +162,15 @@ export interface attackOptions {
   modifier?: number;
   ignoreDef?: number;
   isIgnoreAvade?: boolean;
+}
+
+export interface heroReward {
+  exp: number;
+  gold: number;
+  skillPoints: number;
+  drop?: {
+    label: string;
+    type: enemyTypeDrop;
+    value: number;
+  };
 }

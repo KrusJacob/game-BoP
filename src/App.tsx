@@ -7,7 +7,7 @@ import DoorLayout from "./layout/DoorLayout";
 
 import GameArea from "./components/Game/GameArea/GameArea";
 import { useGameStore } from "./store/gameStore";
-import { registerAllSkills } from "./constants/fn";
+import { registerAllSkills } from "./constants/skill";
 
 function App() {
   const hero = useGameStore((state) => state.hero);

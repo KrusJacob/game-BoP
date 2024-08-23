@@ -13,6 +13,7 @@ import {
   heroStatus,
   heroType,
 } from "./hero.types";
+import { bagItemType } from "./shop.types";
 
 export interface IEnemy {
   type: heroType;
@@ -41,7 +42,21 @@ export interface enemyResources {
   gold: number;
   skillPoints: number;
   exp: number;
+  drop?: enemyDrop;
 }
+export interface enemyDrop {
+  label: enemyTypeLabelDrop;
+  type: enemyTypeDrop;
+  value: number[];
+}
+export type enemyTypeDrop = "fangsBeast" | "rogueItem" | "goblinItem" | "gnomeItem" | "gillsNaga";
+export type enemyTypeLabelDrop =
+  | "Клык зверя"
+  | "Кольцо убийцы"
+  | "Эмблема гоблина"
+  | "Монета гнома"
+  | "Подводное сокровище";
+export type enemyTypeBagDrop = Record<enemyTypeDrop, bagItemType>;
 
 interface enemyStatus extends heroStatus {}
 
@@ -63,4 +78,8 @@ export interface enemiesToLocation {
 export interface enemyInfo {
   name: enemyName;
   unique?: boolean;
+}
+export interface enemiesToTomb {
+  name: enemyName;
+  resource: enemyDrop;
 }

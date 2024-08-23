@@ -3,17 +3,11 @@ import { useGameStore } from "@/store/gameStore";
 import ShopList from "./ShopList";
 import styles from "./styles.module.css";
 import img from "@assets/bg_shop.jpg";
-import { heroResources } from "@/types/hero.types";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { MdOutlineKeyboardDoubleArrowUp } from "react-icons/md";
 import ShopSelectItem from "./ShopSelectItem";
 import { shopItemType } from "@/types/shop.types";
 import { byeShopItem } from "@/constants/shop";
 import ShopHeader from "./ShopHeader";
-import Tooltip from "@/components/UI/Tooltip/Tooltip";
-import React from "react";
-import HeroBagItem from "@/components/Hero/HeroBag/HeroBagItem";
 import HeroBagList from "@/components/Hero/HeroBag/HeroBagList";
 
 const ShopField = () => {

@@ -1,6 +1,7 @@
 export interface shopItemType {
   id: number;
   name: string;
+  quantity: number;
   img: string;
   cost: number;
   data: Record<string, any>;
@@ -10,7 +11,7 @@ export interface shopItemType {
 
 export interface bagItemType extends shopItemType {
   bagSlotId: number;
-  quantity: number;
   empty: boolean;
   isActiveBag: boolean;
+  isMoved: boolean;
 }

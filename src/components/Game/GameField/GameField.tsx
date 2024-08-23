@@ -8,6 +8,7 @@ import HomeField from "../Home/HomeField";
 import TestField from "../Test/TestField";
 import FightField from "../Fight/FightField";
 import HeroField from "../Hero/HeroField";
+import TombField from "../Tomb/TombField";
 
 const GameField = () => {
   return (
@@ -44,7 +45,7 @@ const TabsBtns: ITabsBtn[] = [
   },
 ];
 
-export type TabsWithFight = TabsField | "Бой";
+export type TabsWithFight = TabsField | "Бой" | "Гробница";
 
 const Tabs = () => {
   const [tab, setTab] = useState<TabsWithFight>("Главная");
@@ -73,6 +74,7 @@ const Tabs = () => {
       {tab === "Maгазин" && <ShopField />}
       {tab === "Test" && <TestField />}
       {tab === "Бой" && <FightField onSetTab={onSetTab} />}
+      {tab === "Гробница" && <TombField />}
     </>
   );
 };

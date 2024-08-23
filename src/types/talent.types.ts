@@ -1,4 +1,4 @@
-import { IHero } from "./hero.types";
+import { IHero, TypeSkillTrigger } from "./hero.types";
 
 export interface talentType {
   name: string;
@@ -7,4 +7,5 @@ export interface talentType {
   data: Record<string, any>;
   descr: () => string;
   fn: (hero: IHero) => void;
+  trigger?: keyof TypeSkillTrigger;
 }

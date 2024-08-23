@@ -4,12 +4,12 @@ export const STATS_NAGA: enemyBaseStats = {
   img: "/src/assets/enemy/naga.png",
   name: "Мурлок",
   power: 55,
-  agility: 120,
+  agility: 110,
   intellect: 40,
   attack: 155,
   def: 28,
   maxHp: 2400,
-  attackSpeed: 0.7,
+  attackSpeed: 0.6,
   powerSkill: 0,
 };
 export const STATS_NAGA_2: enemyBaseStats = {
@@ -21,7 +21,7 @@ export const STATS_NAGA_2: enemyBaseStats = {
   attack: 180,
   def: 32,
   maxHp: 2500,
-  attackSpeed: 0.7,
+  attackSpeed: 0.6,
   powerSkill: 0,
 };
 
@@ -34,7 +34,7 @@ export const STATS_NAGA_3: enemyBaseStats = {
   attack: 200,
   def: 52,
   maxHp: 2600,
-  attackSpeed: 0.7,
+  attackSpeed: 0.6,
   powerSkill: 0,
 };
 export const STATS_NAGA_4: enemyBaseStats = {
@@ -46,7 +46,7 @@ export const STATS_NAGA_4: enemyBaseStats = {
   attack: 185,
   def: 46,
   maxHp: 2700,
-  attackSpeed: 0.7,
+  attackSpeed: 0.6,
   powerSkill: 0,
 };
 export const STATS_NAGA_5: enemyBaseStats = {
@@ -58,6 +58,6 @@ export const STATS_NAGA_5: enemyBaseStats = {
   attack: 200,
   def: 59,
   maxHp: 4500,
-  attackSpeed: 0.7,
+  attackSpeed: 0.6,
   powerSkill: 0,
 };

@@ -2,7 +2,7 @@ import { LOCATION } from "@/types/location.types";
 
 // REST HP
 export const HP_REST = 100;
-export const HP_REST_PERCENT = 15;
+export const HP_REST_PERCENT = 20;
 
 // LEVEL
 export const PARAMETER_POINT_LEVEL = 3;
@@ -38,6 +38,8 @@ export const COMLEXITY_LOCATIONS = {
   },
 };
 
-export function incСomplexityLocation(location: LOCATION) {
-  COMLEXITY_LOCATIONS[location].comlexity += 0.5;
+export function incСomplexityLocation(location: LOCATION, max: number) {
+  if (COMLEXITY_LOCATIONS[location].comlexity >= max) {
+    COMLEXITY_LOCATIONS[location].comlexity += 0.5;
+  }
 }

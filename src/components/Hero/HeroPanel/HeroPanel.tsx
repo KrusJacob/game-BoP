@@ -7,7 +7,7 @@ import { IEnemy } from "@/types/enemy.types";
 interface Props {
   hero: IHero;
   enemy: IHero | IEnemy;
-  onClickSkill: () => void;
+  onClickSkill?: () => void;
 }
 
 const HeroPanel = ({ hero, enemy, onClickSkill }: Props) => {
