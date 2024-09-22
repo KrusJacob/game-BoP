@@ -32,7 +32,7 @@ import {
 } from "./initStats";
 import { updateMainStats } from "./attributes";
 import { ACTIVE_BAG_PANEL, ALL_BAG_ITEMS } from "./bag";
-import { START_GOLD_HERO } from "./setup";
+import { START_GOLD_HERO, START_PARAMETERPOINT, START_SKILLPOINT } from "./setup";
 import { goAttack } from "./func/fight";
 import { incExp } from "./func/reward";
 
@@ -77,6 +77,7 @@ export class EnemyClass implements IEnemy {
     isStun: false,
     isFreeze: false,
     isPoisoned: false,
+    isBleeded: false,
   };
   update = () => {};
   getters: enemyGetters;
@@ -126,8 +127,8 @@ export class HeroClass implements IHero {
       gillsNaga: 0,
     },
     gold: START_GOLD_HERO,
-    skillPoints: 0,
-    parameterPoints: 0,
+    skillPoints: START_SKILLPOINT,
+    parameterPoints: START_PARAMETERPOINT,
     bag: ALL_BAG_ITEMS,
     bagActivePanel: ACTIVE_BAG_PANEL,
   };
@@ -140,6 +141,7 @@ export class HeroClass implements IHero {
     isStun: false,
     isFreeze: false,
     isPoisoned: false,
+    isBleeded: false,
   };
   update = () => {};
   getters: heroGetters;

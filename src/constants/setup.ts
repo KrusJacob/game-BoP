@@ -9,6 +9,8 @@ export const PARAMETER_POINT_LEVEL = 3;
 
 // START
 export const START_GOLD_HERO = 0;
+export const START_SKILLPOINT = 0;
+export const START_PARAMETERPOINT = 0;
 
 // HERO MAIN STATS
 export const MAX_HP_FROM_1_POWER = 10;
@@ -39,7 +41,8 @@ export const COMLEXITY_LOCATIONS = {
 };
 
 export function incСomplexityLocation(location: LOCATION, max: number) {
-  if (COMLEXITY_LOCATIONS[location].comlexity >= max) {
+  console.log(COMLEXITY_LOCATIONS, location, max);
+  if (COMLEXITY_LOCATIONS[location].comlexity < max) {
     COMLEXITY_LOCATIONS[location].comlexity += 0.5;
   }
 }

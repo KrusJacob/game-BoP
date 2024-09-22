@@ -98,7 +98,7 @@ const RESOURCES_ROGUE_5: enemyResources = {
 const RESOURCES_GOBLIN: enemyResources = {
   exp: 280,
   gold: 210,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Эмблема гоблина",
     type: "goblinItem",
@@ -108,7 +108,7 @@ const RESOURCES_GOBLIN: enemyResources = {
 const RESOURCES_GOBLIN_2: enemyResources = {
   exp: 310,
   gold: 235,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Эмблема гоблина",
     type: "goblinItem",
@@ -118,7 +118,7 @@ const RESOURCES_GOBLIN_2: enemyResources = {
 const RESOURCES_GOBLIN_3: enemyResources = {
   exp: 345,
   gold: 255,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Эмблема гоблина",
     type: "goblinItem",
@@ -128,7 +128,7 @@ const RESOURCES_GOBLIN_3: enemyResources = {
 const RESOURCES_GOBLIN_4: enemyResources = {
   exp: 380,
   gold: 270,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Эмблема гоблина",
     type: "goblinItem",
@@ -143,7 +143,7 @@ const RESOURCES_GOBLIN_5: enemyResources = {
 const RESOURCES_GNOME: enemyResources = {
   exp: 405,
   gold: 290,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Монета гнома",
     type: "gnomeItem",
@@ -154,7 +154,7 @@ const RESOURCES_GNOME: enemyResources = {
 const RESOURCES_GNOME_2: enemyResources = {
   exp: 430,
   gold: 315,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Монета гнома",
     type: "gnomeItem",
@@ -165,7 +165,7 @@ const RESOURCES_GNOME_2: enemyResources = {
 const RESOURCES_GNOME_3: enemyResources = {
   exp: 455,
   gold: 335,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Монета гнома",
     type: "gnomeItem",
@@ -176,7 +176,7 @@ const RESOURCES_GNOME_3: enemyResources = {
 const RESOURCES_GNOME_4: enemyResources = {
   exp: 480,
   gold: 350,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Монета гнома",
     type: "gnomeItem",
@@ -192,7 +192,7 @@ const RESOURCES_GNOME_5: enemyResources = {
 const RESOURCES_NAGA: enemyResources = {
   exp: 520,
   gold: 375,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Подводное сокровище",
     type: "gillsNaga",
@@ -203,7 +203,7 @@ const RESOURCES_NAGA: enemyResources = {
 const RESOURCES_NAGA_2: enemyResources = {
   exp: 560,
   gold: 390,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Подводное сокровище",
     type: "gillsNaga",
@@ -214,7 +214,7 @@ const RESOURCES_NAGA_2: enemyResources = {
 const RESOURCES_NAGA_3: enemyResources = {
   exp: 600,
   gold: 415,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Подводное сокровище",
     type: "gillsNaga",
@@ -225,7 +225,7 @@ const RESOURCES_NAGA_3: enemyResources = {
 const RESOURCES_NAGA_4: enemyResources = {
   exp: 640,
   gold: 430,
-  skillPoints: 1,
+  skillPoints: 0,
   drop: {
     label: "Подводное сокровище",
     type: "gillsNaga",

@@ -25,9 +25,10 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
 
         if (!hero.status.death) {
           const attackInfo = hero.attack(enemy);
-          if (!attackInfo.isStunned) {
-            ALL_TEXT.push(attackInfo);
-          }
+          attackInfo.isCritical && skillTrigger.afterHeroCrit.map((fn) => fn.call(hero.skills, hero, enemy));
+          // if (!attackInfo.isStunned) {
+          //   ALL_TEXT.push(attackInfo);
+          // }
 
           if (enemy.status.death) {
             console.log(hero.name, "win!");
@@ -49,9 +50,10 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
       } else {
         if (!enemy.status.death) {
           const attackInfo = enemy.attack(hero);
-          if (!attackInfo.isStunned) {
-            ALL_TEXT.push(attackInfo);
-          }
+          // if (!attackInfo.isStunned) {
+          //   ALL_TEXT.push(attackInfo);
+          // }
+          attackInfo.isCritical && skillTrigger.afterEnemyCrit.map((fn) => fn.call(hero.skills, hero, enemy));
           attackInfo.isEvade && skillTrigger.afterHeroAwade.map((fn) => fn.call(hero.skills, hero, enemy));
 
           attackEnemy();
@@ -92,6 +94,7 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
   if (checkForEvade(this.skills[3].data.chanceEvade) && !options?.isIgnoreAvade) {
     attackInfo.isEvade = true;
     console.log(`${this.name} промахнулся`);
+    ALL_TEXT.push(attackInfo);
     return attackInfo;
   }
 
@@ -107,10 +110,14 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
   goDamage(target, attackInfo.damage);
 
   console.log(`Удар по ${target.name} на ${attackInfo.damage} урона, осталось ${target.HP} HP`);
+
+  if (!attackInfo.isStunned) {
+    ALL_TEXT.push(attackInfo);
+  }
   return attackInfo;
 }
 
-function goDamage(target: IHero | IEnemy, value: number) {
+export function goDamage(target: IHero | IEnemy, value: number) {
   if (target.barrier) {
     damageToBarrier(target, value);
   } else {
@@ -180,7 +187,7 @@ export function damageToHP(target: IHero | IEnemy, dmg: number) {
 function createTimeoutFreeze() {
   let timeoutId: any;
 
-  return function startTimeout(hero: IHero | IEnemy, target: IHero | IEnemy, value: number, duration: number) {
+  return function startTimeout(target: IHero | IEnemy, value: number, duration: number) {
     if (!target.status.isFreeze) {
       target.status.isFreeze = true;
       target.buffs.incAttackSpeed(-value);
@@ -197,13 +204,14 @@ function createTimeoutFreeze() {
   };
 }
 
-function createTimeoutDot() {
+function createTimeoutDot(type: "posion" | "bleed") {
+  const statusType = type === "posion" ? "isPoisoned" : "isBleeded";
   let timeoutId: any;
   let intervalId: any;
 
   return function startTimeout(hero: IHero | IEnemy, target: IHero | IEnemy, value: number, duration: number) {
-    if (!target.status.isPoisoned) {
-      target.status.isPoisoned = true;
+    if (!target.status[statusType]) {
+      target.status[statusType] = true;
     }
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -214,7 +222,7 @@ function createTimeoutDot() {
 
     intervalId = setInterval(() => {
       if (target.status.death || hero.status.death) {
-        target.status.isPoisoned = false;
+        target.status[statusType] = false;
         clearInterval(intervalId);
       } else {
         goDamage(target, value);
@@ -224,14 +232,16 @@ function createTimeoutDot() {
 
     timeoutId = setTimeout(() => {
       clearInterval(intervalId);
-      target.status.isPoisoned = false;
-      console.log("яд закончился");
+      target.status[statusType] = false;
+      // target.update();
+      console.log("дот закончился");
     }, duration * 1000);
   };
 }
 
 export const goFreeze = createTimeoutFreeze();
-export const goDotDmg = createTimeoutDot();
+export const goPosionDmg = createTimeoutDot("posion");
+export const goBleedDmg = createTimeoutDot("bleed");
 
 export function goStun(target: IHero | IEnemy, duration: number) {
   target.status.isStun = true;

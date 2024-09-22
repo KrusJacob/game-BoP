@@ -5,9 +5,11 @@ export function applyPowerSkill(value: number, powerSkill: number) {
   return Math.round(value * (powerSkill / 100 + 1));
 }
 
-export function healHeroOfSkill(hero: IHero, healValue = 0, healPercent = 0) {
+export function healHeroOfSkill(hero: IHero, healValue = 0, healPercent = 0, isPowerSkill = true) {
   let heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
-  heal = applyPowerSkill(heal, hero.getters.getPowerSkill());
+  if (isPowerSkill) {
+    heal = applyPowerSkill(heal, hero.getters.getPowerSkill());
+  }
   console.log(heal);
   hero.getHeal(heal);
   // hero.update();

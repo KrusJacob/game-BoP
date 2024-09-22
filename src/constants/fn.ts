@@ -49,6 +49,7 @@ export function getBarrier(this: IHero | IEnemy, value: number) {
   if (this.barrier < 0) {
     this.barrier = 0;
   }
+  this.update();
 }
 
 export function getHeal(this: IHero | IEnemy, value: number) {

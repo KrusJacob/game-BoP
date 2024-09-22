@@ -9,13 +9,17 @@ import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
 
 const HeroStatList = ({ hero }: { hero: IHero | IEnemy }) => {
+  const maxHp = useGameStore((state) => state[hero.type]?.getters.getMaxHp());
   const power = useGameStore((state) => state[hero.type]?.getters.getPower());
   const agility = useGameStore((state) => state[hero.type]?.getters.getAgility());
   const intellect = useGameStore((state) => state[hero.type]?.getters.getIntellect());
+  const def = useGameStore((state) => state[hero.type]?.getters.getDef());
+  const attack = useGameStore((state) => state[hero.type]?.getters.getAttack());
   const attackSpeed = useGameStore((state) => state[hero.type]?.getters.getAttackSpeed());
+  const powerSkill = useGameStore((state) => state[hero.type]?.getters.getPowerSkill());
 
   return (
-    <div>
+    <ul>
       <HeroStat Icon={FaHeart} value={hero.getters.getMaxHp()}>
         Здоровье
       </HeroStat>
@@ -44,7 +48,7 @@ const HeroStatList = ({ hero }: { hero: IHero | IEnemy }) => {
       >
         Сила умений
       </HeroStat>
-    </div>
+    </ul>
   );
 };
 

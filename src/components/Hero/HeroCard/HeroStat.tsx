@@ -12,11 +12,11 @@ interface Props {
 
 const HeroStat = ({ Icon, children, value, title }: Props) => {
   return (
-    <div title={title} className={styles.stats}>
+    <li title={title} className={styles.stats}>
       <Icon />
       <span>{children}:</span>
       {value}
-    </div>
+    </li>
   );
 };
 

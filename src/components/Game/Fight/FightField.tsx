@@ -19,7 +19,7 @@ const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) =>
   const [enemies, setEnemies] = useState<IEnemy[]>([]);
   const { hero, enemy, setEnemy } = useGameStore((state) => state);
 
-  console.log("FightField");
+  // console.log("FightField");
 
   const onGoFight = () => {
     if (enemy && hero) {

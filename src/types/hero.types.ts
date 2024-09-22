@@ -34,6 +34,7 @@ export interface heroStatus {
   isStun: boolean;
   isFreeze: boolean;
   isPoisoned: boolean;
+  isBleeded: boolean;
 }
 
 export interface heroDebuffStack {

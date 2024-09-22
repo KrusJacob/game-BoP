@@ -1,12 +1,124 @@
 .skillField {
-    background-color: #0c1f1f;
-    background: linear-gradient(90deg, rgba(134, 15, 15, 1) 0%, rgba(6, 79, 25, 1) 50%, rgba(6, 65, 143, 1) 100%);
+    background-color: #143333;
+    /* background: linear-gradient(90deg, rgba(134, 15, 15, 1) 0%, rgba(6, 79, 25, 1) 50%, rgba(6, 65, 143, 1) 100%); */
     width: 100%;
     height: 100%;
     border-radius: var(--borderRadius);
     display: flex;
+    flex-direction: column;
+    /* opacity: 1; */
+}
+
+.header {
+    position: relative;
+    padding: 6px 10px;
+    font-size: 1.4rem;
+    background-color: #242424;
+}
+.header div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: max-content;
+    cursor: pointer;
+}
+.contol {
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+.contol button {
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s all;
+}
+.contol button.active {
+    background-color: #fff;
+    color: black;
+}
+.power {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+.agility {
+    background-color: rgba(0, 128, 20, 0.5);
+}
+.intellect {
+    background-color: rgba(0, 100, 255, 0.5);
+}
+.skillWrapper {
+    display: flex;
+    height: 100%;
     justify-content: center;
     align-items: center;
+}
+
+.skillList {
+    padding-top: 4px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: column;
+}
+.title {
+    font-size: 1.4rem;
+}
+
+.skillLevel {
+    width: 100%;
+    position: relative;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    padding: 16px 0 16px 0;
+    background-color: black;
+    border-bottom: 2px dashed rgba(0, 0, 0, 0.5);
+}
+.skillLevel > span {
+    position: absolute;
+    top: 50%;
     font-size: 1.5rem;
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(-50%);
+}
+.skillLevel.skillLevelOpen {
+    background-color: initial;
+}
+
+.skillitem {
+    cursor: pointer;
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border: 2px solid rgb(155, 0, 0);
+    background-color: #777777;
+    opacity: 0.2;
+    border-radius: 16px;
+}
+.skillitem img {
+    border-radius: 16px;
+    width: 100%;
+}
+.skillitem span {
+    position: absolute;
+    border-radius: 4px;
+    padding: 1px 2px;
+    bottom: -8px;
+    right: -10px;
+    font-size: 0.9rem;
+    user-select: none;
+    background-color: #000000;
+}
+.skillitem.open {
     opacity: 1;
+    border-color: #42a841;
+}
+.skillitem.full {
+    border-color: gold;
 }

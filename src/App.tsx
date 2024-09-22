@@ -7,11 +7,13 @@ import DoorLayout from "./layout/DoorLayout";
 
 import GameArea from "./components/Game/GameArea/GameArea";
 import { useGameStore } from "./store/gameStore";
-import { registerAllSkills } from "./constants/skill";
+import { getUpgradeSkills, registerAllSkills } from "./constants/skill";
+import { useSkillStore } from "./store/skillStore";
 
 function App() {
   const hero = useGameStore((state) => state.hero);
   const setHero = useGameStore((state) => state.setHero);
+  const setUpgradeSkills = useSkillStore((state) => state.setUpgradeSkills);
 
   const chooseHero = (hero: IHero) => {
     hero.update = function () {
@@ -21,6 +23,7 @@ function App() {
     // hero.setters.incMaxHp(200);
     hero.update();
     registerAllSkills(hero.skills);
+    setUpgradeSkills(getUpgradeSkills(hero.name));
   };
 
   return (

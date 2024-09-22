@@ -16,7 +16,7 @@ export const STATS_GNOME_2: enemyBaseStats = {
   img: "/src/assets/enemy/gnome_2.png",
   name: "Гном-воитель",
   power: 70,
-  agility: 110,
+  agility: 105,
   intellect: 50,
   attack: 130,
   def: 45,

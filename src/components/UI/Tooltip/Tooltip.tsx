@@ -6,11 +6,12 @@ interface Props {
   children: ReactNode;
   title: string;
   descr?: string;
+  descr2?: string;
   size?: "default" | "small";
   anchor?: "top" | "left" | "bot" | "rigth";
 }
 
-const Tooltip = ({ children, title, size, descr, anchor = "top" }: Props) => {
+const Tooltip = ({ children, title, size, descr, descr2, anchor = "top" }: Props) => {
   const [isShow, setShow] = useState(false);
 
   return (
@@ -29,6 +30,7 @@ const Tooltip = ({ children, title, size, descr, anchor = "top" }: Props) => {
           <div>
             <b>{title}</b>
             {descr && <p>{descr}</p>}
+            {descr2 && <p style={{ opacity: 0.5 }}>{descr2}</p>}
           </div>
         )}
       </div>

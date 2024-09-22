@@ -3,7 +3,7 @@ import { shopItemType } from "@/types/shop.types";
 import { bagItemType } from "@/types/shop.types";
 import { EMPTY_BAG_SLOT } from "../bag";
 import { IEnemy } from "@/types/enemy.types";
-import { goDotDmg, goFreeze, goStun } from "../func/fight";
+import { goBleedDmg, goPosionDmg, goFreeze, goStun } from "../func/fight";
 
 export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
@@ -93,7 +93,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
       duration: 6,
     },
     fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
-      goFreeze(hero, enemy, this.data.value, this.data.duration);
+      goFreeze(enemy, this.data.value, this.data.duration);
       decreaseQuantity(hero.resources, this.bagSlotId);
     },
   },
@@ -112,7 +112,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
       duration: 8,
     },
     fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
-      goDotDmg(hero, enemy, this.data.value, this.data.duration);
+      goPosionDmg(hero, enemy, this.data.value, this.data.duration);
       decreaseQuantity(hero.resources, this.bagSlotId);
     },
   },

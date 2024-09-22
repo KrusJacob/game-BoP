@@ -8,16 +8,26 @@ import { HERO_REWARD } from "../resources";
 import { addItemToBag } from "../shop";
 import { DROP_ENEMIES } from "../drop";
 
+function getGold(hero: IHero, goldValue: number) {
+  if (hero.boost.gold) {
+    goldValue += Math.floor((goldValue * hero.boost.gold) / 100);
+  }
+  hero.resources.gold += goldValue;
+  return goldValue;
+}
+
+function getSkillPoint(hero: IHero, skillPointValue: number) {
+  hero.resources.skillPoints += skillPointValue;
+  return skillPointValue;
+}
+
 export function getReward(hero: IHero, enemy: IEnemy | IHero) {
   if (enemy instanceof EnemyClass) {
-    let goldReward = enemy.resources.gold;
-    let skillPointsReward = enemy.resources.skillPoints;
-    if (hero.boost.gold) {
-      goldReward += Math.floor((goldReward * hero.boost.gold) / 100);
-    }
-    hero.resources.gold += goldReward;
+    const goldReward = getGold(hero, enemy.resources.gold);
+
+    const skillPointsReward = getSkillPoint(hero, enemy.resources.skillPoints);
+
     const expReward = hero.setters.incExp.call(hero, enemy.resources.exp);
-    hero.resources.skillPoints += skillPointsReward;
 
     //
     if (enemy.resources.drop) {
@@ -31,8 +41,6 @@ export function getReward(hero: IHero, enemy: IEnemy | IHero) {
       let dropItem = DROP_ENEMIES[enemy.resources.drop?.type];
       dropItem = { ...dropItem, name: enemy.resources.drop.label, quantity: dropReward };
       const isSuccess = addItemToBag(hero.resources, dropItem, "end");
-      console.log(hero.resources.bag);
-      console.log(isSuccess, "isSuccess");
     } else {
       delete HERO_REWARD.drop;
     }
@@ -46,7 +54,6 @@ export function getReward(hero: IHero, enemy: IEnemy | IHero) {
 
 function restHero(hero: IHero) {
   const healValue = Math.round(hero.getters.getMaxHp() * (HP_REST_PERCENT / 100) + HP_REST);
-
   hero.getHeal(healValue);
 }
 
@@ -67,6 +74,10 @@ function incLevel(this: IHero) {
   this.level.value += 1;
   this.resources.parameterPoints += PARAMETER_POINT_LEVEL;
   getTalent(this);
+
+  if (this.level.value % 2 == 0) {
+    getSkillPoint(this, 1);
+  }
 }
 
 export function setMaxLevelExp(exp: number) {

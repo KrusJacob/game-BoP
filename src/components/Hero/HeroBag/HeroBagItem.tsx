@@ -26,7 +26,7 @@ const HeroBagItem = ({ item, onClickItem = () => {} }: Props) => {
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <span>{item.quantity}</span>
-              <img data-tooltip-id="my-tooltip" src={item.img} alt={item.name} />
+              <img src={item.img} alt={item.name} />
             </motion.div>
             <Tooltip
               style={{ fontSize: "1rem", maxWidth: "320px" }}
