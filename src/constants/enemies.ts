@@ -1,4 +1,4 @@
-import { enemiesToLocation, enemiesToTomb, enemyInfo, enemyName } from "@/types/enemy.types";
+import { enemiesToLocation, enemyToTomb, enemyInfo, enemyName } from "@/types/enemy.types";
 import { locationItem } from "@/types/location.types";
 import { getRandom } from "@/utils/getRandom";
 import { getEnemiesLocations } from "./location";
@@ -41,46 +41,31 @@ export const ALL_ENEMIES = [
 // export const ENEMIES_TO_SNOW_MOUNTAINS = ["gnome", "rogue", "gnome_2"];
 // export const ENEMIES_TO_DARK_FOREST: enemiesToLocation[] = [
 
-export const ENEMIES_TO_TOBM: enemiesToTomb[] = [
+export const ENEMIES_TO_TOBM: enemyToTomb[] = [
   {
     name: "beast_5",
-    resource: {
-      label: "Клык зверя",
-      type: "fangsBeast",
-      value: [30],
-    },
+    value: 100,
+    defeated: false,
   },
   {
     name: "rogue_5",
-    resource: {
-      label: "Кольцо убийцы",
-      type: "rogueItem",
-      value: [30],
-    },
+    value: 100,
+    defeated: false,
   },
   {
     name: "goblin_5",
-    resource: {
-      label: "Эмблема гоблина",
-      type: "goblinItem",
-      value: [30],
-    },
+    value: 100,
+    defeated: false,
   },
   {
     name: "gnome_5",
-    resource: {
-      label: "Монета гнома",
-      type: "gnomeItem",
-      value: [30],
-    },
+    value: 100,
+    defeated: false,
   },
   {
     name: "naga_5",
-    resource: {
-      label: "Подводное сокровище",
-      type: "gillsNaga",
-      value: [30],
-    },
+    value: 100,
+    defeated: false,
   },
 ];
 //

@@ -9,6 +9,7 @@ import TestField from "../Test/TestField";
 import FightField from "../Fight/FightField";
 import HeroField from "../Hero/HeroField";
 import TombField from "../Tomb/TombField";
+import LocationField from "../Location/LocationField";
 
 const GameField = () => {
   return (
@@ -45,7 +46,7 @@ const TabsBtns: ITabsBtn[] = [
   },
 ];
 
-export type TabsWithFight = TabsField | "Бой" | "Гробница";
+export type TabsWithFight = TabsField | "Локация" | "Бой" | "Гробница";
 
 const Tabs = () => {
   const [tab, setTab] = useState<TabsWithFight>("Главная");
@@ -62,7 +63,12 @@ const Tabs = () => {
     <>
       <div className={styles.tabs}>
         {TabsBtns.map((btn) => (
-          <Button disabled={tab === "Бой"} onClick={() => onChangeTab(btn.label)} key={btn.label} size="small">
+          <Button
+            disabled={tab === "Бой" || tab === "Локация"}
+            onClick={() => onChangeTab(btn.label)}
+            key={btn.label}
+            size="small"
+          >
             {btn.label}
           </Button>
         ))}
@@ -74,7 +80,8 @@ const Tabs = () => {
       {tab === "Maгазин" && <ShopField />}
       {tab === "Test" && <TestField />}
       {tab === "Бой" && <FightField onSetTab={onSetTab} />}
-      {tab === "Гробница" && <TombField />}
+      {tab === "Локация" && <LocationField onSetTab={onSetTab} />}
+      {tab === "Гробница" && <TombField onSetTab={onSetTab} />}
     </>
   );
 };

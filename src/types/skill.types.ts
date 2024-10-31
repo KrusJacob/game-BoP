@@ -30,4 +30,4 @@ export interface LevelsSkill {
   // level_5: UpSkill[];
 }
 export type UpgradeSkills = Record<TypeMainStat, LevelsSkill>;
-export type AllLevels = "level_1" | "level_2" | "level_3" | "level_4" | "level_5";
+export type AllLevels = "level_1" | "level_2" | "level_3" | "level_4";

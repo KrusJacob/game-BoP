@@ -9,34 +9,42 @@ const SKILLS_BOXER: heroSkills[] = [
   {
     label: "Апперкот",
     descr: function () {
-      return `Наносит урон противнику в размере ${this.data.modifier * 100}% от атаки. Перезарядка - ${
-        this.data.totalCooldown
-      } секунд`;
+      return `Атакует противника, нанося ${(this.data.modifier * 100).toFixed()}% урона. Стоимость - ${
+        this.data.costEnergy
+      } энергии`;
     },
     img: "/src/assets/skill/skill_boxer_1.png",
     data: {
-      modifier: 1.5,
-      totalCooldown: 15,
+      costEnergy: 170,
+      modifier: 1.75,
+      totalCooldown: 10,
       count: 0,
+      power_2_2: {
+        isOpen: false,
+        modifierPower: 0,
+      },
     },
-    // trigger: "active",
-    // fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
-    //   if (this[0].data.count === 0) {
-    //     console.log("skill 0");
-    //     hero.attack(target, { modifier: this[0].data.modifier, isIgnoreAvade: true });
-    //     target.update();
+    trigger: "active",
+    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+      const data = this[0].data;
+      // if (this[0].data.count === 0) {
+      hero.attack(target, { modifier: data.modifier, isIgnoreAvade: true });
+      // target.update();
+      if (data.power_2_2) {
+        const heal = hero.getters.getPower() * data.power_2_2.modifierPower;
+        healHeroOfSkill(hero, heal, 0);
+      }
+      // this[0].data.count = this[0].data.totalCooldown;
+      // const interval = setInterval(() => {
+      //   this[0].data.count -= 1;
+      //   if (this[0].data.count === 0) {
+      //     clearInterval(interval);
+      //   }
+      // }, 1000);
 
-    //     this[0].data.count = 15;
-    //     const interval = setInterval(() => {
-    //       this[0].data.count -= 1;
-    //       if (this[0].data.count === 0) {
-    //         clearInterval(interval);
-    //       }
-    //     }, 1000);
-
-    //     // setTimeout(() => (this[0].data.count = 0), this[0].data.totalCooldown * 1000);
-    //   }
-    // },
+      // setTimeout(() => (this[0].data.count = 0), this[0].data.totalCooldown * 1000);
+      // }
+    },
   },
   {
     label: "Шестое чувство",
@@ -54,6 +62,10 @@ const SKILLS_BOXER: heroSkills[] = [
         isOpen: false,
         modifierHeal: 0,
       },
+      power_3_2: {
+        isOpen: false,
+        valueEnergy: 0,
+      },
     },
     trigger: "afterHeroAwade",
     fn: function (this: heroSkills[], hero: IHero) {
@@ -67,6 +79,9 @@ const SKILLS_BOXER: heroSkills[] = [
           let healValue = data.healValue;
           if (data.talent_3_1.isOpen) {
             healValue += Math.floor(hero.getters.getIntellect() * data.talent_3_1.modifierHeal);
+          }
+          if (data.power_3_2.isOpen) {
+            hero.energy.value += data.power_3_2.valueEnergy;
           }
           healHeroOfSkill(hero, healValue, data.healPercent);
           hero.getBarrier(data.barrierValue);

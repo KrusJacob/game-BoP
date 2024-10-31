@@ -1,6 +1,7 @@
 import { ALL_HEROES } from "../constants/hero";
-import { IEnemy, enemyDrop, enemyTypeDrop } from "./enemy.types";
+import { IEnemy, enemyDrop, enemyName, enemyType, enemyTypeDrop } from "./enemy.types";
 import { bagItemType } from "./shop.types";
+import { talentType } from "./talent.types";
 
 export interface IHero {
   type: heroType;
@@ -9,6 +10,7 @@ export interface IHero {
   baseStats: heroBaseStats;
   incStats: heroIncStats;
   HP: number;
+  energy: heroEnergy;
   barrier: number;
   buffs: heroBuffs;
   debuffStack: heroDebuffStack;
@@ -22,6 +24,20 @@ export interface IHero {
   getters: heroGetters;
   setters: heroSetters;
   boost: heroBoost;
+  statistics: {
+    kills: killStatistics;
+    tombProgress: tombProgress;
+  };
+}
+
+export type tombProgress = Record<enemyType, number>;
+
+export type killStatistics = Partial<Record<enemyName, number>>;
+
+export interface heroEnergy {
+  value: number;
+  max: number;
+  incValue: number;
 }
 
 export interface heroBoost {
@@ -169,9 +185,10 @@ export interface heroReward {
   exp: number;
   gold: number;
   skillPoints: number;
-  drop?: {
-    label: string;
-    type: enemyTypeDrop;
-    value: number;
-  };
+  talent: talentType | null;
+  // drop?: {
+  //   label: string;
+  //   type: enemyTypeDrop;
+  //   value: number;
+  // };
 }

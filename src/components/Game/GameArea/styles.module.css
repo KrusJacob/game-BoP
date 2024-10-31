@@ -6,7 +6,8 @@
     grid-template-columns: 1fr 2.5fr 1fr;
     justify-content: space-between;
     gap: 8px;
-    margin-top: 0.8rem;
+    /* margin-top: 0.8rem; */
+    margin-top: 2rem;
 }
 
 .gameOverWrapper {

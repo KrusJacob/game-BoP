@@ -27,7 +27,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: true,
         branch: "power",
         data: {
-          value: [100, 200, 300, 400, 500],
+          value: [120, 240, 360, 480, 600],
         },
         fn(hero) {
           hero.setters.incMaxHp(getValue(this));
@@ -49,17 +49,42 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/cook/skillPower_2_1.png",
+        maxPoints: 5,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          value: [100, 130, 160, 190, 210],
+        },
+        fn(hero) {
+          SKILLS_COOK[2].data.power_2_1.isOpen = true;
+          SKILLS_COOK[2].data.power_2_1.modifierPower += getValue(this) / 100;
+        },
+      },
+      {
+        name: "Толстая кожа",
+        descr: function () {
+          const power = getText.call(this, "power");
+          const def = getText.call(this, "def");
+          return {
+            current: power.current ? `Увеличивает силу на ${power.current} и защиту на ${def.current}` : "",
+            next: def.next ? `Увеличивает силу на ${power.next} и защиту на ${def.next}` : "",
+          };
+        },
+        img: "/src/assets/skill/cook/skillPower_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "power",
         data: {
-          value: [120, 160, 200],
+          power: [3, 6, 9],
+          def: [3, 6, 9],
         },
         fn(hero) {
-          SKILLS_COOK[2].data.power_2_1.isOpen = true;
-          SKILLS_COOK[2].data.power_2_1.modifierPower += getValue(this) / 100;
+          hero.setters.incPower(getValue(this, "power"));
+          hero.setters.incDef(getValue(this, "def"));
         },
       },
     ],
@@ -95,6 +120,33 @@ export const upgradeCookSkills: UpgradeSkills = {
         fn(hero) {
           SKILLS_COOK[3].data.chanceCritDamage += getValue(this);
           hero.setters.incPowerSkill(getValue(this, "powerSkill"));
+        },
+      },
+      {
+        name: "Голодная ярость",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current
+              ? `"Во все оружии" дополнительно увеличивает наносимый на ${text.current}% и снижает получаемый урон на ${text.current}%`
+              : "",
+            next: text.next
+              ? `"Во все оружии" дополнительно увеличивает наносимый на ${text.next}% и снижает получаемый урон на ${text.next}%`
+              : "",
+          };
+        },
+        img: "/src/assets/skill/cook/skillPower_3_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          value: [4, 6, 8],
+        },
+        fn(hero) {
+          SKILLS_COOK[0].data.modifierDamage += getValue(this);
+          SKILLS_COOK[0].data.modifierDef += getValue(this);
         },
       },
     ],
@@ -154,7 +206,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: true,
         branch: "agility",
         data: {
-          agility: [5, 10, 15, 20, 25],
+          agility: [4, 8, 12, 16, 20],
           attack: [3, 6, 9, 12, 15],
         },
         fn(hero) {
@@ -178,13 +230,13 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/cook/skillAgility_2_1.png",
-        maxPoints: 2,
+        maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "agility",
         data: {
-          value: [150, 225],
+          value: [150, 200, 250],
           modifierHeal: 0,
         },
         fn(hero) {
@@ -197,6 +249,31 @@ export const upgradeCookSkills: UpgradeSkills = {
               healHeroOfSkill(hero, healValue, 0, false);
             }
           }
+        },
+      },
+      {
+        name: "Быстрая готовка",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current
+              ? `"Во все оружии" так же повышает скорость атаки героя на ${text.current}%`
+              : "",
+            next: text.next ? `"Во все оружии" так же повышает скорость атаки героя на ${text.next}%` : "",
+          };
+        },
+        img: "/src/assets/skill/cook/skillAgility_2_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          value: [10, 15, 20],
+        },
+        fn(hero) {
+          SKILLS_COOK[0].data.agility_2_2.isOpen = true;
+          SKILLS_COOK[0].data.agility_2_2.modifier += getValue(this);
         },
       },
     ],
@@ -218,18 +295,51 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/cook/skillAgility_3_1.png",
+        maxPoints: 5,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          attackSpeed: [0.1, 0.2, 0.3, 0.4, 0.5],
+          intellect: [-8, -16, -24, -32, -40],
+        },
+        fn(hero) {
+          hero.setters.incAttackSpeed(getValue(this, "attackSpeed"));
+          hero.setters.incIntellect(getValue(this, "intellect"));
+        },
+      },
+      {
+        name: "Опасные добавки",
+        descr: function () {
+          const chanceCritDamage = getText.call(this, "chanceCritDamage");
+          const maxHp = getText.call(this, "maxHp");
+          return {
+            current: chanceCritDamage.current
+              ? `Увеличивает шанс крит.удара на ${
+                  chanceCritDamage.current
+                }%, но уменьшает макс.запас здоровья на ${-maxHp.current}`
+              : "",
+            next: chanceCritDamage.next
+              ? `Увеличивает шанс крит.удара на ${
+                  chanceCritDamage.next
+                }%, но уменьшает макс.запас здоровья на ${-maxHp.next}`
+              : "",
+          };
+        },
+        img: "/src/assets/skill/cook/skillAgility_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "agility",
         data: {
-          attackSpeed: [0.12, 0.24, 0.36],
-          intellect: [-8, -16, -24],
+          chanceCritDamage: [3, 6, 9],
+          maxHp: [-50, -100, -150],
         },
         fn(hero) {
-          hero.setters.incAttackSpeed(getValue(this, "attackSpeed"));
-          hero.setters.incIntellect(getValue(this, "intellect"));
+          SKILLS_COOK[3].data.chanceCritDamage += getValue(this, "chanceCritDamage");
+          hero.setters.incMaxHp(getValue(this, "maxHp"));
         },
       },
     ],
@@ -252,7 +362,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [15, 25, 35, 45, 55],
+          value: [18, 27, 36, 45, 54],
         },
         fn(hero) {
           hero.setters.incIgnoreDef(getValue(this));
@@ -274,13 +384,13 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/cook/skillIntellect_1_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "intellect",
         data: {
-          value: [8, 16, 24],
+          value: [6, 12, 18, 24, 30],
         },
         fn(hero) {
           hero.setters.incIntellect(getValue(this));
@@ -304,14 +414,14 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          value: [5, 10, 15],
+          value: [4, 8, 12],
         },
         fn(hero) {
           hero.setters.incDef(getValue(this));
         },
       },
       {
-        name: "Ослабительное",
+        name: "Слабительное",
         descr: function () {
           const text = getText.call(this, "value");
           return {
@@ -320,13 +430,13 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/cook/skillIntellect_2_2.png",
-        maxPoints: 2,
+        maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          value: [7, 10],
+          value: [7, 9, 11],
         },
         fn(hero) {
           SKILLS_COOK[2].data.intellect_2_2.isOpen = true;
@@ -373,14 +483,14 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/cook/skillIntellect_3_2.png",
-        maxPoints: 1,
+        maxPoints: 2,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          duration: [1],
-          value: [175],
+          duration: [0.5, 1],
+          value: [100, 200],
         },
         fn(hero) {
           hero.setters.incMaxHp(-getValue(this));

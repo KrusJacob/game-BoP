@@ -4,23 +4,26 @@ import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
+import EnemyBar from "./EnemyBar";
 
 interface Props {
   hero: IHero;
   enemy: IHero | IEnemy | null;
 }
 
-const WrapperBar = ({ hero, enemy }: Props) => {
-  const heroHP = useGameStore((state) => state.hero?.HP);
-  const heroMaxHP = useGameStore((state) => state.hero?.getters.getMaxHp());
-  const enemyHP = useGameStore((state) => state.enemy?.HP);
-  const enemyMaxHP = useGameStore((state) => state.enemy?.getters.getMaxHp());
-  const heroBarrier = useGameStore((state) => state.hero?.barrier);
-  const enemyBarrier = useGameStore((state) => state.enemy?.barrier);
+const WrapperBar = () => {
+  // const heroHP = useGameStore((state) => state.hero?.HP);
+  // const heroMaxHP = useGameStore((state) => state.hero?.getters.getMaxHp());
+  // const heroBarrier = useGameStore((state) => state.hero?.barrier);
+  // const enemyHP = useGameStore((state) => state.enemy?.HP);
+  // const enemyMaxHP = useGameStore((state) => state.enemy?.getters.getMaxHp());
+  const enemy = useGameStore((state) => state.enemy);
+
+  console.log("render WrapperBar");
 
   return (
     <div className={styles.wrapper}>
-      {hero && <HeroBar value={heroHP || 0} max={heroMaxHP || 0} barrier={heroBarrier || 0} />}
+      <HeroBar />
       {enemy && (
         <>
           <motion.span
@@ -29,7 +32,7 @@ const WrapperBar = ({ hero, enemy }: Props) => {
           >
             VS
           </motion.span>
-          <HeroBar value={enemyHP || 0} max={enemyMaxHP || 0} barrier={enemyBarrier || 0} isEnemy />
+          <EnemyBar />
         </>
       )}
     </div>

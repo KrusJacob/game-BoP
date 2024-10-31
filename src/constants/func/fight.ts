@@ -1,7 +1,7 @@
 import { IEnemy } from "@/types/enemy.types";
 import { IHero, attackOptions, attackInfo } from "@/types/hero.types";
 
-import { ALL_TEXT } from "../text";
+import { ALL_TEXT, clearText } from "../text";
 import { getPercent } from "@/utils/getPercent";
 import { getRandom } from "@/utils/getRandom";
 import { MULTIPLIER_CRITICAL_DAMAGE } from "../setup";
@@ -9,7 +9,7 @@ import { getReward } from "./reward";
 import { skillTrigger } from "../skill";
 
 export function fight(hero: IHero, enemy: IHero | IEnemy) {
-  clearText("full");
+  clearText();
   console.log(skillTrigger);
   skillTrigger.inBeginFight.map((fn) => fn.call(hero.skills, hero, enemy));
   attackHero();
@@ -65,11 +65,10 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
   }
 }
 
-function clearText(mode: "full" | "one") {
-  if (mode === "full") {
-    ALL_TEXT.length = 0;
-  } else {
-    ALL_TEXT.length >= 10 && ALL_TEXT.shift();
+function getEnergy(hero: IHero | IEnemy) {
+  hero.energy.value += hero.energy.incValue;
+  if (hero.energy.value > hero.energy.max) {
+    hero.energy.value = hero.energy.max;
   }
 }
 
@@ -105,11 +104,12 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     attackInfo.damage = goCriticalDamage(attackInfo.damage);
   }
   attackInfo.damage = calcDamageWithDef(attackInfo.damage, target.getters.getDef(), this, options);
-  attackInfo.damage = attackInfo.damage * target.buffs.getBuffDef();
+  attackInfo.damage = Math.floor(attackInfo.damage * target.buffs.getBuffDef());
 
   goDamage(target, attackInfo.damage);
+  getEnergy(this);
 
-  console.log(`Удар по ${target.name} на ${attackInfo.damage} урона, осталось ${target.HP} HP`);
+  // console.log(`Удар по ${target.name} на ${attackInfo.damage} урона, осталось ${target.HP} HP`);
 
   if (!attackInfo.isStunned) {
     ALL_TEXT.push(attackInfo);
@@ -203,6 +203,17 @@ function createTimeoutFreeze() {
     }, duration * 1000);
   };
 }
+
+// function getStatus(type: "posion" | "bleed") {
+//   switch (type) {
+//     case "posion":
+//       return "isPoisoned";
+//     case "bleed":
+//       return "isBleeded";
+//     default:
+//       return "IsOther";
+//   }
+// }
 
 function createTimeoutDot(type: "posion" | "bleed") {
   const statusType = type === "posion" ? "isPoisoned" : "isBleeded";

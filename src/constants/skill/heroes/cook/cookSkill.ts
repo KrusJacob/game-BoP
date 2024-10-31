@@ -7,12 +7,30 @@ import { healHeroOfSkill, applyPowerSkill } from "../../utils";
 
 const SKILLS_COOK: heroSkills[] = [
   {
-    label: "",
+    label: "Во все оружии",
     descr: function () {
-      return `Описание способности. В разработке...`;
+      return `Повышает на ${this.data.duration} секунд наносимый урон героя на ${this.data.modifierDamage}% и снижает получаемый урон на ${this.data.modifierDef}%. Стоимость - ${this.data.costEnergy} энергии`;
     },
     img: "/src/assets/skill/skill_cook_1.png",
-    data: {},
+    data: {
+      costEnergy: 160,
+      modifierDamage: 15,
+      modifierDef: 15,
+      duration: 8,
+      agility_2_2: {
+        isOpen: true,
+        modifier: 0,
+      },
+    },
+    trigger: "active",
+    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+      const data = this[0].data;
+      hero.buffs.incDamage(data.modifierDamage, data.duration);
+      hero.buffs.incDef(data.modifierDef, data.duration);
+      if (data.agility_2_2.isOpen) {
+        hero.buffs.incAttackSpeed(data.agility_2_2.modifier, data.duration);
+      }
+    },
   },
   {
     label: "Сиропчик",
@@ -22,8 +40,8 @@ const SKILLS_COOK: heroSkills[] = [
     img: "/src/assets/skill/skill_cook_2.png",
     data: {
       chance: 20,
-      healValue: 50,
-      healPercent: 5,
+      healValue: 30,
+      healPercent: 4,
       cooldownCount: 5,
       isCooldown: false,
     },
@@ -52,8 +70,8 @@ const SKILLS_COOK: heroSkills[] = [
     data: {
       chance: 20,
       duration: 5,
-      modifierOfIntellect: 0.5,
-      initalValue: 40,
+      modifierOfIntellect: 0.2,
+      initalValue: 30,
       power_2_1: {
         isOpen: false,
         modifierPower: 0,

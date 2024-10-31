@@ -12,7 +12,8 @@ const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
   const heroResources = useGameStore((state) => state.hero?.resources);
 
   const onGoWay = () => {
-    onSetTab("Бой");
+    // onSetTab("Бой");
+    onSetTab("Локация");
   };
 
   const onGoTomb = () => {

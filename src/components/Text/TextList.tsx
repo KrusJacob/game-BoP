@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import TextItem from "./TextItem";
 
 const TextList = () => {
+  // console.log("render TextList");
   return (
     <div className={styles.textList}>
       {ALL_TEXT.map((item, i) => {

@@ -1,12 +1,9 @@
 import { IHero } from "@/types/hero.types";
 import { HP_REST, HP_REST_PERCENT, PARAMETER_POINT_LEVEL } from "../setup";
 import { getTalent } from "../talent";
-import { IEnemy } from "@/types/enemy.types";
-import { getRandom } from "@/utils/getRandom";
+import { IEnemy, enemyType } from "@/types/enemy.types";
 import { EnemyClass } from "../class";
 import { HERO_REWARD } from "../resources";
-import { addItemToBag } from "../shop";
-import { DROP_ENEMIES } from "../drop";
 
 function getGold(hero: IHero, goldValue: number) {
   if (hero.boost.gold) {
@@ -29,26 +26,46 @@ export function getReward(hero: IHero, enemy: IEnemy | IHero) {
 
     const expReward = hero.setters.incExp.call(hero, enemy.resources.exp);
 
-    //
-    if (enemy.resources.drop) {
-      let dropReward = getRandom(enemy.resources.drop.value[0], enemy.resources.drop.value[1]);
-      hero.resources.drop[enemy.resources.drop.type] += dropReward;
-      HERO_REWARD.drop = {
-        label: enemy.resources.drop.label,
-        type: enemy.resources.drop.type,
-        value: dropReward,
-      };
-      let dropItem = DROP_ENEMIES[enemy.resources.drop?.type];
-      dropItem = { ...dropItem, name: enemy.resources.drop.label, quantity: dropReward };
-      const isSuccess = addItemToBag(hero.resources, dropItem, "end");
-    } else {
-      delete HERO_REWARD.drop;
-    }
+    changeKillStatistic(hero.statistics.kills, enemy.name);
+    changeTombProgressStatistic(hero.statistics.tombProgress, enemy);
+
     HERO_REWARD.exp = expReward;
     HERO_REWARD.gold = goldReward;
     HERO_REWARD.skillPoints = skillPointsReward;
 
     restHero(hero);
+  }
+}
+
+function changeKillStatistic(stats: IHero["statistics"]["kills"], enemyName: IEnemy["name"]) {
+  if (stats[enemyName]) {
+    // @ts-ignore
+    stats[enemyName] += 1;
+  } else {
+    stats[enemyName] = 1;
+  }
+}
+
+function changeTombProgressStatistic(stats: IHero["statistics"]["tombProgress"], enemy: IEnemy) {
+  const enemytype = enemy.name.replace(/_\d/gm, "") as enemyType;
+  switch (enemytype) {
+    case "beast":
+      stats[enemytype] += enemy.resources.tombProgress || 0;
+      break;
+    case "rogue":
+      stats[enemytype] += enemy.resources.tombProgress || 0;
+      break;
+    case "goblin":
+      stats[enemytype] += enemy.resources.tombProgress || 0;
+      break;
+    case "gnome":
+      stats[enemytype] += enemy.resources.tombProgress || 0;
+      break;
+    case "naga":
+      stats[enemytype] += enemy.resources.tombProgress || 0;
+      break;
+    default:
+      return;
   }
 }
 
@@ -73,11 +90,12 @@ export function incExp(this: IHero, exp = 0) {
 function incLevel(this: IHero) {
   this.level.value += 1;
   this.resources.parameterPoints += PARAMETER_POINT_LEVEL;
-  getTalent(this);
 
-  if (this.level.value % 2 == 0) {
-    getSkillPoint(this, 1);
-  }
+  HERO_REWARD.talent = getTalent(this);
+
+  // if (this.level.value % 2 == 0) {
+  getSkillPoint(this, 1);
+  // }
 }
 
 export function setMaxLevelExp(exp: number) {

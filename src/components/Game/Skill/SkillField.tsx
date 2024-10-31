@@ -38,7 +38,6 @@ const SkillField = () => {
   }
 
   const incPoint = (item: UpSkill) => {
-    console.log(item, hero.resources.skillPoints > 0);
     if (item.open && item.currentPoint < item.maxPoints && hero.resources.skillPoints > 0) {
       item.inc(upgradeSkills);
       item.fn(hero);

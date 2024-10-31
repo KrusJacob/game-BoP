@@ -7,10 +7,10 @@ import Button from "@/components/UI/Button/Button";
 interface Props {
   enemies: IEnemy[];
   disabled: boolean;
-  onGoFight: () => void;
+  onEnemySelected: () => void;
 }
 
-const FoundEnemies = ({ enemies, disabled, onGoFight }: Props) => {
+const FoundEnemies = ({ enemies, disabled, onEnemySelected }: Props) => {
   const { enemy, setEnemy } = useGameStore((state) => state);
 
   const onSetEnemy = (enemy: IEnemy) => {
@@ -42,7 +42,7 @@ const FoundEnemies = ({ enemies, disabled, onGoFight }: Props) => {
           ))}
         </div>
       )}
-      <Button disabled={disabled} onClick={onGoFight} size="big">
+      <Button disabled={disabled} onClick={onEnemySelected} size="big">
         {enemy ? "Начать бой" : "Выберете врага"}
       </Button>
     </div>

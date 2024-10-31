@@ -3,16 +3,27 @@ import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
 import { applyPowerSkill, healHeroOfSkill } from "../../utils";
-import { goDamage } from "@/constants/func/fight";
+import { goDamage, goPosionDmg } from "@/constants/func/fight";
+import { getPercent } from "@/utils/getPercent";
 
 const SKILLS_PROGRAMMER: heroSkills[] = [
   {
-    label: "",
+    label: "Утечка данных",
     descr: function () {
-      return `Описание способности. В разработке...`;
+      return `Наносит противнику урон - ${this.data.modifier}% от его макс.запаса здоровья, герой исцеляется на 100% от нанесенного урона. Стоимость - ${this.data.costEnergy} энергии`;
     },
     img: "/src/assets/skill/skill_programmer_1.png",
-    data: {},
+    data: {
+      costEnergy: 200,
+      modifier: 8,
+    },
+    trigger: "active",
+    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+      const data = this[0].data;
+      let damage = getPercent(target.getters.getMaxHp(), data.modifier);
+      goDamage(target, damage);
+      healHeroOfSkill(hero, damage, 0, false);
+    },
   },
   {
     label: "Брандмауэр",
@@ -21,62 +32,90 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     },
     img: "/src/assets/skill/skill_programmer_2.png",
     data: {
-      modifier: 3.5,
-      barrierValue: 100,
-      level_2_1: {
+      modifier: 3,
+      barrierValue: 75,
+      power_2_1: {
         isOpen: false,
       },
-      level_2_2: {
+      power_2_2: {
         isOpen: false,
         modifierHeal: 0,
       },
+      power_2_3: {
+        isOpen: false,
+        modifierDamage: 0,
+      },
     },
     trigger: "inBeginFight",
-    fn: function (this: heroSkills[], hero: IHero) {
+    fn: function (this: heroSkills[], hero: IHero, target: IEnemy) {
       const data = this[1].data;
 
-      const mainStat = data.level_2_1.isOpen ? hero.getters.getPower() : hero.getters.getIntellect();
+      const mainStat = data.power_2_1.isOpen ? hero.getters.getPower() : hero.getters.getIntellect();
       let totalBarrier = mainStat * data.modifier + data.barrierValue;
       totalBarrier = applyPowerSkill(totalBarrier, hero.getters.getPowerSkill());
       console.log(totalBarrier);
       hero.getBarrier(totalBarrier);
 
-      if (data.level_2_2.isOpen) {
-        const healValue = Math.floor(hero.getters.getPower() * data.level_2_2.modifierHeal);
+      if (data.power_2_2.isOpen) {
+        const healValue = Math.floor(hero.getters.getPower() * data.power_2_2.modifierHeal);
         healHeroOfSkill(hero, healValue, 0, false);
+      }
+      if (data.power_2_3.isOpen) {
+        const damage = getPercent(hero.getters.getMaxHp(), data.power_2_3.modifierDamage);
+        console.log(damage, "damage");
+        goDamage(target, damage);
       }
     },
   },
   {
     label: "Вирус",
     descr: function () {
-      return `При каждой атаке есть ${this.data.chance}% шанс заразить противника вирусом. Максимум ${this.data.maxLayer} слоя. Каждый слой снижает наносимый урон противника на ${this.data.modifier}% и длиться ${this.data.duration} секунд`;
+      return `При каждой атаке есть ${this.data.chance}% шанс заразить противника вирусом, не чаще чем раз в ${this.data.cooldown} секунд. Максимум ${this.data.maxLayer} слоя. Каждый слой снижает наносимый урон противника на ${this.data.modifier}% и длиться ${this.data.duration} секунд`;
     },
     img: "/src/assets/skill/skill_programmer_3.png",
     data: {
       chance: 25,
       maxLayer: 3,
-      modifier: 15,
+      modifier: 12,
       applyedLayer: 0,
       duration: 6,
+      cooldown: 1.5,
+      isCooldown: false,
       level_4_1: {
         isOpen: false,
         modifierDamage: 0,
+      },
+      intellect_2_2: {
+        isOpen: false,
+        modifier: 0,
       },
     },
     trigger: "afterHeroAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[2].data;
+      if (data.isCooldown) {
+        return;
+      }
       const chance = getRandom(1, 100);
 
       if (chance <= data.chance && data.applyedLayer < data.maxLayer) {
         target.buffs.incDamage(-data.modifier, data.duration);
         data.applyedLayer += 1;
+        data.isCooldown = true;
         console.log(data.applyedLayer, "layer +");
+
+        setTimeout(() => {
+          data.isCooldown = false;
+        }, data.cooldown * 1000);
+
+        if (data.intellect_2_2.isOpen) {
+          const damage = getPercent(target.getters.getMaxHp(), data.intellect_2_2.modifier);
+          console.log(damage, "posion");
+          goPosionDmg(hero, target, damage, data.duration);
+        }
 
         if (data.level_4_1.isOpen) {
           const damage = Math.floor(hero.getters.getPower() * data.level_4_1.modifierDamage);
-          console.log(damage, "damage");
           goDamage(target, damage);
         }
 

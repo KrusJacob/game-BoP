@@ -43,18 +43,18 @@ export function incPoint(this: UpSkill, upgradeSkills: UpgradeSkills) {
   if (this.currentPoint < this.maxPoints) {
     this.currentPoint += 1;
     upgradeSkills[this.branch].totalPoint += 1;
-    if (upgradeSkills[this.branch].totalPoint === 3) {
+    if (upgradeSkills[this.branch].totalPoint === 5) {
       unlockSkills(upgradeSkills, this.branch, "level_2");
     }
-    if (upgradeSkills[this.branch].totalPoint === 6) {
+    if (upgradeSkills[this.branch].totalPoint === 10) {
       unlockSkills(upgradeSkills, this.branch, "level_3");
     }
-    if (upgradeSkills[this.branch].totalPoint === 9) {
+    if (upgradeSkills[this.branch].totalPoint === 15) {
       unlockSkills(upgradeSkills, this.branch, "level_4");
     }
-    if (upgradeSkills[this.branch].totalPoint === 12) {
-      unlockSkills(upgradeSkills, this.branch, "level_5");
-    }
+    // if (upgradeSkills[this.branch].totalPoint === 12) {
+    //   unlockSkills(upgradeSkills, this.branch, "level_5");
+    // }
   }
 }
 

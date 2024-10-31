@@ -1,6 +1,9 @@
-import { UpgradeSkills } from "@/types/skill.types";
+import { UpSkill, UpgradeSkills } from "@/types/skill.types";
 import SKILLS_BOXER from "./boxerSkill";
-import { getText, incPoint, getValue } from "../..";
+import { getText, incPoint, getValue, registerSkill } from "../..";
+import { IHero } from "@/types/hero.types";
+import { IEnemy } from "@/types/enemy.types";
+import { goDamage } from "@/constants/func/fight";
 
 export const upgradeBoxerSkills: UpgradeSkills = {
   power: {
@@ -34,18 +37,18 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current ? `Увеличивает макс.здоровье на ${text.current}` : "",
-            next: text.next ? `Увеличивает макс.здоровье на ${text.next}` : "",
+            current: text.current ? `Увеличивает макс.запас здоровья на ${text.current}` : "",
+            next: text.next ? `Увеличивает макс.запас здоровья на ${text.next}` : "",
           };
         },
         img: "/src/assets/skill/boxer/skillPower_1_2.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "power",
         data: {
-          value: [125, 250, 375],
+          value: [120, 240, 360, 480, 600],
         },
         fn(hero) {
           hero.setters.incMaxHp(getValue(this));
@@ -69,11 +72,34 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [5, 10, 15],
+          value: [4, 8, 12, 16, 20],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));
           hero.setters.incPower(getValue(this));
+        },
+      },
+      {
+        name: "Камбэк",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current ? `"Апперкот" восстанавливает герою здоровье - ${text.current}% от силы` : "",
+            next: text.next ? `"Апперкот" восстанавливает герою здоровье - ${text.next}% от силы` : "",
+          };
+        },
+        img: "/src/assets/skill/boxer/skillPower_2_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          value: [175, 225, 275],
+        },
+        fn(hero) {
+          SKILLS_BOXER[0].data.power_2_2.isOpen = true;
+          SKILLS_BOXER[0].data.power_2_2.modifierPower += getValue(this) / 100;
         },
       },
     ],
@@ -156,13 +182,13 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/boxer/skillAgility_1_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "agility",
         data: {
-          value: [0.08, 0.16, 0.24],
+          value: [0.06, 0.12, 0.18, 0.24, 0.3],
         },
         fn(hero) {
           hero.setters.incAttackSpeed(getValue(this));
@@ -194,6 +220,29 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           hero.setters.incIntellect(getValue(this));
         },
       },
+      {
+        name: "Усиленный апперкот",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current ? `"Апперкот" наносит на ${text.current}% урона больше` : "",
+            next: text.next ? `"Апперкот" наносит на ${text.next}% урона больше` : "",
+          };
+        },
+        img: "/src/assets/skill/boxer/skillAgility_2_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          value: [30, 50, 70],
+        },
+        fn(hero) {
+          console.log(getValue(this) / 100);
+          SKILLS_BOXER[0].data.modifier += getValue(this) / 100;
+        },
+      },
     ],
     level_3: [
       {
@@ -206,13 +255,13 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/boxer/skillAgility_3_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "agility",
         data: {
-          value: [2, 4, 6],
+          value: [2, 4, 6, 8, 10],
         },
         fn() {
           SKILLS_BOXER[3].data.chanceCritDamage += getValue(this);
@@ -258,13 +307,13 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/boxer/skillIntellect_1_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "intellect",
         data: {
-          value: [6, 12, 18],
+          value: [5, 10, 15, 20, 25],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));
@@ -289,10 +338,44 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          value: [8, 16, 24, 32, 40],
+          value: [7, 14, 21, 28, 35],
         },
         fn(hero) {
           hero.setters.incIntellect(getValue(this));
+        },
+      },
+      {
+        name: "Продуманные удары",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current
+              ? `Атаки наносят дополнительный чистый урон - ${text.current}% от интеллекта `
+              : "",
+            next: text.next ? `Атаки наносят дополнительный чистый урон - ${text.next}% от интеллекта ` : "",
+          };
+        },
+        img: "/src/assets/skill/boxer/skillIntellect_2_2.png",
+        maxPoints: 5,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          value: [20, 25, 30, 35, 40],
+          modifierDamage: 0,
+        },
+        fn(hero) {
+          this.data.modifierDamage += getValue(this);
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "afterHeroAttack");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
+              console.log(damage, "damage");
+              goDamage(target, damage);
+            }
+          }
         },
       },
     ],
@@ -321,6 +404,30 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           SKILLS_BOXER[1].data.talent_3_1.isOpen = true;
           SKILLS_BOXER[1].data.talent_3_1.modifierHeal += getValue(this) / 100;
           console.log(SKILLS_BOXER[1].data.talent_3_1.modifierHeal);
+        },
+      },
+      {
+        name: "Второе дыхание",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current ? `"Шестое чувство" восстанавливает ${text.current} энергии` : "",
+            next: text.next ? `"Шестое чувство" восстанавливает ${text.next} энергии` : "",
+          };
+        },
+        img: "/src/assets/skill/boxer/skillIntellect_3_2.png",
+        maxPoints: 2,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          value: [30, 45],
+        },
+        fn() {
+          console.log(SKILLS_BOXER[0].data);
+          SKILLS_BOXER[1].data.power_3_2.isOpen = true;
+          SKILLS_BOXER[1].data.power_3_2.valueEnergy += getValue(this);
         },
       },
     ],

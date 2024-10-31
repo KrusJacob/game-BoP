@@ -9,6 +9,7 @@ import { GiFlowerEmblem } from "react-icons/gi";
 import { TabsWithFight } from "../GameField/GameField";
 import styles from "./styles.module.css";
 import { HERO_REWARD } from "@/constants/resources";
+import TalentItem from "../Talent/TalentItem";
 
 interface Props {
   onSetTab: (tab: TabsWithFight) => void;
@@ -32,23 +33,27 @@ const EnemyModal = ({ onSetTab, setEnemy, enemy }: Props) => {
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1, ease: "backInOut" }}
+        transition={{ duration: 1.5, ease: "backInOut", delay: 0.2 }}
         className={styles.enemyDownWrapper}
       >
         <h3>Вы победили!</h3>
         {enemy && (
           <div className={styles.resources}>
-            <p>+ {HERO_REWARD.exp} Опыта</p>
-            <p>
-              + {HERO_REWARD.gold} <BiSolidCoinStack />
-            </p>
-            <p>
-              + {HERO_REWARD.skillPoints} <GiFlowerEmblem />
-            </p>
-            {HERO_REWARD.drop && (
+            <div>
+              <p>+ {HERO_REWARD.exp} Опыта</p>
               <p>
-                + {HERO_REWARD.drop?.value} {HERO_REWARD.drop.label}
+                + {HERO_REWARD.gold} <BiSolidCoinStack />
               </p>
+              <p>
+                + {HERO_REWARD.skillPoints} <GiFlowerEmblem />
+              </p>
+            </div>
+
+            {HERO_REWARD.talent && (
+              <div className={styles.talent}>
+                <p>Получен талант</p>
+                <TalentItem item={HERO_REWARD.talent} />
+              </div>
             )}
           </div>
         )}
@@ -57,6 +62,7 @@ const EnemyModal = ({ onSetTab, setEnemy, enemy }: Props) => {
           onClick={() => {
             onSetTab("Главная");
             setEnemy(null);
+            HERO_REWARD.talent = null;
           }}
         >
           OK

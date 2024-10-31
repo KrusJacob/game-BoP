@@ -3,6 +3,8 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     border-radius: var(--borderRadius);
 }
 
@@ -23,7 +25,14 @@
     /* justify-content: center; */
     padding: 10px 10px 50px 10px;
 }
+.tombBtn {
+    position: absolute;
+    left: 50%;
+    bottom: 50px;
+    transform: translateX(-50%);
+}
 .tombItemWrapper {
+    position: relative;
     border: 2px solid gold;
 }
 .tombItem {
@@ -50,13 +59,36 @@
 }
 
 .info {
+    width: 220px;
     margin-top: 6px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     padding: 8px;
 }
-.info p {
+
+.full_progressBar {
+    position: relative;
+    border: 1px solid gold;
+    border-radius: 4px;
+    height: 12px;
+    width: 100%;
+}
+.progressBar {
+    border-radius: inherit;
+    height: 100%;
+    width: 0%;
+    background-color: red;
+}
+.progressText {
     text-align: center;
-    font-size: 0.85rem;
+    /* position: absolute; */
+    top: 0;
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.defeated {
+    opacity: 0.75;
+    filter: sepia(1);
 }

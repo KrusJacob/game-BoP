@@ -18,19 +18,19 @@ export const LOCATIONS: locationItem[] = [
   {
     name: "hiddenCave",
     label: "Скрытая Пещера",
-    reqLevel: 10,
+    reqLevel: 12,
     img: "/src/assets/location/hidden_cave.png",
   },
   {
     name: "azureCoast",
     label: "Лазурное Прибережье",
-    reqLevel: 20,
+    reqLevel: 24,
     img: "/src/assets/location/azure_coast.png",
   },
   {
     name: "snowMountains",
     label: "Заснеженные Горы",
-    reqLevel: 30,
+    reqLevel: 36,
     img: "/src/assets/location/snow_mountains.png",
   },
 ];

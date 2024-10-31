@@ -19,6 +19,7 @@ import {
   heroSetters,
   heroType,
   heroBoost,
+  heroEnergy,
 } from "@/types/hero.types";
 import { getBarrier, getHeal } from "./fn";
 import {
@@ -32,7 +33,7 @@ import {
 } from "./initStats";
 import { updateMainStats } from "./attributes";
 import { ACTIVE_BAG_PANEL, ALL_BAG_ITEMS } from "./bag";
-import { START_GOLD_HERO, START_PARAMETERPOINT, START_SKILLPOINT } from "./setup";
+import { MAX_ENERGY_VALUE, START_GOLD_HERO, START_PARAMETERPOINT, START_SKILLPOINT } from "./setup";
 import { goAttack } from "./func/fight";
 import { incExp } from "./func/reward";
 
@@ -53,6 +54,11 @@ export class EnemyClass implements IEnemy {
     this.setters = setters.call(this);
     updateMainStats(this, "all");
     this.HP = this.getters.getMaxHp();
+    this.energy = {
+      incValue: 5,
+      max: MAX_ENERGY_VALUE,
+      value: 0,
+    };
   }
   type: heroType;
   readonly name: enemyName;
@@ -61,6 +67,7 @@ export class EnemyClass implements IEnemy {
   };
   incStats: heroIncStats;
   HP: number;
+  energy: heroEnergy;
   barrier = 0;
   baseStats: enemyBaseStats;
   buffs: enemyBuffs;
@@ -90,14 +97,19 @@ export class HeroClass implements IHero {
     this.name = name;
     this.baseStats = getStatsToHero(name);
     this.incStats = getIncStatsToHero();
-
     this.buffs = getBuffsToHero();
     this.skills = getSkillsToHero(name);
     this.getters = getters.call(this);
     this.setters = setters.call(this);
     updateMainStats(this, "all");
     this.HP = this.getters.getMaxHp();
+    this.energy = {
+      incValue: 5,
+      max: MAX_ENERGY_VALUE,
+      value: 0,
+    };
   }
+
   type: heroType;
   level = {
     value: 1,
@@ -107,6 +119,7 @@ export class HeroClass implements IHero {
   };
   incStats: heroIncStats;
   HP: number;
+  energy: heroEnergy;
   barrier = 0;
   readonly name: heroName;
   baseStats: heroBaseStats;
@@ -118,11 +131,21 @@ export class HeroClass implements IHero {
   getBarrier = getBarrier;
   getHeal = getHeal;
   skills: heroSkills[];
+  statistics = {
+    kills: {},
+    tombProgress: {
+      beast: 0,
+      rogue: 0,
+      goblin: 0,
+      gnome: 0,
+      naga: 0,
+    },
+  };
   resources = {
     drop: {
-      fangsBeast: 0,
-      rogueItem: 0,
-      goblinItem: 0,
+      fangsBeast: 30,
+      rogueItem: 30,
+      goblinItem: 30,
       gnomeItem: 0,
       gillsNaga: 0,
     },

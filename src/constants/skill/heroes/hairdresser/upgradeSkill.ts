@@ -38,6 +38,31 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           hero.setters.incAttackSpeed(getValue(this, "attackSpeed"));
         },
       },
+      {
+        name: `Прочный инструмент`,
+        descr: function () {
+          const def = getText.call(this, "def");
+          const power = getText.call(this, "power");
+          return {
+            current: def.current ? `Увеличивает защиту на ${def.current} и силу на ${power.current}` : "",
+            next: def.next ? `Увеличивает защиту на ${def.next} и силу на ${power.next}` : "",
+          };
+        },
+        img: "/src/assets/skill/chances.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: true,
+        branch: "power",
+        data: {
+          def: [2, 4, 6],
+          power: [4, 8, 12],
+        },
+        fn(hero) {
+          hero.setters.incDef(getValue(this, "def"));
+          hero.setters.incPower(getValue(this, "power"));
+        },
+      },
     ],
     level_2: [
       {
@@ -61,13 +86,38 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          power: [12, 24, 36],
+          power: [11, 22, 33],
           agility: [-3, -6, -9],
         },
         fn(hero) {
           hero.setters.incPower(getValue(this, "power"));
           hero.setters.incAgility(getValue(this, "agility"));
           hero.setters.incIntellect(getValue(this, "agility"));
+        },
+      },
+      {
+        name: "Передышка",
+        descr: function () {
+          const value = getText.call(this, "value");
+          return {
+            current: value.current
+              ? `"В две руки" восстанавливает ${value.current}% от макс.запаса здоровья героя`
+              : "",
+            next: value.next ? `"В две руки" восстанавливает ${value.next}% от макс.запаса здоровья героя` : "",
+          };
+        },
+        img: "/src/assets/skill/hairdresser/skillPower_2_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          value: [8, 12, 16],
+        },
+        fn(hero) {
+          SKILLS_HAIRDRESSER[0].data.power_2_2.isOpen = true;
+          SKILLS_HAIRDRESSER[0].data.power_2_2.modifierHeal += getValue(this);
         },
       },
     ],
@@ -123,7 +173,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         branch: "power",
         data: {
           chanceCritDamage: [2, 4, 6, 8, 10],
-          attack: [5, 10, 15, 20, 25],
+          attack: [4, 8, 12, 16, 20],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this, "attack"));
@@ -157,12 +207,34 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         open: true,
         branch: "agility",
         data: {
-          agility: [9, 18, 27],
+          agility: [8, 16, 24],
           powerSkill: [-4, -8, -12],
         },
         fn(hero) {
           hero.setters.incAgility(getValue(this, "agility"));
           hero.setters.incPowerSkill(getValue(this, "powerSkill"));
+        },
+      },
+      {
+        name: "Проверенный метод",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current ? `Снижает затраты энергии "В две руки" на ${text.current}` : "",
+            next: text.next ? `Снижает затраты энергии "В две руки" на ${text.next}` : "",
+          };
+        },
+        img: "/src/assets/skill/chances.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: true,
+        branch: "agility",
+        data: {
+          value: [10, 20, 30],
+        },
+        fn(hero) {
+          SKILLS_HAIRDRESSER[0].data.costEnergy -= getValue(this);
         },
       },
     ],
@@ -213,6 +285,39 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         },
         fn() {
           SKILLS_HAIRDRESSER[1].data.ignoreDef += getValue(this);
+        },
+      },
+      {
+        name: "Смелый взмах",
+        descr: function () {
+          const chanceCritDamage = getText.call(this, "chanceCritDamage");
+          const intellect = getText.call(this, "intellect");
+          return {
+            current: chanceCritDamage.current
+              ? `Увеличивает шанс крит.удара на ${
+                  chanceCritDamage.current
+                }%, но снижает интеллект на ${-intellect.current}`
+              : "",
+            next: chanceCritDamage.next
+              ? `Увеличивает шанс крит.удара на ${
+                  chanceCritDamage.next
+                }%, но снижает интеллект на ${-intellect.next}`
+              : "",
+          };
+        },
+        img: "/src/assets/skill/hairdresser/skillAgility_3_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          chanceCritDamage: [3, 6, 9],
+          intellect: [-4, -8, -12],
+        },
+        fn(hero) {
+          SKILLS_HAIRDRESSER[3].data.chanceCritDamage += getValue(this, "chanceCritDamage");
+          hero.setters.incIntellect(getValue(this, "intellect"));
         },
       },
     ],
@@ -291,13 +396,13 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/hairdresser/skillIntellect_1_2.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "intellect",
         data: {
-          value: [50, 70, 90],
+          value: [40, 55, 70, 85, 100],
         },
         fn() {
           SKILLS_HAIRDRESSER[1].data.intellect_1_2.isOpen = true;
@@ -320,16 +425,46 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/hairdresser/skillIntellect_2_1.png",
-        maxPoints: 2,
+        maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          value: [4, 6],
+          value: [4, 6, 8],
         },
         fn() {
           SKILLS_HAIRDRESSER[2].data.healPercent += getValue(this);
+        },
+      },
+      {
+        name: "Защитный фартук",
+        descr: function () {
+          const maxHp = getText.call(this, "maxHp");
+          const intellect = getText.call(this, "intellect");
+          return {
+            current: maxHp.current
+              ? `"В две руки" дает герою барьер - ${maxHp.current}% HP от макс.здоровья + ${intellect.current}% от интеллекта`
+              : "",
+            next: maxHp.next
+              ? `"В две руки" дает герою барьер - ${maxHp.next}% HP от макс.здоровья + ${intellect.next}% от интеллекта`
+              : "",
+          };
+        },
+        img: "/src/assets/skill/hairdresser/skillIntellect_2_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          maxHp: [8, 10, 12],
+          intellect: [100, 150, 200],
+        },
+        fn() {
+          SKILLS_HAIRDRESSER[0].data.intellect_2_2.isOpen = true;
+          SKILLS_HAIRDRESSER[0].data.intellect_2_2.modifierMaxHp += getValue(this, "maxHp");
+          SKILLS_HAIRDRESSER[0].data.intellect_2_2.modifierIntellect += getValue(this, "intellect") / 100;
         },
       },
     ],
@@ -342,10 +477,10 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           const modifier = getText.call(this, "modifier");
           return {
             current: chance.current
-              ? `"Заточенный инструмент" c шансом ${chance.current}% накладывает кровотечение на ${duration.current} сек. Нанося каждую секунду ${modifier.current}% от макс.здоровья врага`
+              ? `"Заточенный инструмент" c шансом ${chance.current}% накладывает кровотечение на ${duration.current} сек. нанося каждую секунду ${modifier.current}% от макс.здоровья врага`
               : "",
             next: chance.next
-              ? `"Заточенный инструмент" c шансом ${chance.next}% накладывает кровотечение на ${duration.next} сек. Нанося каждую секунду ${modifier.next}% от макс.здоровья врага`
+              ? `"Заточенный инструмент" c шансом ${chance.next}% накладывает кровотечение на ${duration.next} сек. нанося каждую секунду ${modifier.next}% от макс.здоровья врага`
               : "",
           };
         },
@@ -374,8 +509,10 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current ? `"Профессиональная подготовка" также оглушает на ${text.current} секунды` : "",
-            next: text.next ? `"Профессиональная подготовка" также оглушает на ${text.next} секунды` : "",
+            current: text.current
+              ? `"Профессиональная подготовка" оглушает противника на ${text.current} секунды`
+              : "",
+            next: text.next ? `"Профессиональная подготовка" оглушает противника на ${text.next} секунды` : "",
           };
         },
         img: "/src/assets/skill/hairdresser/skillIntellect_4_1.png",

@@ -8,12 +8,38 @@ import { getRandom } from "@/utils/getRandom";
 
 const SKILLS_HAIRDRESSER: heroSkills[] = [
   {
-    label: "",
+    label: "В две руки",
     descr: function () {
-      return `Описание способности. В разработке...`;
+      return `Увеличивает скорость атаки на ${this.data.modifier}% на ${this.data.duration} секунд. Стоимость - ${this.data.costEnergy} энергии`;
     },
     img: "/src/assets/skill/skill_hairdresser_1.png",
-    data: {},
+    data: {
+      costEnergy: 180,
+      modifier: 35,
+      duration: 6,
+      power_2_2: {
+        isOpen: false,
+        modifierHeal: 0,
+      },
+      intellect_2_2: {
+        isOpen: false,
+        modifierMaxHp: 0,
+        modifierIntellect: 0,
+      },
+    },
+    trigger: "active",
+    fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+      const data = this[0].data;
+      hero.buffs.incAttackSpeed(data.modifier, data.duration);
+      if (data.power_2_2.isOpen) {
+        healHeroOfSkill(hero, 0, data.power_2_2.modifierHeal, false);
+      }
+      if (data.intellect_2_2.isOpen) {
+        const barrierOfMaxHp = getPercent(hero.getters.getMaxHp(), data.intellect_2_2.modifierMaxHp);
+        const barrierOfIntellect = Math.floor(hero.getters.getIntellect() * data.intellect_2_2.modifierIntellect);
+        hero.getBarrier(barrierOfMaxHp + barrierOfIntellect);
+      }
+    },
   },
   {
     label: "Заточенный инструмент",
@@ -88,7 +114,6 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     trigger: "inBeginFight",
     fn: function (this: heroSkills[], hero: IHero, enemy: IEnemy) {
       const data = this[2].data;
-      console.log("heal", data.healPercent);
       healHeroOfSkill(hero, data.healValue, data.healPercent);
       hero.buffs.incDamage(data.modifierDamage, data.duration);
 

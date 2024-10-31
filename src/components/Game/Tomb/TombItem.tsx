@@ -1,41 +1,63 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.css";
-import { IEnemy, enemiesToTomb, enemyName } from "@/types/enemy.types";
+import { IEnemy, enemyToTomb, enemyType } from "@/types/enemy.types";
+import cn from "classnames";
 import { EnemyClass } from "@/constants/class";
 import Button from "@/components/UI/Button/Button";
 import lockImg from "@assets/enemy/lock.png";
-import { heroResources } from "@/types/hero.types";
+import { tombProgress } from "@/types/hero.types";
+import { calcWidthBar } from "@/utils/calcWidthBar";
 
 interface Props {
-  heroResources: heroResources;
-  item: enemiesToTomb;
-  onSetEnemy: (enemy: IEnemy) => void;
+  tombProgress: tombProgress;
+  item: enemyToTomb;
+  onSetEnemy: (enemy: IEnemy, item: enemyToTomb) => void;
 }
 
-const TombItem = ({ item, onSetEnemy, heroResources }: Props) => {
+const TombItem = ({ item, onSetEnemy, tombProgress }: Props) => {
   const [enemy, setEnemy] = useState<IEnemy>();
+  const ref = useRef<HTMLDivElement>(null);
+  const tombEnemy = item.name.replace(/_\d/gm, "") as enemyType;
+  const heroProgress = Math.min(tombProgress[tombEnemy], item.value);
+  const progressText = Math.round((heroProgress / item.value) * 100);
 
   useEffect(() => {
     const enemy = new EnemyClass(item.name);
     setEnemy(enemy);
   }, []);
 
-  const heroResource = heroResources.drop[item.resource.type];
-  const lock = heroResource === 0;
+  useEffect(() => {
+    if (ref.current) {
+      calcWidthBar(ref.current, item.value, heroProgress);
+    }
+  }, [item.value, heroProgress]);
+
+  const lock = item.value > heroProgress;
 
   return (
-    <div className={styles.tombItemWrapper}>
+    <div
+      className={cn(styles.tombItemWrapper, {
+        [styles.defeated]: item.defeated,
+      })}
+    >
       <div className={styles.tombItem}>
-        <p>{lock ? "???" : enemy?.baseStats.name}</p>
         <img src={lock ? lockImg : enemy?.baseStats.img} alt={item.name}></img>
       </div>
       <div className={styles.info}>
-        <p>
-          {heroResources.drop[item.resource.type]}/{item.resource.value[0]} {item.resource.label}
-        </p>
+        <p className={styles.progressText}>{item.defeated ? "Побежден" : `${progressText}%`}</p>
+        <div className={styles.full_progressBar}>
+          <div ref={ref} className={styles.progressBar}></div>
+        </div>
+
         {enemy && (
-          <Button disabled={heroResource < item.resource.value[0]} onClick={() => onSetEnemy(enemy)} size="small">
-            Призвать
+          <Button
+            disabled={lock || item.defeated}
+            onClick={() => {
+              onSetEnemy(enemy, item);
+            }}
+            size="small"
+          >
+            {lock ? "???" : enemy?.baseStats.name}
           </Button>
         )}
       </div>

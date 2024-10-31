@@ -24,14 +24,14 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/programmer/skillPower_1_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "power",
         data: {
-          power: [13, 26, 39],
-          intellect: [-5, -10, -15],
+          power: [12, 24, 36, 48, 60],
+          intellect: [-5, -10, -15, -20, -25],
         },
         fn(hero) {
           hero.setters.incPower(getValue(this, "power"));
@@ -59,7 +59,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           value: [true],
         },
         fn(hero) {
-          SKILLS_PROGRAMMER[1].data.level_2_1.isOpen = true;
+          SKILLS_PROGRAMMER[1].data.power_2_1.isOpen = true;
         },
       },
       {
@@ -85,8 +85,35 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           value: [150, 200, 250],
         },
         fn(hero) {
-          SKILLS_PROGRAMMER[1].data.level_2_2.isOpen = true;
-          SKILLS_PROGRAMMER[1].data.level_2_2.modifierHeal += getValue(this) / 100;
+          SKILLS_PROGRAMMER[1].data.power_2_2.isOpen = true;
+          SKILLS_PROGRAMMER[1].data.power_2_2.modifierHeal += getValue(this) / 100;
+        },
+      },
+      {
+        name: "Полная мощность",
+        descr: function () {
+          const value = getText.call(this, "value");
+          return {
+            current: value.current
+              ? `Активация "Брандмауэр" наносит противнику урон - ${value.current}% от макс.запаса здоровья героя`
+              : "",
+            next: value.next
+              ? `Активация "Брандмауэр" наносит противнику урон - ${value.next}% от макс.запаса здоровья героя`
+              : "",
+          };
+        },
+        img: "/src/assets/skill/programmer/skillPower_2_3.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          value: [8, 12, 16],
+        },
+        fn(hero) {
+          SKILLS_PROGRAMMER[1].data.power_2_3.isOpen = true;
+          SKILLS_PROGRAMMER[1].data.power_2_3.modifierDamage += getValue(this);
         },
       },
     ],
@@ -101,16 +128,43 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/programmer/skillPower_3_1.png",
+        maxPoints: 5,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          value: [10, 20, 30, 40, 50],
+        },
+        fn(hero) {
+          hero.setters.incAttack(getValue(this));
+        },
+      },
+      {
+        name: "Двухэтапная защита",
+        descr: function () {
+          const def = getText.call(this, "def");
+          const maxHp = getText.call(this, "maxHp");
+          return {
+            current: def.current
+              ? `Увеличивает макс.запас здоровья на ${maxHp.current} и защиту на ${def.current}`
+              : "",
+            next: def.next ? `Увеличивает макс.запас здоровья на ${maxHp.next} и защиту на ${def.next}` : "",
+          };
+        },
+        img: "/src/assets/skill/programmer/skillPower_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "power",
         data: {
-          value: [10, 20, 30],
+          def: [2, 4, 6],
+          maxHp: [80, 160, 240],
         },
         fn(hero) {
-          hero.setters.incAttack(getValue(this));
+          hero.setters.incDef(getValue(this, "def"));
+          hero.setters.incMaxHp(getValue(this, "maxHp"));
         },
       },
     ],
@@ -156,13 +210,13 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/programmer/skillAgility_1_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "agility",
         data: {
-          value: [8, 16, 24],
+          value: [6, 12, 18, 24, 30],
         },
         fn(hero) {
           hero.setters.incAgility(getValue(this));
@@ -193,6 +247,28 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           hero.setters.incDef(getValue(this));
         },
       },
+      {
+        name: "Оптимизация кода",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current ? `Затраты энергии на "Утечка данных" снижаются на ${text.current}` : "",
+            next: text.next ? `Затраты энергии на "Утечка данных" снижаются на ${text.next}` : "",
+          };
+        },
+        img: "/src/assets/skill/programmer/skillAgility_2_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          value: [15, 25, 35],
+        },
+        fn(hero) {
+          SKILLS_PROGRAMMER[0].data.costEnergy -= getValue(this);
+        },
+      },
     ],
     level_3: [
       {
@@ -215,6 +291,30 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         },
         fn() {
           SKILLS_PROGRAMMER[3].data.chanceCritDamage += getValue(this);
+        },
+      },
+      {
+        name: "Взлом защиты",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current
+              ? `При атаках, вы дополнительно ингорируете ${text.current}% защиты противника`
+              : "",
+            next: text.next ? `При атаках, вы дополнительно ингорируете ${text.next}% защиты противника` : "",
+          };
+        },
+        img: "/src/assets/skill/programmer/skillAgility_3_2.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          value: [20, 30, 40],
+        },
+        fn(hero) {
+          hero.setters.incIgnoreDef(getValue(this));
         },
       },
     ],
@@ -303,18 +403,45 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           };
         },
         img: "/src/assets/skill/programmer/skillIntellect_2_1.png",
+        maxPoints: 5,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          def: [6, 12, 18, 24, 30],
+          decMaxHp: [-60, -120, -180, -240, -300],
+        },
+        fn(hero) {
+          hero.setters.incDef(getValue(this, "def"));
+          hero.setters.incMaxHp(getValue(this, "decMaxHp"));
+        },
+      },
+      {
+        name: "ТРОЯН",
+        descr: function () {
+          const text = getText.call(this, "value");
+          return {
+            current: text.current
+              ? `"Вирус" отравляет врага, нанося ${text.current}% урона от макс.запаса врага каждую секунду. Не суммируется`
+              : "",
+            next: text.next
+              ? `"Вирус" отравляет врага, нанося ${text.next}% урона от макс.запаса врага каждую секунду. Не суммируется`
+              : "",
+          };
+        },
+        img: "/src/assets/skill/programmer/skillIntellect_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          def: [8, 16, 24],
-          decMaxHp: [-75, -150, -225],
+          value: [1, 1.5, 2],
         },
         fn(hero) {
-          hero.setters.incDef(getValue(this, "def"));
-          hero.setters.incMaxHp(getValue(this, "decMaxHp"));
+          SKILLS_PROGRAMMER[2].data.intellect_2_2.isOpen = true;
+          SKILLS_PROGRAMMER[2].data.intellect_2_2.modifier += getValue(this);
         },
       },
     ],
@@ -344,14 +471,12 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
     ],
     level_4: [
       {
-        name: "Взлом защиты",
+        name: "5G",
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current
-              ? `При атаках, вы дополнительно ингорируете ${text.current}% защиты противника`
-              : "",
-            next: text.next ? `При атаках, вы дополнительно ингорируете ${text.next}% защиты противника` : "",
+            current: text.current ? `Каждая атака дополнительно даёт ${text.current} энергии` : "",
+            next: text.next ? `Каждая атака дополнительно даёт ${text.next} энергии` : "",
           };
         },
         img: "/src/assets/skill/programmer/skillIntellect_4_1.png",
@@ -361,10 +486,10 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          value: [18, 28, 38],
+          value: [1, 2, 3],
         },
         fn(hero) {
-          hero.setters.incIgnoreDef(getValue(this));
+          hero.energy.incValue += getValue(this);
         },
       },
     ],

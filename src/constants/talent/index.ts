@@ -140,7 +140,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");
-      return `Увеличивает шанс уклонения героя на ${text}`;
+      return `Увеличивает шанс уклонения героя на ${text}%`;
     },
     data: {
       value: [4, 6, 8, 10, 12],
@@ -155,7 +155,7 @@ export const ALL_TALENTS: talentType[] = [
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");
-      return `Увеличивает шанс критического удара героя на ${text}`;
+      return `Увеличивает шанс критического удара героя на ${text}%`;
     },
     data: {
       value: [4, 6, 8, 10, 12],
@@ -186,11 +186,11 @@ export const ALL_TALENTS: talentType[] = [
     descr: function () {
       const chance = getText.call(this, "chance");
       const duration = getText.call(this, "duration");
-      return `Ваши атаки c ${chance}% шансом могут оглушить противника на ${duration} секунд`;
+      return `Ваши атаки c ${chance}% шансом могут оглушить противника на ${duration} секунды`;
     },
     data: {
-      chance: [5, 7, 9, 11, 12],
-      duration: [2, 2, 2, 2, 3],
+      chance: [6, 7, 8, 9, 10],
+      duration: [2, 2, 2, 2, 2],
     },
     trigger: "afterHeroAttack",
     fn(hero: IHero) {
@@ -222,7 +222,7 @@ export const ALL_TALENTS: talentType[] = [
     data: {
       healValue: [40, 55, 70, 85, 100],
       healPercent: [1, 2, 3, 4, 5],
-      cooldown: [5, 5, 5, 5, 5],
+      cooldown: [6, 6, 6, 6, 6],
     },
     trigger: "inBeginFight",
     fn(hero: IHero) {
@@ -296,15 +296,15 @@ function getValue(talent: talentType) {
   return talent.data.value[talent.level - 1] - talent.data.value[talent.level - 2];
 }
 
-export function getTalent(hero: IHero) {
+export function getTalent(hero: IHero): talentType {
   const arrTalents = ALL_TALENTS.filter((item) => item.level !== 5);
-  const indexTalent = getRandom(0, arrTalents.length - 1);
-  const nameTalent = arrTalents[indexTalent].name;
+  const indexRandomTalent = getRandom(0, arrTalents.length - 1);
+  const nameTalent = arrTalents[indexRandomTalent].name;
   const findedTalent = ALL_TALENTS.find((item) => item.name === nameTalent);
   if (findedTalent) {
     findedTalent.level += 1;
     findedTalent.fn(hero);
   }
 
-  console.log(arrTalents[indexTalent].name);
+  return findedTalent as talentType;
 }

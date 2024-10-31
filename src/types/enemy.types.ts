@@ -6,6 +6,7 @@ import {
   heroBaseStats,
   heroBuffs,
   heroDebuffStack,
+  heroEnergy,
   heroGetters,
   heroIncStats,
   heroSetters,
@@ -24,6 +25,7 @@ export interface IEnemy {
   baseStats: enemyBaseStats;
   incStats: enemyIncStats;
   HP: number;
+  energy: heroEnergy;
   barrier: number;
   buffs: enemyBuffs;
   debuffStack: enemyDebuffStack;
@@ -42,13 +44,15 @@ export interface enemyResources {
   gold: number;
   skillPoints: number;
   exp: number;
-  drop?: enemyDrop;
+  tombProgress?: number;
 }
 export interface enemyDrop {
   label: enemyTypeLabelDrop;
   type: enemyTypeDrop;
   value: number[];
 }
+export type enemyType = "beast" | "rogue" | "goblin" | "gnome" | "naga";
+export type enemyTombName = Extract<enemyName, "beast_5" | "rogue_5" | "goblin_5" | "gnome_5" | "naga_5">;
 export type enemyTypeDrop = "fangsBeast" | "rogueItem" | "goblinItem" | "gnomeItem" | "gillsNaga";
 export type enemyTypeLabelDrop =
   | "Клык зверя"
@@ -79,7 +83,8 @@ export interface enemyInfo {
   name: enemyName;
   unique?: boolean;
 }
-export interface enemiesToTomb {
-  name: enemyName;
-  resource: enemyDrop;
+export interface enemyToTomb {
+  name: enemyTombName;
+  value: number;
+  defeated: boolean;
 }
