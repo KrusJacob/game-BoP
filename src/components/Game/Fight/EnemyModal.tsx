@@ -10,6 +10,7 @@ import { TabsWithFight } from "../GameField/GameField";
 import styles from "./styles.module.css";
 import { HERO_REWARD } from "@/constants/resources";
 import TalentItem from "../Talent/TalentItem";
+import { useBattleTextStore } from "@/store/battleTextStore";
 
 interface Props {
   onSetTab: (tab: TabsWithFight) => void;
@@ -19,13 +20,17 @@ interface Props {
 
 const EnemyModal = ({ onSetTab, setEnemy, enemy }: Props) => {
   const [isBtnEnable, setBtnEnable] = useState(false);
+  const clearText = useBattleTextStore((state) => state.clearText);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setBtnEnable(true);
-
-      return () => clearTimeout(timeout);
     }, 500);
+
+    return () => {
+      clearText();
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (

@@ -2,7 +2,7 @@ import { TbHexagonLetterE } from "react-icons/tb";
 import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
 import { useCallback } from "react";
-import { skillTrigger } from "@/constants/skill";
+import { skillHeroTrigger } from "@/constants/skill/heroes";
 
 const ActiveSkill = () => {
   const { hero } = useGameStore((state) => state);
@@ -14,7 +14,7 @@ const ActiveSkill = () => {
 
   const onClickSkill = useCallback(() => {
     if (hero.energy.value >= hero.skills[0].data.costEnergy) {
-      skillTrigger.active[0].call(hero?.skills, hero, enemy);
+      skillHeroTrigger.active[0].call(hero?.skills, hero, enemy);
       hero.energy.value -= hero.skills[0].data.costEnergy;
     }
   }, []);

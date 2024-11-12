@@ -5,7 +5,6 @@ import { ALL_SHOP_ITEMS } from "@/constants/shop";
 import { memo } from "react";
 
 const ShopList = memo(({ onSelectItem }: { onSelectItem: (item: shopItemType) => void }) => {
-  console.log("list");
   return (
     <div className={styles.shopList}>
       {ALL_SHOP_ITEMS.map((item) => (

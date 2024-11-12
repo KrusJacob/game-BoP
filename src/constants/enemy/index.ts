@@ -1,9 +1,16 @@
 import { STATS_BEAST, STATS_BEAST_2, STATS_BEAST_3, STATS_BEAST_4, STATS_BEAST_5 } from "./beast";
 import { STATS_GNOME, STATS_GNOME_2, STATS_GNOME_3, STATS_GNOME_4, STATS_GNOME_5 } from "./gnome";
 import { STATS_GOBLIN, STATS_GOBLIN_2, STATS_GOBLIN_3, STATS_GOBLIN_4, STATS_GOBLIN_5 } from "./goblin";
-import { STATS_GNOME_TRADER, STATS_GODLEN_PIG, STATS_SEA_MONSTER } from "./legend";
+import { STATS_GNOME_TRADER, STATS_GODLEN_PIG, STATS_SEA_MONSTER, STATS_TREASURE_BOX } from "./legend";
 import { STATS_NAGA, STATS_NAGA_2, STATS_NAGA_3, STATS_NAGA_4, STATS_NAGA_5 } from "./naga";
 import { STATS_ROGUE, STATS_ROGUE_2, STATS_ROGUE_3, STATS_ROGUE_4, STATS_ROGUE_5 } from "./rogue";
+import {
+  STATS_SKELETON,
+  STATS_SKELETON_2,
+  STATS_SKELETON_3,
+  STATS_SKELETON_4,
+  STATS_SKELETON_5,
+} from "./skeleton";
 
 export const statsRogue = {
   rogue: STATS_ROGUE,
@@ -40,8 +47,16 @@ export const statsNaga = {
   naga_4: STATS_NAGA_4,
   naga_5: STATS_NAGA_5,
 };
+export const statsSkeleton = {
+  skeleton: STATS_SKELETON,
+  skeleton_2: STATS_SKELETON_2,
+  skeleton_3: STATS_SKELETON_3,
+  skeleton_4: STATS_SKELETON_4,
+  skeleton_5: STATS_SKELETON_5,
+};
 export const statsLegend = {
   goldenPig: STATS_GODLEN_PIG,
   gnomeTrader: STATS_GNOME_TRADER,
   seaMonster: STATS_SEA_MONSTER,
+  treasureBox: STATS_TREASURE_BOX,
 };

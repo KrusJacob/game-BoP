@@ -1,15 +1,8 @@
-import { PiSpiralLight, PiSwordLight } from "react-icons/pi";
 import { IHero, heroSkills } from "../../../types/hero.types";
-import { MdShield } from "react-icons/md";
-import { FaHeart, FaRegSnowflake } from "react-icons/fa";
-import { GiBrain, GiMuscleUp, GiSpinningSword, GiWalkingBoot, GiWizardStaff } from "react-icons/gi";
-
 import styles from "./hero.module.css";
-
 import Button from "@/components/UI/Button/Button";
 import Badge from "@/components/UI/Badge/Badge";
 import { IEnemy, enemySkills } from "@/types/enemy.types";
-import HeroStat from "./HeroStat";
 import { useState } from "react";
 
 import { HeroClass } from "@/constants/class";
@@ -17,6 +10,7 @@ import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import { useGameStore } from "@/store/gameStore";
 import HeroStatusBar from "./HeroStatusBar";
 import HeroStatList from "./HeroStatList";
+import SkillText from "./SkillText";
 
 interface Props {
   hero: IHero | IEnemy;
@@ -33,11 +27,12 @@ function getImgUrl(name: string) {
 const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
   const exp = useGameStore((state) => state.hero?.level.exp);
 
-  console.log("HeroCard");
+  // console.log("HeroCard");
 
   return (
     <div className={styles.card}>
       <div className={styles.image}>
+        {hero.type === "hero" && <SkillText />}
         <HeroStatusBar type={hero instanceof HeroClass ? "hero" : "enemy"} />
         <img src={hero.baseStats.img} alt={hero.name} />
         <div className={styles.name}>{hero.baseStats.name}</div>
@@ -50,8 +45,8 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         )}
       </div>
       <div>
-        <HeroStatList hero={hero} />
         <SkillList skills={hero.skills} />
+        <HeroStatList hero={hero} />
       </div>
       {chooseHero && hero instanceof HeroClass && <Button onClick={() => chooseHero(hero)}>Выбрать</Button>}
     </div>

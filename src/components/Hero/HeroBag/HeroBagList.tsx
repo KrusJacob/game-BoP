@@ -15,8 +15,6 @@ const HeroBagList = ({ resources }: { resources: heroResources }) => {
   const bag = useGameStore((state) => state.hero?.resources.bag);
   const bagActivePanel = useGameStore((state) => state.hero?.resources.bagActivePanel);
 
-  // console.log(resources, "bag");
-
   const onClickItem = (item: bagItemType) => {
     if (!item.empty) {
       moveBagItem(resources, item);

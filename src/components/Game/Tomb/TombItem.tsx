@@ -21,6 +21,8 @@ const TombItem = ({ item, onSetEnemy, tombProgress }: Props) => {
   const heroProgress = Math.min(tombProgress[tombEnemy], item.value);
   const progressText = Math.round((heroProgress / item.value) * 100);
 
+  console.log(heroProgress);
+
   useEffect(() => {
     const enemy = new EnemyClass(item.name);
     setEnemy(enemy);

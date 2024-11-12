@@ -16,10 +16,10 @@ export const STATS_BEAST: enemyBaseStats = {
 export const STATS_BEAST_2: enemyBaseStats = {
   img: "/src/assets/enemy/beast_2.png",
   name: "Вепрь",
-  power: 50,
+  power: 55,
   agility: 20,
   intellect: 20,
-  attack: 80,
+  attack: 85,
   def: 17,
   maxHp: 900,
   attackSpeed: 0.4,
@@ -55,8 +55,8 @@ export const STATS_BEAST_4: enemyBaseStats = {
 export const STATS_BEAST_5: enemyBaseStats = {
   img: "/src/assets/enemy/beast_5.png",
   name: "Оборотень",
-  power: 80,
-  agility: 85,
+  power: 60,
+  agility: 70,
   intellect: 40,
   attack: 140,
   def: 35,

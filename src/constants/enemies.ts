@@ -8,6 +8,7 @@ export const ALL_ENEMIES = [
   "golden-pig",
   "gnome-trader",
   "seaMonster",
+  "treasureBox",
   "beast",
   "beast_2",
   "beast_3",
@@ -33,6 +34,11 @@ export const ALL_ENEMIES = [
   "naga_3",
   "naga_4",
   "naga_5",
+  "skeleton",
+  "skeleton_2",
+  "skeleton_3",
+  "skeleton_4",
+  "skeleton_5",
 ] as const;
 
 // export const ENEMIES_TO_DARK_FOREST = ["beast", "rogue", "beast_2", "rogue_2", "beast_3", "rogue_3"];
@@ -67,6 +73,11 @@ export const ENEMIES_TO_TOBM: enemyToTomb[] = [
     value: 100,
     defeated: false,
   },
+  {
+    name: "skeleton_5",
+    value: 100,
+    defeated: false,
+  },
 ];
 //
 
@@ -95,10 +106,10 @@ export const ENEMIES_TO_HIDDEN_CAVE: enemiesToLocation = {
     [{ name: "goblin_2" }, { name: "goblin_3" }, { name: "goblin_4" }],
     [{ name: "goblin_3" }, { name: "goblin_4" }],
     [{ name: "goblin_3" }, { name: "goblin_4" }, { name: "gnome" }],
-    [{ name: "goblin_4" }, { name: "gnome" }],
-    [{ name: "gnome" }, { name: "gnome_2" }],
-    [{ name: "gnome" }, { name: "gnome_2" }, { name: "gnome_3" }],
-    [{ name: "gnome_2" }, { name: "gnome_3" }],
+    [{ name: "goblin_4" }, { name: "gnome" }], //
+    [{ name: "gnome" }, { name: "gnome_2" }, { name: "goblin_4" }],
+    [{ name: "gnome" }, { name: "gnome_2" }, { name: "gnome_3" }, { name: "goblin_4" }],
+    [{ name: "gnome_2" }, { name: "gnome_3" }, { name: "goblin_4" }],
     [{ name: "gnome_2" }, { name: "gnome_3" }, { name: "gnome_4" }],
     [{ name: "gnome_3" }, { name: "gnome_4" }],
   ],
@@ -111,8 +122,18 @@ export const ENEMIES_TO_AZURE_COAST: enemiesToLocation = {
     [{ name: "naga_2" }, { name: "naga_3" }],
     [{ name: "naga_2" }, { name: "naga_3" }, { name: "naga_4" }],
     [{ name: "naga_3" }, { name: "naga_4" }],
+    [{ name: "naga_3" }, { name: "naga_4" }, { name: "skeleton" }],
+    [{ name: "naga_4" }, { name: "skeleton" }],
+    [{ name: "skeleton" }, { name: "skeleton_2" }, { name: "naga_4" }],
+    [{ name: "skeleton" }, { name: "skeleton_2" }, { name: "skeleton_3" }, { name: "naga_4" }],
+    [{ name: "skeleton_2" }, { name: "skeleton_3" }, { name: "naga_4" }],
+    [{ name: "skeleton_2" }, { name: "skeleton_3" }, { name: "skeleton_4" }],
+    [{ name: "skeleton_3" }, { name: "skeleton_4" }],
   ],
-  legendEnemies: [{ name: "seaMonster", unique: true }],
+  legendEnemies: [
+    { name: "seaMonster", unique: true },
+    { name: "treasureBox", unique: true },
+  ],
 };
 // Hidden Cave
 // azure coast

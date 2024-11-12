@@ -57,7 +57,7 @@ export const STATS_NAGA_5: enemyBaseStats = {
   intellect: 60,
   attack: 200,
   def: 59,
-  maxHp: 4500,
+  maxHp: 4000,
   attackSpeed: 0.6,
   powerSkill: 0,
 };

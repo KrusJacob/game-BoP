@@ -19,7 +19,7 @@ const WrapperBar = () => {
   // const enemyMaxHP = useGameStore((state) => state.enemy?.getters.getMaxHp());
   const enemy = useGameStore((state) => state.enemy);
 
-  console.log("render WrapperBar");
+  // console.log("render WrapperBar");
 
   return (
     <div className={styles.wrapper}>

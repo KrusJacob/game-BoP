@@ -12,7 +12,7 @@ const EnemyBar = () => {
   const enemyEnergy = useGameStore((state) => state.enemy?.energy.value);
   const enemyMaxEnergy = useGameStore((state) => state.enemy?.energy.max);
 
-  console.log("render EnemyBar");
+  // console.log("render EnemyBar");
 
   return (
     <div className={styles.enemy}>

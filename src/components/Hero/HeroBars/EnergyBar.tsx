@@ -10,7 +10,6 @@ const EnergyBar = () => {
   const value = useGameStore((state) => state.hero!.energy.value);
   const max = useGameStore((state) => state.hero!.energy.max);
 
-  console.log("render EnergyBar");
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

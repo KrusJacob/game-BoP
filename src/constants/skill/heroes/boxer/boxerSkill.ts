@@ -26,24 +26,14 @@ const SKILLS_BOXER: heroSkills[] = [
     },
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+      hero.pushSkillText(this[0].label);
       const data = this[0].data;
-      // if (this[0].data.count === 0) {
+
       hero.attack(target, { modifier: data.modifier, isIgnoreAvade: true });
-      // target.update();
       if (data.power_2_2) {
         const heal = hero.getters.getPower() * data.power_2_2.modifierPower;
         healHeroOfSkill(hero, heal, 0);
       }
-      // this[0].data.count = this[0].data.totalCooldown;
-      // const interval = setInterval(() => {
-      //   this[0].data.count -= 1;
-      //   if (this[0].data.count === 0) {
-      //     clearInterval(interval);
-      //   }
-      // }, 1000);
-
-      // setTimeout(() => (this[0].data.count = 0), this[0].data.totalCooldown * 1000);
-      // }
     },
   },
   {
@@ -67,10 +57,11 @@ const SKILLS_BOXER: heroSkills[] = [
         valueEnergy: 0,
       },
     },
-    trigger: "afterHeroAwade",
+    trigger: "afterInitiatorMiss",
     fn: function (this: heroSkills[], hero: IHero) {
       const data = this[1].data;
       if (!data.isCooldown) {
+        hero.pushSkillText(this[1].label);
         data.isCooldown = true;
         setTimeout(() => {
           data.isCooldown = false;
@@ -106,12 +97,13 @@ const SKILLS_BOXER: heroSkills[] = [
         stunDuration: 0,
       },
     },
-    trigger: "afterHeroAttack",
+    trigger: "afterInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[2].data;
       const chance = getRandom(1, 100);
       if (chance <= data.chance && !target.status.death) {
         setTimeout(() => {
+          hero.pushSkillText(this[2].label);
           hero.attack(target, { modifier: data.modifier });
           if (data.talent_3_1.isOpen) {
             const stunChance = getRandom(1, 100);

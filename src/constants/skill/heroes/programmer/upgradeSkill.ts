@@ -1,5 +1,5 @@
 import { UpSkill, UpgradeSkills } from "@/types/skill.types";
-import { getText, incPoint, getValue, registerSkill } from "../..";
+import { getText, incPoint, getValue, registerSkill } from "..";
 import SKILLS_PROGRAMMER from "./programmerSkill";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
@@ -348,7 +348,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             registerSkill(skill.bind(this), "inBeginFight");
 
             function skill(this: UpSkill, hero: IHero) {
-              hero.buffs.incAttackSpeed(getValue(this), getValue(this, "duration"));
+              hero.buffs.incAttackSpeed(getValue(this, "value", true), getValue(this, "duration", true));
             }
           }
         },
@@ -410,7 +410,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         branch: "intellect",
         data: {
           def: [6, 12, 18, 24, 30],
-          decMaxHp: [-60, -120, -180, -240, -300],
+          decMaxHp: [-70, -140, -210, -280, -350],
         },
         fn(hero) {
           hero.setters.incDef(getValue(this, "def"));

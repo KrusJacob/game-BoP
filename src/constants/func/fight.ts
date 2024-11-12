@@ -1,17 +1,16 @@
 import { IEnemy } from "@/types/enemy.types";
-import { IHero, attackOptions, attackInfo } from "@/types/hero.types";
-
-import { ALL_TEXT, clearText } from "../text";
+import { IHero, attackOptions, IAttackInfo } from "@/types/hero.types";
+import { battleText } from "../text";
 import { getPercent } from "@/utils/getPercent";
 import { getRandom } from "@/utils/getRandom";
-import { MULTIPLIER_CRITICAL_DAMAGE } from "../setup";
+import { MULTIPLIER_CRITICAL_DAMAGE, STUN_COOLDOWN_SEC } from "../setup";
 import { getReward } from "./reward";
-import { skillTrigger } from "../skill";
+import { goSkillTrigger } from "../skill";
+import { skillEnemyTrigger } from "../skill/enemy";
 
 export function fight(hero: IHero, enemy: IHero | IEnemy) {
-  clearText();
-  console.log(skillTrigger);
-  skillTrigger.inBeginFight.map((fn) => fn.call(hero.skills, hero, enemy));
+  // clearText();
+  goSkillTrigger("inBeginFight", hero, enemy);
   attackHero();
   attackEnemy();
   function attackHero() {
@@ -21,14 +20,12 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
         getReward(hero, enemy);
         return;
       } else {
-        skillTrigger.beforeHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
+        goSkillTrigger("beforeInitiatorAttack", hero, enemy);
 
         if (!hero.status.death) {
           const attackInfo = hero.attack(enemy);
-          attackInfo.isCritical && skillTrigger.afterHeroCrit.map((fn) => fn.call(hero.skills, hero, enemy));
-          // if (!attackInfo.isStunned) {
-          //   ALL_TEXT.push(attackInfo);
-          // }
+
+          attackInfo.isCritical && goSkillTrigger("afterInitiatorCrit", hero, enemy);
 
           if (enemy.status.death) {
             console.log(hero.name, "win!");
@@ -38,7 +35,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
           }
           attackHero();
         }
-        skillTrigger.afterHeroAttack.map((fn) => fn.call(hero.skills, hero, enemy));
+        goSkillTrigger("afterInitiatorAttack", hero, enemy);
       }
     }, 1000 / hero.getters.getAttackSpeed());
   }
@@ -48,18 +45,16 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
       if (hero.status.death) {
         console.log(enemy.name, "win!");
       } else {
+        goSkillTrigger("beforeInitiatorAttack", enemy, hero);
         if (!enemy.status.death) {
           const attackInfo = enemy.attack(hero);
-          // if (!attackInfo.isStunned) {
-          //   ALL_TEXT.push(attackInfo);
-          // }
-          attackInfo.isCritical && skillTrigger.afterEnemyCrit.map((fn) => fn.call(hero.skills, hero, enemy));
-          attackInfo.isEvade && skillTrigger.afterHeroAwade.map((fn) => fn.call(hero.skills, hero, enemy));
 
+          attackInfo.isCritical && goSkillTrigger("afterTargetCrit", hero, enemy);
+          attackInfo.isMiss && goSkillTrigger("afterTargetMiss", hero, enemy);
           attackEnemy();
         }
 
-        skillTrigger.afterEnemyAttack.map((fn) => fn.call(hero.skills, hero, enemy));
+        goSkillTrigger("afterTargetAttack", enemy, hero);
       }
     }, 1000 / enemy.getters.getAttackSpeed());
   }
@@ -72,11 +67,11 @@ function getEnergy(hero: IHero | IEnemy) {
   }
 }
 
-export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?: attackOptions): attackInfo {
+export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?: attackOptions): IAttackInfo {
   const attackInfo = {
     type: this.type,
     damage: 0,
-    isEvade: false,
+    isMiss: false,
     isCritical: false,
     isStunned: false,
   };
@@ -90,10 +85,12 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     return attackInfo;
   }
 
-  if (checkForEvade(this.skills[3].data.chanceEvade) && !options?.isIgnoreAvade) {
-    attackInfo.isEvade = true;
+  if (checkForEvade(target.skills[3].data.chanceEvade) && !options?.isIgnoreAvade) {
+    attackInfo.isMiss = true;
     console.log(`${this.name} промахнулся`);
-    ALL_TEXT.push(attackInfo);
+
+    battleText.pushTextBattle(attackInfo);
+
     return attackInfo;
   }
 
@@ -109,10 +106,10 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
   goDamage(target, attackInfo.damage);
   getEnergy(this);
 
-  // console.log(`Удар по ${target.name} на ${attackInfo.damage} урона, осталось ${target.HP} HP`);
+  console.log(`Удар по ${target.name} на ${attackInfo.damage} урона, осталось ${target.HP} HP`);
 
   if (!attackInfo.isStunned) {
-    ALL_TEXT.push(attackInfo);
+    battleText.pushTextBattle(attackInfo);
   }
   return attackInfo;
 }
@@ -147,7 +144,7 @@ function calcDamageWithDef(damage: number, def: number, hero: IHero | IEnemy, op
     ignoreDef += hero.buffs.nextAttack.ignoreDef;
     hero.buffs.nextAttack.ignoreDef = 0;
   }
-  // console.log(ignoreDef, "%", "ignoreDef");
+  console.log(ignoreDef, "%", "ignoreDef");
   return getDamageAfterDef(damage, def - getPercent(def, ignoreDef));
 }
 
@@ -255,17 +252,30 @@ export const goPosionDmg = createTimeoutDot("posion");
 export const goBleedDmg = createTimeoutDot("bleed");
 
 export function goStun(target: IHero | IEnemy, duration: number) {
-  target.status.isStun = true;
-  ALL_TEXT.push({
-    damage: 0,
-    isCritical: false,
-    isEvade: false,
-    isStunned: true,
-    type: target.type,
-  });
+  if (!checkForStun(target)) {
+    goStunCooldown(target);
+    goStunEffect(target, duration);
+
+    battleText.pushTextBattle({
+      damage: 0,
+      isStunned: true,
+      type: target.type,
+    });
+  }
+}
+
+function goStunEffect(target: IHero | IEnemy, duration: number) {
+  target.status.stun.isStun = true;
   setTimeout(() => {
-    target.status.isStun = false;
+    target.status.stun.isStun = false;
   }, duration * 1000);
+}
+
+function goStunCooldown(target: IHero | IEnemy) {
+  target.status.stun.isCooldown = true;
+  setTimeout(() => {
+    target.status.stun.isCooldown = false;
+  }, STUN_COOLDOWN_SEC * 1000);
 }
 
 function goCriticalDamage(value: number) {
@@ -281,5 +291,5 @@ function checkForEvade(chance: number) {
 }
 
 function checkForStun(hero: IHero | IEnemy) {
-  return hero.status.isStun;
+  return hero.status.stun.isStun;
 }

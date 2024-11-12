@@ -31,10 +31,10 @@ const STATS_COOK: heroBaseStats = {
   name: "Повар",
   power: 50,
   agility: 20,
-  intellect: 60,
+  intellect: 55,
   attack: 100,
-  def: 16,
-  maxHp: 1200,
+  def: 14,
+  maxHp: 1150,
   attackSpeed: 0.4,
   powerSkill: 0,
 };

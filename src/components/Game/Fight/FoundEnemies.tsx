@@ -3,6 +3,9 @@ import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
 import Button from "@/components/UI/Button/Button";
+import { useBattleTextStore } from "@/store/battleTextStore";
+import { IAttackInfo } from "@/types/hero.types";
+import { clearEnemySkills, registerAllEnemySkills, skillEnemyTrigger } from "@/constants/skill/enemy";
 
 interface Props {
   enemies: IEnemy[];
@@ -17,7 +20,10 @@ const FoundEnemies = ({ enemies, disabled, onEnemySelected }: Props) => {
     enemy.update = function () {
       setEnemy(this);
     };
+    clearEnemySkills();
+    registerAllEnemySkills(enemy.skills);
     enemy.update();
+    // console.log(skillEnemyTrigger);
   };
 
   return (

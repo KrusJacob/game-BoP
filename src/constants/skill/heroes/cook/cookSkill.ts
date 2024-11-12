@@ -24,6 +24,7 @@ const SKILLS_COOK: heroSkills[] = [
     },
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+      hero.pushSkillText(this[0].label);
       const data = this[0].data;
       hero.buffs.incDamage(data.modifierDamage, data.duration);
       hero.buffs.incDef(data.modifierDef, data.duration);
@@ -40,16 +41,17 @@ const SKILLS_COOK: heroSkills[] = [
     img: "/src/assets/skill/skill_cook_2.png",
     data: {
       chance: 20,
-      healValue: 30,
-      healPercent: 4,
+      healValue: 20,
+      healPercent: 3,
       cooldownCount: 5,
       isCooldown: false,
     },
-    trigger: "afterEnemyAttack",
+    trigger: "afterTargetAttack",
     fn: function (this: heroSkills[], hero: IHero) {
       const chance = getRandom(1, 100);
       const data = this[1].data;
       if (chance <= data.chance && !data.isCooldown) {
+        hero.pushSkillText(this[1].label);
         console.log("heal");
         data.isCooldown = true;
         setTimeout(() => {
@@ -70,8 +72,8 @@ const SKILLS_COOK: heroSkills[] = [
     data: {
       chance: 20,
       duration: 5,
-      modifierOfIntellect: 0.2,
-      initalValue: 30,
+      modifierOfIntellect: 0.15,
+      initalValue: 25,
       power_2_1: {
         isOpen: false,
         modifierPower: 0,
@@ -85,11 +87,12 @@ const SKILLS_COOK: heroSkills[] = [
         modifierOfIntellect: 0,
       },
     },
-    trigger: "afterHeroAttack",
+    trigger: "afterInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[2].data;
       const chance = getRandom(1, 100);
       if (chance <= data.chance) {
+        hero.pushSkillText(this[2].label);
         console.log("Отравлен");
 
         if (data.power_2_1.isOpen) {

@@ -21,6 +21,7 @@ export interface IHero {
   getBarrier: (this: IHero | IEnemy, value: number) => void;
   getHeal: (this: IHero | IEnemy, value: number) => void;
   update: Function;
+  pushSkillText: Function;
   getters: heroGetters;
   setters: heroSetters;
   boost: heroBoost;
@@ -47,10 +48,17 @@ export interface heroBoost {
 
 export interface heroStatus {
   death: boolean;
-  isStun: boolean;
+  stun: {
+    isStun: boolean;
+    isCooldown: boolean;
+  };
   isFreeze: boolean;
   isPoisoned: boolean;
   isBleeded: boolean;
+  virus: {
+    isVirus: boolean;
+    stack: number;
+  };
 }
 
 export interface heroDebuffStack {
@@ -147,32 +155,32 @@ export interface heroBuffs {
   _def: number;
   _attackSpeed: number;
   incDamage: (value: number, duration?: number) => void;
-  incAttackSpeed: (value: number, duration?: number) => void;
+  incAttackSpeed: (value: number, durationSec?: number) => void;
   incDef: (value: number, duration?: number) => void;
   getBuffDamage: () => number;
   getBuffAttackSpeed: () => number;
   getBuffDef: () => number;
 }
-export interface attackInfo {
+export interface IAttackInfo {
   type: heroType;
   damage: number;
-  isEvade: boolean;
-  isCritical: boolean;
-  isStunned: boolean;
+  isMiss?: boolean;
+  isCritical?: boolean;
+  isStunned?: boolean;
 }
-export type heroGoAttack = (target: IEnemy | IHero, options?: attackOptions) => attackInfo;
+export type heroGoAttack = (target: IEnemy | IHero, options?: attackOptions) => IAttackInfo;
 
 export interface TypeSkillTrigger {
   active: Function[];
   inBeginFight: Function[];
-  beforeHeroAttack: Function[];
-  afterHeroAttack: Function[];
-  beforeEnemyAttack: Function[];
-  afterEnemyAttack: Function[];
-  afterHeroAwade: Function[];
-  afterEnemyAwade: Function[];
-  afterHeroCrit: Function[];
-  afterEnemyCrit: Function[];
+  beforeInitiatorAttack: Function[];
+  beforeTargetAttack: Function[];
+  afterInitiatorAttack: Function[];
+  afterTargetAttack: Function[];
+  afterInitiatorMiss: Function[];
+  afterTargetMiss: Function[];
+  afterInitiatorCrit: Function[];
+  afterTargetCrit: Function[];
 }
 
 export interface attackOptions {

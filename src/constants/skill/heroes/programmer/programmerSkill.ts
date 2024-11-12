@@ -20,6 +20,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[0].data;
+      hero.pushSkillText(this[0].label);
       let damage = getPercent(target.getters.getMaxHp(), data.modifier);
       goDamage(target, damage);
       healHeroOfSkill(hero, damage, 0, false);
@@ -32,8 +33,8 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     },
     img: "/src/assets/skill/skill_programmer_2.png",
     data: {
-      modifier: 3,
-      barrierValue: 75,
+      modifier: 2.5,
+      barrierValue: 100,
       power_2_1: {
         isOpen: false,
       },
@@ -48,6 +49,8 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     },
     trigger: "inBeginFight",
     fn: function (this: heroSkills[], hero: IHero, target: IEnemy) {
+      hero.pushSkillText(this[1].label);
+
       const data = this[1].data;
 
       const mainStat = data.power_2_1.isOpen ? hero.getters.getPower() : hero.getters.getIntellect();
@@ -76,7 +79,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     data: {
       chance: 25,
       maxLayer: 3,
-      modifier: 12,
+      modifier: 10,
       applyedLayer: 0,
       duration: 6,
       cooldown: 1.5,
@@ -90,7 +93,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
         modifier: 0,
       },
     },
-    trigger: "afterHeroAttack",
+    trigger: "afterInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[2].data;
       if (data.isCooldown) {
@@ -99,9 +102,12 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       const chance = getRandom(1, 100);
 
       if (chance <= data.chance && data.applyedLayer < data.maxLayer) {
+        hero.pushSkillText(this[2].label);
         target.buffs.incDamage(-data.modifier, data.duration);
         data.applyedLayer += 1;
         data.isCooldown = true;
+
+        target.status.virus.stack += 1;
         console.log(data.applyedLayer, "layer +");
 
         setTimeout(() => {
@@ -120,6 +126,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
         }
 
         setTimeout(() => {
+          target.status.virus.stack -= 1;
           data.applyedLayer -= 1;
           console.log("layer снялся");
         }, data.duration * 1000);

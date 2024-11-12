@@ -7,6 +7,7 @@ import img from "@assets/bg_tomb.jpg";
 import { TabsWithFight } from "../GameField/GameField";
 import Button from "@/components/UI/Button/Button";
 import { useState } from "react";
+import { clearEnemySkills, registerAllEnemySkills } from "@/constants/skill/enemy";
 
 const TombField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const { setEnemy, hero, enemy } = useGameStore((state) => state);
@@ -23,6 +24,14 @@ const TombField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
 
   const onGoFight = () => {
     tombEnemy.defeated = true;
+
+    if (enemy) {
+      enemy.update = function () {
+        setEnemy(this);
+      };
+      clearEnemySkills();
+      registerAllEnemySkills(enemy.skills);
+    }
     onSetTab("Бой");
   };
 

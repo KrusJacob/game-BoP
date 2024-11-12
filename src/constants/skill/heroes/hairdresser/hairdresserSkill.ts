@@ -29,6 +29,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     },
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
+      hero.pushSkillText(this[0].label);
       const data = this[0].data;
       hero.buffs.incAttackSpeed(data.modifier, data.duration);
       if (data.power_2_2.isOpen) {
@@ -67,11 +68,11 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
         isBleeded: false,
       },
     },
-    trigger: "beforeHeroAttack",
+    trigger: "beforeInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, enemy: IEnemy) {
       const data = this[1].data;
       if (data.currentCount >= data.count) {
-        hero.buffs.nextAttack.ignoreDef += data.ignoreDef;
+        hero.buffs.nextAttack.ignoreDef = data.ignoreDef;
 
         data.currentCount = 1;
         if (data.power_3_1.isOpen) {
@@ -113,6 +114,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     },
     trigger: "inBeginFight",
     fn: function (this: heroSkills[], hero: IHero, enemy: IEnemy) {
+      hero.pushSkillText(this[2].label);
       const data = this[2].data;
       healHeroOfSkill(hero, data.healValue, data.healPercent);
       hero.buffs.incDamage(data.modifierDamage, data.duration);

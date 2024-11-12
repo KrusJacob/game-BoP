@@ -5,15 +5,17 @@ import { STATS_BOXER, STATS_PROGRAMMER, STATS_COOK, STATS_HAIRDRESSER } from "./
 import {
   SKILLS_ROGUE,
   SKILLS_GNOME,
-  SKILLS_BEAST,
   SKILLS_GOBLIN,
   SKILLS_GOLDEN_PIG,
   SKILLS_GNOME_TRADER,
   SKILLS_NAGA,
   SKILLS_SEA_MONSTER,
+  SKILLS_SKELETON,
+  SKILLS_BEAST,
+  SKILLS_BEAST_BOSS,
 } from "./skill/enemySkills";
 import { SKILLS_BOXER, SKILLS_PROGRAMMER, SKILLS_COOK, SKILLS_HAIRDRESSER } from "./skill/heroSkills";
-import { statsBeast, statsGnome, statsGoblin, statsLegend, statsNaga, statsRogue } from "./enemy";
+import { statsBeast, statsGnome, statsGoblin, statsLegend, statsNaga, statsRogue, statsSkeleton } from "./enemy";
 import { enemiesResources } from "./resources";
 import {
   getBuffAttackSpeed,
@@ -82,6 +84,19 @@ export function getStatsToEnemy(type: enemyName): enemyBaseStats {
       return statsNaga.naga_5;
     case "seaMonster":
       return statsLegend.seaMonster;
+    case "skeleton":
+      return statsSkeleton.skeleton;
+    case "skeleton_2":
+      return statsSkeleton.skeleton_2;
+    case "skeleton_3":
+      return statsSkeleton.skeleton_3;
+    case "skeleton_4":
+      return statsSkeleton.skeleton_4;
+    case "skeleton_5":
+      return statsSkeleton.skeleton_5;
+    case "treasureBox":
+      return statsLegend.treasureBox;
+
     default:
       return statsRogue.rogue;
   }
@@ -114,8 +129,9 @@ export function getSkillsToEnemy(type: enemyName) {
     case "beast_2":
     case "beast_3":
     case "beast_4":
-    case "beast_5":
       return SKILLS_BEAST;
+    case "beast_5":
+      return SKILLS_BEAST_BOSS;
     case "rogue":
     case "rogue_2":
     case "rogue_3":
@@ -140,6 +156,12 @@ export function getSkillsToEnemy(type: enemyName) {
     case "naga_4":
     case "naga_5":
       return SKILLS_NAGA;
+    case "skeleton":
+    case "skeleton_2":
+    case "skeleton_3":
+    case "skeleton_4":
+    case "skeleton_5":
+      return SKILLS_SKELETON;
     default:
       return SKILLS_ROGUE;
   }
@@ -151,6 +173,10 @@ export function getResourcesToEnemy(type: enemyName) {
       return enemiesResources.goldenPig;
     case "gnome-trader":
       return enemiesResources.gnomeTrader;
+    case "seaMonster":
+      return enemiesResources.seaMonster;
+    case "treasureBox":
+      return enemiesResources.treasureBox;
     case "beast":
       return enemiesResources.beast;
     case "beast_2":
@@ -191,6 +217,26 @@ export function getResourcesToEnemy(type: enemyName) {
       return enemiesResources.gnome_4;
     case "gnome_5":
       return enemiesResources.gnome_5;
+    case "naga":
+      return enemiesResources.naga;
+    case "naga_2":
+      return enemiesResources.naga_2;
+    case "naga_3":
+      return enemiesResources.naga_3;
+    case "naga_4":
+      return enemiesResources.naga_4;
+    case "naga_5":
+      return enemiesResources.naga_5;
+    case "skeleton":
+      return enemiesResources.skeleton;
+    case "skeleton_2":
+      return enemiesResources.skeleton_2;
+    case "skeleton_3":
+      return enemiesResources.skeleton_3;
+    case "skeleton_4":
+      return enemiesResources.skeleton_4;
+    case "skeleton_5":
+      return enemiesResources.skeleton_5;
     default:
       return enemiesResources.beast;
   }

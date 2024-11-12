@@ -8,6 +8,7 @@ import { useGameStore } from "@/store/gameStore";
 import { TabsWithFight } from "../GameField/GameField";
 import { IEnemy } from "@/types/enemy.types";
 import FoundEnemies from "../Fight/FoundEnemies";
+import HeroPanel from "@/components/Hero/HeroPanel/HeroPanel";
 
 const LocationField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const [enemies, setEnemies] = useState<IEnemy[]>([]);

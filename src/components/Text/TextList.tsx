@@ -1,18 +1,20 @@
-import { ALL_TEXT } from "@/constants/text";
 import styles from "./styles.module.css";
 import TextItem from "./TextItem";
+import { useBattleTextStore } from "@/store/battleTextStore";
+import { memo } from "react";
 
-const TextList = () => {
-  // console.log("render TextList");
+const TextList = memo(() => {
+  const battleText = useBattleTextStore((state) => state.battleText);
+  // console.log("render TextList", battleText.length);
   return (
     <div className={styles.textList}>
-      {ALL_TEXT.map((item, i) => {
-        if (10 + i - ALL_TEXT.length > 0) {
+      {battleText.map((item, i) => {
+        if (10 + i - battleText.length > 0) {
           return <TextItem key={i} item={item} />;
         }
       })}
     </div>
   );
-};
+});
 
 export default TextList;

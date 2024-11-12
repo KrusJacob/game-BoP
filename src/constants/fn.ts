@@ -21,14 +21,14 @@ export function incHeroDef(this: IHero["buffs"], value: number, duration?: numbe
     }, duration * 1000);
   }
 }
-export function incHeroAttackSpeed(this: IHero["buffs"], value: number, duration?: number) {
-  if (!duration) {
+export function incHeroAttackSpeed(this: IHero["buffs"], value: number, durationSec?: number) {
+  if (!durationSec) {
     this._attackSpeed += value;
   } else {
     this._attackSpeed += value;
     setTimeout(() => {
       this._attackSpeed -= value;
-    }, duration * 1000);
+    }, durationSec * 1000);
   }
 }
 export function getBuffDamage(this: IHero["buffs"]) {

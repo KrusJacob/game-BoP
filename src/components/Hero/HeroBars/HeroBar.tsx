@@ -19,7 +19,7 @@ const HeroBar = () => {
   const heroEnergy = useGameStore((state) => state.hero?.energy.value);
   const heroMaxEnergy = useGameStore((state) => state.hero?.energy.max);
 
-  console.log("render HeroBar");
+  // console.log("render HeroBar");
   return (
     <div>
       <div className={styles.full_HPBar}>

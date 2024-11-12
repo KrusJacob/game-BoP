@@ -5,7 +5,7 @@ import { GiFlowerEmblem } from "react-icons/gi";
 import { useGameStore } from "@/store/gameStore";
 import { useState } from "react";
 import SkillLevel from "./SkillLevel";
-import { useSkillStore } from "@/store/skillStore";
+import { useSkillUpgradeStore } from "@/store/skillUpgradeStore";
 import { UpSkill } from "@/types/skill.types";
 
 const arr: tabs[] = [
@@ -31,7 +31,7 @@ interface tabs {
 const SkillField = () => {
   const [tab, setTab] = useState<typeTab>("power");
   const hero = useGameStore((state) => state.hero);
-  const { upgradeSkills, setUpgradeSkills } = useSkillStore((state) => state);
+  const { upgradeSkills, setUpgradeSkills } = useSkillUpgradeStore((state) => state);
 
   if (!hero) {
     return null;

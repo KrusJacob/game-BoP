@@ -9,19 +9,19 @@ const RESOURCES_BEAST: enemyResources = {
 };
 const RESOURCES_BEAST_2: enemyResources = {
   exp: 95,
-  gold: 90,
+  gold: 95,
   skillPoints: 0,
   tombProgress: 6,
 };
 const RESOURCES_BEAST_3: enemyResources = {
   exp: 120,
-  gold: 100,
+  gold: 110,
   skillPoints: 0,
   tombProgress: 8,
 };
 const RESOURCES_BEAST_4: enemyResources = {
   exp: 150,
-  gold: 120,
+  gold: 125,
   skillPoints: 0,
   tombProgress: 10,
 };
@@ -39,19 +39,19 @@ const RESOURCES_ROGUE: enemyResources = {
 };
 const RESOURCES_ROGUE_2: enemyResources = {
   exp: 195,
-  gold: 160,
+  gold: 155,
   skillPoints: 0,
   tombProgress: 6,
 };
 const RESOURCES_ROGUE_3: enemyResources = {
   exp: 220,
-  gold: 180,
+  gold: 170,
   skillPoints: 0,
   tombProgress: 8,
 };
 const RESOURCES_ROGUE_4: enemyResources = {
   exp: 245,
-  gold: 200,
+  gold: 185,
   skillPoints: 0,
   tombProgress: 10,
 };
@@ -65,25 +65,25 @@ const RESOURCES_ROGUE_5: enemyResources = {
 
 const RESOURCES_GOBLIN: enemyResources = {
   exp: 280,
-  gold: 210,
+  gold: 200,
   skillPoints: 0,
   tombProgress: 5,
 };
 const RESOURCES_GOBLIN_2: enemyResources = {
   exp: 310,
-  gold: 235,
+  gold: 215,
   skillPoints: 0,
   tombProgress: 6,
 };
 const RESOURCES_GOBLIN_3: enemyResources = {
   exp: 345,
-  gold: 255,
+  gold: 230,
   skillPoints: 0,
   tombProgress: 8,
 };
 const RESOURCES_GOBLIN_4: enemyResources = {
   exp: 380,
-  gold: 270,
+  gold: 245,
   skillPoints: 0,
   tombProgress: 10,
 };
@@ -94,28 +94,28 @@ const RESOURCES_GOBLIN_5: enemyResources = {
 };
 const RESOURCES_GNOME: enemyResources = {
   exp: 405,
-  gold: 290,
+  gold: 260,
   skillPoints: 0,
   tombProgress: 5,
 };
 
 const RESOURCES_GNOME_2: enemyResources = {
   exp: 430,
-  gold: 315,
+  gold: 275,
   skillPoints: 0,
   tombProgress: 6,
 };
 
 const RESOURCES_GNOME_3: enemyResources = {
   exp: 455,
-  gold: 335,
+  gold: 290,
   skillPoints: 0,
   tombProgress: 8,
 };
 
 const RESOURCES_GNOME_4: enemyResources = {
   exp: 480,
-  gold: 350,
+  gold: 305,
   skillPoints: 0,
   tombProgress: 10,
 };
@@ -125,63 +125,98 @@ const RESOURCES_GNOME_5: enemyResources = {
   gold: 1000,
   skillPoints: 1,
 };
+
 const RESOURCES_NAGA: enemyResources = {
   exp: 520,
-  gold: 375,
+  gold: 320,
+  skillPoints: 0,
+  tombProgress: 5,
+};
+const RESOURCES_NAGA_2: enemyResources = {
+  exp: 560,
+  gold: 340,
+  skillPoints: 0,
+  tombProgress: 6,
+};
+const RESOURCES_NAGA_3: enemyResources = {
+  exp: 600,
+  gold: 360,
+  skillPoints: 0,
+  tombProgress: 8,
+};
+const RESOURCES_NAGA_4: enemyResources = {
+  exp: 640,
+  gold: 380,
+  skillPoints: 0,
+  tombProgress: 10,
+};
+const RESOURCES_NAGA_5: enemyResources = {
+  exp: 1200,
+  gold: 1200,
+  skillPoints: 1,
+};
+const RESOURCES_SKELETON: enemyResources = {
+  exp: 680,
+  gold: 400,
   skillPoints: 0,
   tombProgress: 5,
 };
 
-const RESOURCES_NAGA_2: enemyResources = {
-  exp: 560,
-  gold: 390,
+const RESOURCES_SKELETON_2: enemyResources = {
+  exp: 720,
+  gold: 420,
   skillPoints: 0,
   tombProgress: 6,
 };
 
-const RESOURCES_NAGA_3: enemyResources = {
-  exp: 600,
-  gold: 415,
+const RESOURCES_SKELETON_3: enemyResources = {
+  exp: 765,
+  gold: 440,
   skillPoints: 0,
   tombProgress: 8,
 };
 
-const RESOURCES_NAGA_4: enemyResources = {
-  exp: 640,
-  gold: 430,
+const RESOURCES_SKELETON_4: enemyResources = {
+  exp: 920,
+  gold: 460,
   skillPoints: 0,
   tombProgress: 10,
 };
 
-const RESOURCES_NAGA_5: enemyResources = {
-  exp: 1250,
-  gold: 1250,
+const RESOURCES_SKELETON_5: enemyResources = {
+  exp: 1500,
+  gold: 1500,
   skillPoints: 1,
 };
 
 // legends
 
-const RESOURCES_GNOME_TRADER: enemyResources = {
-  exp: 50,
-  gold: 1500,
-  skillPoints: 1,
-};
-
 const RESOURCES_GODLEN_PIG: enemyResources = {
   exp: 50,
-  gold: 1000,
+  gold: 750,
   skillPoints: 0,
 };
+const RESOURCES_GNOME_TRADER: enemyResources = {
+  exp: 50,
+  gold: 1000,
+  skillPoints: 1,
+};
 const RESOURCES_SEA_MONSTER: enemyResources = {
-  exp: 2000,
+  exp: 1500,
   gold: 300,
   skillPoints: 1,
+};
+const RESOURCES_TREASURE_BOX: enemyResources = {
+  exp: 50,
+  gold: 1500,
+  skillPoints: 0,
 };
 
 export const enemiesResources = {
   goldenPig: RESOURCES_GODLEN_PIG,
   gnomeTrader: RESOURCES_GNOME_TRADER,
   seaMonster: RESOURCES_SEA_MONSTER,
+  treasureBox: RESOURCES_TREASURE_BOX,
   beast: RESOURCES_BEAST,
   beast_2: RESOURCES_BEAST_2,
   beast_3: RESOURCES_BEAST_3,
@@ -207,6 +242,11 @@ export const enemiesResources = {
   naga_3: RESOURCES_NAGA_3,
   naga_4: RESOURCES_NAGA_4,
   naga_5: RESOURCES_NAGA_5,
+  skeleton: RESOURCES_SKELETON,
+  skeleton_2: RESOURCES_SKELETON_2,
+  skeleton_3: RESOURCES_SKELETON_3,
+  skeleton_4: RESOURCES_SKELETON_4,
+  skeleton_5: RESOURCES_SKELETON_5,
 };
 
 export const HERO_REWARD: heroReward = {

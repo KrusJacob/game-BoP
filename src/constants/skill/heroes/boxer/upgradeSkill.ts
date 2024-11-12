@@ -1,6 +1,6 @@
 import { UpSkill, UpgradeSkills } from "@/types/skill.types";
 import SKILLS_BOXER from "./boxerSkill";
-import { getText, incPoint, getValue, registerSkill } from "../..";
+import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
 import { goDamage } from "@/constants/func/fight";
@@ -132,7 +132,6 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           SKILLS_BOXER[2].data.talent_3_1.isOpen = true;
           SKILLS_BOXER[2].data.talent_3_1.stunChance += getValue(this, "chance");
           SKILLS_BOXER[2].data.talent_3_1.stunDuration += getValue(this, "duration");
-          console.log(SKILLS_BOXER);
         },
       },
     ],
@@ -239,7 +238,6 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           value: [30, 50, 70],
         },
         fn(hero) {
-          console.log(getValue(this) / 100);
           SKILLS_BOXER[0].data.modifier += getValue(this) / 100;
         },
       },
@@ -368,7 +366,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         fn(hero) {
           this.data.modifierDamage += getValue(this);
           if (this.currentPoint === 1) {
-            registerSkill(skill.bind(this), "afterHeroAttack");
+            registerSkill(skill.bind(this), "afterInitiatorAttack");
 
             function skill(this: UpSkill, hero: IHero, target: IEnemy) {
               const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
@@ -403,7 +401,6 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         fn() {
           SKILLS_BOXER[1].data.talent_3_1.isOpen = true;
           SKILLS_BOXER[1].data.talent_3_1.modifierHeal += getValue(this) / 100;
-          console.log(SKILLS_BOXER[1].data.talent_3_1.modifierHeal);
         },
       },
       {

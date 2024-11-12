@@ -35,3 +35,15 @@ export const STATS_SEA_MONSTER: enemyBaseStats = {
   attackSpeed: 0.5,
   powerSkill: 0,
 };
+export const STATS_TREASURE_BOX: enemyBaseStats = {
+  img: "/src/assets/enemy/treasureBox.png",
+  name: "Cундук с сокровищем",
+  power: 10,
+  agility: 10,
+  intellect: 10,
+  attack: 150,
+  def: 40,
+  maxHp: 2000,
+  attackSpeed: 0.5,
+  powerSkill: 0,
+};

@@ -8,6 +8,8 @@ export const HP_REST_PERCENT = 20;
 export const PARAMETER_POINT_LEVEL = 3;
 
 // START
+
+export const START_HERO_LEVEL = 1;
 export const START_GOLD_HERO = 0;
 export const START_SKILLPOINT = 0;
 export const START_PARAMETERPOINT = 0;
@@ -24,6 +26,8 @@ export const MULTIPLIER_CRITICAL_DAMAGE = 2;
 export const CHANCE_CRITICAL_DAMAGE = 8;
 export const CHANCE_EVADE = 8;
 export const MULTIPLIER_COUNTER_ATTACK_DAMAGE = 0.5;
+
+export const STUN_COOLDOWN_SEC = 1.5;
 
 export const CHANCE_TO_LEGEND_ENEMY = 3;
 

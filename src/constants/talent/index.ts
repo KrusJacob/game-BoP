@@ -4,7 +4,7 @@ import { getRandom } from "@/utils/getRandom";
 import { IEnemy } from "@/types/enemy.types";
 import { getPercent } from "@/utils/getPercent";
 import { goStun } from "../func/fight";
-import { registerSkill } from "../skill";
+import { registerSkill } from "../skill/heroes";
 
 export const ALL_TALENTS: talentType[] = [
   {
@@ -192,7 +192,7 @@ export const ALL_TALENTS: talentType[] = [
       chance: [6, 7, 8, 9, 10],
       duration: [2, 2, 2, 2, 2],
     },
-    trigger: "afterHeroAttack",
+    trigger: "afterInitiatorAttack",
     fn(hero: IHero) {
       if (this.level === 1) {
         registerTalent(this, activeTalent, this.trigger!);
@@ -256,7 +256,7 @@ export const ALL_TALENTS: talentType[] = [
     data: {
       value: [12, 18, 22, 26, 30],
     },
-    trigger: "afterHeroAttack",
+    trigger: "afterInitiatorAttack",
     fn(hero: IHero) {
       hero.boost.exp += getValue(this);
     },
@@ -272,7 +272,7 @@ export const ALL_TALENTS: talentType[] = [
     data: {
       value: [12, 18, 22, 26, 30],
     },
-    trigger: "afterHeroAttack",
+    trigger: "afterInitiatorAttack",
     fn(hero: IHero) {
       hero.boost.gold += getValue(this);
     },

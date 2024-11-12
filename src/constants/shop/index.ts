@@ -10,14 +10,14 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 0,
     name: "Пузырек лечебного зелья",
     img: "/src/assets/shop/heal_potion_1.png",
-    cost: 180,
+    cost: 200,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
     },
     data: {
-      value: 275,
+      value: 300,
     },
     fn: function (this: bagItemType, hero: IHero) {
       hero.getHeal(this.data.value);
@@ -28,14 +28,14 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 1,
     name: "Флакон лечебного зелья",
     img: "/src/assets/shop/heal_potion_2.png",
-    cost: 340,
+    cost: 400,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
     },
     data: {
-      value: 500,
+      value: 625,
     },
     fn: function (this: bagItemType, hero: IHero) {
       hero.getHeal(this.data.value);
@@ -46,14 +46,14 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 2,
     name: "Бутыль лечебного зелья",
     img: "/src/assets/shop/heal_potion_3.png",
-    cost: 670,
+    cost: 800,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
     },
     data: {
-      value: 1000,
+      value: 1250,
     },
     fn: function (this: bagItemType, hero: IHero) {
       hero.getHeal(this.data.value);
@@ -64,7 +64,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Кирпич",
     img: "/src/assets/shop/brick.png",
-    cost: 470,
+    cost: 575,
     quantity: 1,
     descr: function () {
       const text = this.data.duration;
@@ -82,7 +82,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Зелье заморозки",
     img: "/src/assets/shop/freeze_potion.png",
-    cost: 440,
+    cost: 350,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
@@ -90,7 +90,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
     data: {
       value: 70,
-      duration: 6,
+      duration: 5,
     },
     fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
       goFreeze(enemy, this.data.value, this.data.duration);
@@ -101,7 +101,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Зелье c ядом",
     img: "/src/assets/shop/posion_potion.png",
-    cost: 400,
+    cost: 340,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
@@ -141,7 +141,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Зелье оглушения",
     img: "/src/assets/shop/stun_potion.png",
-    cost: 700,
+    cost: 800,
     quantity: 1,
     descr: function () {
       const text = this.data.duration;
@@ -180,7 +180,6 @@ function decreaseQuantity(resources: IHero["resources"], bagSlotId: number) {
 
 export function byeShopItem(resources: IHero["resources"], item: shopItemType) {
   if (resources.gold < item.cost) {
-    console.log("нету монет");
     return false;
   }
   resources.gold -= item.cost;

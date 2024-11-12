@@ -1,3 +1,4 @@
+import { enemySkills } from "@/types/enemy.types";
 import { IHero } from "@/types/hero.types";
 import { getPercent } from "@/utils/getPercent";
 
@@ -12,5 +13,15 @@ export function healHeroOfSkill(hero: IHero, healValue = 0, healPercent = 0, isP
   }
   console.log(heal);
   hero.getHeal(heal);
-  // hero.update();
+}
+
+export function getLockSkill(): enemySkills {
+  return {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/src/assets/skill/lock.png",
+    data: {},
+  };
 }

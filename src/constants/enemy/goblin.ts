@@ -39,10 +39,10 @@ export const STATS_GOBLIN_3: enemyBaseStats = {
 export const STATS_GOBLIN_4: enemyBaseStats = {
   img: "/src/assets/enemy/goblin_4.png",
   name: "Гоблин-головорез",
-  power: 110,
-  agility: 70,
+  power: 115,
+  agility: 75,
   intellect: 40,
-  attack: 150,
+  attack: 175,
   def: 34,
   maxHp: 1900,
   attackSpeed: 0.5,

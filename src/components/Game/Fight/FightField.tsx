@@ -12,7 +12,7 @@ import TextList from "@/components/Text/TextList";
 import EnemyModal from "./EnemyModal";
 import { fight } from "@/constants/func/fight";
 import { searchEnemy } from "@/constants/enemies";
-import { skillTrigger } from "@/constants/skill";
+import { skillHeroTrigger } from "@/constants/skill/heroes";
 
 const FightField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const [isFight, setFight] = useState(false);

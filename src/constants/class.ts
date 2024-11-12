@@ -33,7 +33,13 @@ import {
 } from "./initStats";
 import { updateMainStats } from "./attributes";
 import { ACTIVE_BAG_PANEL, ALL_BAG_ITEMS } from "./bag";
-import { MAX_ENERGY_VALUE, START_GOLD_HERO, START_PARAMETERPOINT, START_SKILLPOINT } from "./setup";
+import {
+  MAX_ENERGY_VALUE,
+  START_GOLD_HERO,
+  START_HERO_LEVEL,
+  START_PARAMETERPOINT,
+  START_SKILLPOINT,
+} from "./setup";
 import { goAttack } from "./func/fight";
 import { incExp } from "./func/reward";
 
@@ -81,10 +87,17 @@ export class EnemyClass implements IEnemy {
   resources: enemyResources;
   status = {
     death: false,
-    isStun: false,
+    stun: {
+      isStun: false,
+      isCooldown: false,
+    },
     isFreeze: false,
     isPoisoned: false,
     isBleeded: false,
+    virus: {
+      isVirus: false,
+      stack: 0,
+    },
   };
   update = () => {};
   getters: enemyGetters;
@@ -112,7 +125,7 @@ export class HeroClass implements IHero {
 
   type: heroType;
   level = {
-    value: 1,
+    value: START_HERO_LEVEL,
     exp: 0,
     incExp: incExp,
     expToNextLevel: 100,
@@ -139,6 +152,7 @@ export class HeroClass implements IHero {
       goblin: 0,
       gnome: 0,
       naga: 0,
+      skeleton: 0,
     },
   };
   resources = {
@@ -161,12 +175,21 @@ export class HeroClass implements IHero {
   };
   status = {
     death: false,
-    isStun: false,
+    stun: {
+      isStun: false,
+      isCooldown: false,
+    },
     isFreeze: false,
     isPoisoned: false,
     isBleeded: false,
+    virus: {
+      isVirus: false,
+      stack: 0,
+    },
   };
   update = () => {};
+  pushSkillText = () => {};
+
   getters: heroGetters;
   setters: heroSetters;
 }

@@ -1,5 +1,5 @@
 import { UpSkill, UpgradeSkills } from "@/types/skill.types";
-import { getText, incPoint, getValue, registerSkill } from "../..";
+import { getText, incPoint, getValue, registerSkill } from "..";
 import SKILLS_HAIRDRESSER from "./hairdresserSkill";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";

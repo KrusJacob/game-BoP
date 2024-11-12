@@ -1,6 +1,6 @@
 import { UpSkill, UpgradeSkills } from "@/types/skill.types";
 import SKILLS_COOK from "./cookSkill";
-import { getText, incPoint, getValue, registerSkill } from "../..";
+import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
 import { healHeroOfSkill } from "../../utils";
 import { goDamage } from "@/constants/func/fight";
@@ -242,7 +242,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         fn(hero) {
           this.data.modifierHeal += getValue(this);
           if (this.currentPoint === 1) {
-            registerSkill(skill.bind(this), "afterEnemyCrit");
+            registerSkill(skill.bind(this), "afterTargetCrit");
 
             function skill(this: UpSkill, hero: IHero) {
               const healValue = Math.floor(hero.getters.getAgility() * (this.data.modifierHeal / 100));
@@ -525,7 +525,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         fn() {
           this.data.modifierDamage += getValue(this);
           if (this.currentPoint === 1) {
-            registerSkill(skill.bind(this), "afterHeroCrit");
+            registerSkill(skill.bind(this), "afterInitiatorCrit");
 
             function skill(this: UpSkill, hero: IHero, target: IEnemy) {
               const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));

@@ -4,7 +4,7 @@ import SkillItem from "./SkillItem";
 import { TypeMainStat, UpSkill } from "@/types/skill.types";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import { BiSolidLockAlt } from "react-icons/bi";
-import { useSkillStore } from "@/store/skillStore";
+import { useSkillUpgradeStore } from "@/store/skillUpgradeStore";
 
 interface Props {
   tab: TypeMainStat;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const SkillLevel = ({ tab, incPoint, level }: Props) => {
-  const upgradeSkills = useSkillStore((state) => state.upgradeSkills);
+  const upgradeSkills = useSkillUpgradeStore((state) => state.upgradeSkills);
   return (
     <div
       className={cn(styles.skillLevel, {

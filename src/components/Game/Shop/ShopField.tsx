@@ -28,8 +28,6 @@ const ShopField = () => {
     }
   };
 
-  console.log("ShopField");
-
   return (
     <div className={styles.shopField}>
       <img className={styles.bg} src={img} alt={img} />

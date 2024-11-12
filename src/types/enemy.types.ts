@@ -1,7 +1,7 @@
 import { ALL_ENEMIES } from "@/constants/enemies";
 import {
   IHero,
-  attackInfo,
+  IAttackInfo,
   attackOptions,
   heroBaseStats,
   heroBuffs,
@@ -52,7 +52,10 @@ export interface enemyDrop {
   value: number[];
 }
 export type enemyType = "beast" | "rogue" | "goblin" | "gnome" | "naga";
-export type enemyTombName = Extract<enemyName, "beast_5" | "rogue_5" | "goblin_5" | "gnome_5" | "naga_5">;
+export type enemyTombName = Extract<
+  enemyName,
+  "beast_5" | "rogue_5" | "goblin_5" | "gnome_5" | "naga_5" | "skeleton_5"
+>;
 export type enemyTypeDrop = "fangsBeast" | "rogueItem" | "goblinItem" | "gnomeItem" | "gillsNaga";
 export type enemyTypeLabelDrop =
   | "Клык зверя"
@@ -71,7 +74,7 @@ export interface enemyBaseStats extends heroBaseStats {}
 export interface enemyIncStats extends heroIncStats {}
 export interface enemyGetters extends heroGetters {}
 export interface enemySetters extends heroSetters {}
-export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => attackInfo;
+export type enemyGoAttack = (target: IHero | IEnemy, options?: attackOptions) => IAttackInfo;
 
 export type enemyName = (typeof ALL_ENEMIES)[number];
 

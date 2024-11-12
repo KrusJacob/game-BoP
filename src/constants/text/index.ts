@@ -1,7 +1,9 @@
-import { attackInfo } from "@/types/hero.types";
+import { IBattleText, ISkillText } from "@/types/text.types";
 
-export const ALL_TEXT: attackInfo[] = [];
+export const battleText: IBattleText = {
+  pushTextBattle: () => {},
+};
 
-export function clearText() {
-  ALL_TEXT.length = 0;
-}
+export const skillText: ISkillText = {
+  pushSkillText: () => {},
+};
