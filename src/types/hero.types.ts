@@ -13,7 +13,6 @@ export interface IHero {
   energy: heroEnergy;
   barrier: number;
   buffs: heroBuffs;
-  debuffStack: heroDebuffStack;
   attack: heroGoAttack;
   skills: heroSkills[];
   resources: heroResources;
@@ -61,10 +60,6 @@ export interface heroStatus {
   };
 }
 
-export interface heroDebuffStack {
-  posion: number;
-}
-
 export interface heroLevel {
   value: number;
   exp: number;
@@ -83,6 +78,7 @@ export interface heroBaseStats {
   readonly intellect: number;
   readonly attack: number;
   readonly def: number;
+  readonly magicDef: number;
   readonly maxHp: number;
   readonly attackSpeed: number;
   readonly powerSkill: number;
@@ -93,6 +89,7 @@ export interface heroIncStats {
   intellect: number;
   attack: number;
   def: number;
+  magicDef: number;
   maxHp: number;
   attackSpeed: number;
   powerSkill: number;
@@ -118,6 +115,7 @@ export interface heroGetters {
   getIntellect: () => number;
   getAttack: () => number;
   getDef: () => number;
+  getMagicDef: () => number;
   getAttackSpeed: () => number;
   getPowerSkill: () => number;
   getIgnoreDef: () => number;
@@ -130,6 +128,7 @@ export interface heroSetters {
   incIntellect: (value: number) => void;
   incAttack: (value: number) => void;
   incDef: (value: number) => void;
+  incMagicDef: (value: number) => void;
   incAttackSpeed: (value: number) => void;
   incPowerSkill: (value: number) => void;
   incExp: (value: number) => number;
@@ -162,12 +161,18 @@ export interface heroBuffs {
   getBuffDef: () => number;
 }
 export interface IAttackInfo {
-  type: heroType;
-  damage: number;
+  initiatorType: heroType;
+  damage: {
+    type: ITypeDamage;
+    value: number;
+  };
   isMiss?: boolean;
   isCritical?: boolean;
   isStunned?: boolean;
 }
+
+export type ITypeDamage = "physical" | "magical" | "pure";
+
 export type heroGoAttack = (target: IEnemy | IHero, options?: attackOptions) => IAttackInfo;
 
 export interface TypeSkillTrigger {

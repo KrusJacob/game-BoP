@@ -77,9 +77,6 @@ export class EnemyClass implements IEnemy {
   barrier = 0;
   baseStats: enemyBaseStats;
   buffs: enemyBuffs;
-  debuffStack = {
-    posion: 0,
-  };
   attack = goAttack;
   getBarrier = getBarrier;
   getHeal = getHeal;
@@ -137,9 +134,6 @@ export class HeroClass implements IHero {
   readonly name: heroName;
   baseStats: heroBaseStats;
   buffs: heroBuffs;
-  debuffStack = {
-    posion: 0,
-  };
   attack = goAttack;
   getBarrier = getBarrier;
   getHeal = getHeal;
@@ -215,6 +209,9 @@ function getters(this: IHero | IEnemy): heroGetters {
     getDef: function () {
       return hero.baseStats.def + hero.incStats.def;
     },
+    getMagicDef: function () {
+      return hero.baseStats.magicDef + hero.incStats.magicDef;
+    },
     getAttackSpeed: function () {
       return +(
         (hero.baseStats.attackSpeed + hero.incStats.attackSpeed + hero.incStats.attackSpeedFromAgility) *
@@ -254,6 +251,9 @@ function setters(this: IHero | IEnemy): heroSetters {
     },
     incDef: function (value: number) {
       hero.incStats.def += value;
+    },
+    incMagicDef: function (value: number) {
+      hero.incStats.magicDef += value;
     },
     incAttackSpeed: function (value: number) {
       hero.incStats.attackSpeed += value;

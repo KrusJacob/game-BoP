@@ -5,7 +5,6 @@ import {
   attackOptions,
   heroBaseStats,
   heroBuffs,
-  heroDebuffStack,
   heroEnergy,
   heroGetters,
   heroIncStats,
@@ -28,7 +27,6 @@ export interface IEnemy {
   energy: heroEnergy;
   barrier: number;
   buffs: enemyBuffs;
-  debuffStack: enemyDebuffStack;
   attack: enemyGoAttack;
   skills: enemySkills[];
   resources: enemyResources;
@@ -68,7 +66,6 @@ export type enemyTypeBagDrop = Record<enemyTypeDrop, bagItemType>;
 interface enemyStatus extends heroStatus {}
 
 export interface enemyBuffs extends heroBuffs {}
-export interface enemyDebuffStack extends heroDebuffStack {}
 export interface enemySkills extends heroSkills {}
 export interface enemyBaseStats extends heroBaseStats {}
 export interface enemyIncStats extends heroIncStats {}

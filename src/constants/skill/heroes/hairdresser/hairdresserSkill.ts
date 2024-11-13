@@ -1,7 +1,7 @@
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { heroSkills, IHero } from "@/types/hero.types";
-import { healHeroOfSkill } from "../../utils";
-import { goBleedDmg, goDamage, goFreeze, goStun } from "@/constants/func/fight";
+import { applyPowerSkill, goMagicalDamage, healHeroOfSkill } from "../../utils";
+import { goBleedDmg, goStun } from "@/constants/func/fight";
 import { IEnemy } from "@/types/enemy.types";
 import { getPercent } from "@/utils/getPercent";
 import { getRandom } from "@/utils/getRandom";
@@ -33,7 +33,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
       const data = this[0].data;
       hero.buffs.incAttackSpeed(data.modifier, data.duration);
       if (data.power_2_2.isOpen) {
-        healHeroOfSkill(hero, 0, data.power_2_2.modifierHeal, false);
+        healHeroOfSkill(hero, 0, data.power_2_2.modifierHeal);
       }
       if (data.intellect_2_2.isOpen) {
         const barrierOfMaxHp = getPercent(hero.getters.getMaxHp(), data.intellect_2_2.modifierMaxHp);
@@ -69,7 +69,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
       },
     },
     trigger: "beforeInitiatorAttack",
-    fn: function (this: heroSkills[], hero: IHero, enemy: IEnemy) {
+    fn: function (this: heroSkills[], hero: IHero, target: IEnemy) {
       const data = this[1].data;
       if (data.currentCount >= data.count) {
         hero.buffs.nextAttack.ignoreDef = data.ignoreDef;
@@ -77,18 +77,20 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
         data.currentCount = 1;
         if (data.power_3_1.isOpen) {
           const damage = Math.floor(hero.getters.getPower() * data.power_3_1.modifierPower);
-          goDamage(enemy, damage);
+          // goDamage(hero, enemy, magicalDamageAction(damage));
+          goMagicalDamage(hero, target, damage);
         }
         if (data.intellect_1_2.isOpen) {
           const damage = Math.floor(hero.getters.getIntellect() * data.intellect_1_2.modifierIntellect);
-          console.log(damage);
-          goDamage(enemy, damage);
+          // goDamage(hero, target, magicalDamageAction(damage));
+          goMagicalDamage(hero, target, damage);
         }
         if (data.intellect_3_1.isOpen) {
           const chance = getRandom(1, 100);
           if (chance <= data.intellect_3_1.chance) {
-            let bleedValue = getPercent(enemy.getters.getMaxHp(), data.intellect_3_1.modifierBleed);
-            goBleedDmg(hero, enemy, bleedValue, data.intellect_3_1.duration);
+            let bleedValue = getPercent(target.getters.getMaxHp(), data.intellect_3_1.modifierBleed);
+            bleedValue = applyPowerSkill(bleedValue, hero.getters.getPowerSkill());
+            goBleedDmg(hero, target, bleedValue, data.intellect_3_1.duration);
           }
         }
       } else {

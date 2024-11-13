@@ -10,11 +10,11 @@ const TextItem = memo(({ item }: { item: IAttackInfo }) => {
   // console.log("TextItem");
   return (
     <motion.div
-      initial={{ x: item.type === "hero" ? "-100%" : "100%" }}
+      initial={{ x: item.initiatorType === "hero" ? "-100%" : "100%" }}
       animate={{ x: 0 }}
       className={cn(styles.textItem, {
-        [styles.textHero]: item.type === "hero",
-        [styles.textEnemy]: item.type === "enemy",
+        [styles.textHero]: item.initiatorType === "hero",
+        [styles.textEnemy]: item.initiatorType === "enemy",
       })}
     >
       <p>{item.isMiss ? "Промах" : <TextInfo item={item} />}</p>
@@ -31,18 +31,18 @@ const TextInfo = ({ item }: { item: IAttackInfo }) => {
       </>
     );
   }
-  if (item.type === "hero") {
+  if (item.initiatorType === "hero") {
     return (
       <>
-        Вы нанесли {item.damage}
+        Вы нанесли {item.damage.value}
         {item.isCritical && <BsLightningFill />} урона;
       </>
     );
   }
-  if (item.type === "enemy") {
+  if (item.initiatorType === "enemy") {
     return (
       <>
-        Противник нанес {item.damage}
+        Противник нанес {item.damage.value}
         {item.isCritical && <BsLightningFill />} урона;
       </>
     );

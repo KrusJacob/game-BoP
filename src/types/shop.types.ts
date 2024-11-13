@@ -13,5 +13,5 @@ export interface bagItemType extends shopItemType {
   bagSlotId: number;
   empty: boolean;
   isActiveBag: boolean;
-  isMoved: boolean;
+  isMoved?: boolean;
 }

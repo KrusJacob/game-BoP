@@ -113,7 +113,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [8, 12, 16],
+          value: [7, 10, 13],
         },
         fn(hero) {
           SKILLS_HAIRDRESSER[0].data.power_2_2.isOpen = true;
@@ -128,10 +128,10 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           const value = getText.call(this, "value");
           return {
             current: value.current
-              ? `"Заточенный инструмент" дополнительно наносит чистый урон: ${value.current}% от силы`
+              ? `"Заточенный инструмент" дополнительно наносит магический урон: ${value.current}% от силы`
               : "",
             next: value.next
-              ? `"Заточенный инструмент" дополнительно наносит чистый урон: ${value.next}% от силы`
+              ? `"Заточенный инструмент" дополнительно наносит магический урон: ${value.next}% от силы`
               : "",
           };
         },
@@ -388,10 +388,10 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           const value = getText.call(this, "value");
           return {
             current: value.current
-              ? `"Заточенный инструмент" наносит дополнительный чистый урон: ${value.current}% от интеллекта`
+              ? `"Заточенный инструмент" наносит дополнительный магический урон: ${value.current}% от интеллекта`
               : "",
             next: value.next
-              ? `"Заточенный инструмент" наносит дополнительный чистый урон: ${value.next}% от интеллекта`
+              ? `"Заточенный инструмент" наносит дополнительный магический урон: ${value.next}% от интеллекта`
               : "",
           };
         },
@@ -477,10 +477,10 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           const modifier = getText.call(this, "modifier");
           return {
             current: chance.current
-              ? `"Заточенный инструмент" c шансом ${chance.current}% накладывает кровотечение на ${duration.current} сек. нанося каждую секунду ${modifier.current}% от макс.здоровья врага`
+              ? `"Заточенный инструмент" c шансом ${chance.current}% накладывает кровотечение на ${duration.current} сек. нанося каждую секунду ${modifier.current}% магического урона от макс.здоровья врага`
               : "",
             next: chance.next
-              ? `"Заточенный инструмент" c шансом ${chance.next}% накладывает кровотечение на ${duration.next} сек. нанося каждую секунду ${modifier.next}% от макс.здоровья врага`
+              ? `"Заточенный инструмент" c шансом ${chance.next}% накладывает кровотечение на ${duration.next} сек. нанося каждую секунду ${modifier.next}% магического урона от макс.здоровья врага`
               : "",
           };
         },
@@ -491,9 +491,9 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          chance: [35, 40, 45],
+          chance: [40, 45, 50],
           duration: [3, 4, 5],
-          modifier: [5, 5, 5],
+          modifier: [3, 3, 3],
         },
         fn() {
           SKILLS_HAIRDRESSER[1].data.intellect_3_1.isOpen = true;

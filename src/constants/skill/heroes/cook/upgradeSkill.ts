@@ -2,8 +2,7 @@ import { UpSkill, UpgradeSkills } from "@/types/skill.types";
 import SKILLS_COOK from "./cookSkill";
 import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
-import { healHeroOfSkill } from "../../utils";
-import { goDamage } from "@/constants/func/fight";
+import { goPureDamage, healHeroOfSkill } from "../../utils";
 import { IEnemy } from "@/types/enemy.types";
 
 export const upgradeCookSkills: UpgradeSkills = {
@@ -41,10 +40,10 @@ export const upgradeCookSkills: UpgradeSkills = {
           const text = getText.call(this, "value");
           return {
             current: text.current
-              ? `"Отвар яда" в момент срабатывания единожды наносит чистый урон - ${text.current}% от силы`
+              ? `"Отвар яда" в момент срабатывания единожды наносит магический урон - ${text.current}% от силы`
               : "",
             next: text.next
-              ? `"Отвар яда" в момент срабатывания единожды наносит чистый урон: ${text.next}% от силы`
+              ? `"Отвар яда" в момент срабатывания единожды наносит магический урон: ${text.next}% от силы`
               : "",
           };
         },
@@ -246,7 +245,7 @@ export const upgradeCookSkills: UpgradeSkills = {
 
             function skill(this: UpSkill, hero: IHero) {
               const healValue = Math.floor(hero.getters.getAgility() * (this.data.modifierHeal / 100));
-              healHeroOfSkill(hero, healValue, 0, false);
+              healHeroOfSkill(hero, healValue, 0);
             }
           }
         },
@@ -529,7 +528,8 @@ export const upgradeCookSkills: UpgradeSkills = {
 
             function skill(this: UpSkill, hero: IHero, target: IEnemy) {
               const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
-              goDamage(target, damage);
+              goPureDamage(hero, target, damage);
+              // goDamage(hero, target, pureDamageAction(damage));
             }
           }
         },

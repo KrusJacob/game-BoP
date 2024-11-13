@@ -7,9 +7,11 @@ import { MULTIPLIER_CRITICAL_DAMAGE, STUN_COOLDOWN_SEC } from "../setup";
 import { getReward } from "./reward";
 import { goSkillTrigger } from "../skill";
 import { skillEnemyTrigger } from "../skill/enemy";
+import { skillHeroTrigger } from "../skill/heroes";
 
 export function fight(hero: IHero, enemy: IHero | IEnemy) {
   // clearText();
+  console.log(skillHeroTrigger);
   goSkillTrigger("inBeginFight", hero, enemy);
   attackHero();
   attackEnemy();
@@ -34,8 +36,8 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
             return;
           }
           attackHero();
+          !attackInfo.isStunned && goSkillTrigger("afterInitiatorAttack", hero, enemy);
         }
-        goSkillTrigger("afterInitiatorAttack", hero, enemy);
       }
     }, 1000 / hero.getters.getAttackSpeed());
   }
@@ -52,9 +54,11 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
           attackInfo.isCritical && goSkillTrigger("afterTargetCrit", hero, enemy);
           attackInfo.isMiss && goSkillTrigger("afterTargetMiss", hero, enemy);
           attackEnemy();
+          if (!attackInfo.isStunned) {
+            goSkillTrigger("afterTargetAttack", hero, enemy);
+            goSkillTrigger("afterInitiatorAttack", enemy, hero);
+          }
         }
-
-        goSkillTrigger("afterTargetAttack", enemy, hero);
       }
     }, 1000 / enemy.getters.getAttackSpeed());
   }
@@ -69,12 +73,12 @@ function getEnergy(hero: IHero | IEnemy) {
 
 export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?: attackOptions): IAttackInfo {
   const attackInfo = {
-    type: this.type,
-    damage: 0,
+    initiatorType: this.type,
+    damage: physicalDamageAction(0),
     isMiss: false,
     isCritical: false,
     isStunned: false,
-  };
+  } as IAttackInfo;
 
   if (this.status.death) {
     return attackInfo;
@@ -94,19 +98,20 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     return attackInfo;
   }
 
-  attackInfo.damage = getDamageWithBuffs(this);
-  attackInfo.damage = calcDamageWithOptions(attackInfo.damage, options);
+  attackInfo.damage.value = getDamageWithBuffs(this);
+  attackInfo.damage.value = getDamageWithOptions(attackInfo.damage.value, options);
   if (checkForCrit(this.skills[3].data.chanceCritDamage)) {
     attackInfo.isCritical = true;
-    attackInfo.damage = goCriticalDamage(attackInfo.damage);
+    attackInfo.damage.value = goCriticalDamage(attackInfo.damage.value);
   }
-  attackInfo.damage = calcDamageWithDef(attackInfo.damage, target.getters.getDef(), this, options);
-  attackInfo.damage = Math.floor(attackInfo.damage * target.buffs.getBuffDef());
+  // attackInfo.damage.value = Math.floor(attackInfo.damage.value * target.buffs.getBuffDef());
+  // attackInfo.damage.value = getDamageWithDef(this, attackInfo.damage.value, target.getters.getDef(), options);
+  // attackInfo.damage.value = getDamageWithReduction(target, attackInfo.damage.value);
 
-  goDamage(target, attackInfo.damage);
+  attackInfo.damage.value = goDamage(this, target, attackInfo.damage, options);
   getEnergy(this);
 
-  console.log(`Удар по ${target.name} на ${attackInfo.damage} урона, осталось ${target.HP} HP`);
+  console.log(`Удар по ${target.name} на ${attackInfo.damage.value} урона, осталось ${target.HP} HP`);
 
   if (!attackInfo.isStunned) {
     battleText.pushTextBattle(attackInfo);
@@ -114,16 +119,81 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
   return attackInfo;
 }
 
-export function goDamage(target: IHero | IEnemy, value: number) {
-  if (target.barrier) {
-    damageToBarrier(target, value);
-  } else {
-    damageToHP(target, value);
-  }
-  target.update();
+function getDamageWithReduction(target: IHero | IEnemy, value: number) {
+  return Math.floor(value * target.buffs.getBuffDef());
 }
 
-function calcDamageWithOptions(damage: number, options?: attackOptions) {
+export function physicalDamageAction(value: number): IAttackInfo["damage"] {
+  return {
+    type: "physical",
+    value,
+  };
+}
+export function magicalDamageAction(value: number): IAttackInfo["damage"] {
+  return {
+    type: "magical",
+    value,
+  };
+}
+export function pureDamageAction(value: number): IAttackInfo["damage"] {
+  return {
+    type: "pure",
+    value,
+  };
+}
+
+export function goDamage(
+  initiator: IHero | IEnemy,
+  target: IHero | IEnemy,
+  damageInfo: IAttackInfo["damage"],
+  options?: attackOptions
+) {
+  let damageValue = 0;
+
+  switch (damageInfo.type) {
+    case "physical":
+      damageValue = getPhysicalDamage(initiator, target, damageInfo.value, options);
+      damageValue = getDamageWithReduction(target, damageValue);
+      break;
+    case "magical":
+      damageValue = getMagicalDamage(target, damageInfo.value);
+      damageValue = getDamageWithReduction(target, damageValue);
+      break;
+    case "pure":
+      damageValue = getPureDamage(target, damageInfo.value);
+      break;
+    default:
+      damageValue = 0;
+  }
+
+  if (target.barrier) {
+    damageToBarrier(target, damageValue);
+  } else {
+    damageToHP(target, damageValue);
+  }
+  target.update();
+  return damageValue;
+}
+
+function getPhysicalDamage(
+  initiator: IHero | IEnemy,
+  target: IHero | IEnemy,
+  value: number,
+  options?: attackOptions
+) {
+  const damage = getDamageWithDef(initiator, value, target.getters.getDef(), options);
+  return damage;
+}
+
+function getMagicalDamage(target: IHero | IEnemy, value: number) {
+  const damage = getDamageWithMagicDef(value, target.getters.getMagicDef());
+  return damage;
+}
+function getPureDamage(target: IHero | IEnemy, value: number) {
+  return value;
+}
+
+function getDamageWithOptions(damage: number, options?: attackOptions) {
   if (!options) {
     return damage;
   }
@@ -134,7 +204,13 @@ function getDamageWithBuffs(attacker: IHero | IEnemy) {
   return attacker.getters.getAttack() * attacker.buffs.getBuffDamage();
 }
 
-function calcDamageWithDef(damage: number, def: number, hero: IHero | IEnemy, options?: attackOptions) {
+function getDamageWithMagicDef(damage: number, magicDef: number, hero?: IHero | IEnemy, options?: attackOptions) {
+  const res = Math.floor(getPercent(damage, 100 - magicDef));
+
+  return res;
+}
+
+function getDamageWithDef(hero: IHero | IEnemy, damage: number, def: number, options?: attackOptions) {
   if (!options?.ignoreDef && !hero.buffs.nextAttack.ignoreDef && hero.getters.getIgnoreDef() === 0) {
     return getDamageAfterDef(damage, def);
   }
@@ -233,8 +309,8 @@ function createTimeoutDot(type: "posion" | "bleed") {
         target.status[statusType] = false;
         clearInterval(intervalId);
       } else {
-        goDamage(target, value);
-        console.log("dot damage", value);
+        const posionValue = goDamage(hero, target, magicalDamageAction(value));
+        console.log("dot damage", posionValue);
       }
     }, 1000);
 
@@ -257,9 +333,12 @@ export function goStun(target: IHero | IEnemy, duration: number) {
     goStunEffect(target, duration);
 
     battleText.pushTextBattle({
-      damage: 0,
+      damage: {
+        type: "physical",
+        value: 0,
+      },
       isStunned: true,
-      type: target.type,
+      initiatorType: target.type,
     });
   }
 }

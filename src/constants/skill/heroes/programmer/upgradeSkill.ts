@@ -82,7 +82,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [150, 200, 250],
+          value: [120, 160, 200],
         },
         fn(hero) {
           SKILLS_PROGRAMMER[1].data.power_2_2.isOpen = true;
@@ -95,10 +95,10 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           const value = getText.call(this, "value");
           return {
             current: value.current
-              ? `Активация "Брандмауэр" наносит противнику урон - ${value.current}% от макс.запаса здоровья героя`
+              ? `Активация "Брандмауэр" наносит противнику магический урон - ${value.current}% от макс.запаса здоровья героя`
               : "",
             next: value.next
-              ? `Активация "Брандмауэр" наносит противнику урон - ${value.next}% от макс.запаса здоровья героя`
+              ? `Активация "Брандмауэр" наносит противнику магический урон - ${value.next}% от макс.запаса здоровья героя`
               : "",
           };
         },
@@ -175,9 +175,9 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           const value = getText.call(this, "value");
           return {
             current: value.current
-              ? `"Вирус" также наносит чистый урон в размере ${value.current}% от силы героя`
+              ? `"Вирус" также наносит магический урон в размере ${value.current}% от силы героя`
               : "",
-            next: value.next ? `"Вирус" также наносит чистый урон в размере ${value.next}% от силы героя` : "",
+            next: value.next ? `"Вирус" также наносит магический урон в размере ${value.next}% от силы героя` : "",
           };
         },
         img: "/src/assets/skill/programmer/skillPower_4_1.png",
@@ -190,8 +190,8 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           value: [80, 100, 120, 140, 160],
         },
         fn(hero) {
-          SKILLS_PROGRAMMER[2].data.level_4_1.isOpen = true;
-          SKILLS_PROGRAMMER[2].data.level_4_1.modifierDamage += getValue(this) / 100;
+          SKILLS_PROGRAMMER[2].data.power_4_1.isOpen = true;
+          SKILLS_PROGRAMMER[2].data.power_4_1.modifierDamage += getValue(this) / 100;
         },
       },
     ],
@@ -423,10 +423,10 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           const text = getText.call(this, "value");
           return {
             current: text.current
-              ? `"Вирус" отравляет врага, нанося ${text.current}% урона от макс.запаса врага каждую секунду. Не суммируется`
+              ? `"Вирус" отравляет врага, нанося ${text.current}% магического урона от макс.запаса врага каждую секунду. Не суммируется`
               : "",
             next: text.next
-              ? `"Вирус" отравляет врага, нанося ${text.next}% урона от макс.запаса врага каждую секунду. Не суммируется`
+              ? `"Вирус" отравляет врага, нанося ${text.next}% магического урона от макс.запаса врага каждую секунду. Не суммируется`
               : "",
           };
         },

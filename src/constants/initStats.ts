@@ -280,6 +280,7 @@ export function getIncStatsToHero(): heroIncStats {
     attack: 0,
     attackSpeed: 0,
     def: 0,
+    magicDef: 0,
     intellect: 0,
     maxHp: 0,
     power: 0,

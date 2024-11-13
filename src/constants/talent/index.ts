@@ -128,7 +128,7 @@ export const ALL_TALENTS: talentType[] = [
       return `Увеличивает силу умений героя на ${text}`;
     },
     data: {
-      value: [12, 20, 28, 36, 45],
+      value: [9, 15, 21, 27, 33],
     },
     fn(hero: IHero) {
       hero.setters.incPowerSkill(getValue(this));

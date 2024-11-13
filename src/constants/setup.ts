@@ -17,14 +17,14 @@ export const START_PARAMETERPOINT = 0;
 // HERO MAIN STATS
 export const MAX_HP_FROM_1_POWER = 10;
 export const ATTACK_SPD_FROM_1_AGILITY = 0.01;
-export const POWER_SKILL_FROM_1_INTELLECT = 0.7;
+export const POWER_SKILL_FROM_1_INTELLECT = 0.5;
 export const MAX_ENERGY_VALUE = 250;
 // export const MAX_ENERGY_VALUE = 500;
 
 // HERO CHANCE
 export const MULTIPLIER_CRITICAL_DAMAGE = 2;
-export const CHANCE_CRITICAL_DAMAGE = 8;
-export const CHANCE_EVADE = 8;
+export const CHANCE_CRITICAL_DAMAGE = 10;
+export const CHANCE_EVADE = 10;
 export const MULTIPLIER_COUNTER_ATTACK_DAMAGE = 0.5;
 
 export const STUN_COOLDOWN_SEC = 1.5;

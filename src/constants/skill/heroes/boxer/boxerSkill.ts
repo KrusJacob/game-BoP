@@ -2,7 +2,7 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { healHeroOfSkill } from "../../utils";
+import { applyPowerSkill, healHeroOfSkill } from "../../utils";
 import { goStun } from "@/constants/func/fight";
 
 const SKILLS_BOXER: heroSkills[] = [
@@ -43,9 +43,9 @@ const SKILLS_BOXER: heroSkills[] = [
     },
     img: "/src/assets/skill/skill_boxer_2.png",
     data: {
-      healValue: 30,
+      healValue: 50,
       healPercent: 4,
-      barrierValue: 100,
+      barrierValue: 75,
       totalCooldown: 6,
       isCooldown: false,
       talent_3_1: {
@@ -57,7 +57,7 @@ const SKILLS_BOXER: heroSkills[] = [
         valueEnergy: 0,
       },
     },
-    trigger: "afterInitiatorMiss",
+    trigger: "afterTargetMiss",
     fn: function (this: heroSkills[], hero: IHero) {
       const data = this[1].data;
       if (!data.isCooldown) {
@@ -75,7 +75,8 @@ const SKILLS_BOXER: heroSkills[] = [
             hero.energy.value += data.power_3_2.valueEnergy;
           }
           healHeroOfSkill(hero, healValue, data.healPercent);
-          hero.getBarrier(data.barrierValue);
+          const totalBarrier = applyPowerSkill(data.barrierValue, hero.getters.getPowerSkill());
+          hero.getBarrier(totalBarrier);
         }, 250);
       }
     },
@@ -89,7 +90,7 @@ const SKILLS_BOXER: heroSkills[] = [
     },
     img: "/src/assets/skill/skill_boxer_3.png",
     data: {
-      chance: 18,
+      chance: 20,
       modifier: 0.5,
       talent_3_1: {
         isOpen: false,

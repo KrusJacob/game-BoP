@@ -2,15 +2,15 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, healHeroOfSkill } from "../../utils";
-import { goDamage, goPosionDmg } from "@/constants/func/fight";
+import { applyPowerSkill, goMagicalDamage, healHeroOfSkill } from "../../utils";
+import { goPosionDmg } from "@/constants/func/fight";
 import { getPercent } from "@/utils/getPercent";
 
 const SKILLS_PROGRAMMER: heroSkills[] = [
   {
     label: "Утечка данных",
     descr: function () {
-      return `Наносит противнику урон - ${this.data.modifier}% от его макс.запаса здоровья, герой исцеляется на 100% от нанесенного урона. Стоимость - ${this.data.costEnergy} энергии`;
+      return `Наносит противнику магический урон - ${this.data.modifier}% от его макс.запаса здоровья, герой исцеляется на 100% от нанесенного урона. Стоимость - ${this.data.costEnergy} энергии`;
     },
     img: "/src/assets/skill/skill_programmer_1.png",
     data: {
@@ -22,8 +22,9 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       const data = this[0].data;
       hero.pushSkillText(this[0].label);
       let damage = getPercent(target.getters.getMaxHp(), data.modifier);
-      goDamage(target, damage);
-      healHeroOfSkill(hero, damage, 0, false);
+      // goDamage(hero, target, magicalDamageAction(damage));
+      const damagedValue = goMagicalDamage(hero, target, damage);
+      healHeroOfSkill(hero, damagedValue, 0, false);
     },
   },
   {
@@ -61,12 +62,12 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
 
       if (data.power_2_2.isOpen) {
         const healValue = Math.floor(hero.getters.getPower() * data.power_2_2.modifierHeal);
-        healHeroOfSkill(hero, healValue, 0, false);
+        healHeroOfSkill(hero, healValue, 0);
       }
       if (data.power_2_3.isOpen) {
         const damage = getPercent(hero.getters.getMaxHp(), data.power_2_3.modifierDamage);
-        console.log(damage, "damage");
-        goDamage(target, damage);
+        // goDamage(hero, target, magicalDamageAction(damage));
+        goMagicalDamage(hero, target, damage);
       }
     },
   },
@@ -84,7 +85,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       duration: 6,
       cooldown: 1.5,
       isCooldown: false,
-      level_4_1: {
+      power_4_1: {
         isOpen: false,
         modifierDamage: 0,
       },
@@ -115,14 +116,15 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
         }, data.cooldown * 1000);
 
         if (data.intellect_2_2.isOpen) {
-          const damage = getPercent(target.getters.getMaxHp(), data.intellect_2_2.modifier);
-          console.log(damage, "posion");
+          let damage = getPercent(target.getters.getMaxHp(), data.intellect_2_2.modifier);
+          damage = applyPowerSkill(damage, hero.getters.getPowerSkill());
           goPosionDmg(hero, target, damage, data.duration);
         }
 
-        if (data.level_4_1.isOpen) {
-          const damage = Math.floor(hero.getters.getPower() * data.level_4_1.modifierDamage);
-          goDamage(target, damage);
+        if (data.power_4_1.isOpen) {
+          const damage = Math.floor(hero.getters.getPower() * data.power_4_1.modifierDamage);
+          // goDamage(hero, target, magicalDamageAction(damage));
+          goMagicalDamage(hero, target, damage);
         }
 
         setTimeout(() => {

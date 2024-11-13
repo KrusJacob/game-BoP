@@ -28,9 +28,9 @@ const HeroBagList = ({ resources }: { resources: heroResources }) => {
 
   return (
     <motion.div
-      exit={{ bottom: "-48%" }}
-      initial={{ bottom: "-48%" }}
-      animate={{ bottom: isOpen ? 0 : "-48%" }}
+      exit={{ bottom: "-262px" }}
+      initial={{ bottom: "-262px" }}
+      animate={{ bottom: isOpen ? 0 : "-262px" }}
       className={styles.bag}
     >
       <p className={styles.bagAnchor} onClick={() => setOpen(!isOpen)}>

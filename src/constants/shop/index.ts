@@ -7,7 +7,7 @@ import { goBleedDmg, goPosionDmg, goFreeze, goStun } from "../func/fight";
 
 export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
-    id: 0,
+    id: 1,
     name: "Пузырек лечебного зелья",
     img: "/src/assets/shop/heal_potion_1.png",
     cost: 200,
@@ -25,7 +25,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 1,
+    id: 2,
     name: "Флакон лечебного зелья",
     img: "/src/assets/shop/heal_potion_2.png",
     cost: 400,
@@ -43,7 +43,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 2,
+    id: 3,
     name: "Бутыль лечебного зелья",
     img: "/src/assets/shop/heal_potion_3.png",
     cost: 800,
@@ -61,7 +61,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 3,
+    id: 4,
     name: "Кирпич",
     img: "/src/assets/shop/brick.png",
     cost: 575,
@@ -79,7 +79,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 3,
+    id: 5,
     name: "Зелье заморозки",
     img: "/src/assets/shop/freeze_potion.png",
     cost: 350,
@@ -98,14 +98,14 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 3,
+    id: 6,
     name: "Зелье c ядом",
     img: "/src/assets/shop/posion_potion.png",
-    cost: 340,
+    cost: 350,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
-      return `Отравляет врага, нанося ему ${text} урона в секунду в течении ${this.data.duration} cекунд`;
+      return `Отравляет врага, нанося ему ${text} урона в секунду ядом в течении ${this.data.duration} cекунд`;
     },
     data: {
       value: 75,
@@ -117,7 +117,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 3,
+    id: 7,
     name: "Зелье ярости",
     img: "/src/assets/shop/rage_potion.png",
     cost: 850,
@@ -138,7 +138,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 3,
+    id: 8,
     name: "Зелье оглушения",
     img: "/src/assets/shop/stun_potion.png",
     cost: 800,
@@ -156,7 +156,27 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
   {
-    id: 3,
+    id: 9,
+    name: "Зелье удушения",
+    img: "/src/assets/shop/potion.png",
+    cost: 700,
+    quantity: 1,
+    descr: function () {
+      const text = this.data.value;
+      return `Отравляет врага, нанося ему ${text} урона в секунду кровотечением в течении ${this.data.duration} cекунд`;
+    },
+    data: {
+      value: 120,
+      duration: 10,
+    },
+    fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
+      // goPosionDmg(hero, enemy, this.data.value, this.data.duration);
+      goBleedDmg(hero, enemy, this.data.value, this.data.duration);
+      decreaseQuantity(hero.resources, this.bagSlotId);
+    },
+  },
+  {
+    id: 10,
     name: "Зелье смерти (!)",
     img: "/src/assets/shop/death_potion.png",
     cost: 9999,
@@ -214,9 +234,9 @@ export function moveBagItem(resources: IHero["resources"], item: bagItemType) {
 }
 
 function moveToActivePanel(resources: IHero["resources"], bagItem: bagItemType) {
-  if (!bagItem.isMoved) {
-    return;
-  }
+  // if (!bagItem.isMoved) {
+  //   return;
+  // }
   const indexSameItem = resources.bagActivePanel.findIndex((item) => item.name === bagItem.name);
   if (indexSameItem >= 0) {
     resources.bagActivePanel[indexSameItem].quantity += bagItem.quantity;

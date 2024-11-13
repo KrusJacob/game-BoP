@@ -32,7 +32,7 @@ export const SKILLS_BEAST_BOSS: enemySkills[] = [
       console.log(heal, "healheal");
       hero.getHeal(heal);
     },
-    trigger: "beforeInitiatorAttack",
+    trigger: "afterInitiatorAttack",
     img: "/src/assets/talent/chanceCritDamage.png",
     data: {
       modifierDrain: 2,

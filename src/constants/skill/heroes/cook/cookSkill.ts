@@ -1,9 +1,9 @@
-import { goDamage, goPosionDmg } from "@/constants/func/fight";
+import { goPosionDmg } from "@/constants/func/fight";
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { healHeroOfSkill, applyPowerSkill } from "../../utils";
+import { healHeroOfSkill, applyPowerSkill, goMagicalDamage } from "../../utils";
 
 const SKILLS_COOK: heroSkills[] = [
   {
@@ -97,7 +97,8 @@ const SKILLS_COOK: heroSkills[] = [
 
         if (data.power_2_1.isOpen) {
           const damage = Math.floor(hero.getters.getPower() * data.power_2_1.modifierPower);
-          goDamage(target, damage);
+          // goDamage(hero, target, magicalDamageAction(damage));
+          goMagicalDamage(hero, target, damage);
         }
         if (data.intellect_2_2.isOpen) {
           target.buffs.incDamage(-data.intellect_2_2.modifierDebuff, data.duration);

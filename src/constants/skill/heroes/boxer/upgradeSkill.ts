@@ -3,7 +3,7 @@ import SKILLS_BOXER from "./boxerSkill";
 import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
-import { goDamage } from "@/constants/func/fight";
+import { goMagicalDamage } from "../../utils";
 
 export const upgradeBoxerSkills: UpgradeSkills = {
   power: {
@@ -95,7 +95,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [175, 225, 275],
+          value: [150, 200, 250],
         },
         fn(hero) {
           SKILLS_BOXER[0].data.power_2_2.isOpen = true;
@@ -348,9 +348,9 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           const text = getText.call(this, "value");
           return {
             current: text.current
-              ? `Атаки наносят дополнительный чистый урон - ${text.current}% от интеллекта `
+              ? `Атаки наносят дополнительный магический урон - ${text.current}% от интеллекта `
               : "",
-            next: text.next ? `Атаки наносят дополнительный чистый урон - ${text.next}% от интеллекта ` : "",
+            next: text.next ? `Атаки наносят дополнительный магический урон - ${text.next}% от интеллекта ` : "",
           };
         },
         img: "/src/assets/skill/boxer/skillIntellect_2_2.png",
@@ -370,8 +370,9 @@ export const upgradeBoxerSkills: UpgradeSkills = {
 
             function skill(this: UpSkill, hero: IHero, target: IEnemy) {
               const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
-              console.log(damage, "damage");
-              goDamage(target, damage);
+              // goDamage(hero, target, pureDamageAction(damage));
+              // console.log(damage, "damage");
+              goMagicalDamage(hero, target, damage);
             }
           }
         },

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaHeart } from "react-icons/fa";
-import { GiMuscleUp, GiWalkingBoot, GiBrain, GiSpinningSword, GiWizardStaff } from "react-icons/gi";
+import { GiMuscleUp, GiWalkingBoot, GiBrain, GiSpinningSword, GiWizardStaff, GiBoltShield } from "react-icons/gi";
 import { MdShield } from "react-icons/md";
 import { PiSwordLight } from "react-icons/pi";
 import HeroStat from "./HeroStat";
@@ -14,37 +14,41 @@ const HeroStatList = ({ hero }: { hero: IHero | IEnemy }) => {
   const agility = useGameStore((state) => state[hero.type]?.getters.getAgility());
   const intellect = useGameStore((state) => state[hero.type]?.getters.getIntellect());
   const def = useGameStore((state) => state[hero.type]?.getters.getDef());
+  const magicDef = useGameStore((state) => state[hero.type]?.getters.getMagicDef());
   const attack = useGameStore((state) => state[hero.type]?.getters.getAttack());
   const attackSpeed = useGameStore((state) => state[hero.type]?.getters.getAttackSpeed());
   const powerSkill = useGameStore((state) => state[hero.type]?.getters.getPowerSkill());
 
   return (
     <ul>
-      <HeroStat Icon={FaHeart} value={hero.getters.getMaxHp()}>
+      <HeroStat Icon={FaHeart} value={maxHp || hero.getters.getMaxHp()}>
         Здоровье
       </HeroStat>
-      <HeroStat Icon={GiMuscleUp} value={hero.getters.getPower()}>
+      <HeroStat Icon={GiMuscleUp} value={power || hero.getters.getPower()}>
         Cила
       </HeroStat>
-      <HeroStat Icon={GiWalkingBoot} value={hero.getters.getAgility()}>
+      <HeroStat Icon={GiWalkingBoot} value={agility || hero.getters.getAgility()}>
         Ловкость
       </HeroStat>
-      <HeroStat Icon={GiBrain} value={hero.getters.getIntellect()}>
+      <HeroStat Icon={GiBrain} value={intellect || hero.getters.getIntellect()}>
         Интеллект
       </HeroStat>
-      <HeroStat Icon={PiSwordLight} value={hero.getters.getAttack()}>
+      <HeroStat Icon={PiSwordLight} value={attack || hero.getters.getAttack()}>
         Атака
       </HeroStat>
-      <HeroStat Icon={MdShield} value={hero.getters.getDef()}>
+      <HeroStat Icon={MdShield} value={def || hero.getters.getDef()}>
         Защита
       </HeroStat>
-      <HeroStat Icon={GiSpinningSword} value={hero.getters.getAttackSpeed()}>
+      <HeroStat Icon={GiBoltShield} value={magicDef || hero.getters.getMagicDef()}>
+        Магическая Защита
+      </HeroStat>
+      <HeroStat Icon={GiSpinningSword} value={attackSpeed || hero.getters.getAttackSpeed()}>
         Скорость атаки
       </HeroStat>
       <HeroStat
         title={"Влияет на урон способностей и исцеление"}
         Icon={GiWizardStaff}
-        value={hero.getters.getPowerSkill()}
+        value={powerSkill || hero.getters.getPowerSkill()}
       >
         Сила умений
       </HeroStat>
