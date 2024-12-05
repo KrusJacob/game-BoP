@@ -5,10 +5,15 @@ import { useState } from "react";
 import SkillField from "../Skill/SkillField";
 import ShopField from "../Shop/ShopField";
 import HomeField from "../Home/HomeField";
+import TestField from "../Test/TestField";
+import FightField from "../Fight/FightField";
+import HeroField from "../Hero/HeroField";
+import TombField from "../Tomb/TombField";
+import LocationField from "../Location/LocationField";
 
 const GameField = () => {
   return (
-    <div className={styles.gameFiled}>
+    <div className={styles.gameField}>
       <Tabs />
     </div>
   );
@@ -16,13 +21,16 @@ const GameField = () => {
 
 //
 
-type TabsField = "Главная" | "Навыки" | "Таланты" | "Maгазин";
+type TabsField = "Главная" | "Герой" | "Навыки" | "Таланты" | "Maгазин" | "Test";
 interface ITabsBtn {
   label: TabsField;
 }
 const TabsBtns: ITabsBtn[] = [
   {
     label: "Главная",
+  },
+  {
+    label: "Герой",
   },
   {
     label: "Навыки",
@@ -33,28 +41,47 @@ const TabsBtns: ITabsBtn[] = [
   {
     label: "Maгазин",
   },
+  {
+    label: "Test",
+  },
 ];
 
+export type TabsWithFight = TabsField | "Локация" | "Бой" | "Гробница";
+
 const Tabs = () => {
-  const [tab, setTab] = useState<TabsField>("Главная");
+  const [tab, setTab] = useState<TabsWithFight>("Главная");
 
   const onChangeTab = (label: TabsField) => {
     setTab(label);
+  };
+
+  const onSetTab = (tab: TabsWithFight) => {
+    setTab(tab);
   };
 
   return (
     <>
       <div className={styles.tabs}>
         {TabsBtns.map((btn) => (
-          <Button onClick={() => onChangeTab(btn.label)} key={btn.label} size="small">
+          <Button
+            disabled={tab === "Бой" || tab === "Локация"}
+            onClick={() => onChangeTab(btn.label)}
+            key={btn.label}
+            size="small"
+          >
             {btn.label}
           </Button>
         ))}
       </div>
-      {tab === "Главная" && <HomeField />}
+      {tab === "Главная" && <HomeField onSetTab={onSetTab} />}
+      {tab === "Герой" && <HeroField />}
       {tab === "Таланты" && <TalentField />}
       {tab === "Навыки" && <SkillField />}
       {tab === "Maгазин" && <ShopField />}
+      {tab === "Test" && <TestField />}
+      {tab === "Бой" && <FightField onSetTab={onSetTab} />}
+      {tab === "Локация" && <LocationField onSetTab={onSetTab} />}
+      {tab === "Гробница" && <TombField onSetTab={onSetTab} />}
     </>
   );
 };

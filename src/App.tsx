@@ -1,20 +1,39 @@
-import { IHero } from "./types/hero.types";
+import { IAttackInfo, IHero } from "./types/hero.types";
 import { ALL_HEROES } from "./constants/hero";
 import HeroList from "./components/Hero/HeroList/HeroList";
 import Header from "./components/Header/Header";
 import { motion } from "framer-motion";
 import DoorLayout from "./layout/DoorLayout";
-
 import GameArea from "./components/Game/GameArea/GameArea";
 import { useGameStore } from "./store/gameStore";
+import { getUpgradeSkills, registerAllSkills } from "./constants/skill/heroes";
+import { useSkillUpgradeStore } from "./store/skillUpgradeStore";
+import { useSkillTextStore } from "./store/skillTextStore";
+import { useBattleTextStore } from "./store/battleTextStore";
+import { battleText, skillText } from "./constants/text";
 
 function App() {
   const hero = useGameStore((state) => state.hero);
   const setHero = useGameStore((state) => state.setHero);
+  const setUpgradeSkills = useSkillUpgradeStore((state) => state.setUpgradeSkills);
+
+  const addSkill = useSkillTextStore((state) => state.addSkill);
+  const addText = useBattleTextStore((state) => state.addText);
+  console.log("App render");
 
   const chooseHero = (hero: IHero) => {
-    setHero(hero);
-    console.log(hero);
+    hero.update = function () {
+      setHero(this);
+    };
+    hero.update();
+    hero.pushSkillText = function (text: string) {
+      addSkill(text);
+    };
+    battleText.pushTextBattle = function (info: IAttackInfo) {
+      addText(info);
+    };
+    registerAllSkills(hero.skills);
+    setUpgradeSkills(getUpgradeSkills(hero.name));
   };
 
   return (
@@ -28,11 +47,6 @@ function App() {
           className="container"
         >
           {hero ? <GameArea hero={hero} /> : <HeroList heroes={ALL_HEROES} chooseHero={chooseHero} />}
-          {/* <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident accusantium, inventore corrupti
-            iusto adipisci dolorum sed error, ratione minus quasi fuga delectus! Quae odio accusantium aperiam
-            ratione eos perspiciatis perferendis.
-          </p> */}
         </motion.div>
       </DoorLayout>
     </main>

@@ -1,12 +1,59 @@
 .homeField {
     background-color: rgb(12, 31, 31);
+    /* background-image: url("@/assets/bg_home.jpg"); */
+    /* background-position: center; */
+    position: relative;
     width: 100%;
     height: 100%;
     border-radius: var(--borderRadius);
+}
+
+.homeField img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+/* .homeField > * {
+    position: relative;
+} */
+
+.header {
+    position: relative;
     display: flex;
-    justify-content: center;
+    gap: 20px;
+    padding: 6px 10px;
+    font-size: 1.4rem;
+    background-color: #1b58584f;
+}
+.header div {
+    display: flex;
     align-items: center;
-    flex-direction: column;
-    font-size: 1.5rem;
-    gap: 8px;
+    gap: 4px;
+    width: max-content;
+    cursor: pointer;
+}
+
+.castle,
+.way,
+.tomb {
+    background-color: rgba(255, 228, 196, 0.3);
+    position: absolute;
+    font-weight: 700;
+    backdrop-filter: blur(1px);
+}
+
+.castle {
+    top: 65%;
+    left: 13%;
+}
+
+.way {
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tomb {
+    top: 65%;
+    right: 8%;
 }

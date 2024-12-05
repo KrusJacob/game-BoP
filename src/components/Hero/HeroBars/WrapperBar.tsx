@@ -2,15 +2,28 @@ import { motion } from "framer-motion";
 import HeroBar from "./HeroBar";
 import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
+import { IHero } from "@/types/hero.types";
+import { IEnemy } from "@/types/enemy.types";
+import EnemyBar from "./EnemyBar";
+
+interface Props {
+  hero: IHero;
+  enemy: IHero | IEnemy | null;
+}
 
 const WrapperBar = () => {
-  const hero = useGameStore((state) => state.hero);
+  // const heroHP = useGameStore((state) => state.hero?.HP);
+  // const heroMaxHP = useGameStore((state) => state.hero?.getters.getMaxHp());
+  // const heroBarrier = useGameStore((state) => state.hero?.barrier);
+  // const enemyHP = useGameStore((state) => state.enemy?.HP);
+  // const enemyMaxHP = useGameStore((state) => state.enemy?.getters.getMaxHp());
   const enemy = useGameStore((state) => state.enemy);
+
+  // console.log("render WrapperBar");
 
   return (
     <div className={styles.wrapper}>
-      {hero && <HeroBar target={hero} />}
-
+      <HeroBar />
       {enemy && (
         <>
           <motion.span
@@ -19,7 +32,7 @@ const WrapperBar = () => {
           >
             VS
           </motion.span>
-          <HeroBar target={enemy} isEnemy />
+          <EnemyBar />
         </>
       )}
     </div>

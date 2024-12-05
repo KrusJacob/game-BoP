@@ -1,69 +1,82 @@
-import { PiSwordLight } from "react-icons/pi";
-import { IHero } from "../../../types/hero.types";
-import { MdShield } from "react-icons/md";
-import { FaHeart } from "react-icons/fa";
-import { GiBrain, GiMuscleUp, GiSpinningSword, GiWalkingBoot } from "react-icons/gi";
-
+import { IHero, heroSkills } from "../../../types/hero.types";
 import styles from "./hero.module.css";
-
 import Button from "@/components/UI/Button/Button";
 import Badge from "@/components/UI/Badge/Badge";
+import { IEnemy, enemySkills } from "@/types/enemy.types";
+import { useState } from "react";
+import { HeroClass } from "@/constants/class";
+import Tooltip from "@/components/UI/Tooltip/Tooltip";
+import { useGameStore } from "@/store/gameStore";
+import HeroStatusBar from "./HeroStatusBar";
+import HeroStatList from "./HeroStatList";
+import SkillText from "./SkillText";
 
 interface Props {
-  hero: IHero;
+  hero: IHero | IEnemy;
   isChoosed?: boolean;
   chooseHero?: (hero: IHero) => void;
+}
+
+function getImgUrl(name: string) {
+  return new URL(`${name}`, import.meta.url).href;
 }
 
 //https://www.pngitem.com/pimgs/m/240-2409533_hero-silhouette-free-png-transparent-png.png
 
 const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
+  const exp = useGameStore((state) => state.hero?.level.exp);
+
+  // console.log("HeroCard");
+
   return (
     <div className={styles.card}>
       <div className={styles.image}>
-        <img src={hero.baseStats.img} alt={hero.type} />
+        {hero.type === "hero" && <SkillText />}
+        <HeroStatusBar type={hero instanceof HeroClass ? "hero" : "enemy"} />
+        <img src={hero.baseStats.img} alt={hero.name} />
         <div className={styles.name}>{hero.baseStats.name}</div>
         {isChoosed && (
           <div className={styles.level}>
-            <Badge>1</Badge>
+            <Tooltip title={hero instanceof HeroClass ? `${exp} / ${hero.level.expToNextLevel}` : ""}>
+              <Badge>{hero.level.value}</Badge>
+            </Tooltip>
           </div>
         )}
       </div>
       <div>
-        <p className={styles.stats}>
-          <FaHeart />
-          <span>Здоровье:</span>
-          {hero.baseStats.maxHp}
-        </p>
-        <p className={styles.stats}>
-          <GiMuscleUp />
-          <span>Cила:</span>
-          {hero.baseStats.power}
-        </p>
-        <p className={styles.stats}>
-          <GiWalkingBoot />
-          <span>Ловкость:</span>
-          {hero.baseStats.agility}
-        </p>
-        <p className={styles.stats}>
-          <GiBrain />
-          <span>Интеллект:</span> {hero.baseStats.intellect}
-        </p>
-        <p className={styles.stats}>
-          <PiSwordLight /> <span>Атака:</span>
-          {hero.baseStats.attack}
-        </p>
-        <p className={styles.stats}>
-          <MdShield /> <span>Защита:</span>
-          {hero.baseStats.def}
-        </p>
-        <p className={styles.stats}>
-          <GiSpinningSword /> <span>Скорость атаки:</span>
-          {hero.baseStats.attackSpeed}
-        </p>
+        <SkillList skills={hero.skills} />
+        <HeroStatList hero={hero} />
       </div>
+      {chooseHero && hero instanceof HeroClass && <Button onClick={() => chooseHero(hero)}>Выбрать</Button>}
+    </div>
+  );
+};
 
-      {chooseHero && <Button onClick={() => chooseHero(hero)}>Выбрать</Button>}
+const SkillList = ({ skills }: { skills: heroSkills[] | enemySkills[] }) => {
+  const [label, setLabel] = useState("");
+  const [descr, setDescr] = useState("");
+
+  return (
+    <div className={styles.skillList}>
+      {descr && (
+        <div className={styles.skillTitle}>
+          <p>{label}</p>
+          <span>{descr}</span>
+        </div>
+      )}
+      {skills.map((item, i) => (
+        <div
+          onMouseEnter={() => {
+            setLabel(item.label);
+            setDescr(item.descr());
+          }}
+          onMouseLeave={() => setDescr("")}
+          className={styles.skillItem}
+          key={i}
+        >
+          <img src={item.img} alt={item.img} />
+        </div>
+      ))}
     </div>
   );
 };
