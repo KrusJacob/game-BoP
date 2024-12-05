@@ -23,7 +23,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillPower_1_1.png",
+        img: "/assets/skill/hairdresser/skillPower_1_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -48,7 +48,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
             next: def.next ? `Увеличивает защиту на ${def.next} и силу на ${power.next}` : "",
           };
         },
-        img: "/src/assets/skill/chances.png",
+        img: "/assets/skill/chances.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -79,7 +79,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillPower_2_1.png",
+        img: "/assets/skill/hairdresser/skillPower_2_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -106,7 +106,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
             next: value.next ? `"В две руки" восстанавливает ${value.next}% от макс.запаса здоровья героя` : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillPower_2_2.png",
+        img: "/assets/skill/hairdresser/skillPower_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -135,7 +135,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillPower_3_1.png",
+        img: "/assets/skill/hairdresser/skillPower_3_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -165,7 +165,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillPower_4_1.png",
+        img: "/assets/skill/hairdresser/skillPower_4_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -200,7 +200,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillAgility_1_1.png",
+        img: "/assets/skill/hairdresser/skillAgility_1_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -224,7 +224,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
             next: text.next ? `Снижает затраты энергии "В две руки" на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/chances.png",
+        img: "/assets/skill/chances.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -248,7 +248,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает уклонение ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillAgility_2_1.png",
+        img: "/assets/skill/hairdresser/skillAgility_2_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -274,7 +274,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
             next: text.next ? `"Заточенный инструмент" дополнительно игнорирует ${text.next}% защиты` : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillAgility_3_1.png",
+        img: "/assets/skill/hairdresser/skillAgility_3_1.png",
         maxPoints: 2,
         currentPoint: 0,
         inc: incPoint,
@@ -305,7 +305,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillAgility_3_2.png",
+        img: "/assets/skill/hairdresser/skillAgility_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -331,7 +331,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
             next: value.next ? `Увеличивает атаку и защиту на ${value.next}` : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillAgility_4_1.png",
+        img: "/assets/skill/hairdresser/skillAgility_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -367,7 +367,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillIntellect_1_1.png",
+        img: "/assets/skill/hairdresser/skillIntellect_1_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -395,7 +395,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillIntellect_1_2.png",
+        img: "/assets/skill/hairdresser/skillIntellect_1_2.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -424,7 +424,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillIntellect_2_1.png",
+        img: "/assets/skill/hairdresser/skillIntellect_2_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -451,7 +451,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillIntellect_2_2.png",
+        img: "/assets/skill/hairdresser/skillIntellect_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -484,7 +484,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillIntellect_3_1.png",
+        img: "/assets/skill/hairdresser/skillIntellect_3_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -515,7 +515,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
             next: text.next ? `"Профессиональная подготовка" оглушает противника на ${text.next} секунды` : "",
           };
         },
-        img: "/src/assets/skill/hairdresser/skillIntellect_4_1.png",
+        img: "/assets/skill/hairdresser/skillIntellect_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,

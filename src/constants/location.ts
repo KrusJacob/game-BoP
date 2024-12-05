@@ -13,25 +13,25 @@ export const LOCATIONS: locationItem[] = [
     name: "darkForest",
     label: "Темный Лес",
     reqLevel: 1,
-    img: "/src/assets/location/dark_forest.png",
+    img: "/assets/location/dark_forest.png",
   },
   {
     name: "hiddenCave",
     label: "Скрытая Пещера",
     reqLevel: 12,
-    img: "/src/assets/location/hidden_cave.png",
+    img: "/assets/location/hidden_cave.png",
   },
   {
     name: "azureCoast",
     label: "Лазурное Прибережье",
     reqLevel: 24,
-    img: "/src/assets/location/azure_coast.png",
+    img: "/assets/location/azure_coast.png",
   },
   {
     name: "snowMountains",
     label: "Заснеженные Горы",
     reqLevel: 36,
-    img: "/src/assets/location/snow_mountains.png",
+    img: "/assets/location/snow_mountains.png",
   },
 ];
 

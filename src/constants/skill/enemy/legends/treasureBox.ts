@@ -7,7 +7,7 @@ export const SKILLS_TREASURE_BOX: enemySkills[] = [
     descr: function () {
       return `Сундук полностю забит золотом, так откройте же его`;
     },
-    img: "/src/assets/skill/enemies/gnome_trader_1.png",
+    img: "/assets/skill/enemies/gnome_trader_1.png",
     data: {},
   },
   getLockSkill(),
@@ -17,7 +17,7 @@ export const SKILLS_TREASURE_BOX: enemySkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: 0,
       chanceEvade: 0,

@@ -9,7 +9,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 1,
     name: "Пузырек лечебного зелья",
-    img: "/src/assets/shop/heal_potion_1.png",
+    img: "/assets/shop/heal_potion_1.png",
     cost: 200,
     quantity: 1,
     descr: function () {
@@ -27,7 +27,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 2,
     name: "Флакон лечебного зелья",
-    img: "/src/assets/shop/heal_potion_2.png",
+    img: "/assets/shop/heal_potion_2.png",
     cost: 400,
     quantity: 1,
     descr: function () {
@@ -45,7 +45,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 3,
     name: "Бутыль лечебного зелья",
-    img: "/src/assets/shop/heal_potion_3.png",
+    img: "/assets/shop/heal_potion_3.png",
     cost: 800,
     quantity: 1,
     descr: function () {
@@ -63,7 +63,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 4,
     name: "Кирпич",
-    img: "/src/assets/shop/brick.png",
+    img: "/assets/shop/brick.png",
     cost: 575,
     quantity: 1,
     descr: function () {
@@ -81,7 +81,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 5,
     name: "Зелье заморозки",
-    img: "/src/assets/shop/freeze_potion.png",
+    img: "/assets/shop/freeze_potion.png",
     cost: 350,
     quantity: 1,
     descr: function () {
@@ -100,7 +100,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 6,
     name: "Зелье c ядом",
-    img: "/src/assets/shop/posion_potion.png",
+    img: "/assets/shop/posion_potion.png",
     cost: 350,
     quantity: 1,
     descr: function () {
@@ -119,7 +119,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 7,
     name: "Зелье ярости",
-    img: "/src/assets/shop/rage_potion.png",
+    img: "/assets/shop/rage_potion.png",
     cost: 850,
     quantity: 1,
     descr: function () {
@@ -140,7 +140,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 8,
     name: "Зелье оглушения",
-    img: "/src/assets/shop/stun_potion.png",
+    img: "/assets/shop/stun_potion.png",
     cost: 800,
     quantity: 1,
     descr: function () {
@@ -158,7 +158,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 9,
     name: "Зелье удушения",
-    img: "/src/assets/shop/potion.png",
+    img: "/assets/shop/potion.png",
     cost: 700,
     quantity: 1,
     descr: function () {
@@ -178,7 +178,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 10,
     name: "Зелье смерти (!)",
-    img: "/src/assets/shop/death_potion.png",
+    img: "/assets/shop/death_potion.png",
     cost: 9999,
     quantity: 1,
     descr: function () {

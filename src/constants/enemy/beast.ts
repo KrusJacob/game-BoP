@@ -1,7 +1,7 @@
 import { enemyBaseStats } from "@/types/enemy.types";
 
 export const STATS_BEAST: enemyBaseStats = {
-  img: "/src/assets/enemy/beast.png",
+  img: "/assets/enemy/beast.png",
   name: "Дикий олень",
   power: 30,
   agility: 25,
@@ -15,7 +15,7 @@ export const STATS_BEAST: enemyBaseStats = {
 };
 
 export const STATS_BEAST_2: enemyBaseStats = {
-  img: "/src/assets/enemy/beast_2.png",
+  img: "/assets/enemy/beast_2.png",
   name: "Вепрь",
   power: 55,
   agility: 20,
@@ -29,7 +29,7 @@ export const STATS_BEAST_2: enemyBaseStats = {
 };
 
 export const STATS_BEAST_3: enemyBaseStats = {
-  img: "/src/assets/enemy/beast_3.png",
+  img: "/assets/enemy/beast_3.png",
   name: "Волк",
   power: 40,
   agility: 60,
@@ -43,7 +43,7 @@ export const STATS_BEAST_3: enemyBaseStats = {
 };
 
 export const STATS_BEAST_4: enemyBaseStats = {
-  img: "/src/assets/enemy/beast_4.png",
+  img: "/assets/enemy/beast_4.png",
   name: "Медведь",
   power: 90,
   agility: 5,
@@ -57,7 +57,7 @@ export const STATS_BEAST_4: enemyBaseStats = {
 };
 
 export const STATS_BEAST_5: enemyBaseStats = {
-  img: "/src/assets/enemy/beast_5.png",
+  img: "/assets/enemy/beast_5.png",
   name: "Оборотень",
   power: 60,
   agility: 70,

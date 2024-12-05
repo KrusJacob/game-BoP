@@ -19,7 +19,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает макс.здоровье на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillPower_1_1.png",
+        img: "/assets/skill/cook/skillPower_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -47,7 +47,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillPower_2_1.png",
+        img: "/assets/skill/cook/skillPower_2_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -71,7 +71,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: def.next ? `Увеличивает силу на ${power.next} и защиту на ${def.next}` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillPower_2_2.png",
+        img: "/assets/skill/cook/skillPower_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -106,7 +106,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillPower_3_1.png",
+        img: "/assets/skill/cook/skillPower_3_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -134,7 +134,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillPower_3_2.png",
+        img: "/assets/skill/cook/skillPower_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -164,7 +164,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillPower_4_1.png",
+        img: "/assets/skill/cook/skillPower_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -198,7 +198,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: agility.next ? `Увеличивает ловкость на ${agility.next} и атаку на ${attack.next}` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillAgility_1_1.png",
+        img: "/assets/skill/cook/skillAgility_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -228,7 +228,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillAgility_2_1.png",
+        img: "/assets/skill/cook/skillAgility_2_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -261,7 +261,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: text.next ? `"Во все оружии" так же повышает скорость атаки героя на ${text.next}%` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillAgility_2_2.png",
+        img: "/assets/skill/cook/skillAgility_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -293,7 +293,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillAgility_3_1.png",
+        img: "/assets/skill/cook/skillAgility_3_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -326,7 +326,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillAgility_3_2.png",
+        img: "/assets/skill/cook/skillAgility_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -354,7 +354,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: text.next ? `При атаках, вы дополнительно ингорируете ${text.next}% защиты противника` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillAgility_4_1.png",
+        img: "/assets/skill/cook/skillAgility_4_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -382,7 +382,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает интеллект на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillIntellect_1_1.png",
+        img: "/assets/skill/cook/skillIntellect_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -406,7 +406,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает защиту на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillIntellect_2_1.png",
+        img: "/assets/skill/cook/skillIntellect_2_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -428,7 +428,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: text.next ? `"Отвар яда" также снижает урон противника на ${text.next}%` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillIntellect_2_2.png",
+        img: "/assets/skill/cook/skillIntellect_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -453,7 +453,7 @@ export const upgradeCookSkills: UpgradeSkills = {
             next: text.next ? `"Отвар яда" наносит дополнительный урон: ${text.next}% от интеллекта` : "",
           };
         },
-        img: "/src/assets/skill/cook/skillIntellect_3_1.png",
+        img: "/assets/skill/cook/skillIntellect_3_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -481,7 +481,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillIntellect_3_2.png",
+        img: "/assets/skill/cook/skillIntellect_3_2.png",
         maxPoints: 2,
         currentPoint: 0,
         inc: incPoint,
@@ -511,7 +511,7 @@ export const upgradeCookSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/cook/skillIntellect_4_1.png",
+        img: "/assets/skill/cook/skillIntellect_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,

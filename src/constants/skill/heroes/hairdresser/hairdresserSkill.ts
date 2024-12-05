@@ -12,7 +12,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     descr: function () {
       return `Увеличивает скорость атаки на ${this.data.modifier}% на ${this.data.duration} секунд. Стоимость - ${this.data.costEnergy} энергии`;
     },
-    img: "/src/assets/skill/skill_hairdresser_1.png",
+    img: "/assets/skill/skill_hairdresser_1.png",
     data: {
       costEnergy: 180,
       modifier: 35,
@@ -47,7 +47,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     descr: function () {
       return `Каждая ${this.data.count} ваша атака игнорирует ${this.data.ignoreDef}% защиты противника `;
     },
-    img: "/src/assets/skill/skill_hairdresser_2.png",
+    img: "/assets/skill/skill_hairdresser_2.png",
     data: {
       count: 3,
       ignoreDef: 50,
@@ -103,7 +103,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     descr: function () {
       return `Перед каждым боем герой восстанавливает часть здоровья и увеличивает наносимый урон на ${this.data.modifierDamage}% на ${this.data.duration} секунд`;
     },
-    img: "/src/assets/skill/skill_hairdresser_3.png",
+    img: "/assets/skill/skill_hairdresser_3.png",
     data: {
       healValue: 125,
       healPercent: 10,
@@ -131,7 +131,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
       chanceEvade: CHANCE_EVADE,

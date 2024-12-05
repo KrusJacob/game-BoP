@@ -13,7 +13,7 @@ export const SKILLS_BEAST: enemySkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
       chanceEvade: CHANCE_EVADE,
@@ -33,7 +33,7 @@ export const SKILLS_BEAST_BOSS: enemySkills[] = [
       hero.getHeal(heal);
     },
     trigger: "afterInitiatorAttack",
-    img: "/src/assets/talent/chanceCritDamage.png",
+    img: "/assets/talent/chanceCritDamage.png",
     data: {
       modifierDrain: 2,
     },
@@ -45,7 +45,7 @@ export const SKILLS_BEAST_BOSS: enemySkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
       chanceEvade: CHANCE_EVADE,

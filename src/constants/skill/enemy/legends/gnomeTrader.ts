@@ -7,7 +7,7 @@ export const SKILLS_GNOME_TRADER: enemySkills[] = [
     descr: function () {
       return `Добрый гном-торговец готов поделится с вами частью своего богатства`;
     },
-    img: "/src/assets/skill/enemies/gnome_trader_1.png",
+    img: "/assets/skill/enemies/gnome_trader_1.png",
     data: {},
   },
   getLockSkill(),
@@ -17,7 +17,7 @@ export const SKILLS_GNOME_TRADER: enemySkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: 0,
       chanceEvade: 0,

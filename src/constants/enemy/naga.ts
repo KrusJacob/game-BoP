@@ -1,7 +1,7 @@
 import { enemyBaseStats } from "@/types/enemy.types";
 
 export const STATS_NAGA: enemyBaseStats = {
-  img: "/src/assets/enemy/naga.png",
+  img: "/assets/enemy/naga.png",
   name: "Мурлок",
   power: 55,
   agility: 110,
@@ -14,7 +14,7 @@ export const STATS_NAGA: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_NAGA_2: enemyBaseStats = {
-  img: "/src/assets/enemy/naga_2.png",
+  img: "/assets/enemy/naga_2.png",
   name: "Обольстительница",
   power: 70,
   agility: 90,
@@ -28,7 +28,7 @@ export const STATS_NAGA_2: enemyBaseStats = {
 };
 
 export const STATS_NAGA_3: enemyBaseStats = {
-  img: "/src/assets/enemy/naga_3.png",
+  img: "/assets/enemy/naga_3.png",
   name: "Морской воин",
   power: 140,
   agility: 35,
@@ -41,7 +41,7 @@ export const STATS_NAGA_3: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_NAGA_4: enemyBaseStats = {
-  img: "/src/assets/enemy/naga_4.png",
+  img: "/assets/enemy/naga_4.png",
   name: "Правитель морей",
   power: 120,
   agility: 75,
@@ -54,7 +54,7 @@ export const STATS_NAGA_4: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_NAGA_5: enemyBaseStats = {
-  img: "/src/assets/enemy/naga_5.png",
+  img: "/assets/enemy/naga_5.png",
   name: "Ужас глубин",
   power: 150,
   agility: 60,

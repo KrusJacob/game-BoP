@@ -19,7 +19,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает защиту на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillPower_1_1.png",
+        img: "/assets/skill/boxer/skillPower_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -41,7 +41,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает макс.запас здоровья на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillPower_1_2.png",
+        img: "/assets/skill/boxer/skillPower_1_2.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -65,7 +65,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает силу и атаку на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillPower_2_1.png",
+        img: "/assets/skill/boxer/skillPower_2_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -88,7 +88,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `"Апперкот" восстанавливает герою здоровье - ${text.next}% от силы` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillPower_2_2.png",
+        img: "/assets/skill/boxer/skillPower_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -118,7 +118,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillPower_3_1.png",
+        img: "/assets/skill/boxer/skillPower_3_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -150,7 +150,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillPower_4_1.png",
+        img: "/assets/skill/boxer/skillPower_4_1.png",
         maxPoints: 2,
         currentPoint: 0,
         inc: incPoint,
@@ -180,7 +180,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает скорость атаки на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillAgility_1_1.png",
+        img: "/assets/skill/boxer/skillAgility_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -204,7 +204,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает силу, ловкость и интеллект на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillAgility_2_1.png",
+        img: "/assets/skill/boxer/skillAgility_2_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -228,7 +228,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `"Апперкот" наносит на ${text.next}% урона больше` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillAgility_2_2.png",
+        img: "/assets/skill/boxer/skillAgility_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -252,7 +252,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает шанс критического удара на ${text.next}%` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillAgility_3_1.png",
+        img: "/assets/skill/boxer/skillAgility_3_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -276,7 +276,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает шанс навыка "Хук левой" на ${text.next}%` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillAgility_4_1.png",
+        img: "/assets/skill/boxer/skillAgility_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -304,7 +304,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает атаку и силу умений на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillIntellect_1_1.png",
+        img: "/assets/skill/boxer/skillIntellect_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -329,7 +329,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает интеллект на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillIntellect_2_1.png",
+        img: "/assets/skill/boxer/skillIntellect_2_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -353,7 +353,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Атаки наносят дополнительный магический урон - ${text.next}% от интеллекта ` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillIntellect_2_2.png",
+        img: "/assets/skill/boxer/skillIntellect_2_2.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -390,7 +390,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Шестое чувство" восстанавливает дополнительно ${text.next}% от интеллекта` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillIntellect_3_1.png",
+        img: "/assets/skill/boxer/skillIntellect_3_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -413,7 +413,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `"Шестое чувство" восстанавливает ${text.next} энергии` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillIntellect_3_2.png",
+        img: "/assets/skill/boxer/skillIntellect_3_2.png",
         maxPoints: 2,
         currentPoint: 0,
         inc: incPoint,
@@ -439,7 +439,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает уклонение на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/boxer/skillIntellect_4_1.png",
+        img: "/assets/skill/boxer/skillIntellect_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,

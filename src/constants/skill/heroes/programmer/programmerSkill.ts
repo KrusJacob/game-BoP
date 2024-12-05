@@ -12,7 +12,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     descr: function () {
       return `Наносит противнику магический урон - ${this.data.modifier}% от его макс.запаса здоровья, герой исцеляется на 100% от нанесенного урона. Стоимость - ${this.data.costEnergy} энергии`;
     },
-    img: "/src/assets/skill/skill_programmer_1.png",
+    img: "/assets/skill/skill_programmer_1.png",
     data: {
       costEnergy: 200,
       modifier: 8,
@@ -32,7 +32,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     descr: function () {
       return `В Начале боя активирует барьер, поглощающий входящий урон. Обьем барьера зависит от интеллекта и силы умений`;
     },
-    img: "/src/assets/skill/skill_programmer_2.png",
+    img: "/assets/skill/skill_programmer_2.png",
     data: {
       modifier: 2.5,
       barrierValue: 100,
@@ -76,7 +76,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     descr: function () {
       return `При каждой атаке есть ${this.data.chance}% шанс заразить противника вирусом, не чаще чем раз в ${this.data.cooldown} секунд. Максимум ${this.data.maxLayer} слоя. Каждый слой снижает наносимый урон противника на ${this.data.modifier}% и длиться ${this.data.duration} секунд`;
     },
-    img: "/src/assets/skill/skill_programmer_3.png",
+    img: "/assets/skill/skill_programmer_3.png",
     data: {
       chance: 25,
       maxLayer: 3,
@@ -140,7 +140,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data.chanceCritDamage}%, Шанс уклонения: ${this.data.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
       chanceEvade: CHANCE_EVADE,

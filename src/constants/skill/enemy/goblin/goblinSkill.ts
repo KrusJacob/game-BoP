@@ -15,7 +15,7 @@ export const SKILLS_GOBLIN: enemySkills[] = [
       hero.buffs.nextAttack.ignoreDef = this[2].data.ignoreDef;
     },
     trigger: "beforeInitiatorAttack",
-    img: "/src/assets/talent/chanceCritDamage.png",
+    img: "/assets/talent/chanceCritDamage.png",
     data: {
       ignoreDef: 15,
     },
@@ -25,7 +25,7 @@ export const SKILLS_GOBLIN: enemySkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: CHANCE_CRITICAL_DAMAGE + 1,
       chanceEvade: CHANCE_EVADE + 1,

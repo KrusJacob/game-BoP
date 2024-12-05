@@ -23,7 +23,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillPower_1_1.png",
+        img: "/assets/skill/programmer/skillPower_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -49,7 +49,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `обьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillPower_2_1.png",
+        img: "/assets/skill/programmer/skillPower_2_1.png",
         maxPoints: 1,
         currentPoint: 0,
         inc: incPoint,
@@ -75,7 +75,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillPower_2_2.png",
+        img: "/assets/skill/programmer/skillPower_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -102,7 +102,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillPower_2_3.png",
+        img: "/assets/skill/programmer/skillPower_2_3.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -127,7 +127,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: value.next ? `Увеличивает атаку на ${value.next}` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillPower_3_1.png",
+        img: "/assets/skill/programmer/skillPower_3_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -152,7 +152,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: def.next ? `Увеличивает макс.запас здоровья на ${maxHp.next} и защиту на ${def.next}` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillPower_3_2.png",
+        img: "/assets/skill/programmer/skillPower_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -180,7 +180,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: value.next ? `"Вирус" также наносит магический урон в размере ${value.next}% от силы героя` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillPower_4_1.png",
+        img: "/assets/skill/programmer/skillPower_4_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -209,7 +209,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает ловкость на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillAgility_1_1.png",
+        img: "/assets/skill/programmer/skillAgility_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -233,7 +233,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает атаку и защиту на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillAgility_2_1.png",
+        img: "/assets/skill/programmer/skillAgility_2_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -256,7 +256,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `Затраты энергии на "Утечка данных" снижаются на ${text.next}` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillAgility_2_2.png",
+        img: "/assets/skill/programmer/skillAgility_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -280,7 +280,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает шанс критического удара на ${text.next}%` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillAgility_3_1.png",
+        img: "/assets/skill/programmer/skillAgility_3_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -304,7 +304,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `При атаках, вы дополнительно ингорируете ${text.next}% защиты противника` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillAgility_3_2.png",
+        img: "/assets/skill/programmer/skillAgility_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -333,7 +333,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillAgility_4_1.png",
+        img: "/assets/skill/programmer/skillAgility_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -371,7 +371,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: attack.next ? `Увеличивает интеллект на ${intellect.next} и атаку на ${attack.next}` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillIntellect_1_1.png",
+        img: "/assets/skill/programmer/skillIntellect_1_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -402,7 +402,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillIntellect_2_1.png",
+        img: "/assets/skill/programmer/skillIntellect_2_1.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
@@ -430,7 +430,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
               : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillIntellect_2_2.png",
+        img: "/assets/skill/programmer/skillIntellect_2_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -455,7 +455,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `Увеличивает шанс срабатывания "Вирус" на ${text.next}%` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillIntellect_3_1.png",
+        img: "/assets/skill/programmer/skillIntellect_3_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
@@ -479,7 +479,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
             next: text.next ? `Каждая атака дополнительно даёт ${text.next} энергии` : "",
           };
         },
-        img: "/src/assets/skill/programmer/skillIntellect_4_1.png",
+        img: "/assets/skill/programmer/skillIntellect_4_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,

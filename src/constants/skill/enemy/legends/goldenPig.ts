@@ -7,7 +7,7 @@ export const SKILLS_GOLDEN_PIG: enemySkills[] = [
     descr: function () {
       return `Поговаривают что она вся состоит из чистого золота...`;
     },
-    img: "/src/assets/skill/enemies/golden_pig_1.png",
+    img: "/assets/skill/enemies/golden_pig_1.png",
     data: {},
   },
   getLockSkill(),
@@ -17,7 +17,7 @@ export const SKILLS_GOLDEN_PIG: enemySkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: 0,
       chanceEvade: 0,

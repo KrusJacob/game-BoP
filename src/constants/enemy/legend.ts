@@ -1,6 +1,6 @@
 import { enemyBaseStats } from "@/types/enemy.types";
 export const STATS_GODLEN_PIG: enemyBaseStats = {
-  img: "/src/assets/enemy/golden-pig.png",
+  img: "/assets/enemy/golden-pig.png",
   name: "Золотая свинка",
   power: 10,
   agility: 10,
@@ -13,7 +13,7 @@ export const STATS_GODLEN_PIG: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GNOME_TRADER: enemyBaseStats = {
-  img: "/src/assets/enemy/gnome-trader.png",
+  img: "/assets/enemy/gnome-trader.png",
   name: "Гном-торговец",
   power: 20,
   agility: 20,
@@ -26,7 +26,7 @@ export const STATS_GNOME_TRADER: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_SEA_MONSTER: enemyBaseStats = {
-  img: "/src/assets/enemy/gnome-trader.png",
+  img: "/assets/enemy/gnome-trader.png",
   name: "Морское чудовище",
   power: 200,
   agility: 20,
@@ -39,7 +39,7 @@ export const STATS_SEA_MONSTER: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_TREASURE_BOX: enemyBaseStats = {
-  img: "/src/assets/enemy/treasureBox.png",
+  img: "/assets/enemy/treasureBox.png",
   name: "Cундук с сокровищем",
   power: 10,
   agility: 10,

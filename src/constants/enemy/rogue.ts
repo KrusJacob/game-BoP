@@ -1,7 +1,7 @@
 import { enemyBaseStats } from "@/types/enemy.types";
 
 export const STATS_ROGUE: enemyBaseStats = {
-  img: "/src/assets/enemy/rogue.png",
+  img: "/assets/enemy/rogue.png",
   name: "Грабитель",
   power: 30,
   agility: 65,
@@ -14,7 +14,7 @@ export const STATS_ROGUE: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_ROGUE_2: enemyBaseStats = {
-  img: "/src/assets/enemy/rogue_2.png",
+  img: "/assets/enemy/rogue_2.png",
   name: "Разбойник",
   power: 50,
   agility: 60,
@@ -28,7 +28,7 @@ export const STATS_ROGUE_2: enemyBaseStats = {
 };
 
 export const STATS_ROGUE_3: enemyBaseStats = {
-  img: "/src/assets/enemy/rogue_3.png",
+  img: "/assets/enemy/rogue_3.png",
   name: "Наёмный убийца",
   power: 40,
   agility: 55,
@@ -41,7 +41,7 @@ export const STATS_ROGUE_3: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_ROGUE_4: enemyBaseStats = {
-  img: "/src/assets/enemy/rogue_4.png",
+  img: "/assets/enemy/rogue_4.png",
   name: "Призрачный охотник",
   power: 30,
   agility: 95,
@@ -54,7 +54,7 @@ export const STATS_ROGUE_4: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_ROGUE_5: enemyBaseStats = {
-  img: "/src/assets/enemy/rogue_5.png",
+  img: "/assets/enemy/rogue_5.png",
   name: "Скрытный убийца",
   power: 60,
   agility: 110,

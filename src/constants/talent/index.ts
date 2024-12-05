@@ -9,7 +9,7 @@ import { registerSkill } from "../skill/heroes";
 export const ALL_TALENTS: talentType[] = [
   {
     name: "Грозный натиск",
-    img: "/src/assets/talent/attack.png",
+    img: "/assets/talent/attack.png",
     level: 0,
 
     descr: function () {
@@ -25,7 +25,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Несокрушимость",
-    img: "/src/assets/talent/def.png",
+    img: "/assets/talent/def.png",
     level: 0,
 
     descr: function () {
@@ -41,7 +41,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Жизненные ресурсы",
-    img: "/src/assets/talent/maxHp.png",
+    img: "/assets/talent/maxHp.png",
     level: 0,
 
     descr: function () {
@@ -57,7 +57,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Сила гиганта",
-    img: "/src/assets/talent/power.png",
+    img: "/assets/talent/power.png",
     level: 0,
 
     descr: function () {
@@ -73,7 +73,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Проворность",
-    img: "/src/assets/talent/agility.png",
+    img: "/assets/talent/agility.png",
     level: 0,
 
     descr: function () {
@@ -89,7 +89,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Концетрация мыслей",
-    img: "/src/assets/talent/intellect.png",
+    img: "/assets/talent/intellect.png",
     level: 0,
 
     descr: function () {
@@ -105,7 +105,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Небесный шквал",
-    img: "/src/assets/talent/attackSpeed.png",
+    img: "/assets/talent/attackSpeed.png",
     level: 0,
 
     descr: function () {
@@ -121,7 +121,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Наставление магии",
-    img: "/src/assets/talent/powerSkill.png",
+    img: "/assets/talent/powerSkill.png",
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");
@@ -136,7 +136,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Изворотливость",
-    img: "/src/assets/talent/chanceEvade.png",
+    img: "/assets/talent/chanceEvade.png",
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");
@@ -151,7 +151,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Смертельные выпады",
-    img: "/src/assets/talent/chanceCritDamage.png",
+    img: "/assets/talent/chanceCritDamage.png",
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");
@@ -166,7 +166,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Разлом обороны",
-    img: "/src/assets/talent/ignoreDef.png",
+    img: "/assets/talent/ignoreDef.png",
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");
@@ -181,7 +181,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Оглушающие удары",
-    img: "/src/assets/talent/stun.png",
+    img: "/assets/talent/stun.png",
     level: 0,
     descr: function () {
       const chance = getText.call(this, "chance");
@@ -211,7 +211,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Целебные потоки",
-    img: "/src/assets/talent/heal.png",
+    img: "/assets/talent/heal.png",
     level: 0,
     descr: function () {
       const cooldown = getText.call(this, "cooldown");
@@ -247,7 +247,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Впитывание знаний",
-    img: "/src/assets/talent/exp.png",
+    img: "/assets/talent/exp.png",
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");
@@ -263,7 +263,7 @@ export const ALL_TALENTS: talentType[] = [
   },
   {
     name: "Золотая лихорадка",
-    img: "/src/assets/talent/gold.png",
+    img: "/assets/talent/gold.png",
     level: 0,
     descr: function () {
       const text = getText.call(this, "value");

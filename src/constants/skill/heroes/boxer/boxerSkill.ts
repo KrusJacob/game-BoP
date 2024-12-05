@@ -13,7 +13,7 @@ const SKILLS_BOXER: heroSkills[] = [
         this.data.costEnergy
       } энергии`;
     },
-    img: "/src/assets/skill/skill_boxer_1.png",
+    img: "/assets/skill/skill_boxer_1.png",
     data: {
       costEnergy: 170,
       modifier: 1.75,
@@ -41,7 +41,7 @@ const SKILLS_BOXER: heroSkills[] = [
     descr: function () {
       return `После каждого уклонения герой восстанавливает часть здоровья и получает барьер, поглощающий входящий урон. Перезарядка: ${this.data.totalCooldown} секунд`;
     },
-    img: "/src/assets/skill/skill_boxer_2.png",
+    img: "/assets/skill/skill_boxer_2.png",
     data: {
       healValue: 50,
       healPercent: 4,
@@ -88,7 +88,7 @@ const SKILLS_BOXER: heroSkills[] = [
         this.data.modifier * 100
       }% урона`;
     },
-    img: "/src/assets/skill/skill_boxer_3.png",
+    img: "/assets/skill/skill_boxer_3.png",
     data: {
       chance: 20,
       modifier: 0.5,
@@ -122,7 +122,7 @@ const SKILLS_BOXER: heroSkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data.chanceCritDamage}%, Шанс уклонения: ${this.data.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
       chanceEvade: CHANCE_EVADE,

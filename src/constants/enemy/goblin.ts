@@ -1,7 +1,7 @@
 import { enemyBaseStats } from "@/types/enemy.types";
 
 export const STATS_GOBLIN: enemyBaseStats = {
-  img: "/src/assets/enemy/goblin.png",
+  img: "/assets/enemy/goblin.png",
   name: "Гоблин-разведчик",
   power: 35,
   agility: 90,
@@ -14,7 +14,7 @@ export const STATS_GOBLIN: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GOBLIN_2: enemyBaseStats = {
-  img: "/src/assets/enemy/goblin_2.png",
+  img: "/assets/enemy/goblin_2.png",
   name: "Гоблин-убийца",
   power: 55,
   agility: 80,
@@ -27,7 +27,7 @@ export const STATS_GOBLIN_2: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GOBLIN_3: enemyBaseStats = {
-  img: "/src/assets/enemy/goblin_3.png",
+  img: "/assets/enemy/goblin_3.png",
   name: "Гоблин-ветеран",
   power: 100,
   agility: 55,
@@ -40,7 +40,7 @@ export const STATS_GOBLIN_3: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GOBLIN_4: enemyBaseStats = {
-  img: "/src/assets/enemy/goblin_4.png",
+  img: "/assets/enemy/goblin_4.png",
   name: "Гоблин-головорез",
   power: 115,
   agility: 75,
@@ -53,7 +53,7 @@ export const STATS_GOBLIN_4: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GOBLIN_5: enemyBaseStats = {
-  img: "/src/assets/enemy/goblin_5.png",
+  img: "/assets/enemy/goblin_5.png",
   name: "Охотник за головами",
   power: 90,
   agility: 100,

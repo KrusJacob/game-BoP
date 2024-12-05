@@ -39,7 +39,7 @@ export function getLockSkill(): enemySkills {
     descr: function () {
       return `Описание способности. В разработке...`;
     },
-    img: "/src/assets/skill/lock.png",
+    img: "/assets/skill/lock.png",
     data: {},
   };
 }

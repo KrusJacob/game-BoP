@@ -11,7 +11,7 @@ const SKILLS_COOK: heroSkills[] = [
     descr: function () {
       return `Повышает на ${this.data.duration} секунд наносимый урон героя на ${this.data.modifierDamage}% и снижает получаемый урон на ${this.data.modifierDef}%. Стоимость - ${this.data.costEnergy} энергии`;
     },
-    img: "/src/assets/skill/skill_cook_1.png",
+    img: "/assets/skill/skill_cook_1.png",
     data: {
       costEnergy: 160,
       modifierDamage: 15,
@@ -38,7 +38,7 @@ const SKILLS_COOK: heroSkills[] = [
     descr: function () {
       return `После любого действия противника есть ${this.data.chance}% - шанс восстановить часть здоровья. Перезарядка: ${this.data.cooldownCount} с.`;
     },
-    img: "/src/assets/skill/skill_cook_2.png",
+    img: "/assets/skill/skill_cook_2.png",
     data: {
       chance: 20,
       healValue: 20,
@@ -68,7 +68,7 @@ const SKILLS_COOK: heroSkills[] = [
     descr: function () {
       return `При каждой атаке есть ${this.data.chance}% шанс отравить врага ядом. Яд каждую секунду наносит магический урон и длиться ${this.data.duration} секунд`;
     },
-    img: "/src/assets/skill/skill_cook_3.png",
+    img: "/assets/skill/skill_cook_3.png",
     data: {
       chance: 20,
       duration: 5,
@@ -119,7 +119,7 @@ const SKILLS_COOK: heroSkills[] = [
     descr: function () {
       return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
     },
-    img: "/src/assets/skill/chances.png",
+    img: "/assets/skill/chances.png",
     data: {
       chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
       chanceEvade: CHANCE_EVADE,

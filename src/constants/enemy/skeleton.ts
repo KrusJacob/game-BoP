@@ -1,7 +1,7 @@
 import { enemyBaseStats } from "@/types/enemy.types";
 
 export const STATS_SKELETON: enemyBaseStats = {
-  img: "/src/assets/enemy/skeleton.png",
+  img: "/assets/enemy/skeleton.png",
   name: "Адский пёс",
   power: 130,
   agility: 80,
@@ -14,7 +14,7 @@ export const STATS_SKELETON: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_SKELETON_2: enemyBaseStats = {
-  img: "/src/assets/enemy/skeleton_2.png",
+  img: "/assets/enemy/skeleton_2.png",
   name: "Скелет-воин",
   power: 120,
   agility: 100,
@@ -28,7 +28,7 @@ export const STATS_SKELETON_2: enemyBaseStats = {
 };
 
 export const STATS_SKELETON_3: enemyBaseStats = {
-  img: "/src/assets/enemy/skeleton_3.png",
+  img: "/assets/enemy/skeleton_3.png",
   name: "Скелет-дробитель",
   power: 150,
   agility: 50,
@@ -41,7 +41,7 @@ export const STATS_SKELETON_3: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_SKELETON_4: enemyBaseStats = {
-  img: "/src/assets/enemy/skeleton_4.png",
+  img: "/assets/enemy/skeleton_4.png",
   name: "Мертвый адмирал",
   power: 160,
   agility: 65,
@@ -54,7 +54,7 @@ export const STATS_SKELETON_4: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_SKELETON_5: enemyBaseStats = {
-  img: "/src/assets/enemy/skeleton_5.png",
+  img: "/assets/enemy/skeleton_5.png",
   name: "Рыцарь смерти",
   power: 175,
   agility: 50,

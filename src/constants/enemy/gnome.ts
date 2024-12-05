@@ -1,7 +1,7 @@
 import { enemyBaseStats } from "@/types/enemy.types";
 
 export const STATS_GNOME: enemyBaseStats = {
-  img: "/src/assets/enemy/gnome.png",
+  img: "/assets/enemy/gnome.png",
   name: "Гном-охранник",
   power: 85,
   agility: 85,
@@ -14,7 +14,7 @@ export const STATS_GNOME: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GNOME_2: enemyBaseStats = {
-  img: "/src/assets/enemy/gnome_2.png",
+  img: "/assets/enemy/gnome_2.png",
   name: "Гном-воитель",
   power: 70,
   agility: 105,
@@ -27,7 +27,7 @@ export const STATS_GNOME_2: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GNOME_3: enemyBaseStats = {
-  img: "/src/assets/enemy/gnome_3.png",
+  img: "/assets/enemy/gnome_3.png",
   name: "Боевой гном",
   power: 125,
   agility: 55,
@@ -40,7 +40,7 @@ export const STATS_GNOME_3: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GNOME_4: enemyBaseStats = {
-  img: "/src/assets/enemy/gnome_4.png",
+  img: "/assets/enemy/gnome_4.png",
   name: "Гном-убийца",
   power: 100,
   agility: 65,
@@ -53,7 +53,7 @@ export const STATS_GNOME_4: enemyBaseStats = {
   powerSkill: 0,
 };
 export const STATS_GNOME_5: enemyBaseStats = {
-  img: "/src/assets/enemy/gnome_5.png",
+  img: "/assets/enemy/gnome_5.png",
   name: "Пещерный ужас",
   power: 125,
   agility: 40,
