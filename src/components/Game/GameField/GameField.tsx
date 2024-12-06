@@ -41,9 +41,9 @@ const TabsBtns: ITabsBtn[] = [
   {
     label: "Maгазин",
   },
-  {
-    label: "Test",
-  },
+  // {
+  //   label: "Test",
+  // },
 ];
 
 export type TabsWithFight = TabsField | "Локация" | "Бой" | "Гробница";
@@ -78,7 +78,7 @@ const Tabs = () => {
       {tab === "Таланты" && <TalentField />}
       {tab === "Навыки" && <SkillField />}
       {tab === "Maгазин" && <ShopField />}
-      {tab === "Test" && <TestField />}
+      {/* {tab === "Test" && <TestField />} */}
       {tab === "Бой" && <FightField onSetTab={onSetTab} />}
       {tab === "Локация" && <LocationField onSetTab={onSetTab} />}
       {tab === "Гробница" && <TombField onSetTab={onSetTab} />}

@@ -41,9 +41,9 @@ function App() {
       <DoorLayout>
         <Header />
         <motion.div
-          // initial={{ opacity: 0 }}
-          // animate={{ opacity: 1 }}
-          // transition={{ duration: 0.8, delay: 2.7 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 2.7 }}
           className="container"
         >
           {hero ? <GameArea hero={hero} /> : <HeroList heroes={ALL_HEROES} chooseHero={chooseHero} />}
