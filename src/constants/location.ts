@@ -30,7 +30,7 @@ export const LOCATIONS: locationItem[] = [
   {
     name: "snowMountains",
     label: "Заснеженные Горы",
-    reqLevel: 36,
+    reqLevel: 999,
     img: "/assets/location/snow_mountains.png",
   },
 ];
