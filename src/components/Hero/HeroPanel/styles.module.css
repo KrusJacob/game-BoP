@@ -1,0 +1,56 @@
+.heroPanel {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    gap: 16px;
+    width: 100%;
+    border-top: 3px solid #3e6565;
+    /* overflow: hidden; */
+}
+.heroSkills {
+    display: flex;
+    position: relative;
+    gap: 8px;
+}
+.heroSkill {
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+.skillCost {
+    position: absolute;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #e6d224;
+    width: 100%;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.heroSkill:hover {
+    box-shadow: 0 0 10px 5px black;
+    transform: scale(0.97);
+}
+.heroSkill:disabled {
+    opacity: inherit;
+    opacity: 0.5;
+}
+
+.heroSkills img {
+    width: 100%;
+}
+
+.heroBag {
+    display: flex;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.heroBag img {
+    height: 100%;
+    width: 100%;
+}

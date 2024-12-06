@@ -1,0 +1,34 @@
+.button {
+    border-radius: var(--borderRadius);
+    border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.button:hover:not([disabled]) {
+    border-color: #646cff;
+    background-color: #5fcdd9;
+}
+.button:focus,
+/* .button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+} */
+.button:disabled:active {
+    box-shadow: none;
+}
+.button:active {
+    box-shadow: inset 0 0 5px 4px #fff;
+}
+
+.small {
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+}
+
+.big {
+    padding: 0.7rem 1.4rem;
+    font-size: 1.4rem;
+}

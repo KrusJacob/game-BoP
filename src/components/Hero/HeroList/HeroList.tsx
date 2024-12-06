@@ -1,12 +1,12 @@
-import { heroType } from "@/types/hero.types";
+import { IHero, heroName } from "@/types/hero.types";
 
 import HeroCard from "../HeroCard/HeroCard";
 import styles from "./heroList.module.css";
-import { HeroClass } from "@/constants/fn";
+import { HeroClass } from "@/constants/class";
 
 interface Props {
-  heroes: readonly heroType[];
-  chooseHero: (hero: heroType) => void;
+  heroes: readonly heroName[];
+  chooseHero: (hero: IHero) => void;
 }
 
 const HeroList = ({ heroes, chooseHero }: Props) => {

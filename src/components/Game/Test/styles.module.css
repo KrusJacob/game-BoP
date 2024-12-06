@@ -1,0 +1,18 @@
+.testField {
+    background-color: rgb(12, 31, 31);
+    width: 100%;
+    height: 100%;
+    border-radius: var(--borderRadius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    gap: 18px;
+}
+
+.enemies {
+    display: grid;
+    grid-template-columns: 2;
+    gap: 4px;
+}

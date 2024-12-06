@@ -1,73 +1,60 @@
-import { IHero, heroBaseStats, heroBuffs, heroGoAttack, heroType } from "../types/hero.types";
-import { STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER } from "./hero";
+import { IEnemy } from "@/types/enemy.types";
+import { IHero } from "../types/hero.types";
 
-export class HeroClass implements IHero {
-  constructor(type: heroType) {
-    this.type = type;
-    this.baseStats = getStatsToHero(type);
-    this.HP = this.baseStats.maxHp;
-    this.buffs = {
-      damage: 0,
-      def: 0,
-      incDamage: incHeroDamage,
-      incDef: incHeroDef,
-      getBuffDamage: getBuffDamage,
-      getBuffDef: getBuffDef,
-    };
-    this.attack = goAttack;
-  }
-  HP: number;
-  readonly type: heroType;
-  baseStats: heroBaseStats;
-  buffs: heroBuffs;
-  attack: heroGoAttack;
-}
-
-function getStatsToHero(type: heroType): heroBaseStats {
-  switch (type) {
-    case "boxer":
-      return STATS_BOXER;
-    case "programmer":
-      return STATS_PROGRAMMER;
-    case "cook":
-      return STATS_COOK;
-    case "hairdresser":
-      return STATS_HAIRDRESSER;
-    default:
-      return STATS_BOXER;
-  }
-}
-
-function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
+export function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
   if (!duration) {
-    this.damage += value;
+    this._damage += value;
   } else {
-    this.damage += value;
+    this._damage += value;
     setTimeout(() => {
-      this.damage -= value;
-    }, duration);
+      this._damage -= value;
+    }, duration * 1000);
   }
 }
-function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
+export function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
   if (!duration) {
-    this.def += value;
+    this._def += value;
   } else {
-    this.def += value;
+    this._def += value;
     setTimeout(() => {
-      this.def -= value;
-    }, duration);
+      this._def -= value;
+    }, duration * 1000);
   }
 }
-function getBuffDamage(this: IHero["buffs"]) {
-  return this.damage / 100 + 1;
+export function incHeroAttackSpeed(this: IHero["buffs"], value: number, durationSec?: number) {
+  if (!durationSec) {
+    this._attackSpeed += value;
+  } else {
+    this._attackSpeed += value;
+    setTimeout(() => {
+      this._attackSpeed -= value;
+    }, durationSec * 1000);
+  }
 }
-function getBuffDef(this: IHero["buffs"]) {
-  return (100 - this.def) / 100;
+export function getBuffDamage(this: IHero["buffs"]) {
+  return this._damage / 100 + 1;
+}
+export function getBuffDef(this: IHero["buffs"]) {
+  return (100 - this._def) / 100;
+}
+export function getBuffAttackSpeed(this: IHero["buffs"]) {
+  return this._attackSpeed / 100 + 1;
 }
 
-function goAttack(this: IHero, target: IHero) {
-  const calcAttack = this.baseStats.attack * this.buffs.getBuffDamage();
-  const result = calcAttack * target.buffs.getBuffDef();
-  target.HP -= result;
-  console.log(target.type, `урон: ${result}, осталось: ${target.baseStats.maxHp}`);
+export function getBarrier(this: IHero | IEnemy, value: number) {
+  console.log("getBarrier");
+  const barrierValue = Math.min(value, this.getters.getMaxHp() - this.barrier);
+  this.barrier += barrierValue;
+
+  if (this.barrier < 0) {
+    this.barrier = 0;
+  }
+  this.update();
+}
+
+export function getHeal(this: IHero | IEnemy, value: number) {
+  if (!this.status.death) {
+    this.HP += Math.min(this.getters.getMaxHp() - this.HP, value);
+    this.update();
+  }
 }

@@ -1,0 +1,121 @@
+.wrapper {
+    width: 100%;
+    background-color: #242424;
+    height: 34px;
+    border-radius: var(--borderRadius);
+    display: grid;
+    grid-template-columns: 1fr 0.3fr 1fr;
+}
+
+.wrapper span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.full_HPBar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--borderRadius);
+    /* background-color: black; */
+    background: linear-gradient(180deg, rgb(85, 7, 7) 25%, rgb(14, 13, 13) 85%);
+}
+.full_HPBar::after {
+    bottom: 0;
+    top: 0;
+    content: "";
+    height: 175%;
+    /* width: 100%; */
+    z-index: 0;
+    position: relative;
+    display: block;
+    background: linear-gradient(115deg, transparent 94.5%, #242424 95%);
+    margin-top: -60px;
+}
+.enemy .full_HPBar::after {
+    background: linear-gradient(65deg, #242424 5%, transparent 5.5%);
+    /* transform: scale(-1, 1); */
+}
+
+.HPBar {
+    /* background-color: #04bf9d; */
+    background: rgb(248, 222, 202);
+    background: linear-gradient(180deg, rgba(248, 222, 202, 1) 0%, rgba(175, 32, 23, 1) 80%);
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+    transition: all 0.3s;
+}
+.barrierBar {
+    width: 0%;
+    height: 120%;
+    position: absolute;
+    top: -10%;
+    border-radius: inherit;
+    transition: all 0.3s;
+
+    background: linear-gradient(-180deg, rgb(182, 205, 253, 0.2) 0%, rgb(40, 66, 184, 0.5) 80%);
+}
+
+.enemy .HPBar {
+    margin-left: auto;
+}
+
+.textBar {
+    z-index: 100;
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    left: 10px;
+    font-size: 1.2rem;
+}
+
+.enemy .textBar {
+    left: auto;
+    right: 10px;
+}
+
+.energyWrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+    align-items: center;
+}
+.energyWrapper span {
+    font-size: 0.8rem;
+    color: #e6d224;
+}
+.full_energyBar {
+    width: 75%;
+    border: 1px solid #e6d224;
+    border-radius: 4px;
+    height: 12px;
+    overflow: hidden;
+    mask-image: linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
+        linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
+        linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
+        linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
+        linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%);
+    mask-size: 20% 100%;
+    mask-position:
+        0 0,
+        25% 0,
+        50% 0,
+        75% 0,
+        100% 0;
+    mask-repeat: no-repeat;
+}
+.energyBar {
+    /* position: absolute; */
+    transition: all 0.3s;
+    width: 0%;
+    height: 100%;
+    background-color: orange;
+}
+
+.enemy .energyWrapper {
+    justify-content: end;
+}
