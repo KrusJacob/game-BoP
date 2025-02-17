@@ -10,7 +10,7 @@ import { getUpgradeSkills, registerAllSkills } from "./constants/skill/heroes";
 import { useSkillUpgradeStore } from "./store/skillUpgradeStore";
 import { useSkillTextStore } from "./store/skillTextStore";
 import { useBattleTextStore } from "./store/battleTextStore";
-import { battleText, skillText } from "./constants/text";
+import { battleText } from "./constants/text";
 
 function App() {
   const hero = useGameStore((state) => state.hero);

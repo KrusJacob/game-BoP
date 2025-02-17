@@ -4,7 +4,7 @@
     max-width: 270px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
 }
 
 .image {
@@ -21,13 +21,18 @@
 .statusBar {
     border-radius: var(--borderRadius);
     display: flex;
-    padding: 4px 4px 0 4px;
-    gap: 8px;
+    margin: 4px;
+    /* gap: 8px; */
     position: absolute;
     left: 3px;
     top: 3px;
     font-size: 1.3rem;
-    background-color: #1f1d1d75;
+    background-color: rgba(31, 29, 29, 0.6);
+}
+
+.statusBarItem {
+    padding: 4px;
+    padding-bottom: 0;
 }
 
 .statusBar .stack {
@@ -54,17 +59,23 @@
     right: 0;
     bottom: 0;
 }
+.statList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.stat {
+    background-color: rgba(17, 21, 68, 0.5);
+    padding: 1px 0;
 
-.stats {
-    margin-top: 4px;
     display: flex;
     font-size: 1.2rem;
+    justify-content: center;
     align-items: center;
-    gap: 6px;
-    margin: 8px 0 8px 0;
+    gap: 8px;
     cursor: default;
 }
-.stats span {
+.stat span {
     font-size: 1rem;
 }
 
@@ -75,7 +86,6 @@
     justify-content: center;
     gap: 4px;
     padding: 4px;
-    margin: 10px 0 0 0;
 }
 .skillItem {
     width: 60px;
@@ -118,6 +128,9 @@
     bottom: 0;
     z-index: 100;
 }
+.textBattle.isEnemy {
+    left: 0;
+}
 
 .textBattle p {
     width: max-content;
@@ -130,6 +143,9 @@
     padding: 6px;
     color: gold;
     animation: showText 3s forwards;
+}
+.textBattle.isEnemy p {
+    left: 4px;
 }
 
 @keyframes showText {

@@ -17,20 +17,20 @@ export function goMagicalDamage(hero: IHero | IEnemy, target: IHero | IEnemy, da
 
 export function goPureDamage(hero: IHero | IEnemy, target: IHero | IEnemy, damage: number) {
   const pureDamage = applyPowerSkill(damage, hero.getters.getPowerSkill());
-  goDamage(hero, target, pureDamageAction(pureDamage));
+  return goDamage(hero, target, pureDamageAction(pureDamage));
 }
 
 export function goPhysicalDamage(hero: IHero | IEnemy, target: IHero | IEnemy, damage: number) {
   goDamage(hero, target, physicalDamageAction(damage));
 }
 
-export function healHeroOfSkill(hero: IHero, healValue = 0, healPercent = 0, isPowerSkill = true) {
+export function healHeroOfSkill(hero: IHero | IEnemy, healValue = 0, healPercent = 0, isPowerSkill = true) {
   let heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
   if (isPowerSkill) {
     heal = applyPowerSkill(heal, hero.getters.getPowerSkill());
   }
-  console.log(heal);
   hero.getHeal(heal);
+  console.log(hero.getHeal(heal), "- heal", hero.type);
 }
 
 export function getLockSkill(): enemySkills {

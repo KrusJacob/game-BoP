@@ -7,6 +7,7 @@ import HeroStat from "./HeroStat";
 import { useGameStore } from "@/store/gameStore";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
+import styles from "./hero.module.css";
 
 const HeroStatList = ({ hero }: { hero: IHero | IEnemy }) => {
   const maxHp = useGameStore((state) => state[hero.type]?.getters.getMaxHp());
@@ -20,7 +21,7 @@ const HeroStatList = ({ hero }: { hero: IHero | IEnemy }) => {
   const powerSkill = useGameStore((state) => state[hero.type]?.getters.getPowerSkill());
 
   return (
-    <ul>
+    <ul className={styles.statList}>
       <HeroStat Icon={FaHeart} value={maxHp || hero.getters.getMaxHp()}>
         Здоровье
       </HeroStat>

@@ -30,6 +30,8 @@ import {
   getSkillsToHero,
   getIncStatsToHero,
   getBuffsToHero,
+  getStatusToHero,
+  getStatisticsToHero,
 } from "./initStats";
 import { updateMainStats } from "./attributes";
 import { ACTIVE_BAG_PANEL, ALL_BAG_ITEMS } from "./bag";
@@ -82,21 +84,9 @@ export class EnemyClass implements IEnemy {
   getHeal = getHeal;
   skills: enemySkills[];
   resources: enemyResources;
-  status = {
-    death: false,
-    stun: {
-      isStun: false,
-      isCooldown: false,
-    },
-    isFreeze: false,
-    isPoisoned: false,
-    isBleeded: false,
-    virus: {
-      isVirus: false,
-      stack: 0,
-    },
-  };
+  status = getStatusToHero();
   update = () => {};
+  pushSkillText = () => {};
   getters: enemyGetters;
   setters: enemySetters;
 }
@@ -138,22 +128,12 @@ export class HeroClass implements IHero {
   getBarrier = getBarrier;
   getHeal = getHeal;
   skills: heroSkills[];
-  statistics = {
-    kills: {},
-    tombProgress: {
-      beast: 0,
-      rogue: 0,
-      goblin: 0,
-      gnome: 0,
-      naga: 0,
-      skeleton: 0,
-    },
-  };
+  statistics = getStatisticsToHero();
   resources = {
     drop: {
-      fangsBeast: 30,
-      rogueItem: 30,
-      goblinItem: 30,
+      fangsBeast: 0,
+      rogueItem: 0,
+      goblinItem: 0,
       gnomeItem: 0,
       gillsNaga: 0,
     },
@@ -167,20 +147,7 @@ export class HeroClass implements IHero {
     exp: 0,
     gold: 0,
   };
-  status = {
-    death: false,
-    stun: {
-      isStun: false,
-      isCooldown: false,
-    },
-    isFreeze: false,
-    isPoisoned: false,
-    isBleeded: false,
-    virus: {
-      isVirus: false,
-      stack: 0,
-    },
-  };
+  status = getStatusToHero();
   update = () => {};
   pushSkillText = () => {};
 

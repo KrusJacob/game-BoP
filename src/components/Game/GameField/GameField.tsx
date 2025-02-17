@@ -64,6 +64,7 @@ const Tabs = () => {
       <div className={styles.tabs}>
         {TabsBtns.map((btn) => (
           <Button
+            className={tab === btn.label ? styles.active : ""}
             disabled={tab === "Бой" || tab === "Локация"}
             onClick={() => onChangeTab(btn.label)}
             key={btn.label}
@@ -78,7 +79,7 @@ const Tabs = () => {
       {tab === "Таланты" && <TalentField />}
       {tab === "Навыки" && <SkillField />}
       {tab === "Maгазин" && <ShopField />}
-      {/* {tab === "Test" && <TestField />} */}
+      {tab === "Test" && <TestField />}
       {tab === "Бой" && <FightField onSetTab={onSetTab} />}
       {tab === "Локация" && <LocationField onSetTab={onSetTab} />}
       {tab === "Гробница" && <TombField onSetTab={onSetTab} />}

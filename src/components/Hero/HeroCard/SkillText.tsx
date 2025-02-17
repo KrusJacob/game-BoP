@@ -1,13 +1,40 @@
 import { useEffect, useState } from "react";
+import cn from "classnames";
 import styles from "./hero.module.css";
-import { useSkillTextStore } from "@/store/skillTextStore";
+import { ISkillText, useSkillTextStore } from "@/store/skillTextStore";
+import { heroType } from "@/types/hero.types";
 
-const SkillText = () => {
-  //   const { battleText, removeSkill } = useSkill();
-  const { skillText, removeSkill } = useSkillTextStore();
+const SkillText = ({ type }: { type: heroType }) => {
+  if (type === "hero") {
+    const skillText = useSkillTextStore((store) => store.skillText);
+    const removeSkill = useSkillTextStore((store) => store.removeSkill);
+
+    return <TextBattleList list={skillText} removeSkill={removeSkill} />;
+  }
+  if (type === "enemy") {
+    const skillText = useSkillTextStore((store) => store.enemySkillText);
+    const removeSkill = useSkillTextStore((store) => store.removeEnemySkill);
+
+    return <TextBattleList list={skillText} removeSkill={removeSkill} isEnemy />;
+  }
+};
+
+const TextBattleList = ({
+  list,
+  removeSkill,
+  isEnemy = false,
+}: {
+  list: ISkillText[];
+  removeSkill: (i: number) => void;
+  isEnemy?: boolean;
+}) => {
   return (
-    <div className={styles.textBattle}>
-      {skillText.map((item, i) => (
+    <div
+      className={cn(styles.textBattle, {
+        [styles.isEnemy]: isEnemy,
+      })}
+    >
+      {list.map((item, i) => (
         <TextBattleItem text={item.text} key={i} onRemove={() => removeSkill(i)} />
       ))}
     </div>

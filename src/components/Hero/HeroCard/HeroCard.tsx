@@ -17,12 +17,6 @@ interface Props {
   chooseHero?: (hero: IHero) => void;
 }
 
-function getImgUrl(name: string) {
-  return new URL(`${name}`, import.meta.url).href;
-}
-
-//https://www.pngitem.com/pimgs/m/240-2409533_hero-silhouette-free-png-transparent-png.png
-
 const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
   const exp = useGameStore((state) => state.hero?.level.exp);
 
@@ -31,7 +25,7 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
   return (
     <div className={styles.card}>
       <div className={styles.image}>
-        {hero.type === "hero" && <SkillText />}
+        <SkillText type={hero.type} />
         <HeroStatusBar type={hero instanceof HeroClass ? "hero" : "enemy"} />
         <img src={hero.baseStats.img} alt={hero.name} />
         <div className={styles.name}>{hero.baseStats.name}</div>
@@ -43,10 +37,10 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
           </div>
         )}
       </div>
-      <div>
-        <SkillList skills={hero.skills} />
-        <HeroStatList hero={hero} />
-      </div>
+
+      <SkillList skills={hero.skills} />
+      <HeroStatList hero={hero} />
+
       {chooseHero && hero instanceof HeroClass && <Button onClick={() => chooseHero(hero)}>Выбрать</Button>}
     </div>
   );
