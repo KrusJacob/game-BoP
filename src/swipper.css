@@ -1,0 +1,14 @@
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
+.swiper-button-prev {
+    transform: translateY(50px);
+    left: 0;
+    color: #07cf93;
+}
+.swiper-button-next {
+    transform: translateY(50px);
+    right: 0;
+    color: #07cf93;
+}

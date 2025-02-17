@@ -12,10 +12,6 @@
     border-color: #646cff;
     background-color: #5fcdd9;
 }
-.button:focus,
-/* .button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-} */
 .button:disabled:active {
     box-shadow: none;
 }
@@ -31,4 +27,7 @@
 .big {
     padding: 0.7rem 1.4rem;
     font-size: 1.4rem;
+}
+.button.active {
+    background-color: #62a4be;
 }
