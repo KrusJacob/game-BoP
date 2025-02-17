@@ -29,7 +29,7 @@ export const LOCATIONS: locationItem[] = [
   },
   {
     name: "snowMountains",
-    label: "Заснеженные Горы",
+    label: "Заснеженные Горы (в разработке)",
     reqLevel: 999,
     img: "/assets/location/snow_mountains.png",
   },

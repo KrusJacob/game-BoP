@@ -1,7 +1,5 @@
 .wrapper {
     width: 100%;
-    background-color: #242424;
-    height: 34px;
     border-radius: var(--borderRadius);
     display: grid;
     grid-template-columns: 1fr 0.3fr 1fr;
@@ -15,28 +13,12 @@
 }
 
 .full_HPBar {
+    border: 0.5px solid #af2017;
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 35px;
     border-radius: var(--borderRadius);
-    /* background-color: black; */
     background: linear-gradient(180deg, rgb(85, 7, 7) 25%, rgb(14, 13, 13) 85%);
-}
-.full_HPBar::after {
-    bottom: 0;
-    top: 0;
-    content: "";
-    height: 175%;
-    /* width: 100%; */
-    z-index: 0;
-    position: relative;
-    display: block;
-    background: linear-gradient(115deg, transparent 94.5%, #242424 95%);
-    margin-top: -60px;
-}
-.enemy .full_HPBar::after {
-    background: linear-gradient(65deg, #242424 5%, transparent 5.5%);
-    /* transform: scale(-1, 1); */
 }
 
 .HPBar {
@@ -94,7 +76,7 @@
     border-radius: 4px;
     height: 12px;
     overflow: hidden;
-    mask-image: linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
+    /* mask-image: linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
         linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
         linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
         linear-gradient(45deg, transparent 0%, #000 35%, #000 65%, transparent 100%),
@@ -106,7 +88,8 @@
         50% 0,
         75% 0,
         100% 0;
-    mask-repeat: no-repeat;
+    mask-repeat: no-repeat; */
+    background: white;
 }
 .energyBar {
     /* position: absolute; */

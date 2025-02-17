@@ -1,5 +1,6 @@
 import { IEnemy } from "@/types/enemy.types";
 import { IHero } from "../types/hero.types";
+import { getPercent } from "@/utils/getPercent";
 
 export function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
   if (!duration) {
@@ -53,8 +54,20 @@ export function getBarrier(this: IHero | IEnemy, value: number) {
 }
 
 export function getHeal(this: IHero | IEnemy, value: number) {
+  let healValue = value;
   if (!this.status.death) {
-    this.HP += Math.min(this.getters.getMaxHp() - this.HP, value);
+    healValue = Math.min(this.getters.getMaxHp() - this.HP, value);
+    if (this.status.severeWound.isSevereWound) {
+      healValue = reducingHeal(healValue, this.status.severeWound.value);
+    }
+    this.HP += healValue;
     this.update();
   }
+  return healValue;
+}
+
+function reducingHeal(healValue: number, modifierValue: number) {
+  const reducedHeal = getPercent(healValue, modifierValue);
+
+  return reducedHeal;
 }

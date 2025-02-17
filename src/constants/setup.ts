@@ -13,6 +13,14 @@ export const START_HERO_LEVEL = 1;
 export const START_GOLD_HERO = 0;
 export const START_SKILLPOINT = 0;
 export const START_PARAMETERPOINT = 0;
+export const START_STATISTICS = {
+  beast: 100,
+  rogue: 100,
+  goblin: 100,
+  gnome: 100,
+  naga: 100,
+  skeleton: 100,
+};
 
 // HERO MAIN STATS
 export const MAX_HP_FROM_1_POWER = 10;

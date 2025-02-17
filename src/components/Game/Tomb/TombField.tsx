@@ -8,9 +8,11 @@ import { TabsWithFight } from "../GameField/GameField";
 import Button from "@/components/UI/Button/Button";
 import { useState } from "react";
 import { clearEnemySkills, registerAllEnemySkills } from "@/constants/skill/enemy";
+import { useSkillTextStore } from "@/store/skillTextStore";
 
 const TombField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const { setEnemy, hero, enemy } = useGameStore((state) => state);
+  const addSkill = useSkillTextStore((state) => state.addEnemySkill);
   const [tombEnemy, setTombEnemy] = useState<enemyToTomb>({} as enemyToTomb);
 
   if (!hero) {
@@ -28,6 +30,9 @@ const TombField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
     if (enemy) {
       enemy.update = function () {
         setEnemy(this);
+      };
+      enemy.pushSkillText = function (text: string) {
+        addSkill(text);
       };
       clearEnemySkills();
       registerAllEnemySkills(enemy.skills);

@@ -1,5 +1,5 @@
 import { enemyName, enemyBaseStats } from "@/types/enemy.types";
-import { heroName, heroBaseStats, heroIncStats, heroBuffs } from "@/types/hero.types";
+import { heroName, heroBaseStats, heroIncStats, heroBuffs, heroStatus, heroStatistics } from "@/types/hero.types";
 
 import { STATS_BOXER, STATS_PROGRAMMER, STATS_COOK, STATS_HAIRDRESSER } from "./hero";
 import {
@@ -25,6 +25,7 @@ import {
   incHeroDamage,
   incHeroDef,
 } from "./fn";
+import { START_STATISTICS } from "./setup";
 
 export function getStatsToEnemy(type: enemyName): enemyBaseStats {
   switch (type) {
@@ -289,5 +290,40 @@ export function getIncStatsToHero(): heroIncStats {
     attackSpeedFromAgility: 0,
     powerSkillFromIntellect: 0,
     ignoreDef: 0,
+  };
+}
+
+export function getStatusToHero(): heroStatus {
+  return {
+    death: false,
+    stun: {
+      isStun: false,
+      isCooldown: false,
+    },
+    isFreeze: false,
+    isPoisoned: false,
+    isBleeded: false,
+    virus: {
+      isVirus: false,
+      stack: 0,
+    },
+    severeWound: {
+      isSevereWound: false,
+      value: 0,
+    },
+  };
+}
+
+export function getStatisticsToHero(): heroStatistics {
+  return {
+    kills: {},
+    tombProgress: {
+      beast: START_STATISTICS.beast,
+      rogue: START_STATISTICS.rogue,
+      goblin: START_STATISTICS.goblin,
+      gnome: START_STATISTICS.gnome,
+      naga: START_STATISTICS.naga,
+      skeleton: START_STATISTICS.skeleton,
+    },
   };
 }

@@ -15,3 +15,6 @@
     gap: 4px;
     overflow-x: auto;
 }
+.active {
+    background-color: #5fcdd9;
+}

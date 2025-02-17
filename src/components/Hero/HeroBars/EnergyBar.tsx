@@ -6,7 +6,7 @@ import { TbHexagonLetterE } from "react-icons/tb";
 import { heroEnergy } from "@/types/hero.types";
 
 const EnergyBar = () => {
-  const { enemy } = useGameStore((state) => state);
+  const enemy = useGameStore((state) => state.enemy);
   const value = useGameStore((state) => state.hero!.energy.value);
   const max = useGameStore((state) => state.hero!.energy.max);
 

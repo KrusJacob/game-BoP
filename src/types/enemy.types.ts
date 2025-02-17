@@ -32,8 +32,9 @@ export interface IEnemy {
   resources: enemyResources;
   status: enemyStatus;
   getBarrier: (this: IHero | IEnemy, value: number) => void;
-  getHeal: (this: IHero | IEnemy, value: number) => void;
+  getHeal: (this: IHero | IEnemy, value: number) => number;
   update: Function;
+  pushSkillText: Function;
   getters: enemyGetters;
   setters: enemySetters;
 }
@@ -49,7 +50,7 @@ export interface enemyDrop {
   type: enemyTypeDrop;
   value: number[];
 }
-export type enemyType = "beast" | "rogue" | "goblin" | "gnome" | "naga";
+export type enemyType = "beast" | "rogue" | "goblin" | "gnome" | "naga" | "skeleton";
 export type enemyTombName = Extract<
   enemyName,
   "beast_5" | "rogue_5" | "goblin_5" | "gnome_5" | "naga_5" | "skeleton_5"

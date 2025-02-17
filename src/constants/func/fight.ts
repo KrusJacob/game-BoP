@@ -15,6 +15,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
   goSkillTrigger("inBeginFight", hero, enemy);
   attackHero();
   attackEnemy();
+
   function attackHero() {
     setTimeout(() => {
       if (enemy.status.death) {
@@ -36,7 +37,9 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
             return;
           }
           attackHero();
-          !attackInfo.isStunned && goSkillTrigger("afterInitiatorAttack", hero, enemy);
+          if (!attackInfo.isStunned && !attackInfo.isMiss) {
+            goSkillTrigger("afterInitiatorAttack", hero, enemy);
+          }
         }
       }
     }, 1000 / hero.getters.getAttackSpeed());
@@ -54,9 +57,9 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
           attackInfo.isCritical && goSkillTrigger("afterTargetCrit", hero, enemy);
           attackInfo.isMiss && goSkillTrigger("afterTargetMiss", hero, enemy);
           attackEnemy();
-          if (!attackInfo.isStunned) {
-            goSkillTrigger("afterTargetAttack", hero, enemy);
+          if (!attackInfo.isStunned && !attackInfo.isMiss) {
             goSkillTrigger("afterInitiatorAttack", enemy, hero);
+            goSkillTrigger("afterTargetAttack", hero, enemy);
           }
         }
       }
@@ -104,9 +107,6 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     attackInfo.isCritical = true;
     attackInfo.damage.value = goCriticalDamage(attackInfo.damage.value);
   }
-  // attackInfo.damage.value = Math.floor(attackInfo.damage.value * target.buffs.getBuffDef());
-  // attackInfo.damage.value = getDamageWithDef(this, attackInfo.damage.value, target.getters.getDef(), options);
-  // attackInfo.damage.value = getDamageWithReduction(target, attackInfo.damage.value);
 
   attackInfo.damage.value = goDamage(this, target, attackInfo.damage, options);
   getEnergy(this);
@@ -205,9 +205,7 @@ function getDamageWithBuffs(attacker: IHero | IEnemy) {
 }
 
 function getDamageWithMagicDef(damage: number, magicDef: number, hero?: IHero | IEnemy, options?: attackOptions) {
-  const res = Math.floor(getPercent(damage, 100 - magicDef));
-
-  return res;
+  return getPercent(damage, 100 - magicDef);
 }
 
 function getDamageWithDef(hero: IHero | IEnemy, damage: number, def: number, options?: attackOptions) {
@@ -276,17 +274,6 @@ function createTimeoutFreeze() {
     }, duration * 1000);
   };
 }
-
-// function getStatus(type: "posion" | "bleed") {
-//   switch (type) {
-//     case "posion":
-//       return "isPoisoned";
-//     case "bleed":
-//       return "isBleeded";
-//     default:
-//       return "IsOther";
-//   }
-// }
 
 function createTimeoutDot(type: "posion" | "bleed") {
   const statusType = type === "posion" ? "isPoisoned" : "isBleeded";
