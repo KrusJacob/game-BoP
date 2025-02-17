@@ -18,16 +18,18 @@ export interface IHero {
   resources: heroResources;
   status: heroStatus;
   getBarrier: (this: IHero | IEnemy, value: number) => void;
-  getHeal: (this: IHero | IEnemy, value: number) => void;
+  getHeal: (this: IHero | IEnemy, value: number) => number;
   update: Function;
   pushSkillText: Function;
   getters: heroGetters;
   setters: heroSetters;
   boost: heroBoost;
-  statistics: {
-    kills: killStatistics;
-    tombProgress: tombProgress;
-  };
+  statistics: heroStatistics;
+}
+
+export interface heroStatistics {
+  kills: killStatistics;
+  tombProgress: tombProgress;
 }
 
 export type tombProgress = Record<enemyType, number>;
@@ -57,6 +59,10 @@ export interface heroStatus {
   virus: {
     isVirus: boolean;
     stack: number;
+  };
+  severeWound: {
+    isSevereWound: boolean;
+    value: number;
   };
 }
 

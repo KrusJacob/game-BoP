@@ -1,4 +1,4 @@
-import { goPosionDmg } from "@/constants/func/fight";
+import { goFreeze, goPosionDmg } from "@/constants/func/fight";
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
@@ -36,7 +36,7 @@ const SKILLS_COOK: heroSkills[] = [
   {
     label: "Сиропчик",
     descr: function () {
-      return `После любого действия противника есть ${this.data.chance}% - шанс восстановить часть здоровья. Перезарядка: ${this.data.cooldownCount} с.`;
+      return `После атаки противника есть ${this.data.chance}% - шанс восстановить часть здоровья. Перезарядка: ${this.data.cooldownCount} с.`;
     },
     img: "/assets/skill/skill_cook_2.png",
     data: {
@@ -86,6 +86,10 @@ const SKILLS_COOK: heroSkills[] = [
         isOpen: false,
         modifierOfIntellect: 0,
       },
+      intellect_4_1: {
+        isOpen: false,
+        modifierOfFreeze: 0,
+      },
     },
     trigger: "afterInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
@@ -111,6 +115,10 @@ const SKILLS_COOK: heroSkills[] = [
           console.log(poisinValue);
         }
         goPosionDmg(hero, target, poisinValue, data.duration);
+
+        if (data.intellect_4_1.isOpen) {
+          goFreeze(target, data.intellect_4_1.modifierOfFreeze, data.duration);
+        }
       }
     },
   },

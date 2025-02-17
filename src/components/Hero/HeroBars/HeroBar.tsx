@@ -16,8 +16,8 @@ const HeroBar = () => {
   const heroHP = useGameStore((state) => state.hero?.HP);
   const heroMaxHP = useGameStore((state) => state.hero?.getters.getMaxHp());
   const heroBarrier = useGameStore((state) => state.hero!.barrier);
-  const heroEnergy = useGameStore((state) => state.hero?.energy.value);
-  const heroMaxEnergy = useGameStore((state) => state.hero?.energy.max);
+  // const heroEnergy = useGameStore((state) => state.hero?.energy.value);
+  // const heroMaxEnergy = useGameStore((state) => state.hero?.energy.max);
 
   // console.log("render HeroBar");
   return (

@@ -14,8 +14,8 @@ import { ATTACK_SPD_FROM_1_AGILITY, MAX_HP_FROM_1_POWER, POWER_SKILL_FROM_1_INTE
 
 // Интеллект
 // + сила умений
-// 1 интеллект = 0.75 сила умений
-// 100 интеллект = 75 сила умений
+// 1 интеллект = 0.5 сила умений
+// 100 интеллект = 50 сила умений
 
 export function updateMainStats(hero: IHero | IEnemy, stat: "power" | "agility" | "intellect" | "all") {
   switch (stat) {

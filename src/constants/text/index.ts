@@ -4,6 +4,6 @@ export const battleText: IBattleText = {
   pushTextBattle: () => {},
 };
 
-export const skillText: ISkillText = {
-  pushSkillText: () => {},
-};
+// export const skillText: ISkillText = {
+//   pushSkillText: () => {},
+// };

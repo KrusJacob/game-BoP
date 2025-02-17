@@ -3,9 +3,9 @@ import styles from "./styles.module.css";
 import { useGameStore } from "@/store/gameStore";
 import { IEnemy } from "@/types/enemy.types";
 import Button from "@/components/UI/Button/Button";
-import { useBattleTextStore } from "@/store/battleTextStore";
-import { IAttackInfo } from "@/types/hero.types";
-import { clearEnemySkills, registerAllEnemySkills, skillEnemyTrigger } from "@/constants/skill/enemy";
+
+import { clearEnemySkills, registerAllEnemySkills } from "@/constants/skill/enemy";
+import { useSkillTextStore } from "@/store/skillTextStore";
 
 interface Props {
   enemies: IEnemy[];
@@ -15,6 +15,7 @@ interface Props {
 
 const FoundEnemies = ({ enemies, disabled, onEnemySelected }: Props) => {
   const { enemy, setEnemy } = useGameStore((state) => state);
+  const addSkill = useSkillTextStore((state) => state.addEnemySkill);
 
   const onSetEnemy = (enemy: IEnemy) => {
     enemy.update = function () {
@@ -23,7 +24,9 @@ const FoundEnemies = ({ enemies, disabled, onEnemySelected }: Props) => {
     clearEnemySkills();
     registerAllEnemySkills(enemy.skills);
     enemy.update();
-    // console.log(skillEnemyTrigger);
+    enemy.pushSkillText = function (text: string) {
+      addSkill(text);
+    };
   };
 
   return (

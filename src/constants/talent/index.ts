@@ -5,6 +5,7 @@ import { IEnemy } from "@/types/enemy.types";
 import { getPercent } from "@/utils/getPercent";
 import { goStun } from "../func/fight";
 import { registerSkill } from "../skill/heroes";
+import { goPureDamage } from "../skill/utils";
 
 export const ALL_TALENTS: talentType[] = [
   {
@@ -39,6 +40,23 @@ export const ALL_TALENTS: talentType[] = [
       hero.setters.incDef(getValue(this));
     },
   },
+  {
+    name: "Магический заслон",
+    img: "/assets/talent/magicDef.png",
+    level: 0,
+
+    descr: function () {
+      const text = getText.call(this, "value");
+      return `Увеличивает магическую защиту героя на ${text}`;
+    },
+    data: {
+      value: [8, 13, 18, 23, 28],
+    },
+    fn(hero: IHero) {
+      hero.setters.incMagicDef(getValue(this));
+    },
+  },
+
   {
     name: "Жизненные ресурсы",
     img: "/assets/talent/maxHp.png",
@@ -180,6 +198,56 @@ export const ALL_TALENTS: talentType[] = [
     },
   },
   {
+    name: "Шипастая броня",
+    img: "/assets/talent/reflect.png",
+    level: 0,
+
+    descr: function () {
+      const value = getText.call(this, "value");
+      const modifierDef = getText.call(this, "modifierDef");
+      return `При получении урона, ноносит надапающему чистый урон: ${value} ед. урона + ${modifierDef}% от вашей защиты`;
+    },
+    data: {
+      value: [8, 12, 16, 20, 24],
+      modifierDef: [20, 25, 30, 35, 40],
+    },
+    trigger: "afterTargetAttack",
+    fn(hero: IHero) {
+      if (this.level === 1) {
+        registerTalent(this, activeTalent, this.trigger!);
+        function activeTalent(this: talentType, hero: IHero, target: IHero | IEnemy) {
+          const value = getText.call(this, "value");
+          const modifierDef = getText.call(this, "modifierDef");
+          const damageValue = value + getPercent(hero.getters.getDef(), modifierDef);
+          console.log(goPureDamage(hero, target, damageValue), "reflect");
+        }
+      }
+    },
+  },
+  {
+    name: "Просветление",
+    img: "/assets/talent/startEnergy.png",
+    level: 0,
+
+    descr: function () {
+      const value = getText.call(this, "value");
+      return `В начале каждого боя вы получаете ${value} энергии`;
+    },
+    data: {
+      value: [15, 20, 25, 30, 35],
+    },
+    trigger: "inBeginFight",
+    fn(hero: IHero) {
+      if (this.level === 1) {
+        registerTalent(this, activeTalent, this.trigger!);
+        function activeTalent(this: talentType, hero: IHero, target: IHero | IEnemy) {
+          const energyValue = getValue(this);
+          hero.energy.value += Math.min(energyValue, hero.energy.max - energyValue);
+        }
+      }
+    },
+  },
+  {
     name: "Оглушающие удары",
     img: "/assets/talent/stun.png",
     level: 0,
@@ -197,13 +265,11 @@ export const ALL_TALENTS: talentType[] = [
       if (this.level === 1) {
         registerTalent(this, activeTalent, this.trigger!);
         function activeTalent(this: talentType, hero: IHero, target: IHero | IEnemy) {
-          const data = this.data;
-          const level = this.level;
           const chance = getRandom(1, 100);
-          console.log(chance, "chance");
-          if (chance <= data.chance[level]) {
+          console.log(chance, "chance", getText.call(this, "chance"));
+          if (chance <= getText.call(this, "chance")) {
             console.log("Оглушен");
-            goStun(target, data.duration[level]);
+            goStun(target, getText.call(this, "duration"));
           }
         }
       }
@@ -230,17 +296,19 @@ export const ALL_TALENTS: talentType[] = [
         registerTalent(this, activeTalent, this.trigger!);
         function activeTalent(this: talentType, hero: IHero, target: IHero | IEnemy) {
           console.log("inBeginFight");
-          const data = this.data;
-          const level = this.level;
+          const healValue = getText.call(this, "healValue");
+          const healPercent = getText.call(this, "healPercent");
+          const cooldown = getText.call(this, "cooldown");
+
           const timeoutId = setInterval(() => {
             if (!target.status.death && !hero.status.death) {
-              const heal = data.healValue[level] + getPercent(hero.getters.getMaxHp(), data.healPercent[level]);
+              const heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
               console.log("heal talent", heal);
               hero.getHeal(heal);
             } else {
               clearInterval(timeoutId);
             }
-          }, data.cooldown[level] * 1000);
+          }, cooldown * 1000);
         }
       }
     },

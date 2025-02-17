@@ -424,8 +424,8 @@ export const upgradeCookSkills: UpgradeSkills = {
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current ? `"Отвар яда" также снижает урон противника на ${text.current}%` : "",
-            next: text.next ? `"Отвар яда" также снижает урон противника на ${text.next}%` : "",
+            current: text.current ? `"Отвар яда" также снижает наносимый урон противника на ${text.current}%` : "",
+            next: text.next ? `"Отвар яда" также снижает наносимый урон противника на ${text.next}%` : "",
           };
         },
         img: "/assets/skill/cook/skillIntellect_2_2.png",
@@ -449,8 +449,12 @@ export const upgradeCookSkills: UpgradeSkills = {
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current ? `"Отвар яда" наносит дополнительный урон: ${text.current}% от интеллекта` : "",
-            next: text.next ? `"Отвар яда" наносит дополнительный урон: ${text.next}% от интеллекта` : "",
+            current: text.current
+              ? `Яд от вашего "Отвар яда" наносит дополнительный урон: ${text.current}% от интеллекта`
+              : "",
+            next: text.next
+              ? `Яд от вашего "Отвар яда" наносит дополнительный урон: ${text.next}% от интеллекта`
+              : "",
           };
         },
         img: "/assets/skill/cook/skillIntellect_3_1.png",
@@ -498,16 +502,51 @@ export const upgradeCookSkills: UpgradeSkills = {
       },
     ],
     level_4: [
+      // {
+      //   name: "Соль на рану",
+      //   descr: function () {
+      //     const text = getText.call(this, "value");
+      //     return {
+      //       current: text.current
+      //         ? `При критическом ударе наносит дополнительный чистый урон: ${text.current}% от интеллекта`
+      //         : "",
+      //       next: text.next
+      //         ? `При критическом ударе наносит дополнительный чистый урон: ${text.next}% от интеллекта`
+      //         : "",
+      //     };
+      //   },
+      //   img: "/assets/skill/cook/skillIntellect_4_1.png",
+      //   maxPoints: 3,
+      //   currentPoint: 0,
+      //   inc: incPoint,
+      //   open: false,
+      //   branch: "intellect",
+      //   data: {
+      //     value: [125, 175, 225],
+      //     modifierDamage: 0,
+      //   },
+      //   fn() {
+      //     this.data.modifierDamage += getValue(this);
+      //     if (this.currentPoint === 1) {
+      //       registerSkill(skill.bind(this), "afterInitiatorCrit");
+
+      //       function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+      //         const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
+      //         goPureDamage(hero, target, damage);
+      //       }
+      //     }
+      //   },
+      // },
       {
-        name: "Соль на рану",
+        name: "Охлажденный напиток",
         descr: function () {
           const text = getText.call(this, "value");
           return {
             current: text.current
-              ? `При критическом ударе наносит дополнительный чистый урон: ${text.current}% от интеллекта`
+              ? `"Отвар яда" накладывает охлаждение на противника, снижая его скорость атаки на ${text.current}%`
               : "",
             next: text.next
-              ? `При критическом ударе наносит дополнительный чистый урон: ${text.next}% от интеллекта`
+              ? `"Отвар яда" накладывает охлаждение на противника, снижая его скорость атаки на ${text.next}%`
               : "",
           };
         },
@@ -518,20 +557,11 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          value: [125, 175, 225],
-          modifierDamage: 0,
+          value: [7, 11, 15],
         },
         fn() {
-          this.data.modifierDamage += getValue(this);
-          if (this.currentPoint === 1) {
-            registerSkill(skill.bind(this), "afterInitiatorCrit");
-
-            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
-              const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
-              goPureDamage(hero, target, damage);
-              // goDamage(hero, target, pureDamageAction(damage));
-            }
-          }
+          SKILLS_COOK[2].data.intellect_4_1.isOpen = true;
+          SKILLS_COOK[2].data.intellect_4_1.modifierOfFreeze += getValue(this);
         },
       },
     ],

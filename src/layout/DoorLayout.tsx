@@ -6,9 +6,9 @@ import { ReactNode } from "react";
 const DoorLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      <DoorTop />
+      {/* <DoorTop />
       <Logo />
-      <DoorBottom />
+      <DoorBottom /> */}
       {children}
     </>
   );
