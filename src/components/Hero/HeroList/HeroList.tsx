@@ -1,8 +1,9 @@
 import { IHero, heroName } from "@/types/hero.types";
-
 import HeroCard from "../HeroCard/HeroCard";
 import styles from "./heroList.module.css";
 import { HeroClass } from "@/constants/class";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
 
 interface Props {
   heroes: readonly heroName[];
@@ -11,12 +12,28 @@ interface Props {
 
 const HeroList = ({ heroes, chooseHero }: Props) => {
   return (
-    <div className={styles.heroList}>
+    <Swiper
+      breakpoints={{
+        512: {
+          slidesPerView: 3,
+        },
+        1024: {
+          slidesPerView: 4,
+        },
+      }}
+      navigation
+      modules={[Navigation]}
+      className={styles.heroList}
+    >
       {heroes.map((hero) => {
         const newHero = new HeroClass(hero);
-        return <HeroCard key={hero} hero={newHero} chooseHero={chooseHero} />;
+        return (
+          <SwiperSlide key={hero}>
+            <HeroCard hero={newHero} chooseHero={chooseHero} />
+          </SwiperSlide>
+        );
       })}
-    </div>
+    </Swiper>
   );
 };
 
