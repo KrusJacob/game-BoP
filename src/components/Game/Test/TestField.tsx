@@ -85,10 +85,10 @@ const TestField = () => {
           <Button size="small" onClick={() => onSetEnemy("rogue_4")}>
             Разбойник 4
           </Button>
-          <Button size="small" onClick={() => onSetEnemy("golden-pig")}>
+          <Button size="small" onClick={() => onSetEnemy("goldenPig_L")}>
             Золотая свинка
           </Button>
-          <Button size="small" onClick={() => onSetEnemy("gnome-trader")}>
+          <Button size="small" onClick={() => onSetEnemy("gnomeTrader_L")}>
             Торговец
           </Button>
         </div>
