@@ -33,7 +33,7 @@
 }
 .tombItemWrapper {
     position: relative;
-    border: 2px solid gold;
+    border: 2px solid red;
 }
 .tombItem {
     position: relative;
@@ -42,7 +42,7 @@
 
     /* opacity: 0.3; */
 }
-.tombItem p {
+/* .tombItem p {
     color: gold;
     width: 100%;
     bottom: 0;
@@ -51,7 +51,7 @@
     padding: 2px;
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-}
+} */
 
 .tombItem img {
     width: 100%;

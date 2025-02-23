@@ -5,10 +5,12 @@ import { getEnemiesLocations } from "./location";
 import { COMLEXITY_LOCATIONS, CHANCE_TO_LEGEND_ENEMY, incСomplexityLocation } from "./setup";
 
 export const ALL_ENEMIES = [
-  "golden-pig",
-  "gnome-trader",
-  "seaMonster",
-  "treasureBox",
+  "goldenPig_L",
+  "swampMonster_L",
+  "gnomeTrader_L",
+  "caveHorror_L",
+  "seaMonster_L",
+  "treasureBox_L",
   "beast",
   "beast_2",
   "beast_3",
@@ -96,7 +98,10 @@ export const ENEMIES_TO_DARK_FOREST: enemiesToLocation = {
     [{ name: "rogue_2" }, { name: "rogue_3" }, { name: "rogue_4" }],
     [{ name: "rogue_3" }, { name: "rogue_4" }],
   ],
-  legendEnemies: [{ name: "golden-pig", unique: true }],
+  legendEnemies: [
+    { name: "goldenPig_L", unique: true },
+    { name: "swampMonster_L", unique: true },
+  ],
 };
 export const ENEMIES_TO_HIDDEN_CAVE: enemiesToLocation = {
   enemies: [
@@ -113,7 +118,10 @@ export const ENEMIES_TO_HIDDEN_CAVE: enemiesToLocation = {
     [{ name: "gnome_2" }, { name: "gnome_3" }, { name: "gnome_4" }],
     [{ name: "gnome_3" }, { name: "gnome_4" }],
   ],
-  legendEnemies: [{ name: "gnome-trader", unique: true }],
+  legendEnemies: [
+    { name: "gnomeTrader_L", unique: true },
+    { name: "caveHorror_L", unique: true },
+  ],
 };
 export const ENEMIES_TO_AZURE_COAST: enemiesToLocation = {
   enemies: [
@@ -131,8 +139,8 @@ export const ENEMIES_TO_AZURE_COAST: enemiesToLocation = {
     [{ name: "skeleton_3" }, { name: "skeleton_4" }],
   ],
   legendEnemies: [
-    { name: "seaMonster", unique: true },
-    { name: "treasureBox", unique: true },
+    { name: "seaMonster_L", unique: true },
+    { name: "treasureBox_L", unique: true },
   ],
 };
 // Hidden Cave

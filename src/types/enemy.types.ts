@@ -45,24 +45,12 @@ export interface enemyResources {
   exp: number;
   tombProgress?: number;
 }
-export interface enemyDrop {
-  label: enemyTypeLabelDrop;
-  type: enemyTypeDrop;
-  value: number[];
-}
+
 export type enemyType = "beast" | "rogue" | "goblin" | "gnome" | "naga" | "skeleton";
 export type enemyTombName = Extract<
   enemyName,
   "beast_5" | "rogue_5" | "goblin_5" | "gnome_5" | "naga_5" | "skeleton_5"
 >;
-export type enemyTypeDrop = "fangsBeast" | "rogueItem" | "goblinItem" | "gnomeItem" | "gillsNaga";
-export type enemyTypeLabelDrop =
-  | "Клык зверя"
-  | "Кольцо убийцы"
-  | "Эмблема гоблина"
-  | "Монета гнома"
-  | "Подводное сокровище";
-export type enemyTypeBagDrop = Record<enemyTypeDrop, bagItemType>;
 
 interface enemyStatus extends heroStatus {}
 

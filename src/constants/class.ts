@@ -130,13 +130,6 @@ export class HeroClass implements IHero {
   skills: heroSkills[];
   statistics = getStatisticsToHero();
   resources = {
-    drop: {
-      fangsBeast: 0,
-      rogueItem: 0,
-      goblinItem: 0,
-      gnomeItem: 0,
-      gillsNaga: 0,
-    },
     gold: START_GOLD_HERO,
     skillPoints: START_SKILLPOINT,
     parameterPoints: START_PARAMETERPOINT,

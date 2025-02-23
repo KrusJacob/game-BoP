@@ -12,6 +12,19 @@ export const STATS_GODLEN_PIG: enemyBaseStats = {
   attackSpeed: 0.5,
   powerSkill: 0,
 };
+export const STATS_SWAMP_MONSTER: enemyBaseStats = {
+  img: "/assets/enemy/swampMonster.png",
+  name: "Болотное чудовище",
+  power: 90,
+  agility: 25,
+  intellect: 10,
+  attack: 170,
+  def: 45,
+  magicDef: 10,
+  maxHp: 2500,
+  attackSpeed: 0.5,
+  powerSkill: 0,
+};
 export const STATS_GNOME_TRADER: enemyBaseStats = {
   img: "/assets/enemy/gnome-trader.png",
   name: "Гном-торговец",
@@ -25,19 +38,20 @@ export const STATS_GNOME_TRADER: enemyBaseStats = {
   attackSpeed: 0.5,
   powerSkill: 0,
 };
-export const STATS_SEA_MONSTER: enemyBaseStats = {
-  img: "/assets/enemy/gnome-trader.png",
-  name: "Морское чудовище",
-  power: 200,
-  agility: 20,
-  intellect: 50,
-  attack: 300,
-  def: 50,
-  magicDef: 0,
-  maxHp: 4800,
+export const STATS_CAVE_HORROR: enemyBaseStats = {
+  img: "/assets/enemy/caveHorror.png",
+  name: "Пещерный ужас",
+  power: 120,
+  agility: 10,
+  intellect: 40,
+  attack: 210,
+  def: 40,
+  magicDef: 20,
+  maxHp: 3400,
   attackSpeed: 0.5,
   powerSkill: 0,
 };
+
 export const STATS_TREASURE_BOX: enemyBaseStats = {
   img: "/assets/enemy/treasureBox.png",
   name: "Cундук с сокровищем",
@@ -48,6 +62,19 @@ export const STATS_TREASURE_BOX: enemyBaseStats = {
   def: 40,
   magicDef: 0,
   maxHp: 2000,
+  attackSpeed: 0.5,
+  powerSkill: 0,
+};
+export const STATS_SEA_MONSTER: enemyBaseStats = {
+  img: "/assets/enemy/seaMonster.png",
+  name: "Морское чудовище",
+  power: 160,
+  agility: 15,
+  intellect: 50,
+  attack: 300,
+  def: 50,
+  magicDef: 30,
+  maxHp: 4300,
   attackSpeed: 0.5,
   powerSkill: 0,
 };

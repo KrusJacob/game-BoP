@@ -170,14 +170,14 @@ const RESOURCES_SKELETON_2: enemyResources = {
 };
 
 const RESOURCES_SKELETON_3: enemyResources = {
-  exp: 765,
+  exp: 760,
   gold: 440,
   skillPoints: 0,
   tombProgress: 8,
 };
 
 const RESOURCES_SKELETON_4: enemyResources = {
-  exp: 920,
+  exp: 800,
   gold: 460,
   skillPoints: 0,
   tombProgress: 10,
@@ -196,25 +196,37 @@ const RESOURCES_GODLEN_PIG: enemyResources = {
   gold: 750,
   skillPoints: 0,
 };
-const RESOURCES_GNOME_TRADER: enemyResources = {
-  exp: 50,
-  gold: 1000,
+const RESOURCES_SWAMP_MONSTER: enemyResources = {
+  exp: 600,
+  gold: 400,
   skillPoints: 1,
 };
-const RESOURCES_SEA_MONSTER: enemyResources = {
-  exp: 1500,
-  gold: 300,
+const RESOURCES_GNOME_TRADER: enemyResources = {
+  exp: 50,
+  gold: 1200,
+  skillPoints: 0,
+};
+const RESOURCES_CAVE_HORROR: enemyResources = {
+  exp: 800,
+  gold: 600,
   skillPoints: 1,
 };
 const RESOURCES_TREASURE_BOX: enemyResources = {
   exp: 50,
-  gold: 1500,
+  gold: 1600,
   skillPoints: 0,
+};
+const RESOURCES_SEA_MONSTER: enemyResources = {
+  exp: 1000,
+  gold: 800,
+  skillPoints: 1,
 };
 
 export const enemiesResources = {
   goldenPig: RESOURCES_GODLEN_PIG,
+  swampMonster: RESOURCES_SWAMP_MONSTER,
   gnomeTrader: RESOURCES_GNOME_TRADER,
+  caveHorror: RESOURCES_CAVE_HORROR,
   seaMonster: RESOURCES_SEA_MONSTER,
   treasureBox: RESOURCES_TREASURE_BOX,
   beast: RESOURCES_BEAST,

@@ -54,11 +54,11 @@ export const STATS_GNOME_4: enemyBaseStats = {
 };
 export const STATS_GNOME_5: enemyBaseStats = {
   img: "/assets/enemy/gnome_5.png",
-  name: "Пещерный ужас",
+  name: "Владыка гномов",
   power: 110,
   agility: 50,
   intellect: 150,
-  attack: 100,
+  attack: 90,
   def: 30,
   magicDef: 25,
   maxHp: 3500,

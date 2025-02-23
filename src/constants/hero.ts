@@ -3,7 +3,7 @@ import { heroBaseStats } from "../types/hero.types";
 const ALL_HEROES = ["boxer", "programmer", "cook", "hairdresser"] as const;
 
 const STATS_BOXER: heroBaseStats = {
-  img: "/assets/boxer.png",
+  img: "/assets/hero/boxer.png",
   name: "Боксер",
   power: 55,
   agility: 35,

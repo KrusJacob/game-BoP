@@ -15,12 +15,12 @@ export const START_GOLD_HERO = 0;
 export const START_SKILLPOINT = 0;
 export const START_PARAMETERPOINT = 0;
 export const START_STATISTICS = {
-  beast: 100,
-  rogue: 100,
-  goblin: 100,
-  gnome: 100,
-  naga: 100,
-  skeleton: 100,
+  beast: 0,
+  rogue: 0,
+  goblin: 0,
+  gnome: 0,
+  naga: 0,
+  skeleton: 0,
 };
 
 // HERO MAIN STATS
@@ -56,7 +56,7 @@ export const COMLEXITY_LOCATIONS = {
 };
 
 export function incСomplexityLocation(location: LOCATION, max: number) {
-  console.log(COMLEXITY_LOCATIONS, location, max);
+  // console.log(COMLEXITY_LOCATIONS, location, max);
   if (COMLEXITY_LOCATIONS[location].comlexity < max) {
     COMLEXITY_LOCATIONS[location].comlexity += 0.5;
   }

@@ -13,6 +13,7 @@ import {
   SKILLS_SKELETON,
   SKILLS_BEAST,
   SKILLS_BEAST_BOSS,
+  SKILLS_TREASURE_BOX,
 } from "./skill/enemySkills";
 import { SKILLS_BOXER, SKILLS_PROGRAMMER, SKILLS_COOK, SKILLS_HAIRDRESSER } from "./skill/heroSkills";
 import { statsBeast, statsGnome, statsGoblin, statsLegend, statsNaga, statsRogue, statsSkeleton } from "./enemy";
@@ -26,11 +27,20 @@ import {
   incHeroDef,
 } from "./fn";
 import { START_STATISTICS } from "./setup";
+import { SKILLS_ROGUE_BOSS } from "./skill/enemy/rogue/rogueSkill";
+import { SKILLS_GOBLIN_BOSS } from "./skill/enemy/goblin/goblinSkill";
+import { SKILLS_GNOME_BOSS } from "./skill/enemy/gnome/gnomeSkill";
+import { SKILLS_NAGA_BOSS } from "./skill/enemy/naga/nagaSkill";
+import { SKILLS_SKELETON_BOSS } from "./skill/enemy/skeleton/skeletonSkill";
+import { SKILLS_CAVE_HORROR } from "./skill/enemy/legends/caveHorror";
+import { SKILLS_SWAMP_MONSTER } from "./skill/enemy/legends/swampMonster";
 
 export function getStatsToEnemy(type: enemyName): enemyBaseStats {
   switch (type) {
-    case "golden-pig":
+    case "goldenPig_L":
       return statsLegend.goldenPig;
+    case "swampMonster_L":
+      return statsLegend.swampMonster;
     case "beast":
       return statsBeast.beast;
     case "beast_2":
@@ -61,8 +71,10 @@ export function getStatsToEnemy(type: enemyName): enemyBaseStats {
       return statsGoblin.goblin_4;
     case "goblin_5":
       return statsGoblin.goblin_5;
-    case "gnome-trader":
+    case "gnomeTrader_L":
       return statsLegend.gnomeTrader;
+    case "caveHorror_L":
+      return statsLegend.caveHorror;
     case "gnome":
       return statsGnome.gnome;
     case "gnome_2":
@@ -83,7 +95,7 @@ export function getStatsToEnemy(type: enemyName): enemyBaseStats {
       return statsNaga.naga_4;
     case "naga_5":
       return statsNaga.naga_5;
-    case "seaMonster":
+    case "seaMonster_L":
       return statsLegend.seaMonster;
     case "skeleton":
       return statsSkeleton.skeleton;
@@ -95,7 +107,7 @@ export function getStatsToEnemy(type: enemyName): enemyBaseStats {
       return statsSkeleton.skeleton_4;
     case "skeleton_5":
       return statsSkeleton.skeleton_5;
-    case "treasureBox":
+    case "treasureBox_L":
       return statsLegend.treasureBox;
 
     default:
@@ -120,11 +132,17 @@ export function getStatsToHero(type: heroName): heroBaseStats {
 
 export function getSkillsToEnemy(type: enemyName) {
   switch (type) {
-    case "golden-pig":
+    case "goldenPig_L":
       return SKILLS_GOLDEN_PIG;
-    case "gnome-trader":
+    case "swampMonster_L":
+      return SKILLS_SWAMP_MONSTER;
+    case "gnomeTrader_L":
       return SKILLS_GNOME_TRADER;
-    case "seaMonster":
+    case "treasureBox_L":
+      return SKILLS_TREASURE_BOX;
+    case "caveHorror_L":
+      return SKILLS_CAVE_HORROR;
+    case "seaMonster_L":
       return SKILLS_SEA_MONSTER;
     case "beast":
     case "beast_2":
@@ -137,32 +155,37 @@ export function getSkillsToEnemy(type: enemyName) {
     case "rogue_2":
     case "rogue_3":
     case "rogue_4":
-    case "rogue_5":
       return SKILLS_ROGUE;
+    case "rogue_5":
+      return SKILLS_ROGUE_BOSS;
     case "gnome":
     case "gnome_2":
     case "gnome_3":
     case "gnome_4":
-    case "gnome_5":
       return SKILLS_GNOME;
+    case "gnome_5":
+      return SKILLS_GNOME_BOSS;
     case "goblin":
     case "goblin_2":
     case "goblin_3":
     case "goblin_4":
-    case "goblin_5":
       return SKILLS_GOBLIN;
+    case "goblin_5":
+      return SKILLS_GOBLIN_BOSS;
     case "naga":
     case "naga_2":
     case "naga_3":
     case "naga_4":
-    case "naga_5":
       return SKILLS_NAGA;
+    case "naga_5":
+      return SKILLS_NAGA_BOSS;
     case "skeleton":
     case "skeleton_2":
     case "skeleton_3":
     case "skeleton_4":
-    case "skeleton_5":
       return SKILLS_SKELETON;
+    case "skeleton_5":
+      return SKILLS_SKELETON_BOSS;
     default:
       return SKILLS_ROGUE;
   }
@@ -170,13 +193,17 @@ export function getSkillsToEnemy(type: enemyName) {
 
 export function getResourcesToEnemy(type: enemyName) {
   switch (type) {
-    case "golden-pig":
+    case "goldenPig_L":
       return enemiesResources.goldenPig;
-    case "gnome-trader":
+    case "swampMonster_L":
+      return enemiesResources.swampMonster;
+    case "gnomeTrader_L":
       return enemiesResources.gnomeTrader;
-    case "seaMonster":
+    case "caveHorror_L":
+      return enemiesResources.caveHorror;
+    case "seaMonster_L":
       return enemiesResources.seaMonster;
-    case "treasureBox":
+    case "treasureBox_L":
       return enemiesResources.treasureBox;
     case "beast":
       return enemiesResources.beast;
@@ -309,7 +336,8 @@ export function getStatusToHero(): heroStatus {
     },
     severeWound: {
       isSevereWound: false,
-      value: 0,
+      stack: 0,
+      value: 20,
     },
   };
 }

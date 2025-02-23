@@ -57,8 +57,8 @@ export function getHeal(this: IHero | IEnemy, value: number) {
   let healValue = value;
   if (!this.status.death) {
     healValue = Math.min(this.getters.getMaxHp() - this.HP, value);
-    if (this.status.severeWound.isSevereWound) {
-      healValue = reducingHeal(healValue, this.status.severeWound.value);
+    if (this.status.severeWound.stack > 0) {
+      healValue = reducingHeal(healValue, this.status.severeWound.stack);
     }
     this.HP += healValue;
     this.update();
@@ -66,8 +66,8 @@ export function getHeal(this: IHero | IEnemy, value: number) {
   return healValue;
 }
 
-function reducingHeal(healValue: number, modifierValue: number) {
-  const reducedHeal = getPercent(healValue, modifierValue);
+function reducingHeal(healValue: number, stack: number) {
+  const reducedHeal = getPercent(healValue, Math.max(100 - 20 * stack, 0));
 
   return reducedHeal;
 }

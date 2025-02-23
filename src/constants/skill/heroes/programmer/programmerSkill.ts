@@ -2,7 +2,7 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, goMagicalDamage, healHeroOfSkill } from "../../utils";
+import { applyPowerSkill, goMagicalDamage, healHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { goPosionDmg } from "@/constants/func/fight";
 import { getPercent } from "@/utils/getPercent";
 
@@ -14,7 +14,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     },
     img: "/assets/skill/skill_programmer_1.png",
     data: {
-      costEnergy: 200,
+      costEnergy: 0,
       modifier: 8,
     },
     trigger: "active",
@@ -24,6 +24,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       let damage = getPercent(target.getters.getMaxHp(), data.modifier);
       // goDamage(hero, target, magicalDamageAction(damage));
       const damagedValue = goMagicalDamage(hero, target, damage);
+      console.log(damagedValue);
       healHeroOfSkill(hero, damagedValue, 0, false);
     },
   },
@@ -135,17 +136,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       }
     },
   },
-  {
-    label: "Техника боя",
-    descr: function () {
-      return `Шанс критического удара: ${this.data.chanceCritDamage}%, Шанс уклонения: ${this.data.chanceEvade}% `;
-    },
-    img: "/assets/skill/chances.png",
-    data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
-    },
-  },
+  getСombatTechniquesSkill(),
 ];
 
 export default SKILLS_PROGRAMMER;

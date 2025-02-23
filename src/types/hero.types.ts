@@ -1,5 +1,5 @@
 import { ALL_HEROES } from "../constants/hero";
-import { IEnemy, enemyDrop, enemyName, enemyType, enemyTypeDrop } from "./enemy.types";
+import { IEnemy, enemyName, enemyType } from "./enemy.types";
 import { bagItemType } from "./shop.types";
 import { talentType } from "./talent.types";
 
@@ -62,7 +62,8 @@ export interface heroStatus {
   };
   severeWound: {
     isSevereWound: boolean;
-    value: number;
+    stack: number;
+    readonly value: number;
   };
 }
 
@@ -109,7 +110,6 @@ export interface heroResources {
   gold: number;
   skillPoints: number;
   parameterPoints: number;
-  drop: Record<enemyTypeDrop, number>;
   bag: Array<bagItemType>;
   bagActivePanel: Array<bagItemType>;
 }
@@ -205,9 +205,4 @@ export interface heroReward {
   gold: number;
   skillPoints: number;
   talent: talentType | null;
-  // drop?: {
-  //   label: string;
-  //   type: enemyTypeDrop;
-  //   value: number;
-  // };
 }

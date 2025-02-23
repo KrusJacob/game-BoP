@@ -2,7 +2,7 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, healHeroOfSkill } from "../../utils";
+import { applyPowerSkill, healHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { goStun } from "@/constants/func/fight";
 
 const SKILLS_BOXER: heroSkills[] = [
@@ -117,17 +117,7 @@ const SKILLS_BOXER: heroSkills[] = [
       }
     },
   },
-  {
-    label: "Техника боя",
-    descr: function () {
-      return `Шанс критического удара: ${this.data.chanceCritDamage}%, Шанс уклонения: ${this.data.chanceEvade}% `;
-    },
-    img: "/assets/skill/chances.png",
-    data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
-    },
-  },
+  getСombatTechniquesSkill(),
 ];
 
 export default SKILLS_BOXER;
