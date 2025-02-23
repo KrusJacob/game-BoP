@@ -42,6 +42,7 @@ const FoundEnemies = ({ enemies, disabled, onEnemySelected }: Props) => {
                 [styles.enemy_3]: enemyItem.name.slice(-1) === "3",
                 [styles.enemy_4]: enemyItem.name.slice(-1) === "4",
                 [styles.enemy_5]: enemyItem.name.slice(-1) === "5",
+                [styles.enemy_legend]: enemyItem.name.slice(-1) === "L",
               })}
               key={i}
               onClick={() => onSetEnemy(enemyItem)}

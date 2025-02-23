@@ -41,6 +41,9 @@
     border-color: blueviolet;
 }
 .enemy_5 {
+    border-color: red;
+}
+.enemy_legend {
     border-color: gold;
 }
 

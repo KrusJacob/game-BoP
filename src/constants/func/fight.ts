@@ -13,6 +13,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
   // clearText();
   console.log(skillHeroTrigger);
   goSkillTrigger("inBeginFight", hero, enemy);
+  goSkillTrigger("inBeginFight", enemy, hero);
   attackHero();
   attackEnemy();
 
@@ -54,7 +55,11 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
         if (!enemy.status.death) {
           const attackInfo = enemy.attack(hero);
 
-          attackInfo.isCritical && goSkillTrigger("afterTargetCrit", hero, enemy);
+          if (attackInfo.isCritical) {
+            goSkillTrigger("afterTargetCrit", hero, enemy);
+            goSkillTrigger("afterInitiatorCrit", enemy, hero);
+          }
+
           attackInfo.isMiss && goSkillTrigger("afterTargetMiss", hero, enemy);
           attackEnemy();
           if (!attackInfo.isStunned && !attackInfo.isMiss) {
@@ -255,6 +260,42 @@ export function damageToHP(target: IHero | IEnemy, dmg: number) {
   }
 }
 
+function createTimeoutHeal() {
+  let timeoutId: any;
+  let intervalId: any;
+
+  return function startTimeout(
+    hero: IHero | IEnemy,
+    target: IHero | IEnemy,
+    healValue: number,
+    healPercent: number,
+    tick = 1,
+    duration = 999
+  ) {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+
+    intervalId = setInterval(() => {
+      if (target.status.death || hero.status.death) {
+        clearInterval(intervalId);
+      } else {
+        const heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
+        // hero.getHeal(heal);
+        console.log("heal-tick", hero.getHeal(heal));
+      }
+    }, tick * 1000);
+
+    timeoutId = setTimeout(() => {
+      clearInterval(intervalId);
+      console.log("heal-tick закончился");
+    }, duration * 1000);
+  };
+}
+
 function createTimeoutFreeze() {
   let timeoutId: any;
 
@@ -271,6 +312,24 @@ function createTimeoutFreeze() {
       target.status.isFreeze = false;
       target.buffs.incAttackSpeed(value);
       console.log("мороз закончился");
+    }, duration * 1000);
+  };
+}
+function createTimeoutSevereWound() {
+  let timeoutId: any;
+
+  return function startTimeout(target: IHero | IEnemy, stack = 1, duration: number) {
+    // target.status.severeWound.isSevereWound = true;
+    target.status.severeWound.stack += stack;
+
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      // target.status.severeWound.isSevereWound = false;
+      target.status.severeWound.stack -= stack;
+      console.log("тяжелые раны закончились");
     }, duration * 1000);
   };
 }
@@ -311,8 +370,11 @@ function createTimeoutDot(type: "posion" | "bleed") {
 }
 
 export const goFreeze = createTimeoutFreeze();
+export const goSevereWound = createTimeoutSevereWound();
 export const goPosionDmg = createTimeoutDot("posion");
 export const goBleedDmg = createTimeoutDot("bleed");
+
+export const goHealTick = createTimeoutHeal();
 
 export function goStun(target: IHero | IEnemy, duration: number) {
   if (!checkForStun(target)) {

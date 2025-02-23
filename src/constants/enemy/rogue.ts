@@ -59,7 +59,7 @@ export const STATS_ROGUE_5: enemyBaseStats = {
   power: 60,
   agility: 100,
   intellect: 60,
-  attack: 160,
+  attack: 150,
   def: 30,
   magicDef: 15,
   maxHp: 2500,

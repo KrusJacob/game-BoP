@@ -1,7 +1,6 @@
 import { FaRegSnowflake, FaSkull } from "react-icons/fa";
 import { PiSpiralLight } from "react-icons/pi";
 import styles from "./hero.module.css";
-import { IHero } from "@/types/hero.types";
 import { useGameStore } from "@/store/gameStore";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import { ImDroplet } from "react-icons/im";
@@ -14,7 +13,7 @@ const HeroStatusBar = ({ type }: { type: "hero" | "enemy" }) => {
   const isPoisoned = useGameStore((state) => state[type]?.status.isPoisoned);
   const isBleeded = useGameStore((state) => state[type]?.status.isBleeded);
   const virusStack = useGameStore((state) => state[type]?.status.virus.stack);
-  const isSevereWound = useGameStore((state) => state[type]?.status.severeWound.isSevereWound);
+  const severeWoundStack = useGameStore((state) => state[type]?.status.severeWound.stack);
 
   return (
     <div className={styles.statusBar}>
@@ -46,10 +45,11 @@ const HeroStatusBar = ({ type }: { type: "hero" | "enemy" }) => {
           </Tooltip>
         </div>
       )}
-      {isSevereWound && (
+      {Boolean(severeWoundStack) && (
         <div className={styles.statusBarItem}>
           <Tooltip title="Тяжелое ранение" size="small">
             <FaHeartCrack color="orange" />
+            <span className={styles.stack}>{severeWoundStack}</span>
           </Tooltip>
         </div>
       )}
