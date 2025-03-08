@@ -2,7 +2,7 @@ import { UpSkill, UpgradeSkills } from "@/types/skill.types";
 import SKILLS_COOK from "./cookSkill";
 import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
-import { goPureDamage, healHeroOfSkill } from "../../utils";
+import { goPureDamage, goHealHeroOfSkill } from "../../utils";
 import { IEnemy } from "@/types/enemy.types";
 
 export const upgradeCookSkills: UpgradeSkills = {
@@ -236,16 +236,14 @@ export const upgradeCookSkills: UpgradeSkills = {
         branch: "agility",
         data: {
           value: [150, 200, 250],
-          modifierHeal: 0,
         },
         fn(hero) {
-          this.data.modifierHeal += getValue(this);
           if (this.currentPoint === 1) {
             registerSkill(skill.bind(this), "afterTargetCrit");
 
             function skill(this: UpSkill, hero: IHero) {
-              const healValue = Math.floor(hero.getters.getAgility() * (this.data.modifierHeal / 100));
-              healHeroOfSkill(hero, healValue, 0);
+              const healValue = Math.floor(hero.getters.getAgility() * (getValue(this) / 100));
+              goHealHeroOfSkill(hero, healValue, 0);
             }
           }
         },
@@ -268,7 +266,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [10, 15, 20],
+          value: [12, 18, 24],
         },
         fn(hero) {
           SKILLS_COOK[0].data.agility_2_2.isOpen = true;
@@ -361,7 +359,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [18, 27, 36, 45, 54],
+          value: [20, 30, 40, 50, 60],
         },
         fn(hero) {
           hero.setters.incIgnoreDef(getValue(this));

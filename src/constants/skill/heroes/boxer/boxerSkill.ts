@@ -1,8 +1,7 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, healHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
+import { applyPowerSkill, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { goStun } from "@/constants/func/fight";
 
 const SKILLS_BOXER: heroSkills[] = [
@@ -32,7 +31,7 @@ const SKILLS_BOXER: heroSkills[] = [
       hero.attack(target, { modifier: data.modifier, isIgnoreAvade: true });
       if (data.power_2_2) {
         const heal = hero.getters.getPower() * data.power_2_2.modifierPower;
-        healHeroOfSkill(hero, heal, 0);
+        goHealHeroOfSkill(hero, heal, 0);
       }
     },
   },
@@ -69,12 +68,12 @@ const SKILLS_BOXER: heroSkills[] = [
         setTimeout(() => {
           let healValue = data.healValue;
           if (data.talent_3_1.isOpen) {
-            healValue += Math.floor(hero.getters.getIntellect() * data.talent_3_1.modifierHeal);
+            healValue += hero.getters.getIntellect() * data.talent_3_1.modifierHeal;
           }
           if (data.power_3_2.isOpen) {
             hero.energy.value += data.power_3_2.valueEnergy;
           }
-          healHeroOfSkill(hero, healValue, data.healPercent);
+          goHealHeroOfSkill(hero, healValue, data.healPercent);
           const totalBarrier = applyPowerSkill(data.barrierValue, hero.getters.getPowerSkill());
           hero.getBarrier(totalBarrier);
         }, 250);

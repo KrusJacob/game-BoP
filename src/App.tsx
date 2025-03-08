@@ -6,11 +6,12 @@ import { motion } from "framer-motion";
 import DoorLayout from "./layout/DoorLayout";
 import GameArea from "./components/Game/GameArea/GameArea";
 import { useGameStore } from "./store/gameStore";
-import { getUpgradeSkills, registerAllSkills } from "./constants/skill/heroes";
+import { registerAllSkills } from "./constants/skill/heroes";
 import { useSkillUpgradeStore } from "./store/skillUpgradeStore";
 import { useSkillTextStore } from "./store/skillTextStore";
 import { useBattleTextStore } from "./store/battleTextStore";
 import { battleText } from "./constants/text";
+import { getUpgradeSkills } from "./constants/initStats";
 
 function App() {
   const hero = useGameStore((state) => state.hero);

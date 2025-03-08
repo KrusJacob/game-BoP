@@ -1,6 +1,5 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { heroSkills, IHero } from "@/types/hero.types";
-import { applyPowerSkill, goMagicalDamage, healHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
+import { applyPowerSkill, goMagicalDamage, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { goBleedDmg, goStun } from "@/constants/func/fight";
 import { IEnemy } from "@/types/enemy.types";
 import { getPercent } from "@/utils/getPercent";
@@ -33,7 +32,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
       const data = this[0].data;
       hero.buffs.incAttackSpeed(data.modifier, data.duration);
       if (data.power_2_2.isOpen) {
-        healHeroOfSkill(hero, 0, data.power_2_2.modifierHeal);
+        goHealHeroOfSkill(hero, 0, data.power_2_2.modifierHeal);
       }
       if (data.intellect_2_2.isOpen) {
         const barrierOfMaxHp = getPercent(hero.getters.getMaxHp(), data.intellect_2_2.modifierMaxHp);
@@ -118,7 +117,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
     fn: function (this: heroSkills[], hero: IHero, enemy: IEnemy) {
       hero.pushSkillText(this[2].label);
       const data = this[2].data;
-      healHeroOfSkill(hero, data.healValue, data.healPercent);
+      goHealHeroOfSkill(hero, data.healValue, data.healPercent);
       hero.buffs.incDamage(data.modifierDamage, data.duration);
 
       if (data.intellect_4_1.isOpen) {

@@ -1,9 +1,9 @@
 import { goFreeze, goPosionDmg } from "@/constants/func/fight";
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
+
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { healHeroOfSkill, applyPowerSkill, goMagicalDamage, getСombatTechniquesSkill } from "../../utils";
+import { goHealHeroOfSkill, applyPowerSkill, goMagicalDamage, getСombatTechniquesSkill } from "../../utils";
 
 const SKILLS_COOK: heroSkills[] = [
   {
@@ -58,7 +58,7 @@ const SKILLS_COOK: heroSkills[] = [
           data.isCooldown = false;
         }, data.cooldownCount * 1000);
         setTimeout(() => {
-          healHeroOfSkill(hero, data.healValue, data.healPercent);
+          goHealHeroOfSkill(hero, data.healValue, data.healPercent);
         }, 250);
       }
     },
@@ -100,15 +100,14 @@ const SKILLS_COOK: heroSkills[] = [
         console.log("Отравлен");
 
         if (data.power_2_1.isOpen) {
-          const damage = Math.floor(hero.getters.getPower() * data.power_2_1.modifierPower);
-          // goDamage(hero, target, magicalDamageAction(damage));
+          const damage = hero.getters.getPower() * data.power_2_1.modifierPower;
           goMagicalDamage(hero, target, damage);
         }
         if (data.intellect_2_2.isOpen) {
           target.buffs.incDamage(-data.intellect_2_2.modifierDebuff, data.duration);
         }
 
-        let poisinValue = Math.round(hero.getters.getIntellect() * data.modifierOfIntellect + data.initalValue);
+        let poisinValue = hero.getters.getIntellect() * data.modifierOfIntellect + data.initalValue;
         poisinValue = applyPowerSkill(poisinValue, hero.getters.getPowerSkill());
         if (data.intellect_3_1.isOpen) {
           poisinValue += Math.floor(hero.getters.getIntellect() * data.intellect_3_1.modifierOfIntellect);

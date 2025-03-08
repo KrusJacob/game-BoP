@@ -1,6 +1,6 @@
 import { LOCATION } from "@/types/location.types";
 
-export const VERSION_APP = "1.14.1";
+export const VERSION_APP = "2.0.0";
 // REST HP
 export const HP_REST = 100;
 export const HP_REST_PERCENT = 20;

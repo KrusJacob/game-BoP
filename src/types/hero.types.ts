@@ -47,7 +47,9 @@ export interface heroBoost {
   gold: number;
 }
 
-export interface heroStatus {
+export type heroStatus = defaultStatuses & uniqueStatuses;
+
+interface defaultStatuses {
   death: boolean;
   stun: {
     isStun: boolean;
@@ -60,10 +62,17 @@ export interface heroStatus {
     isVirus: boolean;
     stack: number;
   };
-  severeWound: {
-    isSevereWound: boolean;
+  darkСurse: {
+    isDarkСurse: boolean;
     stack: number;
     readonly value: number;
+  };
+}
+
+interface uniqueStatuses {
+  justiceMark: {
+    isJusticeMark: boolean;
+    stack: number;
   };
 }
 
@@ -184,6 +193,7 @@ export type heroGoAttack = (target: IEnemy | IHero, options?: attackOptions) => 
 export interface TypeSkillTrigger {
   active: Function[];
   inBeginFight: Function[];
+  inEndFight: Function[];
   beforeInitiatorAttack: Function[];
   beforeTargetAttack: Function[];
   afterInitiatorAttack: Function[];
@@ -203,6 +213,7 @@ export interface attackOptions {
 export interface heroReward {
   exp: number;
   gold: number;
-  skillPoints: number;
+  parameterPoints?: number;
+  skillPoints?: number;
   talent: talentType | null;
 }

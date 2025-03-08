@@ -3,7 +3,7 @@ import { shopItemType } from "@/types/shop.types";
 import { bagItemType } from "@/types/shop.types";
 import { EMPTY_BAG_SLOT } from "../bag";
 import { IEnemy } from "@/types/enemy.types";
-import { goBleedDmg, goPosionDmg, goFreeze, goStun, goSevereWound } from "../func/fight";
+import { goBleedDmg, goPosionDmg, goFreeze, goStun, goDarkCurse } from "../func/fight";
 import { goPureDamage } from "../skill/utils";
 
 export const ALL_SHOP_ITEMS: shopItemType[] = [
@@ -184,7 +184,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     quantity: 1,
     descr: function () {
       const modifierDamage = this.data.modifierDamage;
-      return `Наносит врагу ${modifierDamage}% чистого урона от его макс.запаса здоровья и накадывает 4 слоя тяжелого ранения на ${this.data.duration} секунд. (Каждый слой снижает получаемое исцеление на 20%)`;
+      return `Наносит врагу ${modifierDamage}% чистого урона от его макс.запаса здоровья и накадывает 4 слоя "Темное проклятие" на ${this.data.duration} секунд. (Каждый слой снижает получаемое исцеление на 20%)`;
     },
     data: {
       modifierDamage: 15,
@@ -193,7 +193,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
     fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
       goPureDamage(hero, enemy, (enemy.getters.getMaxHp() * this.data.modifierDamage) / 100);
-      goSevereWound(enemy, this.data.stack, this.data.duration);
+      goDarkCurse(enemy, this.data.stack, this.data.duration);
       decreaseQuantity(hero.resources, this.bagSlotId);
     },
   },

@@ -73,7 +73,7 @@
 .resources p {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 .resources .talent {
     border-left: 2px solid #5fcdd9;

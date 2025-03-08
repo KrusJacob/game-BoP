@@ -45,8 +45,8 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current ? `обьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
-            next: text.next ? `обьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
+            current: text.current ? `Oбьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
+            next: text.next ? `Oбьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
           };
         },
         img: "/assets/skill/programmer/skillPower_2_1.png",
@@ -134,7 +134,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [10, 20, 30, 40, 50],
+          value: [9, 18, 27, 36, 45],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));
@@ -378,7 +378,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         open: true,
         branch: "intellect",
         data: {
-          attack: [2, 4, 6, 8, 10],
+          attack: [3, 6, 9, 12, 15],
           intellect: [4, 8, 12, 16, 20],
         },
         fn(hero) {

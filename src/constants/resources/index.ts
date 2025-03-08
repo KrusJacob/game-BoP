@@ -4,61 +4,53 @@ import { heroReward } from "@/types/hero.types";
 const RESOURCES_BEAST: enemyResources = {
   exp: 75,
   gold: 80,
-  skillPoints: 0,
   tombProgress: 5,
 };
 const RESOURCES_BEAST_2: enemyResources = {
   exp: 95,
   gold: 95,
-  skillPoints: 0,
   tombProgress: 6,
 };
 const RESOURCES_BEAST_3: enemyResources = {
   exp: 120,
   gold: 110,
-  skillPoints: 0,
   tombProgress: 8,
 };
 const RESOURCES_BEAST_4: enemyResources = {
   exp: 150,
   gold: 125,
-  skillPoints: 0,
   tombProgress: 10,
 };
 const RESOURCES_BEAST_5: enemyResources = {
   exp: 500,
   gold: 350,
-  skillPoints: 1,
+  parameterPoints: 3,
 };
 
 const RESOURCES_ROGUE: enemyResources = {
   exp: 170,
   gold: 140,
-  skillPoints: 0,
   tombProgress: 5,
 };
 const RESOURCES_ROGUE_2: enemyResources = {
   exp: 195,
   gold: 155,
-  skillPoints: 0,
   tombProgress: 6,
 };
 const RESOURCES_ROGUE_3: enemyResources = {
   exp: 220,
   gold: 170,
-  skillPoints: 0,
   tombProgress: 8,
 };
 const RESOURCES_ROGUE_4: enemyResources = {
   exp: 245,
   gold: 185,
-  skillPoints: 0,
   tombProgress: 10,
 };
 const RESOURCES_ROGUE_5: enemyResources = {
   exp: 700,
   gold: 500,
-  skillPoints: 1,
+  parameterPoints: 3,
 };
 
 //
@@ -66,127 +58,116 @@ const RESOURCES_ROGUE_5: enemyResources = {
 const RESOURCES_GOBLIN: enemyResources = {
   exp: 280,
   gold: 200,
-  skillPoints: 0,
   tombProgress: 5,
 };
 const RESOURCES_GOBLIN_2: enemyResources = {
   exp: 310,
   gold: 215,
-  skillPoints: 0,
   tombProgress: 6,
 };
 const RESOURCES_GOBLIN_3: enemyResources = {
   exp: 345,
   gold: 230,
-  skillPoints: 0,
   tombProgress: 8,
 };
 const RESOURCES_GOBLIN_4: enemyResources = {
   exp: 380,
   gold: 245,
-  skillPoints: 0,
   tombProgress: 10,
 };
 const RESOURCES_GOBLIN_5: enemyResources = {
   exp: 900,
   gold: 700,
-  skillPoints: 1,
+  parameterPoints: 3,
 };
 const RESOURCES_GNOME: enemyResources = {
   exp: 405,
   gold: 260,
-  skillPoints: 0,
   tombProgress: 5,
 };
 
 const RESOURCES_GNOME_2: enemyResources = {
   exp: 430,
   gold: 275,
-  skillPoints: 0,
   tombProgress: 6,
 };
 
 const RESOURCES_GNOME_3: enemyResources = {
   exp: 455,
   gold: 290,
-  skillPoints: 0,
   tombProgress: 8,
 };
 
 const RESOURCES_GNOME_4: enemyResources = {
   exp: 480,
   gold: 305,
-  skillPoints: 0,
   tombProgress: 10,
 };
 
 const RESOURCES_GNOME_5: enemyResources = {
   exp: 1000,
   gold: 1000,
-  skillPoints: 1,
+  parameterPoints: 3,
 };
 
 const RESOURCES_NAGA: enemyResources = {
   exp: 520,
   gold: 320,
-  skillPoints: 0,
+
   tombProgress: 5,
 };
 const RESOURCES_NAGA_2: enemyResources = {
   exp: 560,
   gold: 340,
-  skillPoints: 0,
+
   tombProgress: 6,
 };
 const RESOURCES_NAGA_3: enemyResources = {
   exp: 600,
   gold: 360,
-  skillPoints: 0,
+
   tombProgress: 8,
 };
 const RESOURCES_NAGA_4: enemyResources = {
   exp: 640,
   gold: 380,
-  skillPoints: 0,
+
   tombProgress: 10,
 };
 const RESOURCES_NAGA_5: enemyResources = {
   exp: 1200,
   gold: 1200,
-  skillPoints: 1,
+  parameterPoints: 3,
 };
 const RESOURCES_SKELETON: enemyResources = {
   exp: 680,
   gold: 400,
-  skillPoints: 0,
+
   tombProgress: 5,
 };
 
 const RESOURCES_SKELETON_2: enemyResources = {
   exp: 720,
   gold: 420,
-  skillPoints: 0,
   tombProgress: 6,
 };
 
 const RESOURCES_SKELETON_3: enemyResources = {
   exp: 760,
   gold: 440,
-  skillPoints: 0,
   tombProgress: 8,
 };
 
 const RESOURCES_SKELETON_4: enemyResources = {
   exp: 800,
   gold: 460,
-  skillPoints: 0,
   tombProgress: 10,
 };
 
 const RESOURCES_SKELETON_5: enemyResources = {
   exp: 1500,
   gold: 1500,
-  skillPoints: 1,
+  parameterPoints: 3,
 };
 
 // legends
@@ -264,6 +245,7 @@ export const enemiesResources = {
 export const HERO_REWARD: heroReward = {
   exp: 0,
   gold: 0,
+  parameterPoints: 0,
   skillPoints: 0,
   talent: null,
 };

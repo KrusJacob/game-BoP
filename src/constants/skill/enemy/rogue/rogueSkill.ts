@@ -12,7 +12,7 @@ export const SKILLS_ROGUE: enemySkills[] = [
   getСombatTechniquesSkill(),
 ];
 
-export const SKILLS_ROGUE_BOSS = SKILLS_ROGUE;
+export const SKILLS_ROGUE_BOSS = [...SKILLS_ROGUE];
 SKILLS_ROGUE_BOSS[0] = {
   label: "Отравленный клинок",
   descr: function () {

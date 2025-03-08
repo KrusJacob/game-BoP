@@ -13,16 +13,21 @@ function getGold(hero: IHero, goldValue: number) {
   return goldValue;
 }
 
-function getSkillPoint(hero: IHero, skillPointValue: number) {
+function getSkillPoint(hero: IHero, skillPointValue = 0) {
   hero.resources.skillPoints += skillPointValue;
   return skillPointValue;
+}
+function getParameterPoint(hero: IHero, parameterPoints = 0) {
+  hero.resources.parameterPoints += parameterPoints;
+  return parameterPoints;
 }
 
 export function getReward(hero: IHero, enemy: IEnemy | IHero) {
   if (enemy instanceof EnemyClass) {
     const goldReward = getGold(hero, enemy.resources.gold);
 
-    const skillPointsReward = getSkillPoint(hero, enemy.resources.skillPoints);
+    const skillPointReward = getSkillPoint(hero, enemy.resources.skillPoints);
+    const parameterPointReward = getParameterPoint(hero, enemy.resources.skillPoints);
 
     const expReward = hero.setters.incExp.call(hero, enemy.resources.exp);
 
@@ -31,7 +36,8 @@ export function getReward(hero: IHero, enemy: IEnemy | IHero) {
 
     HERO_REWARD.exp = expReward;
     HERO_REWARD.gold = goldReward;
-    HERO_REWARD.skillPoints = skillPointsReward;
+    HERO_REWARD.skillPoints = skillPointReward;
+    HERO_REWARD.parameterPoints = parameterPointReward;
 
     restHero(hero);
   }

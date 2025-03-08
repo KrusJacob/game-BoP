@@ -186,8 +186,8 @@ export const ALL_TALENTS: talentType[] = [
     descr: function () {
       const text = getText.call(this, "value");
       return {
-        current: text.current ? `Увеличивает шанс уклонения героя на ${text.current}` : "",
-        next: text.next ? `Увеличивает шанс уклонения героя на ${text.next}` : "",
+        current: text.current ? `Увеличивает шанс уклонения героя на ${text.current}%` : "",
+        next: text.next ? `Увеличивает шанс уклонения героя на ${text.next}%` : "",
       };
     },
     data: {
@@ -204,8 +204,8 @@ export const ALL_TALENTS: talentType[] = [
     descr: function () {
       const text = getText.call(this, "value");
       return {
-        current: text.current ? `Увеличивает шанс критического урона героя на ${text.current}` : "",
-        next: text.next ? `Увеличивает шанс критического урона героя на ${text.next}` : "",
+        current: text.current ? `Увеличивает шанс критического урона героя на ${text.current}%` : "",
+        next: text.next ? `Увеличивает шанс критического урона героя на ${text.next}%` : "",
       };
     },
     data: {
@@ -222,12 +222,12 @@ export const ALL_TALENTS: talentType[] = [
     descr: function () {
       const text = getText.call(this, "value");
       return {
-        current: text.current ? `Увеличивает шанс критического урона героя на ${text.current}` : "",
-        next: text.next ? `Увеличивает шанс критического урона героя на ${text.next}` : "",
+        current: text.current ? `Ваши атаки игнорируют ${text.current}% брони противника` : "",
+        next: text.next ? `Ваши атаки игнорируют ${text.next}% брони противника` : "",
       };
     },
     data: {
-      value: [14, 25, 33, 41, 50],
+      value: [18, 27, 38, 49, 60],
     },
     fn(hero: IHero) {
       hero.setters.incIgnoreDef(getValue(this));

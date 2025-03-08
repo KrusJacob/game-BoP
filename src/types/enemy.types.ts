@@ -41,7 +41,8 @@ export interface IEnemy {
 
 export interface enemyResources {
   gold: number;
-  skillPoints: number;
+  parameterPoints?: number;
+  skillPoints?: number;
   exp: number;
   tombProgress?: number;
 }

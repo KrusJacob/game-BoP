@@ -2,7 +2,7 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, goMagicalDamage, healHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
+import { applyPowerSkill, goMagicalDamage, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { goPosionDmg } from "@/constants/func/fight";
 import { getPercent } from "@/utils/getPercent";
 
@@ -14,7 +14,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     },
     img: "/assets/skill/skill_programmer_1.png",
     data: {
-      costEnergy: 0,
+      costEnergy: 200,
       modifier: 8,
     },
     trigger: "active",
@@ -25,7 +25,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       // goDamage(hero, target, magicalDamageAction(damage));
       const damagedValue = goMagicalDamage(hero, target, damage);
       console.log(damagedValue);
-      healHeroOfSkill(hero, damagedValue, 0, false);
+      goHealHeroOfSkill(hero, damagedValue, 0, false);
     },
   },
   {
@@ -58,12 +58,11 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       const mainStat = data.power_2_1.isOpen ? hero.getters.getPower() : hero.getters.getIntellect();
       let totalBarrier = mainStat * data.modifier + data.barrierValue;
       totalBarrier = applyPowerSkill(totalBarrier, hero.getters.getPowerSkill());
-      console.log(totalBarrier);
       hero.getBarrier(totalBarrier);
 
       if (data.power_2_2.isOpen) {
         const healValue = Math.floor(hero.getters.getPower() * data.power_2_2.modifierHeal);
-        healHeroOfSkill(hero, healValue, 0);
+        goHealHeroOfSkill(hero, healValue, 0);
       }
       if (data.power_2_3.isOpen) {
         const damage = getPercent(hero.getters.getMaxHp(), data.power_2_3.modifierDamage);
@@ -82,7 +81,6 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       chance: 25,
       maxLayer: 3,
       modifier: 10,
-      applyedLayer: 0,
       duration: 6,
       cooldown: 1.5,
       isCooldown: false,
@@ -103,14 +101,12 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       }
       const chance = getRandom(1, 100);
 
-      if (chance <= data.chance && data.applyedLayer < data.maxLayer) {
+      if (chance <= data.chance && target.status.virus.stack < data.maxLayer) {
         hero.pushSkillText(this[2].label);
         target.buffs.incDamage(-data.modifier, data.duration);
-        data.applyedLayer += 1;
         data.isCooldown = true;
-
         target.status.virus.stack += 1;
-        console.log(data.applyedLayer, "layer +");
+        console.log(target.status.virus.stack, "layer +");
 
         setTimeout(() => {
           data.isCooldown = false;
@@ -130,7 +126,6 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
 
         setTimeout(() => {
           target.status.virus.stack -= 1;
-          data.applyedLayer -= 1;
           console.log("layer снялся");
         }, data.duration * 1000);
       }

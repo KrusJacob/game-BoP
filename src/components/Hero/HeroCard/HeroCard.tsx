@@ -31,7 +31,7 @@ const HeroCard = ({ hero, chooseHero, isChoosed }: Props) => {
         <div className={styles.name}>{hero.baseStats.name}</div>
         {isChoosed && (
           <div className={styles.level}>
-            <Tooltip title={hero instanceof HeroClass ? `${exp} / ${hero.level.expToNextLevel}` : ""}>
+            <Tooltip title={hero instanceof HeroClass ? `Опыт: ${exp}/${hero.level.expToNextLevel}` : ""}>
               <Badge>{hero.level.value}</Badge>
             </Tooltip>
           </div>

@@ -1,6 +1,6 @@
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy, enemySkills } from "@/types/enemy.types";
-import { getLockSkill, healHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
+import { getLockSkill, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { IHero } from "@/types/hero.types";
 import { getPercent } from "@/utils/getPercent";
 
@@ -18,7 +18,7 @@ SKILLS_BEAST_BOSS[0] = {
     return `Каждая атака исцеляют вас на ${this.data.modifierDrain}% от вашего макс.запаса здоровья`;
   },
   fn: function (this: enemySkills[], hero: IHero | IEnemy, target: IHero | IEnemy) {
-    healHeroOfSkill(hero, 0, this[0].data.modifierDrain, false);
+    goHealHeroOfSkill(hero, 0, this[0].data.modifierDrain, false);
   },
   trigger: "afterInitiatorAttack",
   img: "/assets/skill/enemies/skill_beast_1.png",
