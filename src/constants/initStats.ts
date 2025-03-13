@@ -1,7 +1,15 @@
 import { enemyName, enemyBaseStats } from "@/types/enemy.types";
-import { heroName, heroBaseStats, heroIncStats, heroBuffs, heroStatus, heroStatistics } from "@/types/hero.types";
+import {
+  heroName,
+  heroBaseStats,
+  heroIncStats,
+  heroBuffs,
+  heroStatus,
+  heroStatistics,
+  IHero,
+} from "@/types/hero.types";
 
-import { STATS_BOXER, STATS_PROGRAMMER, STATS_COOK, STATS_HAIRDRESSER } from "./hero";
+import { STATS_BOXER, STATS_PROGRAMMER, STATS_COOK, STATS_HAIRDRESSER, STATS_PRIEST } from "./hero";
 import {
   SKILLS_ROGUE,
   SKILLS_GNOME,
@@ -34,6 +42,12 @@ import { SKILLS_NAGA_BOSS } from "./skill/enemy/naga/nagaSkill";
 import { SKILLS_SKELETON_BOSS } from "./skill/enemy/skeleton/skeletonSkill";
 import { SKILLS_CAVE_HORROR } from "./skill/enemy/legends/caveHorror";
 import { SKILLS_SWAMP_MONSTER } from "./skill/enemy/legends/swampMonster";
+import SKILLS_PRIEST from "./skill/heroes/priest/priestSkill";
+import { upgradeBoxerSkills } from "./skill/heroes/boxer/upgradeSkill";
+import { upgradeProgrammerSkills } from "./skill/heroes/programmer/upgradeSkill";
+import { upgradeCookSkills } from "./skill/heroes/cook/upgradeSkill";
+import { upgradeHairdresserSkills } from "./skill/heroes/hairdresser/upgradeSkill";
+import { upgradePriestSkills } from "./skill/heroes/priest/upgradeSkill";
 
 export function getStatsToEnemy(type: enemyName): enemyBaseStats {
   switch (type) {
@@ -125,6 +139,8 @@ export function getStatsToHero(type: heroName): heroBaseStats {
       return STATS_COOK;
     case "hairdresser":
       return STATS_HAIRDRESSER;
+    case "priest":
+      return STATS_PRIEST;
     default:
       return STATS_BOXER;
   }
@@ -280,8 +296,27 @@ export function getSkillsToHero(type: heroName) {
       return SKILLS_COOK;
     case "hairdresser":
       return SKILLS_HAIRDRESSER;
+    case "priest":
+      return SKILLS_PRIEST;
     default:
       return SKILLS_BOXER;
+  }
+}
+
+export function getUpgradeSkills(name: IHero["name"]) {
+  switch (name) {
+    case "boxer":
+      return upgradeBoxerSkills;
+    case "programmer":
+      return upgradeProgrammerSkills;
+    case "cook":
+      return upgradeCookSkills;
+    case "hairdresser":
+      return upgradeHairdresserSkills;
+    case "priest":
+      return upgradePriestSkills;
+    default:
+      return upgradeBoxerSkills;
   }
 }
 
@@ -334,10 +369,14 @@ export function getStatusToHero(): heroStatus {
       isVirus: false,
       stack: 0,
     },
-    severeWound: {
-      isSevereWound: false,
+    darkСurse: {
+      isDarkСurse: false,
       stack: 0,
       value: 20,
+    },
+    justiceMark: {
+      isJusticeMark: false,
+      stack: 0,
     },
   };
 }

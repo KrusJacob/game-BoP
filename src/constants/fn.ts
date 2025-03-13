@@ -43,9 +43,9 @@ export function getBuffAttackSpeed(this: IHero["buffs"]) {
 }
 
 export function getBarrier(this: IHero | IEnemy, value: number) {
-  console.log("getBarrier");
   const barrierValue = Math.min(value, this.getters.getMaxHp() - this.barrier);
   this.barrier += barrierValue;
+  console.log("getBarrier", barrierValue);
 
   if (this.barrier < 0) {
     this.barrier = 0;
@@ -57,8 +57,8 @@ export function getHeal(this: IHero | IEnemy, value: number) {
   let healValue = value;
   if (!this.status.death) {
     healValue = Math.min(this.getters.getMaxHp() - this.HP, value);
-    if (this.status.severeWound.stack > 0) {
-      healValue = reducingHeal(healValue, this.status.severeWound.stack);
+    if (this.status.darkСurse.stack > 0) {
+      healValue = reducingHeal(healValue, this.status.darkСurse.stack);
     }
     this.HP += healValue;
     this.update();

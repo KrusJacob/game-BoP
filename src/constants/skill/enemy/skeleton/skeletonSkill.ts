@@ -1,7 +1,7 @@
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { enemySkills, IEnemy } from "@/types/enemy.types";
 import { IHero } from "@/types/hero.types";
-import { getIgnoreDefSkill, getLockSkill, healHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
+import { getIgnoreDefSkill, getLockSkill, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { getPercent } from "@/utils/getPercent";
 import { getRandom } from "@/utils/getRandom";
 
@@ -23,7 +23,7 @@ SKILLS_SKELETON_BOSS[0] = {
     const chance = getRandom(1, 100);
     if (chance <= data.chance) {
       hero.pushSkillText(this[0].label);
-      healHeroOfSkill(hero, 0, data.modifierHeal, false);
+      goHealHeroOfSkill(hero, 0, data.modifierHeal, false);
     }
   },
   trigger: "afterInitiatorAttack",

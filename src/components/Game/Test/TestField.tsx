@@ -11,7 +11,13 @@ const TestField = () => {
   const { hero, enemy, setHero, setEnemy } = useGameStore((state) => state);
 
   const onSetEnemy = (enemy: heroName | enemyName) => {
-    if (enemy !== "boxer" && enemy !== "programmer" && enemy !== "cook" && enemy !== "hairdresser") {
+    if (
+      enemy !== "boxer" &&
+      enemy !== "programmer" &&
+      enemy !== "cook" &&
+      enemy !== "hairdresser" &&
+      enemy !== "priest"
+    ) {
       const newEnemy = new EnemyClass(enemy);
       setEnemy(newEnemy);
     } else {

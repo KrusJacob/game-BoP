@@ -1,13 +1,10 @@
 import { IHero, TypeSkillTrigger, heroSkills } from "@/types/hero.types";
 import { AllLevels, TypeMainStat, UpSkill, UpgradeSkills, typeDescr } from "@/types/skill.types";
-import { upgradeBoxerSkills } from "./boxer/upgradeSkill";
-import { upgradeProgrammerSkills } from "./programmer/upgradeSkill";
-import { upgradeCookSkills } from "./cook/upgradeSkill";
-import { upgradeHairdresserSkills } from "./hairdresser/upgradeSkill";
 
 export const skillHeroTrigger: TypeSkillTrigger = {
   active: [],
   inBeginFight: [],
+  inEndFight: [],
   beforeInitiatorAttack: [],
   afterInitiatorAttack: [],
   beforeTargetAttack: [],
@@ -24,19 +21,6 @@ export function registerSkill(fn: Function, trigger: keyof TypeSkillTrigger) {
 
 export function registerAllSkills(skillsArr: heroSkills[]) {
   skillsArr.filter((item) => item.trigger).map((skill) => registerSkill(skill.fn!, skill.trigger!));
-}
-
-export function getUpgradeSkills(name: IHero["name"]) {
-  switch (name) {
-    case "boxer":
-      return upgradeBoxerSkills;
-    case "programmer":
-      return upgradeProgrammerSkills;
-    case "cook":
-      return upgradeCookSkills;
-    case "hairdresser":
-      return upgradeHairdresserSkills;
-  }
 }
 
 export function incPoint(this: UpSkill, upgradeSkills: UpgradeSkills) {

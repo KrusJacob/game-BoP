@@ -13,6 +13,7 @@ export const skillEnemyTrigger: TypeSkillTrigger = {
   afterTargetMiss: [],
   afterInitiatorCrit: [],
   afterTargetCrit: [],
+  inEndFight: [],
 };
 
 export function clearEnemySkills() {

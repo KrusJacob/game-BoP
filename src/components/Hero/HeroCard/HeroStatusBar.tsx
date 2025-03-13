@@ -6,6 +6,7 @@ import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import { ImDroplet } from "react-icons/im";
 import { IoSkullSharp } from "react-icons/io5";
 import { FaHeartCrack } from "react-icons/fa6";
+import { GiInjustice } from "react-icons/gi";
 
 const HeroStatusBar = ({ type }: { type: "hero" | "enemy" }) => {
   const isStun = useGameStore((state) => state[type]?.status.stun.isStun);
@@ -13,7 +14,8 @@ const HeroStatusBar = ({ type }: { type: "hero" | "enemy" }) => {
   const isPoisoned = useGameStore((state) => state[type]?.status.isPoisoned);
   const isBleeded = useGameStore((state) => state[type]?.status.isBleeded);
   const virusStack = useGameStore((state) => state[type]?.status.virus.stack);
-  const severeWoundStack = useGameStore((state) => state[type]?.status.severeWound.stack);
+  const darkСurseStack = useGameStore((state) => state[type]?.status.darkСurse.stack);
+  const justiceMarkStack = useGameStore((state) => state[type]?.status.justiceMark.stack);
 
   return (
     <div className={styles.statusBar}>
@@ -45,11 +47,11 @@ const HeroStatusBar = ({ type }: { type: "hero" | "enemy" }) => {
           </Tooltip>
         </div>
       )}
-      {Boolean(severeWoundStack) && (
+      {Boolean(darkСurseStack) && (
         <div className={styles.statusBarItem}>
-          <Tooltip title="Тяжелое ранение" size="small">
+          <Tooltip title="Темное проклятие" size="small">
             <FaHeartCrack color="orange" />
-            <span className={styles.stack}>{severeWoundStack}</span>
+            <span className={styles.stack}>{darkСurseStack}</span>
           </Tooltip>
         </div>
       )}
@@ -58,6 +60,15 @@ const HeroStatusBar = ({ type }: { type: "hero" | "enemy" }) => {
           <Tooltip title="Вирус" size="small">
             <IoSkullSharp color="#BAC6C2" />
             <span className={styles.stack}>{virusStack}</span>
+          </Tooltip>
+        </div>
+      )}
+      {Boolean(justiceMarkStack) && (
+        <div className={styles.statusBarItem}>
+          <Tooltip title="Метка правосудия" size="small">
+            <GiInjustice color="#e9dd36" />
+
+            <span className={styles.stack}>{justiceMarkStack}</span>
           </Tooltip>
         </div>
       )}

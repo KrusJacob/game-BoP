@@ -11,13 +11,14 @@ export function applyPowerSkill(value: number, powerSkill: number) {
 export function goMagicalDamage(hero: IHero | IEnemy, target: IHero | IEnemy, damage: number) {
   const magicalDamage = applyPowerSkill(damage, hero.getters.getPowerSkill());
   const damagedValue = goDamage(hero, target, magicalDamageAction(magicalDamage));
-  console.log(damagedValue, "damage");
+  console.log(damagedValue, "magicalDamage");
 
   return damagedValue;
 }
 
 export function goPureDamage(hero: IHero | IEnemy, target: IHero | IEnemy, damage: number) {
   const pureDamage = applyPowerSkill(damage, hero.getters.getPowerSkill());
+  console.log(pureDamage, "pureDamage");
   return goDamage(hero, target, pureDamageAction(pureDamage));
 }
 
@@ -25,13 +26,19 @@ export function goPhysicalDamage(hero: IHero | IEnemy, target: IHero | IEnemy, d
   goDamage(hero, target, physicalDamageAction(damage));
 }
 
-export function healHeroOfSkill(hero: IHero | IEnemy, healValue = 0, healPercent = 0, isPowerSkill = true) {
+export function goHealHeroOfSkill(hero: IHero | IEnemy, healValue = 0, healPercent = 0, isPowerSkill = true) {
+  const heal = getHealOfSkill(hero, healValue, healPercent, isPowerSkill);
+  console.log(heal, "- heal", hero.type);
+  hero.getHeal(heal);
+}
+
+export function getHealOfSkill(hero: IHero | IEnemy, healValue = 0, healPercent = 0, isPowerSkill = true) {
   let heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
   if (isPowerSkill) {
     heal = applyPowerSkill(heal, hero.getters.getPowerSkill());
   }
-  hero.getHeal(heal);
-  console.log(hero.getHeal(heal), "- heal", hero.type);
+
+  return heal;
 }
 
 export function getLockSkill(): enemySkills {
@@ -46,7 +53,6 @@ export function getLockSkill(): enemySkills {
 }
 
 export function getIgnoreDefSkill(ignoreDef: number): enemySkills {
-  console.log(ignoreDef);
   return {
     label: "Жестокие удары",
     descr: function () {
