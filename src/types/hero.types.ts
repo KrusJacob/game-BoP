@@ -186,7 +186,7 @@ export interface IAttackInfo {
   isStunned?: boolean;
 }
 
-export type ITypeDamage = "physical" | "magical" | "pure";
+export type ITypeDamage = "physical" | "magical" | "pure" | "sacrifice";
 
 export type heroGoAttack = (target: IEnemy | IHero, options?: attackOptions) => IAttackInfo;
 
@@ -206,6 +206,7 @@ export interface TypeSkillTrigger {
 
 export interface attackOptions {
   modifier?: number;
+  bonusDamage?: number;
   ignoreDef?: number;
   isIgnoreAvade?: boolean;
 }

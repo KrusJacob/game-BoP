@@ -48,7 +48,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: true,
         branch: "power",
         data: {
-          value: [120, 240, 360, 480, 600],
+          value: [110, 220, 330, 440, 550],
         },
         fn(hero) {
           hero.setters.incMaxHp(getValue(this));
@@ -109,12 +109,13 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         descr: function () {
           const chance = getText.call(this, "chance");
           const duration = getText.call(this, "duration");
+          const energy = getText.call(this, "energy");
           return {
             current: chance.current
-              ? `"Хук левой" с шансом ${chance.current}% оглушит противника на ${duration.current} секунды`
+              ? `"Хук левой" с шансом ${chance.current}% оглушит противника на ${duration.current} секунды и восстановит ${energy.current}% энергии герою`
               : "",
             next: chance.next
-              ? `"Хук левой" с шансом ${chance.next}% оглушит противника на ${duration.next} секунды`
+              ? `"Хук левой" с шансом ${chance.next}% оглушит противника на ${duration.next} секунды и восстановит ${energy.next}% энергии герою`
               : "",
           };
         },
@@ -125,13 +126,15 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          chance: [30, 50, 70],
+          chance: [40, 55, 70],
           duration: [2, 2, 2],
+          energy: [10, 15, 20],
         },
         fn() {
-          SKILLS_BOXER[2].data.talent_3_1.isOpen = true;
-          SKILLS_BOXER[2].data.talent_3_1.stunChance += getValue(this, "chance");
-          SKILLS_BOXER[2].data.talent_3_1.stunDuration += getValue(this, "duration");
+          SKILLS_BOXER[2].data.power_3_1.isOpen = true;
+          SKILLS_BOXER[2].data.power_3_1.stunChance += getValue(this, "chance");
+          SKILLS_BOXER[2].data.power_3_1.stunDuration += getValue(this, "duration");
+          SKILLS_BOXER[2].data.power_3_1.energy += getValue(this, "energy");
         },
       },
     ],
@@ -151,18 +154,50 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/boxer/skillPower_4_1.png",
-        maxPoints: 2,
+        maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "power",
         data: {
-          value: [25, 50],
-          debuff: [-0.15, -0.3],
+          value: [30, 60, 90],
+          debuff: [-0.14, -0.28, -0.42],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));
           hero.setters.incAttackSpeed(getValue(this, "debuff"));
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Ванпанчмен",
+        descr: function () {
+          const modifierValue = getText.call(this, "modifierValue");
+          const modifierPower = getText.call(this, "modifierPower");
+          return {
+            current: modifierValue.current
+              ? `"Апперкот" наносит дополнительно ${modifierValue.current}% урона + ${modifierPower.current}% от силы героя, но оглушает героя на 2 секунды`
+              : "",
+            next: modifierValue.next
+              ? `"Апперкот" наносит дополнительно ${modifierValue.next}% урона + ${modifierPower.next}% от силы героя, но оглушает героя на 2 секунды`
+              : "",
+          };
+        },
+        img: "/assets/skill/boxer/skillPower_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          modifierValue: [75, 110, 145],
+          modifierPower: [75, 110, 145],
+        },
+        fn(hero) {
+          SKILLS_BOXER[0].data.modifier += getValue(this, "modifierValue") / 100;
+          SKILLS_BOXER[0].data.power_5_1.isOpen = true;
+          SKILLS_BOXER[0].data.power_5_1.modifierPower += getValue(this, "modifierPower") / 100;
         },
       },
     ],
@@ -219,13 +254,40 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           hero.setters.incIntellect(getValue(this));
         },
       },
+      // {
+      //   name: "Усиленный апперкот",
+      //   descr: function () {
+      //     const text = getText.call(this, "value");
+      //     return {
+      //       current: text.current ? `"Апперкот" наносит на ${text.current}% урона больше` : "",
+      //       next: text.next ? `"Апперкот" наносит на ${text.next}% урона больше` : "",
+      //     };
+      //   },
+      //   img: "/assets/skill/boxer/skillAgility_2_2.png",
+      //   maxPoints: 3,
+      //   currentPoint: 0,
+      //   inc: incPoint,
+      //   open: false,
+      //   branch: "agility",
+      //   data: {
+      //     value: [30, 50, 70],
+      //   },
+      //   fn(hero) {
+      //     SKILLS_BOXER[0].data.modifier += getValue(this) / 100;
+      //   },
+      // },
       {
-        name: "Усиленный апперкот",
+        name: "Пробивающий удар",
         descr: function () {
-          const text = getText.call(this, "value");
+          const modifierDef = getText.call(this, "modifierDef");
+          const duration = getText.call(this, "duration");
           return {
-            current: text.current ? `"Апперкот" наносит на ${text.current}% урона больше` : "",
-            next: text.next ? `"Апперкот" наносит на ${text.next}% урона больше` : "",
+            current: modifierDef.current
+              ? `"Апперкот" снижает защиту противника на ${modifierDef.current}% на ${duration.current} секунд`
+              : "",
+            next: modifierDef.next
+              ? `"Апперкот" снижает защиту противника на ${modifierDef.next}% на ${duration.next} секунд`
+              : "",
           };
         },
         img: "/assets/skill/boxer/skillAgility_2_2.png",
@@ -235,10 +297,13 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [30, 50, 70],
+          modifierDef: [40, 55, 70],
+          duration: [5, 6, 7],
         },
         fn(hero) {
-          SKILLS_BOXER[0].data.modifier += getValue(this) / 100;
+          SKILLS_BOXER[0].data.agility_2_2.isOpen = true;
+          SKILLS_BOXER[0].data.agility_2_2.modifierDef += getValue(this, "modifierDef") / 100;
+          SKILLS_BOXER[0].data.agility_2_2.duration += getValue(this, "duration");
         },
       },
     ],
@@ -283,10 +348,42 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [2, 4, 6],
+          value: [3, 5, 7],
         },
         fn() {
           SKILLS_BOXER[2].data.chance += getValue(this);
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Троечка",
+        descr: function () {
+          const chance = getText.call(this, "chance");
+          const modifier = getText.call(this, "modifier");
+          return {
+            current: chance.current
+              ? `"Хук левой" с шансом ${chance.current}% может провести еще доп.атаку, нанося ${modifier.current}% урона`
+              : "",
+            next: chance.next
+              ? `"Хук левой" с шансом ${chance.next}% может провести еще доп.атаку, нанося ${modifier.next}% урона`
+              : "",
+          };
+        },
+        img: "/assets/skill/boxer/skillAgility_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          chance: [30, 40, 50],
+          modifier: [70, 85, 100],
+        },
+        fn(hero) {
+          SKILLS_BOXER[2].data.agility_5_1.isOpen = true;
+          SKILLS_BOXER[2].data.agility_5_1.chance += getValue(this, "chance");
+          SKILLS_BOXER[2].data.agility_5_1.modifier += getValue(this, "modifier") / 100;
         },
       },
     ],
@@ -369,9 +466,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
             registerSkill(skill.bind(this), "afterInitiatorAttack");
 
             function skill(this: UpSkill, hero: IHero, target: IEnemy) {
-              const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
-              // goDamage(hero, target, pureDamageAction(damage));
-              // console.log(damage, "damage");
+              const damage = hero.getters.getIntellect() * (this.data.modifierDamage / 100);
               goMagicalDamage(hero, target, damage);
             }
           }
@@ -400,8 +495,8 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           value: [150, 200, 250],
         },
         fn() {
-          SKILLS_BOXER[1].data.talent_3_1.isOpen = true;
-          SKILLS_BOXER[1].data.talent_3_1.modifierHeal += getValue(this) / 100;
+          SKILLS_BOXER[1].data.intellect_3_1.isOpen = true;
+          SKILLS_BOXER[1].data.intellect_3_1.modifierHeal += getValue(this) / 100;
         },
       },
       {
@@ -446,10 +541,51 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          value: [2, 4, 6],
+          value: [3, 5, 7],
         },
         fn() {
           SKILLS_BOXER[3].data.chanceEvade += getValue(this);
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Вдохновение бойца",
+        descr: function () {
+          const modifier = getText.call(this, "modifier");
+          const duration = getText.call(this, "duration");
+          return {
+            current: modifier.current
+              ? `В начале каждого боя увеливает наносимый урон и снижает получаемый на ${modifier.current}% на ${duration.current} секунд`
+              : "",
+            next: modifier.next
+              ? `В начале каждого боя увеливает наносимый урон и снижает получаемый на ${modifier.next}% на ${duration.next} секунд`
+              : "",
+          };
+        },
+        img: "/assets/skill/boxer/skillIntellect_5_1.png",
+        maxPoints: 2,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          modifier: [20, 30],
+          duration: [6, 8],
+        },
+        fn(hero) {
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "inBeginFight");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              hero.pushSkillText(this.name);
+              const modifier = getValue(this, "modifier", true);
+              const duration = getValue(this, "duration", true);
+              console.log(duration);
+              hero.buffs.incDamage(modifier, duration);
+              hero.buffs.incDef(modifier, duration);
+            }
+          }
         },
       },
     ],

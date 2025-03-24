@@ -1,5 +1,5 @@
 import { IHero, TypeSkillTrigger, heroSkills } from "@/types/hero.types";
-import { AllLevels, TypeMainStat, UpSkill, UpgradeSkills, typeDescr } from "@/types/skill.types";
+import { AllSkillLevels, TypeMainStat, UpSkill, UpgradeSkills, typeDescr } from "@/types/skill.types";
 
 export const skillHeroTrigger: TypeSkillTrigger = {
   active: [],
@@ -36,13 +36,13 @@ export function incPoint(this: UpSkill, upgradeSkills: UpgradeSkills) {
     if (upgradeSkills[this.branch].totalPoint === 15) {
       unlockSkills(upgradeSkills, this.branch, "level_4");
     }
-    // if (upgradeSkills[this.branch].totalPoint === 12) {
-    //   unlockSkills(upgradeSkills, this.branch, "level_5");
-    // }
+    if (upgradeSkills[this.branch].totalPoint === 20) {
+      unlockSkills(upgradeSkills, this.branch, "level_5");
+    }
   }
 }
 
-export function unlockSkills(upgradeSkills: UpgradeSkills, branch: TypeMainStat, level: AllLevels) {
+export function unlockSkills(upgradeSkills: UpgradeSkills, branch: TypeMainStat, level: AllSkillLevels) {
   upgradeSkills[branch].openLevels.push(level);
   upgradeSkills[branch][level].forEach((element) => {
     element.open = true;
