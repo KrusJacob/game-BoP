@@ -4,7 +4,7 @@ import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
 import { goHealHeroOfSkill, goMagicalDamage, goPureDamage } from "../../utils";
-import { goDarkCurse, goStun } from "@/constants/func/fight";
+import { damageToHP, goDamage, goDarkCurse, goStun } from "@/constants/func/fight";
 import { getRandom } from "@/utils/getRandom";
 
 export const upgradePriestSkills: UpgradeSkills = {
@@ -32,7 +32,7 @@ export const upgradePriestSkills: UpgradeSkills = {
         branch: "power",
         data: {
           power: [2, 4, 6],
-          maxHp: [100, 200, 300],
+          maxHp: [80, 160, 240],
         },
         fn(hero) {
           hero.setters.incPower(getValue(this, "power"));
@@ -69,10 +69,13 @@ export const upgradePriestSkills: UpgradeSkills = {
       {
         name: "Латы паладина",
         descr: function () {
-          const text = getText.call(this, "value");
+          const def = getText.call(this, "def");
+          const decDodge = getText.call(this, "decDodge");
           return {
-            current: text.current ? `Увеличивает защиту ${text.current}` : "",
-            next: text.next ? `Увеличивает защиту ${text.next}` : "",
+            current: def.current
+              ? `Увеличивает защиту ${def.current}, но уменьшает уклонение на ${decDodge.current}%`
+              : "",
+            next: def.next ? `Увеличивает защиту ${def.next}, но уменьшает уклонение на ${-decDodge.next}%` : "",
           };
         },
         img: "/assets/skill/priest/skillPower_2_1.png",
@@ -82,10 +85,12 @@ export const upgradePriestSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [5, 10, 15],
+          def: [6, 12, 18],
+          decDodge: [-2, -4, -6],
         },
         fn(hero) {
-          hero.setters.incDef(getValue(this));
+          hero.setters.incDef(getValue(this, "def"));
+          SKILLS_PRIEST[3].data.chanceEvade += getValue(this, "decDodge");
         },
       },
       {
@@ -110,8 +115,8 @@ export const upgradePriestSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          cooldown: [8, 7, 6],
-          modifierPower: [120, 160, 200],
+          cooldown: [9, 8, 7],
+          modifierPower: [120, 140, 160],
           duration: [1, 1, 1],
         },
         fn(hero) {
@@ -139,29 +144,30 @@ export const upgradePriestSkills: UpgradeSkills = {
       {
         name: "Долой пост",
         descr: function () {
-          const power = getText.call(this, "power");
+          const value = getText.call(this, "value");
           const agility = getText.call(this, "agility");
           return {
-            current: power.current
-              ? `Увеличивает силу героя на ${power.current}, но уменьшает ловкость на ${-agility.current}`
+            current: value.current
+              ? `Увеличивает силу и атаку героя на ${value.current}, но уменьшает ловкость на ${-agility.current}`
               : "",
-            next: power.next
-              ? `Увеличивает силу героя на ${power.next}, но уменьшает ловкость на ${-agility.next}`
+            next: value.next
+              ? `Увеличивает силу и атаку героя на ${value.next}, но уменьшает ловкость на ${-agility.next}`
               : "",
           };
         },
         img: "/assets/skill/priest/skillPower_3_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "power",
         data: {
-          power: [10, 20, 30],
-          agility: [-3, -6, -9],
+          value: [7, 14, 21, 28, 35],
+          agility: [-2, -4, -8, -12, -16],
         },
         fn(hero) {
-          hero.setters.incPower(getValue(this, "power"));
+          hero.setters.incPower(getValue(this, "value"));
+          hero.setters.incAttack(getValue(this, "value"));
           hero.setters.incAgility(getValue(this, "agility"));
         },
       },
@@ -190,10 +196,10 @@ export const upgradePriestSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          healValue: [250, 350, 450],
-          healPercent: [8, 10, 12],
+          healValue: [250, 325, 400],
+          healPercent: [6, 8, 10],
           energy: [10, 15, 20],
-          cooldown: [7, 6, 5],
+          cooldown: [9, 8, 7],
           isCooldown: false,
         },
         fn(hero) {
@@ -210,6 +216,47 @@ export const upgradePriestSkills: UpgradeSkills = {
               setTimeout(() => {
                 this.data.isCooldown = false;
               }, cooldown);
+            }
+          }
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Кара богов",
+        descr: function () {
+          const damage = getText.call(this, "damage");
+          const delay = getText.call(this, "delay");
+          return {
+            current: damage.current
+              ? `Через ${delay.current} секунд от начала боя наносит противнику ${damage.current} чистого урона`
+              : "",
+            next: damage.next
+              ? `Через ${delay.next} секунд от начала боя наносит противнику ${damage.next} чистого урона`
+              : "",
+          };
+        },
+        img: "/assets/skill/priest/skillPower_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          damage: [500, 650, 800],
+          delay: [16, 14, 12],
+        },
+        fn(hero) {
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "inBeginFight");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              const timeout = setTimeout(() => {
+                if (hero.status.death && target.status.death) return;
+
+                hero.pushSkillText(this.name);
+                goPureDamage(hero, target, getValue(this, "damage", true));
+              }, getValue(this, "delay", true) * 1000);
             }
           }
         },
@@ -326,7 +373,7 @@ export const upgradePriestSkills: UpgradeSkills = {
         data: {
           maxCountAttack: [7, 6, 5],
           currentCountAttack: 0,
-          modifierDamage: [100, 115, 130],
+          modifierDamage: [90, 100, 110],
         },
         fn() {
           if (this.currentPoint === 1) {
@@ -360,14 +407,14 @@ export const upgradePriestSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/priest/skillAgility_3_2.png",
-        maxPoints: 3,
+        maxPoints: 2,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "agility",
         data: {
-          healPercent: [12, 16, 20],
-          energy: [10, 15, 20],
+          healPercent: [12, 16],
+          energy: [10, 15],
         },
         fn() {
           if (this.currentPoint === 1) {
@@ -417,6 +464,38 @@ export const upgradePriestSkills: UpgradeSkills = {
         },
       },
     ],
+    level_5: [
+      {
+        name: "Форма ангела",
+        descr: function () {
+          const modifier = getText.call(this, "modifier");
+          const duration = getText.call(this, "duration");
+          return {
+            current: modifier.current
+              ? `"Молитва" действует на ${duration.current} секунду дольше, также во время действия увеличивает наносимый урон героя и скорость атаки на ${modifier.current}%`
+              : "",
+            next: modifier.next
+              ? `"Молитва" действует на ${duration.next} секунду дольше, также во время действия увеличивает наносимый урон героя и скорость атаки на ${modifier.next}%`
+              : "",
+          };
+        },
+        img: "/assets/skill/priest/skillAgility_5_1.png",
+        maxPoints: 2,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          modifier: [18, 25],
+          duration: [1, 1],
+        },
+        fn(hero) {
+          SKILLS_PRIEST[0].data.duration += getValue(this, "duration");
+          SKILLS_PRIEST[0].data.agility_5_1.isOpen = true;
+          SKILLS_PRIEST[0].data.agility_5_1.modifier += getValue(this, "modifier");
+        },
+      },
+    ],
   },
   intellect: {
     totalPoint: 0,
@@ -457,33 +536,34 @@ export const upgradePriestSkills: UpgradeSkills = {
     ],
     level_2: [
       {
-        name: "Божественный заслон",
+        name: "Сильная аура",
         descr: function () {
-          const modifierDef = getText.call(this, "modifierDef");
-          const energyCost = getText.call(this, "energyCost");
+          const value = getText.call(this, "value");
+          const decAttack = getText.call(this, "decAttack");
           return {
-            current: modifierDef.current
-              ? `"Молитва" требует на ${energyCost.current} энергии меньше, так же во время ее действия снижает получаемый урон по герою на ${modifierDef.current}%`
+            current: value.current
+              ? `Уменьшает атаку на ${-decAttack.current}, но "Искра света" наносит на ${
+                  value.current
+                } больше урона`
               : "",
-            next: modifierDef.next
-              ? `"Молитва" требует на ${energyCost.next} энергии меньше, так же во время ее действия снижает получаемый урон по герою на ${modifierDef.next}%`
+            next: value.next
+              ? `Уменьшает атаку на ${-decAttack.next}, но "Искра света" наносит на ${value.next} больше урона`
               : "",
           };
         },
-        img: "/assets/skill/priest/skillIntellect_2_1.png",
+        img: "/assets/skill/priest/skillIntellect_3_2.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          modifierDef: [30, 40, 50],
-          energyCost: [6, 8, 10],
+          value: [6, 12, 18],
+          decAttack: [-6, -12, -18],
         },
         fn(hero) {
-          SKILLS_PRIEST[0].data.costEnergy -= getValue(this, "energyCost");
-          SKILLS_PRIEST[0].data.intellect_2_1.isOpen = true;
-          SKILLS_PRIEST[0].data.intellect_2_1.modifierDef += getValue(this, "modifierDef");
+          hero.setters.incAttack(getValue(this, "decAttack"));
+          SKILLS_PRIEST[1].data.value += getValue(this);
         },
       },
       {
@@ -506,7 +586,7 @@ export const upgradePriestSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          heal: [25, 35, 55],
+          heal: [30, 45, 60],
         },
         fn(hero) {
           SKILLS_PRIEST[2].data.intellect_2_2.isOpen = true;
@@ -565,36 +645,36 @@ export const upgradePriestSkills: UpgradeSkills = {
         },
       },
       {
-        name: "Сильная аура",
+        name: "Божественный заслон",
         descr: function () {
-          const value = getText.call(this, "value");
-          const decAttack = getText.call(this, "decAttack");
+          const modifierDef = getText.call(this, "modifierDef");
+          const energyCost = getText.call(this, "energyCost");
           return {
-            current: value.current
-              ? `Уменьшает атаку на ${-decAttack.current}, но "Искра света" наносит на ${
-                  value.current
-                } больше урона`
+            current: modifierDef.current
+              ? `"Молитва" требует на ${energyCost.current} энергии меньше, так же во время ее действия снижает получаемый урон по герою на ${modifierDef.current}%`
               : "",
-            next: value.next
-              ? `Уменьшает атаку на ${-decAttack.next}, но "Искра света" наносит на ${value.next} больше урона`
+            next: modifierDef.next
+              ? `"Молитва" требует на ${energyCost.next} энергии меньше, так же во время ее действия снижает получаемый урон по герою на ${modifierDef.next}%`
               : "",
           };
         },
-        img: "/assets/skill/priest/skillIntellect_3_2.png",
+        img: "/assets/skill/priest/skillIntellect_2_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          value: [8, 12, 16],
-          decAttack: [-5, -10, -15],
+          modifierDef: [30, 40, 50],
+          energyCost: [6, 8, 10],
         },
         fn(hero) {
-          hero.setters.incAttack(getValue(this, "decAttack"));
-          SKILLS_PRIEST[1].data.value += getValue(this);
+          SKILLS_PRIEST[0].data.costEnergy -= getValue(this, "energyCost");
+          SKILLS_PRIEST[0].data.intellect_2_1.isOpen = true;
+          SKILLS_PRIEST[0].data.intellect_2_1.modifierDef += getValue(this, "modifierDef");
         },
       },
+
       {
         name: "Взгляд в душу",
         descr: function () {
@@ -632,10 +712,10 @@ export const upgradePriestSkills: UpgradeSkills = {
           const duration = getText.call(this, "duration");
           return {
             current: chance.current
-              ? `При атаке есть ${chance.current}% шанс восстановить ${energy.current} энергии и наложить на противника 1 слой "Темного проклятия" на ${duration.current} секунд. (Каждый слой снижает получаемое исцеление на 20%)`
+              ? `При атаке есть ${chance.current}% шанс восстановить ${energy.current} энергии и наложить на противника 1 слой "Темное проклятие" на ${duration.current} секунд. (Каждый слой снижает получаемое исцеление на 20%)`
               : "",
             next: chance.next
-              ? `При атаке есть ${chance.next}% шанс восстановить ${energy.next} энергии и наложить на противника 1 слой "Темного проклятия" на ${duration.next} секунд. (Каждый слой снижает получаемое исцеление на 20%)`
+              ? `При атаке есть ${chance.next}% шанс восстановить ${energy.next} энергии и наложить на противника 1 слой "Темное проклятие" на ${duration.next} секунд. (Каждый слой снижает получаемое исцеление на 20%)`
               : "",
           };
         },
@@ -647,8 +727,8 @@ export const upgradePriestSkills: UpgradeSkills = {
         branch: "intellect",
         data: {
           chance: [15, 18, 21],
-          energy: [7, 10, 13],
-          duration: [7, 10, 13],
+          energy: [7, 9, 11],
+          duration: [7, 9, 11],
         },
         fn() {
           if (this.currentPoint === 1) {
@@ -661,6 +741,56 @@ export const upgradePriestSkills: UpgradeSkills = {
                 hero.energy.value += getValue(this, "energy", true);
                 goDarkCurse(target, 1, getValue(this, "duration", true));
               }
+            }
+          }
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Сделка с дьяволом",
+        descr: function () {
+          const sacrifice = getText.call(this, "sacrifice");
+          const modifier = getText.call(this, "modifier");
+          const duration = getText.call(this, "duration");
+
+          return {
+            current: sacrifice.current
+              ? `В начале боя герой жертвует ${
+                  sacrifice.current
+                } здоровья и увеличивает получаемой урон противника на ${-modifier.current}% на ${
+                  duration.current
+                } секунд`
+              : "",
+            next: sacrifice.next
+              ? `В начале боя герой жертвует ${
+                  sacrifice.next
+                } здоровья и увеличивает получаемой урон противника на ${-modifier.next}% на ${
+                  duration.next
+                } секунд`
+              : "",
+          };
+        },
+        img: "/assets/skill/priest/skillIntellect_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          sacrifice: [250, 300, 350],
+          modifier: [-20, -25, -30],
+          duration: [8, 10, 12],
+        },
+        fn(hero) {
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "inBeginFight");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              hero.pushSkillText(this.name);
+
+              goDamage(target, hero, { type: "sacrifice", value: getValue(this, "sacrifice", true) });
+              target.buffs.incDef(getValue(this, "modifier", true), getValue(this, "duration", true));
             }
           }
         },

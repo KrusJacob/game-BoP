@@ -1,5 +1,5 @@
 import { IEnemy, enemySkills } from "@/types/enemy.types";
-import { IHero } from "@/types/hero.types";
+import { IHero, attackOptions } from "@/types/hero.types";
 import { getPercent } from "@/utils/getPercent";
 import { goDamage, magicalDamageAction, physicalDamageAction, pureDamageAction } from "../func/fight";
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "../setup";
@@ -18,16 +18,22 @@ export function goMagicalDamage(hero: IHero | IEnemy, target: IHero | IEnemy, da
 
 export function goPureDamage(hero: IHero | IEnemy, target: IHero | IEnemy, damage: number) {
   const pureDamage = applyPowerSkill(damage, hero.getters.getPowerSkill());
-  console.log(pureDamage, "pureDamage");
-  return goDamage(hero, target, pureDamageAction(pureDamage));
+  const damagedValue = goDamage(hero, target, pureDamageAction(pureDamage));
+  console.log(damagedValue, "pureDamage");
+  return damagedValue;
 }
 
-export function goPhysicalDamage(hero: IHero | IEnemy, target: IHero | IEnemy, damage: number) {
-  goDamage(hero, target, physicalDamageAction(damage));
+export function goPhysicalDamage(
+  hero: IHero | IEnemy,
+  target: IHero | IEnemy,
+  damage: number,
+  options?: attackOptions
+) {
+  return goDamage(hero, target, physicalDamageAction(damage), options);
 }
 
 export function goHealHeroOfSkill(hero: IHero | IEnemy, healValue = 0, healPercent = 0, isPowerSkill = true) {
-  const heal = getHealOfSkill(hero, healValue, healPercent, isPowerSkill);
+  const heal = Math.round(getHealOfSkill(hero, healValue, healPercent, isPowerSkill));
   console.log(heal, "- heal", hero.type);
   hero.getHeal(heal);
 }

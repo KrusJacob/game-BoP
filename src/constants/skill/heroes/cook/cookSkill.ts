@@ -1,4 +1,4 @@
-import { goFreeze, goPosionDmg } from "@/constants/func/fight";
+import { goDarkCurse, goFreeze, goPosionDmg } from "@/constants/func/fight";
 
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
@@ -90,6 +90,10 @@ const SKILLS_COOK: heroSkills[] = [
         isOpen: false,
         modifierOfFreeze: 0,
       },
+      intellect_4_2: {
+        isOpen: false,
+        duration: 0,
+      },
     },
     trigger: "afterInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
@@ -117,6 +121,9 @@ const SKILLS_COOK: heroSkills[] = [
 
         if (data.intellect_4_1.isOpen) {
           goFreeze(target, data.intellect_4_1.modifierOfFreeze, data.duration);
+        }
+        if (data.intellect_4_2.isOpen) {
+          goDarkCurse(target, 1, data.intellect_4_2.duration);
         }
       }
     },

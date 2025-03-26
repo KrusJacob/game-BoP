@@ -23,7 +23,13 @@ import {
   SKILLS_BEAST_BOSS,
   SKILLS_TREASURE_BOX,
 } from "./skill/enemySkills";
-import { SKILLS_BOXER, SKILLS_PROGRAMMER, SKILLS_COOK, SKILLS_HAIRDRESSER } from "./skill/heroSkills";
+import {
+  SKILLS_BOXER,
+  SKILLS_PROGRAMMER,
+  SKILLS_COOK,
+  SKILLS_HAIRDRESSER,
+  SKILLS_PRIEST,
+} from "./skill/heroSkills";
 import { statsBeast, statsGnome, statsGoblin, statsLegend, statsNaga, statsRogue, statsSkeleton } from "./enemy";
 import { enemiesResources } from "./resources";
 import {
@@ -42,7 +48,7 @@ import { SKILLS_NAGA_BOSS } from "./skill/enemy/naga/nagaSkill";
 import { SKILLS_SKELETON_BOSS } from "./skill/enemy/skeleton/skeletonSkill";
 import { SKILLS_CAVE_HORROR } from "./skill/enemy/legends/caveHorror";
 import { SKILLS_SWAMP_MONSTER } from "./skill/enemy/legends/swampMonster";
-import SKILLS_PRIEST from "./skill/heroes/priest/priestSkill";
+
 import { upgradeBoxerSkills } from "./skill/heroes/boxer/upgradeSkill";
 import { upgradeProgrammerSkills } from "./skill/heroes/programmer/upgradeSkill";
 import { upgradeCookSkills } from "./skill/heroes/cook/upgradeSkill";

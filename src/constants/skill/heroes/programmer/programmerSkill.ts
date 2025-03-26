@@ -2,8 +2,14 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, goMagicalDamage, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
-import { goPosionDmg } from "@/constants/func/fight";
+import {
+  applyPowerSkill,
+  goMagicalDamage,
+  goHealHeroOfSkill,
+  getСombatTechniquesSkill,
+  getHealOfSkill,
+} from "../../utils";
+import { goDarkCurse, goHealTick, goPosionDmg } from "@/constants/func/fight";
 import { getPercent } from "@/utils/getPercent";
 
 const SKILLS_PROGRAMMER: heroSkills[] = [
@@ -16,16 +22,31 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     data: {
       costEnergy: 200,
       modifier: 8,
+      agility_5_1: {
+        isOpen: false,
+        modifierHeal: 0,
+        duration: 0,
+      },
+      intellect_5_1: {
+        isOpen: false,
+        duration: 0,
+      },
     },
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[0].data;
       hero.pushSkillText(this[0].label);
       let damage = getPercent(target.getters.getMaxHp(), data.modifier);
-      // goDamage(hero, target, magicalDamageAction(damage));
       const damagedValue = goMagicalDamage(hero, target, damage);
-      console.log(damagedValue);
       goHealHeroOfSkill(hero, damagedValue, 0, false);
+      if (data.agility_5_1.isOpen) {
+        let heal = hero.getters.getAgility() * data.agility_5_1.modifierHeal;
+        heal = getHealOfSkill(hero, heal, 0);
+        goHealTick(hero, target, heal, 0, 1, data.agility_5_1.duration);
+      }
+      if (data.intellect_5_1.isOpen) {
+        goDarkCurse(target, 4, data.intellect_5_1.duration);
+      }
     },
   },
   {
@@ -61,7 +82,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       hero.getBarrier(totalBarrier);
 
       if (data.power_2_2.isOpen) {
-        const healValue = Math.floor(hero.getters.getPower() * data.power_2_2.modifierHeal);
+        const healValue = hero.getters.getPower() * data.power_2_2.modifierHeal;
         goHealHeroOfSkill(hero, healValue, 0);
       }
       if (data.power_2_3.isOpen) {
@@ -119,8 +140,7 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
         }
 
         if (data.power_4_1.isOpen) {
-          const damage = Math.floor(hero.getters.getPower() * data.power_4_1.modifierDamage);
-          // goDamage(hero, target, magicalDamageAction(damage));
+          const damage = hero.getters.getPower() * data.power_4_1.modifierDamage;
           goMagicalDamage(hero, target, damage);
         }
 

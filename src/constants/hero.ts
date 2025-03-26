@@ -8,7 +8,7 @@ const STATS_BOXER: heroBaseStats = {
   power: 55,
   agility: 35,
   intellect: 15,
-  attack: 130,
+  attack: 125,
   def: 12,
   magicDef: 0,
   maxHp: 1000,

@@ -155,7 +155,7 @@ export const ALL_TALENTS: talentType[] = [
       };
     },
     data: {
-      value: [0.16, 0.27, 0.38, 0.49, 0.6],
+      value: [0.14, 0.23, 0.32, 0.41, 0.5],
     },
     fn(hero: IHero) {
       hero.setters.incAttackSpeed(getValue(this));
@@ -191,7 +191,7 @@ export const ALL_TALENTS: talentType[] = [
       };
     },
     data: {
-      value: [4, 6, 8, 10, 12],
+      value: [4, 7, 10, 13, 16],
     },
     fn(hero: IHero) {
       hero.setters.incChanceEvade(getValue(this));
@@ -209,7 +209,7 @@ export const ALL_TALENTS: talentType[] = [
       };
     },
     data: {
-      value: [4, 6, 8, 10, 12],
+      value: [4, 7, 10, 13, 16],
     },
     fn(hero: IHero) {
       hero.setters.incChanceCritDamage(getValue(this));

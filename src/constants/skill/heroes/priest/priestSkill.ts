@@ -36,6 +36,10 @@ const SKILLS_PRIEST: heroSkills[] = [
         isOpen: false,
         modifierDef: 0,
       },
+      agility_5_1: {
+        isOpen: false,
+        modifier: 0,
+      },
     },
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
@@ -55,6 +59,11 @@ const SKILLS_PRIEST: heroSkills[] = [
       }
       if (data.intellect_2_1.isOpen) {
         hero.buffs.incDef(data.intellect_2_1.modifierDef, data.duration);
+      }
+      if (data.agility_5_1.isOpen) {
+        console.log(data.agility_5_1.modifier);
+        hero.buffs.incDamage(data.agility_5_1.modifier, data.duration);
+        hero.buffs.incAttackSpeed(data.agility_5_1.modifier, data.duration);
       }
     },
   },
@@ -94,7 +103,7 @@ const SKILLS_PRIEST: heroSkills[] = [
     data: {
       chance: 35,
       maxMark: 5,
-      damage: 160,
+      damage: 150,
       cooldownCount: 4,
       isCooldown: false,
       intellect_2_2: {

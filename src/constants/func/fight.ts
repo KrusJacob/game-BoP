@@ -125,6 +125,7 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
 }
 
 function getDamageWithReduction(target: IHero | IEnemy, value: number) {
+  // console.log(value, Math.floor(value * target.buffs.getBuffDef()));
   return Math.floor(value * target.buffs.getBuffDef());
 }
 
@@ -158,20 +159,23 @@ export function goDamage(
   switch (damageInfo.type) {
     case "physical":
       damageValue = getPhysicalDamage(initiator, target, damageInfo.value, options);
-      damageValue = getDamageWithReduction(target, damageValue);
+      // damageValue = getDamageWithReduction(target, damageValue);
       break;
     case "magical":
       damageValue = getMagicalDamage(target, damageInfo.value);
-      damageValue = getDamageWithReduction(target, damageValue);
+      // damageValue = getDamageWithReduction(target, damageValue);
       break;
     case "pure":
       damageValue = getPureDamage(target, damageInfo.value);
+      break;
+    case "sacrifice":
+      damageValue = damageInfo.value;
       break;
     default:
       damageValue = 0;
   }
 
-  if (target.barrier) {
+  if (target.barrier && damageInfo.type !== "sacrifice") {
     damageToBarrier(target, damageValue);
   } else {
     damageToHP(target, damageValue);
@@ -186,15 +190,20 @@ function getPhysicalDamage(
   value: number,
   options?: attackOptions
 ) {
-  const damage = getDamageWithDef(initiator, value, target.getters.getDef(), options);
+  let damage = getDamageWithDef(initiator, value, target.getters.getDef(), options);
+  damage = getDamageWithReduction(target, damage);
   return damage;
 }
 
 function getMagicalDamage(target: IHero | IEnemy, value: number) {
-  const damage = getDamageWithMagicDef(value, target.getters.getMagicDef());
+  let damage = getDamageWithMagicDef(value, target.getters.getMagicDef());
+  damage = getDamageWithReduction(target, damage);
   return damage;
 }
 function getPureDamage(target: IHero | IEnemy, value: number) {
+  if (target.buffs.getBuffDef() > 1) {
+    return getDamageWithReduction(target, value);
+  }
   return value;
 }
 
@@ -202,7 +211,11 @@ function getDamageWithOptions(damage: number, options?: attackOptions) {
   if (!options) {
     return damage;
   }
-  return Math.floor(damage * (options.modifier ? options.modifier : 1));
+  let bonusDamage = 0;
+  if (options.bonusDamage) {
+    bonusDamage += options.bonusDamage;
+  }
+  return Math.floor(damage * (options.modifier ? options.modifier : 1) + bonusDamage);
 }
 
 function getDamageWithBuffs(attacker: IHero | IEnemy) {
@@ -326,9 +339,8 @@ function createTimeoutDarkCurse() {
     // }
 
     setTimeout(() => {
-      // target.status.severeWound.isSevereWound = false;
       target.status.darkСurse.stack -= stack;
-      console.log("тяжелые раны закончились");
+      console.log("Темное проклятие закончились");
     }, duration * 1000);
   };
 }

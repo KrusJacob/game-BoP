@@ -1,7 +1,7 @@
 import cn from "classnames";
 import styles from "./styles.module.css";
 import SkillItem from "./SkillItem";
-import { TypeMainStat, UpSkill } from "@/types/skill.types";
+import { AllSkillLevels, TypeMainStat, UpSkill } from "@/types/skill.types";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import { BiSolidLockAlt } from "react-icons/bi";
 import { useSkillUpgradeStore } from "@/store/skillUpgradeStore";
@@ -9,7 +9,7 @@ import { useSkillUpgradeStore } from "@/store/skillUpgradeStore";
 interface Props {
   tab: TypeMainStat;
   incPoint: (item: UpSkill) => void;
-  level: "level_1" | "level_2" | "level_3" | "level_4";
+  level: AllSkillLevels;
 }
 
 const SkillLevel = ({ tab, incPoint, level }: Props) => {
