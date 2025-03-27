@@ -11,7 +11,13 @@ const TestField = () => {
   const { hero, enemy, setHero, setEnemy } = useGameStore((state) => state);
 
   const onSetEnemy = (enemy: heroName | enemyName) => {
-    if (enemy !== "boxer" && enemy !== "programmer" && enemy !== "cook" && enemy !== "hairdresser") {
+    if (
+      enemy !== "boxer" &&
+      enemy !== "programmer" &&
+      enemy !== "cook" &&
+      enemy !== "hairdresser" &&
+      enemy !== "priest"
+    ) {
       const newEnemy = new EnemyClass(enemy);
       setEnemy(newEnemy);
     } else {
@@ -85,10 +91,10 @@ const TestField = () => {
           <Button size="small" onClick={() => onSetEnemy("rogue_4")}>
             Разбойник 4
           </Button>
-          <Button size="small" onClick={() => onSetEnemy("golden-pig")}>
+          <Button size="small" onClick={() => onSetEnemy("goldenPig_L")}>
             Золотая свинка
           </Button>
-          <Button size="small" onClick={() => onSetEnemy("gnome-trader")}>
+          <Button size="small" onClick={() => onSetEnemy("gnomeTrader_L")}>
             Торговец
           </Button>
         </div>

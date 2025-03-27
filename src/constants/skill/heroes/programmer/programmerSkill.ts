@@ -2,8 +2,14 @@ import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, goMagicalDamage, healHeroOfSkill } from "../../utils";
-import { goPosionDmg } from "@/constants/func/fight";
+import {
+  applyPowerSkill,
+  goMagicalDamage,
+  goHealHeroOfSkill,
+  getСombatTechniquesSkill,
+  getHealOfSkill,
+} from "../../utils";
+import { goDarkCurse, goHealTick, goPosionDmg } from "@/constants/func/fight";
 import { getPercent } from "@/utils/getPercent";
 
 const SKILLS_PROGRAMMER: heroSkills[] = [
@@ -16,15 +22,31 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
     data: {
       costEnergy: 200,
       modifier: 8,
+      agility_5_1: {
+        isOpen: false,
+        modifierHeal: 0,
+        duration: 0,
+      },
+      intellect_5_1: {
+        isOpen: false,
+        duration: 0,
+      },
     },
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[0].data;
       hero.pushSkillText(this[0].label);
       let damage = getPercent(target.getters.getMaxHp(), data.modifier);
-      // goDamage(hero, target, magicalDamageAction(damage));
       const damagedValue = goMagicalDamage(hero, target, damage);
-      healHeroOfSkill(hero, damagedValue, 0, false);
+      goHealHeroOfSkill(hero, damagedValue, 0, false);
+      if (data.agility_5_1.isOpen) {
+        let heal = hero.getters.getAgility() * data.agility_5_1.modifierHeal;
+        heal = getHealOfSkill(hero, heal, 0);
+        goHealTick(hero, target, heal, 0, 1, data.agility_5_1.duration);
+      }
+      if (data.intellect_5_1.isOpen) {
+        goDarkCurse(target, 4, data.intellect_5_1.duration);
+      }
     },
   },
   {
@@ -57,12 +79,11 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       const mainStat = data.power_2_1.isOpen ? hero.getters.getPower() : hero.getters.getIntellect();
       let totalBarrier = mainStat * data.modifier + data.barrierValue;
       totalBarrier = applyPowerSkill(totalBarrier, hero.getters.getPowerSkill());
-      console.log(totalBarrier);
       hero.getBarrier(totalBarrier);
 
       if (data.power_2_2.isOpen) {
-        const healValue = Math.floor(hero.getters.getPower() * data.power_2_2.modifierHeal);
-        healHeroOfSkill(hero, healValue, 0);
+        const healValue = hero.getters.getPower() * data.power_2_2.modifierHeal;
+        goHealHeroOfSkill(hero, healValue, 0);
       }
       if (data.power_2_3.isOpen) {
         const damage = getPercent(hero.getters.getMaxHp(), data.power_2_3.modifierDamage);
@@ -81,7 +102,6 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       chance: 25,
       maxLayer: 3,
       modifier: 10,
-      applyedLayer: 0,
       duration: 6,
       cooldown: 1.5,
       isCooldown: false,
@@ -102,14 +122,12 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
       }
       const chance = getRandom(1, 100);
 
-      if (chance <= data.chance && data.applyedLayer < data.maxLayer) {
+      if (chance <= data.chance && target.status.virus.stack < data.maxLayer) {
         hero.pushSkillText(this[2].label);
         target.buffs.incDamage(-data.modifier, data.duration);
-        data.applyedLayer += 1;
         data.isCooldown = true;
-
         target.status.virus.stack += 1;
-        console.log(data.applyedLayer, "layer +");
+        console.log(target.status.virus.stack, "layer +");
 
         setTimeout(() => {
           data.isCooldown = false;
@@ -122,30 +140,18 @@ const SKILLS_PROGRAMMER: heroSkills[] = [
         }
 
         if (data.power_4_1.isOpen) {
-          const damage = Math.floor(hero.getters.getPower() * data.power_4_1.modifierDamage);
-          // goDamage(hero, target, magicalDamageAction(damage));
+          const damage = hero.getters.getPower() * data.power_4_1.modifierDamage;
           goMagicalDamage(hero, target, damage);
         }
 
         setTimeout(() => {
           target.status.virus.stack -= 1;
-          data.applyedLayer -= 1;
           console.log("layer снялся");
         }, data.duration * 1000);
       }
     },
   },
-  {
-    label: "Техника боя",
-    descr: function () {
-      return `Шанс критического удара: ${this.data.chanceCritDamage}%, Шанс уклонения: ${this.data.chanceEvade}% `;
-    },
-    img: "/assets/skill/chances.png",
-    data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
-    },
-  },
+  getСombatTechniquesSkill(),
 ];
 
 export default SKILLS_PROGRAMMER;

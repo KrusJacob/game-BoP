@@ -24,6 +24,9 @@
     width: 100%;
     max-width: 320px;
 }
+.tooltip div b {
+    font-size: 1.1rem;
+}
 .tooltip div p {
     margin-top: 6px;
 }

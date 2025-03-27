@@ -1,7 +1,8 @@
 .card {
+    justify-self: center;
     position: relative;
     min-width: 230px;
-    max-width: 270px;
+    max-width: 260px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -27,11 +28,12 @@
     left: 3px;
     top: 3px;
     font-size: 1.3rem;
-    background-color: rgba(31, 29, 29, 0.6);
+    background-color: rgba(31, 29, 29, 0.85);
 }
 
 .statusBarItem {
-    padding: 4px;
+    position: relative;
+    padding: 6px;
     padding-bottom: 0;
 }
 
@@ -39,7 +41,7 @@
     position: absolute;
     right: 0;
     bottom: -2px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .name {

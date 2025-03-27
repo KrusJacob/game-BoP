@@ -3,6 +3,7 @@ import { getText, incPoint, getValue, registerSkill } from "..";
 import SKILLS_PROGRAMMER from "./programmerSkill";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
+import { goMagicalDamage } from "../../utils";
 
 export const upgradeProgrammerSkills: UpgradeSkills = {
   power: {
@@ -45,8 +46,8 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current ? `обьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
-            next: text.next ? `обьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
+            current: text.current ? `Oбьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
+            next: text.next ? `Oбьем барьера от "Брандмауэр" зависит от силы, а не от интеллекта` : "",
           };
         },
         img: "/assets/skill/programmer/skillPower_2_1.png",
@@ -82,7 +83,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [120, 160, 200],
+          value: [130, 190, 250],
         },
         fn(hero) {
           SKILLS_PROGRAMMER[1].data.power_2_2.isOpen = true;
@@ -128,13 +129,13 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/programmer/skillPower_3_1.png",
-        maxPoints: 5,
+        maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "power",
         data: {
-          value: [10, 20, 30, 40, 50],
+          value: [9, 18, 27],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));
@@ -175,9 +176,11 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           const value = getText.call(this, "value");
           return {
             current: value.current
-              ? `"Вирус" также наносит магический урон в размере ${value.current}% от силы героя`
+              ? `В момент срабатывания "Вирус" - наносит магический урон врагу в размере ${value.current}% от силы героя`
               : "",
-            next: value.next ? `"Вирус" также наносит магический урон в размере ${value.next}% от силы героя` : "",
+            next: value.next
+              ? `В момент срабатывания "Вирус" - наносит магический урон врагу в размере ${value.next}% от силы героя`
+              : "",
           };
         },
         img: "/assets/skill/programmer/skillPower_4_1.png",
@@ -192,6 +195,31 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         fn(hero) {
           SKILLS_PROGRAMMER[2].data.power_4_1.isOpen = true;
           SKILLS_PROGRAMMER[2].data.power_4_1.modifierDamage += getValue(this) / 100;
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Протокол защиты",
+        descr: function () {
+          const def = getText.call(this, "value");
+          return {
+            current: def.current ? `Увеличивает защиту и магическую защиту на ${def.current}` : "",
+            next: def.next ? `Увеличивает защиту и магическую защиту на ${def.next}` : "",
+          };
+        },
+        img: "/assets/skill/programmer/skillPower_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          value: [5, 10, 15],
+        },
+        fn(hero) {
+          hero.setters.incDef(getValue(this));
+          hero.setters.incMagicDef(getValue(this));
         },
       },
     ],
@@ -340,7 +368,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [20, 25, 30],
+          value: [20, 30, 40],
           duration: [4, 5, 6],
         },
         fn() {
@@ -354,6 +382,38 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         },
       },
     ],
+    level_5: [
+      {
+        name: "Восстановление данных",
+        descr: function () {
+          const modifierHeal = getText.call(this, "modifierHeal");
+          const duration = getText.call(this, "duration");
+          return {
+            current: modifierHeal.current
+              ? `После "Утечка данных" восстанавливает каждую секунду здоровье - ${modifierHeal.current}% от ловкости героя, в течении ${duration.current} секунд`
+              : "",
+            next: modifierHeal.next
+              ? `После "Утечка данных" восстанавливает каждую секунду здоровье - ${modifierHeal.next}% от ловкости героя, в течении ${duration.next} секунд`
+              : "",
+          };
+        },
+        img: "/assets/skill/programmer/skillAgility_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          modifierHeal: [120, 135, 150],
+          duration: [4, 5, 6],
+        },
+        fn(hero) {
+          SKILLS_PROGRAMMER[0].data.agility_5_1.isOpen = true;
+          SKILLS_PROGRAMMER[0].data.agility_5_1.modifierHeal += getValue(this, "modifierHeal") / 100;
+          SKILLS_PROGRAMMER[0].data.agility_5_1.duration += getValue(this, "duration");
+        },
+      },
+    ],
   },
   intellect: {
     totalPoint: 0,
@@ -362,28 +422,67 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
       {
         name: "Чтение книг",
         descr: function () {
-          const attack = getText.call(this, "attack");
           const intellect = getText.call(this, "intellect");
           return {
-            current: attack.current
-              ? `Увеличивает интеллект на ${intellect.current} и атаку на ${attack.current}`
-              : "",
-            next: attack.next ? `Увеличивает интеллект на ${intellect.next} и атаку на ${attack.next}` : "",
+            current: intellect.current ? `Увеличивает интеллект на ${intellect.current}` : "",
+            next: intellect.next ? `Увеличивает интеллект на ${intellect.next}` : "",
           };
         },
         img: "/assets/skill/programmer/skillIntellect_1_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: true,
+        branch: "intellect",
+        data: {
+          intellect: [6, 12, 18],
+        },
+        fn(hero) {
+          hero.setters.incIntellect(getValue(this, "intellect"));
+        },
+      },
+      {
+        name: "Майнинг",
+        descr: function () {
+          const value = getText.call(this, "value");
+          const decAttack = getText.call(this, "decAttack");
+          return {
+            current: value.current
+              ? `Каждую секунду наносит врагу ${
+                  value.current
+                } магического урона. Уменьшает атаку героя на ${-decAttack.current}`
+              : "",
+            next: value.next
+              ? `Каждую секунду наносит врагу ${
+                  value.next
+                } магического урона. Уменьшает атаку героя на ${-decAttack.next}`
+              : "",
+          };
+        },
+        img: "/assets/skill/programmer/skillIntellect_1_2.png",
         maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: true,
         branch: "intellect",
         data: {
-          attack: [2, 4, 6, 8, 10],
-          intellect: [4, 8, 12, 16, 20],
+          value: [10, 20, 30, 40, 50],
+          decAttack: [-7, -14, -21, -28, -35],
         },
         fn(hero) {
-          hero.setters.incAttack(getValue(this, "attack"));
-          hero.setters.incIntellect(getValue(this, "intellect"));
+          hero.setters.incAttack(getValue(this, "decAttack"));
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "inBeginFight");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              hero.pushSkillText(this.name);
+
+              const interval = setInterval(() => {
+                if (hero.status.death || target.status.death) clearInterval(interval);
+                goMagicalDamage(hero, target, getValue(this, "value", true));
+              }, 1000);
+            }
+          }
         },
       },
     ],
@@ -410,7 +509,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         branch: "intellect",
         data: {
           def: [6, 12, 18, 24, 30],
-          decMaxHp: [-70, -140, -210, -280, -350],
+          decMaxHp: [-75, -150, -225, -300, -375],
         },
         fn(hero) {
           hero.setters.incDef(getValue(this, "def"));
@@ -447,7 +546,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
     ],
     level_3: [
       {
-        name: "Закинуть троян",
+        name: "Адаптивный скрипт",
         descr: function () {
           const text = getText.call(this, "value");
           return {
@@ -462,7 +561,7 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          value: [2, 4, 6],
+          value: [3, 6, 9],
         },
         fn() {
           SKILLS_PROGRAMMER[2].data.chance += getValue(this);
@@ -490,6 +589,38 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
         },
         fn(hero) {
           hero.energy.incValue += getValue(this);
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "DDoS-атака",
+        descr: function () {
+          const modifier = getText.call(this, "modifier");
+          const duration = getText.call(this, "duration");
+          return {
+            current: duration.current
+              ? `Увеличивает урон от "Утечка данных" на ${modifier.current}% от макс.запаса врага, также накладывает на врага 4 слоя "Темное проклятие" на ${duration.current} секунд`
+              : "",
+            next: duration.next
+              ? `Увеличивает урон от "Утечка данных" на ${modifier.next}% от макс.запаса врага, также накладывает на врага 4 слоя "Темное проклятие" на ${duration.next} секунд`
+              : "",
+          };
+        },
+        img: "/assets/skill/programmer/skillIntellect_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          modifier: [1, 2, 3],
+          duration: [6, 7, 8],
+        },
+        fn(hero) {
+          SKILLS_PROGRAMMER[0].data.modifier += getValue(this, "modifier");
+          SKILLS_PROGRAMMER[0].data.intellect_5_1.isOpen = true;
+          SKILLS_PROGRAMMER[0].data.intellect_5_1.duration += getValue(this, "duration");
         },
       },
     ],

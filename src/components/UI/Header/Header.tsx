@@ -1,6 +1,7 @@
 import { VERSION_APP } from "@/constants/setup";
 import styles from "./header.module.css";
 import logo from "@assets/game-logo.png";
+import GuideInfo from "../../Game/Guide/GuideInfo";
 
 const Header = () => {
   return (
@@ -11,6 +12,7 @@ const Header = () => {
       <h3 className={styles.title}>
         The battle of professions <span>v:{VERSION_APP}</span>
       </h3>
+      <GuideInfo />
     </header>
   );
 };

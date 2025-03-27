@@ -2,8 +2,10 @@ import { UpSkill, UpgradeSkills } from "@/types/skill.types";
 import SKILLS_COOK from "./cookSkill";
 import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
-import { goPureDamage, healHeroOfSkill } from "../../utils";
+import { goPureDamage, goHealHeroOfSkill, goPhysicalDamage } from "../../utils";
 import { IEnemy } from "@/types/enemy.types";
+import { get } from "http";
+import { getPercent } from "@/utils/getPercent";
 
 export const upgradeCookSkills: UpgradeSkills = {
   power: {
@@ -15,8 +17,8 @@ export const upgradeCookSkills: UpgradeSkills = {
         descr: function () {
           const text = getText.call(this, "value");
           return {
-            current: text.current ? `Увеличивает макс.здоровье на ${text.current}` : "",
-            next: text.next ? `Увеличивает макс.здоровье на ${text.next}` : "",
+            current: text.current ? `Увеличивает макс.запас здоровья на ${text.current}` : "",
+            next: text.next ? `Увеличивает макс.запас здоровья на ${text.next}` : "",
           };
         },
         img: "/assets/skill/cook/skillPower_1_1.png",
@@ -26,7 +28,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: true,
         branch: "power",
         data: {
-          value: [120, 240, 360, 480, 600],
+          value: [110, 220, 330, 440, 550],
         },
         fn(hero) {
           hero.setters.incMaxHp(getValue(this));
@@ -113,8 +115,8 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          value: [3, 6, 9],
-          powerSkill: [-6, -12, -18],
+          value: [4, 8, 12],
+          powerSkill: [-5, -10, -15],
         },
         fn(hero) {
           SKILLS_COOK[3].data.chanceCritDamage += getValue(this);
@@ -172,12 +174,54 @@ export const upgradeCookSkills: UpgradeSkills = {
         branch: "power",
         data: {
           value: [10, 20, 30],
-          debuff: [-0.05, -0.1, -0.15],
+          debuff: [-0.07, -0.14, -0.21],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));
           hero.setters.incPower(getValue(this));
           hero.setters.incAttackSpeed(getValue(this, "debuff"));
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Мясник",
+        descr: function () {
+          const modifierMaxHp = getText.call(this, "modifierMaxHp");
+          const cooldown = getText.call(this, "cooldown");
+          return {
+            current: modifierMaxHp.current
+              ? `Каждые ${cooldown.current} секунды ваша следующая атака нанесет дополнительно ${modifierMaxHp.current}% физического урона от макс.запаса здоровья героя и проигнорирует защиту противника`
+              : "",
+            next: modifierMaxHp.next
+              ? `Каждые ${cooldown.next} секунды ваша следующая атака нанесет дополнительно ${modifierMaxHp.next}% физического урона от макс.запаса здоровья героя и проигнорирует защиту противника`
+              : "",
+          };
+        },
+        img: "/assets/skill/cook/skillPower_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          modifierMaxHp: [6, 7, 8],
+          cooldown: [8, 7, 6],
+          isCooldown: false,
+        },
+        fn(hero) {
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "afterInitiatorAttack");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              if (this.data.isCooldown) return;
+              this.data.isCooldown = true;
+              setTimeout(() => (this.data.isCooldown = false), getValue(this, "cooldown", true) * 1000);
+              hero.pushSkillText(this.name);
+              const damage = getPercent(hero.getters.getMaxHp(), getValue(this, "modifierMaxHp", true));
+              goPhysicalDamage(hero, target, damage, { ignoreDef: 100 });
+            }
+          }
         },
       },
     ],
@@ -235,17 +279,15 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [150, 200, 250],
-          modifierHeal: 0,
+          value: [175, 225, 275],
         },
         fn(hero) {
-          this.data.modifierHeal += getValue(this);
           if (this.currentPoint === 1) {
             registerSkill(skill.bind(this), "afterTargetCrit");
 
             function skill(this: UpSkill, hero: IHero) {
-              const healValue = Math.floor(hero.getters.getAgility() * (this.data.modifierHeal / 100));
-              healHeroOfSkill(hero, healValue, 0);
+              const healValue = hero.getters.getAgility() * (getValue(this) / 100);
+              goHealHeroOfSkill(hero, healValue, 0);
             }
           }
         },
@@ -268,7 +310,7 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [10, 15, 20],
+          value: [12, 20, 28],
         },
         fn(hero) {
           SKILLS_COOK[0].data.agility_2_2.isOpen = true;
@@ -315,12 +357,12 @@ export const upgradeCookSkills: UpgradeSkills = {
           const maxHp = getText.call(this, "maxHp");
           return {
             current: chanceCritDamage.current
-              ? `Увеличивает шанс крит.удара на ${
+              ? `Увеличивает шанс критического удара на ${
                   chanceCritDamage.current
                 }%, но уменьшает макс.запас здоровья на ${-maxHp.current}`
               : "",
             next: chanceCritDamage.next
-              ? `Увеличивает шанс крит.удара на ${
+              ? `Увеличивает шанс критического удара на ${
                   chanceCritDamage.next
                 }%, но уменьшает макс.запас здоровья на ${-maxHp.next}`
               : "",
@@ -333,8 +375,8 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          chanceCritDamage: [3, 6, 9],
-          maxHp: [-50, -100, -150],
+          chanceCritDamage: [4, 7, 9],
+          maxHp: [-60, -120, -180],
         },
         fn(hero) {
           SKILLS_COOK[3].data.chanceCritDamage += getValue(this, "chanceCritDamage");
@@ -355,16 +397,61 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/cook/skillAgility_4_1.png",
-        maxPoints: 5,
+        maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "agility",
         data: {
-          value: [18, 27, 36, 45, 54],
+          value: [30, 45, 60],
         },
         fn(hero) {
           hero.setters.incIgnoreDef(getValue(this));
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Соль на рану",
+        descr: function () {
+          const modifierAgility = getText.call(this, "modifierAgility");
+          const modifierHeal = getText.call(this, "modifierHeal");
+          const cooldown = getText.call(this, "cooldown");
+          return {
+            current: modifierAgility.current
+              ? `При критическом ударе наносит дополнительный чистый урон: ${modifierAgility.current}% от ловкости и исцеляет героя на ${modifierHeal.current}% от этого значения. Перезарядка: ${cooldown.current} секунд`
+              : "",
+            next: modifierAgility.next
+              ? `При критическом ударе наносит дополнительный чистый урон: ${modifierAgility.next}% от ловкости и исцеляет героя на ${modifierHeal.next}% от этого значения. Перезарядка: ${cooldown.next} секунд`
+              : "",
+          };
+        },
+        img: "/assets/skill/cook/skillAgility_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          modifierAgility: [150, 175, 200],
+          modifierHeal: [40, 50, 60],
+          cooldown: [7, 6, 5],
+          isCooldown: false,
+        },
+        fn() {
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "afterInitiatorCrit");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              if (this.data.isCooldown) return;
+              this.data.isCooldown = true;
+              setTimeout(() => (this.data.isCooldown = false), getValue(this, "cooldown", true) * 1000);
+              hero.pushSkillText(this.name);
+              const damage = hero.getters.getAgility() * (getValue(this, "modifierAgility", true) / 100);
+              const heal = goPureDamage(hero, target, damage) * (getValue(this, "modifierHeal", true) / 100);
+              goHealHeroOfSkill(hero, heal, 0, false);
+            }
+          }
         },
       },
     ],
@@ -448,12 +535,17 @@ export const upgradeCookSkills: UpgradeSkills = {
         name: "Жгучая отрава",
         descr: function () {
           const text = getText.call(this, "value");
+          const decAttack = getText.call(this, "decAttack");
           return {
             current: text.current
-              ? `Яд от вашего "Отвар яда" наносит дополнительный урон: ${text.current}% от интеллекта`
+              ? `Уменьшает атаку героя на ${-decAttack.current}. Яд от вашего "Отвар яда" наносит дополнительный урон: ${
+                  text.current
+                }% от интеллекта`
               : "",
             next: text.next
-              ? `Яд от вашего "Отвар яда" наносит дополнительный урон: ${text.next}% от интеллекта`
+              ? `Уменьшает атаку героя на ${-decAttack.next}. Яд от вашего "Отвар яда" наносит дополнительный урон: ${
+                  text.next
+                }% от интеллекта`
               : "",
           };
         },
@@ -464,9 +556,11 @@ export const upgradeCookSkills: UpgradeSkills = {
         open: false,
         branch: "intellect",
         data: {
-          value: [30, 45, 60],
+          value: [40, 55, 70],
+          decAttack: [-10, -20, -30],
         },
-        fn() {
+        fn(hero) {
+          hero.setters.incAttack(getValue(this, "decAttack"));
           SKILLS_COOK[2].data.intellect_3_1.isOpen = true;
           SKILLS_COOK[2].data.intellect_3_1.modifierOfIntellect += getValue(this) / 100;
         },
@@ -502,41 +596,6 @@ export const upgradeCookSkills: UpgradeSkills = {
       },
     ],
     level_4: [
-      // {
-      //   name: "Соль на рану",
-      //   descr: function () {
-      //     const text = getText.call(this, "value");
-      //     return {
-      //       current: text.current
-      //         ? `При критическом ударе наносит дополнительный чистый урон: ${text.current}% от интеллекта`
-      //         : "",
-      //       next: text.next
-      //         ? `При критическом ударе наносит дополнительный чистый урон: ${text.next}% от интеллекта`
-      //         : "",
-      //     };
-      //   },
-      //   img: "/assets/skill/cook/skillIntellect_4_1.png",
-      //   maxPoints: 3,
-      //   currentPoint: 0,
-      //   inc: incPoint,
-      //   open: false,
-      //   branch: "intellect",
-      //   data: {
-      //     value: [125, 175, 225],
-      //     modifierDamage: 0,
-      //   },
-      //   fn() {
-      //     this.data.modifierDamage += getValue(this);
-      //     if (this.currentPoint === 1) {
-      //       registerSkill(skill.bind(this), "afterInitiatorCrit");
-
-      //       function skill(this: UpSkill, hero: IHero, target: IEnemy) {
-      //         const damage = Math.floor(hero.getters.getIntellect() * (this.data.modifierDamage / 100));
-      //         goPureDamage(hero, target, damage);
-      //       }
-      //     }
-      //   },
-      // },
       {
         name: "Охлажденный напиток",
         descr: function () {
@@ -551,19 +610,101 @@ export const upgradeCookSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/cook/skillIntellect_4_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          value: [7, 11, 15],
+          value: [7, 10, 13, 18, 21],
         },
         fn() {
           SKILLS_COOK[2].data.intellect_4_1.isOpen = true;
           SKILLS_COOK[2].data.intellect_4_1.modifierOfFreeze += getValue(this);
         },
       },
+      {
+        name: "Мастер яда",
+        descr: function () {
+          const duration = getText.call(this, "duration");
+          return {
+            current: duration.current
+              ? `"Отвар яда" накладывает на противника 1 слой "Темное проклятие" на ${duration.current} секунд`
+              : "",
+            next: duration.next
+              ? `"Отвар яда" накладывает на противника 1 слой "Темное проклятие" на ${duration.next} секунд`
+              : "",
+          };
+        },
+        img: "/assets/skill/cook/skillIntellect_4_2.png",
+        maxPoints: 2,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          duration: [7, 10],
+        },
+        fn() {
+          SKILLS_COOK[2].data.intellect_4_2.isOpen = true;
+          SKILLS_COOK[2].data.intellect_4_2.duration += getValue(this, "duration");
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Всегда под рукой",
+        descr: function () {
+          const chance = getText.call(this, "chance");
+
+          return {
+            current: chance.current ? `Шанс применения "Сиропчик" увеличивается на ${chance.current}%` : "",
+            next: chance.next ? `Шанс применения "Сиропчик" увеличивается на ${chance.next}%` : "",
+          };
+        },
+        img: "/assets/skill/cook/skillIntellect_5_1.png",
+        maxPoints: 2,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          chance: [3, 5],
+        },
+        fn(hero) {
+          SKILLS_COOK[1].data.chance += getValue(this, "chance");
+        },
+      },
+      // {
+      //   name: "Передозировка",
+      //   descr: function () {
+      //     const cooldown = getText.call(this, "cooldown");
+      //     const countdown = getText.call(this, "countdown");
+      //     return {
+      //       current: cooldown.current
+      //         ? `Через 4 секунды после применения "Отвар яда" оглушает противника на 1 секунду. Перезарядка: ${cooldown.current} секунд`
+      //         : "",
+      //       next: cooldown.next
+      //         ? `Через 4 секунды после применения "Отвар яда" оглушает противника на 1 секунду. Перезарядка: ${cooldown.next} секунд`
+      //         : "",
+      //     };
+      //   },
+      //   img: "/assets/skill/cook/skillPower_4_1.png",
+      //   maxPoints: 3,
+      //   currentPoint: 0,
+      //   inc: incPoint,
+      //   open: false,
+      //   branch: "intellect",
+      //   data: {
+      //     cooldown: [9, 7, 5],
+      //     countdown: [4, 4, 4],
+      //   },
+      //   fn(hero) {
+      //     SKILLS_COOK[2].data.intellect_5_1.isOpen = true;
+      //     SKILLS_COOK[2].data.intellect_5_1.cooldown += getValue(this, "cooldown", true);
+      //     SKILLS_COOK[2].data.intellect_5_1.countdown += getValue(this, "countdown", true);
+      //   },
+      // },
     ],
   },
 };

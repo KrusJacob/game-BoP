@@ -8,7 +8,7 @@ import SkillLevel from "./SkillLevel";
 import { useSkillUpgradeStore } from "@/store/skillUpgradeStore";
 import { UpSkill } from "@/types/skill.types";
 
-const arr: tabs[] = [
+const arr: Tabs[] = [
   {
     label: "Cила",
     name: "power",
@@ -23,7 +23,7 @@ const arr: tabs[] = [
   },
 ];
 type typeTab = "power" | "agility" | "intellect";
-interface tabs {
+interface Tabs {
   name: typeTab;
   label: string;
 }
@@ -75,8 +75,8 @@ const SkillField = () => {
           <SkillLevel incPoint={incPoint} tab={tab} level="level_2" />
           <SkillLevel incPoint={incPoint} tab={tab} level="level_3" />
           <SkillLevel incPoint={incPoint} tab={tab} level="level_4" />
-          <div style={{ height: "85px", width: "100%", backgroundColor: "black" }}></div>
-          {/* <SkillLevel incPoint={incPoint} tab={tab} level="level_5" /> */}
+          <SkillLevel incPoint={incPoint} tab={tab} level="level_5" />
+          {/* <div style={{ height: "85px", width: "100%", backgroundColor: "black" }}></div> */}
         </div>
       </div>
     </div>

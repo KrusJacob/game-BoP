@@ -1,21 +1,20 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { applyPowerSkill, healHeroOfSkill } from "../../utils";
+import { applyPowerSkill, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { goStun } from "@/constants/func/fight";
 
 const SKILLS_BOXER: heroSkills[] = [
   {
     label: "Апперкот",
     descr: function () {
-      return `Атакует противника, нанося ${(this.data.modifier * 100).toFixed()}% урона. Стоимость - ${
-        this.data.costEnergy
-      } энергии`;
+      return `Атакует противника, нанося ${(
+        this.data.modifier * 100
+      ).toFixed()}% урона. От этого удара невозможно уклониться. Стоимость - ${this.data.costEnergy} энергии`;
     },
     img: "/assets/skill/skill_boxer_1.png",
     data: {
-      costEnergy: 170,
+      costEnergy: 160,
       modifier: 1.75,
       totalCooldown: 10,
       count: 0,
@@ -23,16 +22,42 @@ const SKILLS_BOXER: heroSkills[] = [
         isOpen: false,
         modifierPower: 0,
       },
+      power_5_1: {
+        isOpen: false,
+        modifierPower: 0,
+        durationStun: 2,
+      },
+      agility_2_2: {
+        isOpen: false,
+        modifierDef: 0,
+        duration: 0,
+      },
     },
     trigger: "active",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       hero.pushSkillText(this[0].label);
       const data = this[0].data;
 
-      hero.attack(target, { modifier: data.modifier, isIgnoreAvade: true });
+      let bonusDamage = 0;
+      if (data.power_5_1.isOpen) {
+        bonusDamage += hero.getters.getPower() * data.power_5_1.modifierPower;
+      }
+
+      hero.attack(target, { modifier: data.modifier, isIgnoreAvade: true, bonusDamage });
       if (data.power_2_2) {
         const heal = hero.getters.getPower() * data.power_2_2.modifierPower;
-        healHeroOfSkill(hero, heal, 0);
+        goHealHeroOfSkill(hero, heal, 0);
+      }
+      if (data.power_5_1.isOpen) {
+        goStun(hero, data.power_5_1.durationStun);
+      }
+      if (data.agility_2_2.isOpen) {
+        const decDef = Math.floor(target.getters.getDef() * data.agility_2_2.modifierDef);
+        target.setters.incDef(-decDef);
+        console.log(decDef);
+        setTimeout(() => {
+          target.setters.incDef(decDef);
+        }, data.agility_2_2.duration * 1000);
       }
     },
   },
@@ -48,7 +73,7 @@ const SKILLS_BOXER: heroSkills[] = [
       barrierValue: 75,
       totalCooldown: 6,
       isCooldown: false,
-      talent_3_1: {
+      intellect_3_1: {
         isOpen: false,
         modifierHeal: 0,
       },
@@ -68,13 +93,13 @@ const SKILLS_BOXER: heroSkills[] = [
         }, data.totalCooldown * 1000);
         setTimeout(() => {
           let healValue = data.healValue;
-          if (data.talent_3_1.isOpen) {
-            healValue += Math.floor(hero.getters.getIntellect() * data.talent_3_1.modifierHeal);
+          if (data.intellect_3_1.isOpen) {
+            healValue += hero.getters.getIntellect() * data.intellect_3_1.modifierHeal;
           }
           if (data.power_3_2.isOpen) {
             hero.energy.value += data.power_3_2.valueEnergy;
           }
-          healHeroOfSkill(hero, healValue, data.healPercent);
+          goHealHeroOfSkill(hero, healValue, data.healPercent);
           const totalBarrier = applyPowerSkill(data.barrierValue, hero.getters.getPowerSkill());
           hero.getBarrier(totalBarrier);
         }, 250);
@@ -92,10 +117,16 @@ const SKILLS_BOXER: heroSkills[] = [
     data: {
       chance: 20,
       modifier: 0.5,
-      talent_3_1: {
+      power_3_1: {
         isOpen: false,
         stunChance: 0,
         stunDuration: 0,
+        energy: 0,
+      },
+      agility_5_1: {
+        isOpen: false,
+        chance: 0,
+        modifier: 0,
       },
     },
     trigger: "afterInitiatorAttack",
@@ -106,28 +137,29 @@ const SKILLS_BOXER: heroSkills[] = [
         setTimeout(() => {
           hero.pushSkillText(this[2].label);
           hero.attack(target, { modifier: data.modifier });
-          if (data.talent_3_1.isOpen) {
+          if (data.power_3_1.isOpen) {
             const stunChance = getRandom(1, 100);
-            if (stunChance <= data.talent_3_1.stunChance) {
-              goStun(target, data.talent_3_1.stunDuration);
+            if (stunChance <= data.power_3_1.stunChance) {
+              goStun(target, data.power_3_1.stunDuration);
+            }
+            hero.energy.value += data.power_3_1.energy;
+          }
+
+          if (data.agility_5_1.isOpen) {
+            const chance = getRandom(1, 100);
+            if (chance <= data.agility_5_1.chance) {
+              setTimeout(() => {
+                hero.attack(target, { modifier: data.agility_5_1.modifier });
+              }, 150);
             }
           }
+
           target.update();
-        }, 250);
+        }, 150);
       }
     },
   },
-  {
-    label: "Техника боя",
-    descr: function () {
-      return `Шанс критического удара: ${this.data.chanceCritDamage}%, Шанс уклонения: ${this.data.chanceEvade}% `;
-    },
-    img: "/assets/skill/chances.png",
-    data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
-    },
-  },
+  getСombatTechniquesSkill(),
 ];
 
 export default SKILLS_BOXER;

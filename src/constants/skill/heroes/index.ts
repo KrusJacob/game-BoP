@@ -1,13 +1,10 @@
 import { IHero, TypeSkillTrigger, heroSkills } from "@/types/hero.types";
-import { AllLevels, TypeMainStat, UpSkill, UpgradeSkills, typeDescr } from "@/types/skill.types";
-import { upgradeBoxerSkills } from "./boxer/upgradeSkill";
-import { upgradeProgrammerSkills } from "./programmer/upgradeSkill";
-import { upgradeCookSkills } from "./cook/upgradeSkill";
-import { upgradeHairdresserSkills } from "./hairdresser/upgradeSkill";
+import { AllSkillLevels, TypeMainStat, UpSkill, UpgradeSkills, typeDescr } from "@/types/skill.types";
 
 export const skillHeroTrigger: TypeSkillTrigger = {
   active: [],
   inBeginFight: [],
+  inEndFight: [],
   beforeInitiatorAttack: [],
   afterInitiatorAttack: [],
   beforeTargetAttack: [],
@@ -26,19 +23,6 @@ export function registerAllSkills(skillsArr: heroSkills[]) {
   skillsArr.filter((item) => item.trigger).map((skill) => registerSkill(skill.fn!, skill.trigger!));
 }
 
-export function getUpgradeSkills(name: IHero["name"]) {
-  switch (name) {
-    case "boxer":
-      return upgradeBoxerSkills;
-    case "programmer":
-      return upgradeProgrammerSkills;
-    case "cook":
-      return upgradeCookSkills;
-    case "hairdresser":
-      return upgradeHairdresserSkills;
-  }
-}
-
 export function incPoint(this: UpSkill, upgradeSkills: UpgradeSkills) {
   if (this.currentPoint < this.maxPoints) {
     this.currentPoint += 1;
@@ -52,13 +36,13 @@ export function incPoint(this: UpSkill, upgradeSkills: UpgradeSkills) {
     if (upgradeSkills[this.branch].totalPoint === 15) {
       unlockSkills(upgradeSkills, this.branch, "level_4");
     }
-    // if (upgradeSkills[this.branch].totalPoint === 12) {
-    //   unlockSkills(upgradeSkills, this.branch, "level_5");
-    // }
+    if (upgradeSkills[this.branch].totalPoint === 20) {
+      unlockSkills(upgradeSkills, this.branch, "level_5");
+    }
   }
 }
 
-export function unlockSkills(upgradeSkills: UpgradeSkills, branch: TypeMainStat, level: AllLevels) {
+export function unlockSkills(upgradeSkills: UpgradeSkills, branch: TypeMainStat, level: AllSkillLevels) {
   upgradeSkills[branch].openLevels.push(level);
   upgradeSkills[branch][level].forEach((element) => {
     element.open = true;

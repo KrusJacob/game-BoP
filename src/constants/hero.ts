@@ -1,15 +1,15 @@
 import { heroBaseStats } from "../types/hero.types";
 
-const ALL_HEROES = ["boxer", "programmer", "cook", "hairdresser"] as const;
+const ALL_HEROES = ["boxer", "programmer", "cook", "hairdresser", "priest"] as const;
 
 const STATS_BOXER: heroBaseStats = {
-  img: "/assets/boxer.png",
+  img: "/assets/hero/boxer.png",
   name: "Боксер",
   power: 55,
   agility: 35,
   intellect: 15,
-  attack: 130,
-  def: 11,
+  attack: 125,
+  def: 12,
   magicDef: 0,
   maxHp: 1000,
   attackSpeed: 0.4,
@@ -33,8 +33,8 @@ const STATS_COOK: heroBaseStats = {
   name: "Повар",
   power: 50,
   agility: 20,
-  intellect: 55,
-  attack: 100,
+  intellect: 50,
+  attack: 95,
   def: 14,
   magicDef: 0,
   maxHp: 1150,
@@ -54,5 +54,18 @@ const STATS_HAIRDRESSER: heroBaseStats = {
   attackSpeed: 0.4,
   powerSkill: 0,
 };
+const STATS_PRIEST: heroBaseStats = {
+  img: "/assets/hero/priest.png",
+  name: "Cвященник",
+  power: 40,
+  agility: 20,
+  intellect: 55,
+  attack: 75,
+  def: 8,
+  magicDef: 10,
+  maxHp: 1100,
+  attackSpeed: 0.4,
+  powerSkill: 0,
+};
 
-export { ALL_HEROES, STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER };
+export { ALL_HEROES, STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER, STATS_PRIEST };

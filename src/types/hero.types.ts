@@ -1,5 +1,5 @@
 import { ALL_HEROES } from "../constants/hero";
-import { IEnemy, enemyDrop, enemyName, enemyType, enemyTypeDrop } from "./enemy.types";
+import { IEnemy, enemyName, enemyType } from "./enemy.types";
 import { bagItemType } from "./shop.types";
 import { talentType } from "./talent.types";
 
@@ -47,7 +47,9 @@ export interface heroBoost {
   gold: number;
 }
 
-export interface heroStatus {
+export type heroStatus = defaultStatuses & uniqueStatuses;
+
+interface defaultStatuses {
   death: boolean;
   stun: {
     isStun: boolean;
@@ -60,9 +62,17 @@ export interface heroStatus {
     isVirus: boolean;
     stack: number;
   };
-  severeWound: {
-    isSevereWound: boolean;
-    value: number;
+  darkСurse: {
+    isDarkСurse: boolean;
+    stack: number;
+    readonly value: number;
+  };
+}
+
+interface uniqueStatuses {
+  justiceMark: {
+    isJusticeMark: boolean;
+    stack: number;
   };
 }
 
@@ -109,7 +119,6 @@ export interface heroResources {
   gold: number;
   skillPoints: number;
   parameterPoints: number;
-  drop: Record<enemyTypeDrop, number>;
   bag: Array<bagItemType>;
   bagActivePanel: Array<bagItemType>;
 }
@@ -177,13 +186,14 @@ export interface IAttackInfo {
   isStunned?: boolean;
 }
 
-export type ITypeDamage = "physical" | "magical" | "pure";
+export type ITypeDamage = "physical" | "magical" | "pure" | "sacrifice";
 
 export type heroGoAttack = (target: IEnemy | IHero, options?: attackOptions) => IAttackInfo;
 
 export interface TypeSkillTrigger {
   active: Function[];
   inBeginFight: Function[];
+  inEndFight: Function[];
   beforeInitiatorAttack: Function[];
   beforeTargetAttack: Function[];
   afterInitiatorAttack: Function[];
@@ -196,6 +206,7 @@ export interface TypeSkillTrigger {
 
 export interface attackOptions {
   modifier?: number;
+  bonusDamage?: number;
   ignoreDef?: number;
   isIgnoreAvade?: boolean;
 }
@@ -203,11 +214,7 @@ export interface attackOptions {
 export interface heroReward {
   exp: number;
   gold: number;
-  skillPoints: number;
+  parameterPoints?: number;
+  skillPoints?: number;
   talent: talentType | null;
-  // drop?: {
-  //   label: string;
-  //   type: enemyTypeDrop;
-  //   value: number;
-  // };
 }

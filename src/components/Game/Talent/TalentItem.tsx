@@ -15,7 +15,11 @@ const TalentItem = ({ item }: { item: talentType }) => {
         [styles.level_5]: item.level === 5,
       })}
     >
-      <Tooltip title={`${item.name} ур.${item.level}`} descr={item.descr()}>
+      <Tooltip
+        title={`${item.name} ур.${item.level}`}
+        descr={item.descr ? item.descr().current : ""}
+        descr2={item.descr ? item.descr().next : ""}
+      >
         <img src={item.img} alt={item.name} />
       </Tooltip>
     </div>

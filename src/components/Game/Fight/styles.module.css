@@ -41,6 +41,9 @@
     border-color: blueviolet;
 }
 .enemy_5 {
+    border-color: red;
+}
+.enemy_legend {
     border-color: gold;
 }
 
@@ -70,7 +73,7 @@
 .resources p {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 .resources .talent {
     border-left: 2px solid #5fcdd9;

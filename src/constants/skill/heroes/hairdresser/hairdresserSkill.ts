@@ -1,6 +1,5 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { heroSkills, IHero } from "@/types/hero.types";
-import { applyPowerSkill, goMagicalDamage, healHeroOfSkill } from "../../utils";
+import { applyPowerSkill, goMagicalDamage, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
 import { goBleedDmg, goStun } from "@/constants/func/fight";
 import { IEnemy } from "@/types/enemy.types";
 import { getPercent } from "@/utils/getPercent";
@@ -33,7 +32,7 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
       const data = this[0].data;
       hero.buffs.incAttackSpeed(data.modifier, data.duration);
       if (data.power_2_2.isOpen) {
-        healHeroOfSkill(hero, 0, data.power_2_2.modifierHeal);
+        goHealHeroOfSkill(hero, 0, data.power_2_2.modifierHeal);
       }
       if (data.intellect_2_2.isOpen) {
         const barrierOfMaxHp = getPercent(hero.getters.getMaxHp(), data.intellect_2_2.modifierMaxHp);
@@ -67,6 +66,10 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
         modifierBleed: 0,
         isBleeded: false,
       },
+      agility_5_1: {
+        isOpen: false,
+        modifierHeal: 0,
+      },
     },
     trigger: "beforeInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IEnemy) {
@@ -76,14 +79,16 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
 
         data.currentCount = 1;
         if (data.power_3_1.isOpen) {
-          const damage = Math.floor(hero.getters.getPower() * data.power_3_1.modifierPower);
-          // goDamage(hero, enemy, magicalDamageAction(damage));
+          const damage = hero.getters.getPower() * data.power_3_1.modifierPower;
           goMagicalDamage(hero, target, damage);
         }
         if (data.intellect_1_2.isOpen) {
-          const damage = Math.floor(hero.getters.getIntellect() * data.intellect_1_2.modifierIntellect);
-          // goDamage(hero, target, magicalDamageAction(damage));
+          const damage = hero.getters.getIntellect() * data.intellect_1_2.modifierIntellect;
           goMagicalDamage(hero, target, damage);
+        }
+        if (data.agility_5_1.isOpen) {
+          let heal = hero.getters.getAttack() * data.agility_5_1.modifierHeal;
+          goHealHeroOfSkill(hero, heal, 0);
         }
         if (data.intellect_3_1.isOpen) {
           const chance = getRandom(1, 100);
@@ -113,30 +118,28 @@ const SKILLS_HAIRDRESSER: heroSkills[] = [
         isOpen: false,
         modifierStun: 0,
       },
+      power_5_1: {
+        isOpen: false,
+        modifierDef: 0,
+      },
     },
     trigger: "inBeginFight",
     fn: function (this: heroSkills[], hero: IHero, enemy: IEnemy) {
       hero.pushSkillText(this[2].label);
       const data = this[2].data;
-      healHeroOfSkill(hero, data.healValue, data.healPercent);
+      goHealHeroOfSkill(hero, data.healValue, data.healPercent);
       hero.buffs.incDamage(data.modifierDamage, data.duration);
+
+      if (data.power_5_1.isOpen) {
+        hero.buffs.incDef(data.power_5_1.modifierDef, data.duration);
+      }
 
       if (data.intellect_4_1.isOpen) {
         goStun(enemy, data.intellect_4_1.modifierStun);
       }
     },
   },
-  {
-    label: "Техника боя",
-    descr: function () {
-      return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
-    },
-    img: "/assets/skill/chances.png",
-    data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
-    },
-  },
+  getСombatTechniquesSkill(),
 ];
 
 export default SKILLS_HAIRDRESSER;

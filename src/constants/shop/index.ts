@@ -3,7 +3,8 @@ import { shopItemType } from "@/types/shop.types";
 import { bagItemType } from "@/types/shop.types";
 import { EMPTY_BAG_SLOT } from "../bag";
 import { IEnemy } from "@/types/enemy.types";
-import { goBleedDmg, goPosionDmg, goFreeze, goStun } from "../func/fight";
+import { goBleedDmg, goPosionDmg, goFreeze, goStun, goDarkCurse } from "../func/fight";
+import { goPureDamage } from "../skill/utils";
 
 export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
@@ -177,16 +178,24 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
   },
   {
     id: 10,
-    name: "Зелье смерти (!)",
+    name: "Зелье смерти",
     img: "/assets/shop/death_potion.png",
-    cost: 9999,
+    cost: 950,
     quantity: 1,
     descr: function () {
-      const text = this.data.value;
-      return `Никто никогда не осмеливался купить это зелье...`;
+      const modifierDamage = this.data.modifierDamage;
+      return `Наносит врагу ${modifierDamage}% чистого урона от его макс.запаса здоровья и накадывает 4 слоя "Темное проклятие" на ${this.data.duration} секунд. (Каждый слой снижает получаемое исцеление на 20%)`;
     },
-    data: {},
-    fn: function (this: bagItemType, hero: IHero) {},
+    data: {
+      modifierDamage: 15,
+      stack: 4,
+      duration: 15,
+    },
+    fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
+      goPureDamage(hero, enemy, (enemy.getters.getMaxHp() * this.data.modifierDamage) / 100);
+      goDarkCurse(enemy, this.data.stack, this.data.duration);
+      decreaseQuantity(hero.resources, this.bagSlotId);
+    },
   },
 ];
 
@@ -202,8 +211,10 @@ export function byeShopItem(resources: IHero["resources"], item: shopItemType) {
   if (resources.gold < item.cost) {
     return false;
   }
-  resources.gold -= item.cost;
   const isSuccess = addItemToBag(resources, item);
+  if (isSuccess) {
+    resources.gold -= item.cost;
+  }
   return isSuccess;
 }
 

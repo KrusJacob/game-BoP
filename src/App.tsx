@@ -1,16 +1,18 @@
 import { IAttackInfo, IHero } from "./types/hero.types";
 import { ALL_HEROES } from "./constants/hero";
 import HeroList from "./components/Hero/HeroList/HeroList";
-import Header from "./components/Header/Header";
+import Header from "./components/UI/Header/Header";
 import { motion } from "framer-motion";
 import DoorLayout from "./layout/DoorLayout";
 import GameArea from "./components/Game/GameArea/GameArea";
 import { useGameStore } from "./store/gameStore";
-import { getUpgradeSkills, registerAllSkills } from "./constants/skill/heroes";
+import { registerAllSkills } from "./constants/skill/heroes";
 import { useSkillUpgradeStore } from "./store/skillUpgradeStore";
 import { useSkillTextStore } from "./store/skillTextStore";
 import { useBattleTextStore } from "./store/battleTextStore";
 import { battleText } from "./constants/text";
+import { getUpgradeSkills } from "./constants/initStats";
+import Footer from "./components/UI/Footer/Footer";
 
 function App() {
   const hero = useGameStore((state) => state.hero);
@@ -48,6 +50,7 @@ function App() {
         >
           {hero ? <GameArea hero={hero} /> : <HeroList heroes={ALL_HEROES} chooseHero={chooseHero} />}
         </motion.div>
+        <Footer />
       </DoorLayout>
     </main>
   );

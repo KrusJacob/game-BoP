@@ -3,6 +3,7 @@ import { getText, incPoint, getValue, registerSkill } from "..";
 import SKILLS_HAIRDRESSER from "./hairdresserSkill";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
+import { goStun } from "@/constants/func/fight";
 
 export const upgradeHairdresserSkills: UpgradeSkills = {
   power: {
@@ -31,7 +32,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         branch: "power",
         data: {
           attack: [10, 20, 30],
-          attackSpeed: [-0.05, -0.1, -0.15],
+          attackSpeed: [-0.06, -0.12, -0.18],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this, "attack"));
@@ -107,13 +108,13 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/hairdresser/skillPower_2_2.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "power",
         data: {
-          value: [7, 10, 13],
+          value: [7, 10, 13, 16, 19],
         },
         fn(hero) {
           SKILLS_HAIRDRESSER[0].data.power_2_2.isOpen = true;
@@ -181,6 +182,38 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         },
       },
     ],
+    level_5: [
+      {
+        name: "Опытный мастер",
+        descr: function () {
+          const duration = getText.call(this, "duration");
+          const modifierDef = getText.call(this, "modifierDef");
+          return {
+            current: duration.current
+              ? `Увеличивает длительность "Профессиональная подготовка" на ${duration.current} секунд. Также во время действия снижает получаемый урон по герою на ${modifierDef.current}%`
+              : "",
+            next: duration.next
+              ? `Увеличивает длительность "Профессиональная подготовка" на ${duration.next} секунд. Также во время действия снижает получаемый урон по герою на ${modifierDef.next}%`
+              : "",
+          };
+        },
+        img: "/assets/skill/hairdresser/skillPower_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "power",
+        data: {
+          duration: [1, 2, 3],
+          modifierDef: [20, 25, 30],
+        },
+        fn(hero) {
+          SKILLS_HAIRDRESSER[2].data.duration += getValue(this, "duration");
+          SKILLS_HAIRDRESSER[2].data.power_5_1.isOpen = true;
+          SKILLS_HAIRDRESSER[2].data.power_5_1.modifierDef += getValue(this, "modifierDef");
+        },
+      },
+    ],
   },
   agility: {
     totalPoint: 0,
@@ -207,8 +240,8 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         open: true,
         branch: "agility",
         data: {
-          agility: [8, 16, 24],
-          powerSkill: [-4, -8, -12],
+          agility: [7, 14, 21],
+          powerSkill: [-3, -6, -9],
         },
         fn(hero) {
           hero.setters.incAgility(getValue(this, "agility"));
@@ -242,10 +275,15 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
       {
         name: "Порхай как бабочка",
         descr: function () {
-          const text = getText.call(this, "value");
+          const dodge = getText.call(this, "value");
+          const decMaxHp = getText.call(this, "decMaxHp");
           return {
-            current: text.current ? `Увеличивает уклонение ${text.current}` : "",
-            next: text.next ? `Увеличивает уклонение ${text.next}` : "",
+            current: dodge.current
+              ? `Увеличивает уклонение ${dodge.current}, но уменьшает макс.запас здоровья на ${-decMaxHp.current}`
+              : "",
+            next: dodge.next
+              ? `Увеличивает уклонение ${dodge.next}, но уменьшает макс.запас здоровья на ${-decMaxHp.next}`
+              : "",
           };
         },
         img: "/assets/skill/hairdresser/skillAgility_2_1.png",
@@ -255,10 +293,12 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [2, 4, 6, 8, 10],
+          value: [3, 6, 9, 12, 15],
+          decMaxHp: [-40, -80, -120, -160, -200],
         },
         fn(hero) {
           SKILLS_HAIRDRESSER[3].data.chanceEvade += getValue(this);
+          hero.setters.incMaxHp(getValue(this, "decMaxHp"));
         },
       },
     ],
@@ -313,7 +353,7 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         branch: "agility",
         data: {
           chanceCritDamage: [3, 6, 9],
-          intellect: [-4, -8, -12],
+          intellect: [-3, -6, -9],
         },
         fn(hero) {
           SKILLS_HAIRDRESSER[3].data.chanceCritDamage += getValue(this, "chanceCritDamage");
@@ -332,17 +372,47 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/hairdresser/skillAgility_4_1.png",
+        maxPoints: 5,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "agility",
+        data: {
+          value: [4, 8, 12, 16, 20],
+        },
+        fn(hero) {
+          hero.setters.incAttack(getValue(this));
+          hero.setters.incDef(getValue(this));
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Освежение",
+        descr: function () {
+          const modifierHeal = getText.call(this, "modifierHeal");
+
+          return {
+            current: modifierHeal.current
+              ? `"Заточенный инструмент" исцеляет героя на ${modifierHeal.current}% от атаки`
+              : "",
+            next: modifierHeal.next
+              ? `"Заточенный инструмент" исцеляет героя на ${modifierHeal.next}% от атаки`
+              : "",
+          };
+        },
+        img: "/assets/skill/hairdresser/skillAgility_5_1.png",
         maxPoints: 3,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "agility",
         data: {
-          value: [4, 8, 12],
+          modifierHeal: [40, 55, 70],
         },
         fn(hero) {
-          hero.setters.incAttack(getValue(this));
-          hero.setters.incDef(getValue(this));
+          SKILLS_HAIRDRESSER[1].data.agility_5_1.isOpen = true;
+          SKILLS_HAIRDRESSER[1].data.agility_5_1.modifierHeal += getValue(this, "modifierHeal") / 100;
         },
       },
     ],
@@ -425,13 +495,13 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/hairdresser/skillIntellect_2_1.png",
-        maxPoints: 3,
+        maxPoints: 5,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "intellect",
         data: {
-          value: [4, 6, 8],
+          value: [4, 6, 8, 10, 12],
         },
         fn() {
           SKILLS_HAIRDRESSER[2].data.healPercent += getValue(this);
@@ -527,6 +597,51 @@ export const upgradeHairdresserSkills: UpgradeSkills = {
         fn() {
           SKILLS_HAIRDRESSER[2].data.intellect_4_1.isOpen = true;
           SKILLS_HAIRDRESSER[2].data.intellect_4_1.modifierStun += getValue(this);
+        },
+      },
+    ],
+    level_5: [
+      {
+        name: "Замри!",
+        descr: function () {
+          const cooldown = getText.call(this, "cooldown");
+          const duration = getText.call(this, "duration");
+
+          return {
+            current: cooldown.current
+              ? `Каждые ${cooldown.current} секунд оглушает противника на ${duration.current} секунд`
+              : "",
+            next: cooldown.next
+              ? `Каждые ${cooldown.next} секунд оглушает противника на ${duration.next} секунд`
+              : "",
+          };
+        },
+        img: "/assets/skill/hairdresser/skillIntellect_5_1.png",
+        maxPoints: 3,
+        currentPoint: 0,
+        inc: incPoint,
+        open: false,
+        branch: "intellect",
+        data: {
+          cooldown: [9, 8, 7],
+          duration: [1.25, 1.5, 1.75],
+        },
+        fn(hero) {
+          if (this.currentPoint === 1) {
+            registerSkill(skill.bind(this), "inBeginFight");
+
+            function skill(this: UpSkill, hero: IHero, target: IEnemy) {
+              const cooldown = getValue(this, "cooldown", true) * 1000;
+              const interval = setInterval(() => {
+                if (hero.status.death || target.status.death) {
+                  clearInterval(interval);
+                  return;
+                }
+                hero.pushSkillText(this.name);
+                goStun(target, getValue(this, "duration", true));
+              }, cooldown);
+            }
+          }
         },
       },
     ],

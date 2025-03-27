@@ -11,6 +11,7 @@ import styles from "./styles.module.css";
 import { HERO_REWARD } from "@/constants/resources";
 import TalentItem from "../Talent/TalentItem";
 import { useBattleTextStore } from "@/store/battleTextStore";
+import { TbSquareRoundedPlusFilled } from "react-icons/tb";
 
 interface Props {
   onSetTab: (tab: TabsWithFight) => void;
@@ -48,6 +49,9 @@ const EnemyModal = ({ onSetTab, setEnemy, enemy }: Props) => {
               <p>+ {HERO_REWARD.exp} Опыта</p>
               <p>
                 + {HERO_REWARD.gold} <BiSolidCoinStack />
+              </p>
+              <p>
+                + {HERO_REWARD.parameterPoints} <TbSquareRoundedPlusFilled />
               </p>
               <p>
                 + {HERO_REWARD.skillPoints} <GiFlowerEmblem />

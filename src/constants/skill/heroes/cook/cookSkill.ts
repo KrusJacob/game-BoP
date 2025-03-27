@@ -1,9 +1,9 @@
-import { goFreeze, goPosionDmg } from "@/constants/func/fight";
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
+import { goDarkCurse, goFreeze, goPosionDmg } from "@/constants/func/fight";
+
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { healHeroOfSkill, applyPowerSkill, goMagicalDamage } from "../../utils";
+import { goHealHeroOfSkill, applyPowerSkill, goMagicalDamage, getСombatTechniquesSkill } from "../../utils";
 
 const SKILLS_COOK: heroSkills[] = [
   {
@@ -58,7 +58,7 @@ const SKILLS_COOK: heroSkills[] = [
           data.isCooldown = false;
         }, data.cooldownCount * 1000);
         setTimeout(() => {
-          healHeroOfSkill(hero, data.healValue, data.healPercent);
+          goHealHeroOfSkill(hero, data.healValue, data.healPercent);
         }, 250);
       }
     },
@@ -90,6 +90,10 @@ const SKILLS_COOK: heroSkills[] = [
         isOpen: false,
         modifierOfFreeze: 0,
       },
+      intellect_4_2: {
+        isOpen: false,
+        duration: 0,
+      },
     },
     trigger: "afterInitiatorAttack",
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
@@ -100,15 +104,14 @@ const SKILLS_COOK: heroSkills[] = [
         console.log("Отравлен");
 
         if (data.power_2_1.isOpen) {
-          const damage = Math.floor(hero.getters.getPower() * data.power_2_1.modifierPower);
-          // goDamage(hero, target, magicalDamageAction(damage));
+          const damage = hero.getters.getPower() * data.power_2_1.modifierPower;
           goMagicalDamage(hero, target, damage);
         }
         if (data.intellect_2_2.isOpen) {
           target.buffs.incDamage(-data.intellect_2_2.modifierDebuff, data.duration);
         }
 
-        let poisinValue = Math.round(hero.getters.getIntellect() * data.modifierOfIntellect + data.initalValue);
+        let poisinValue = hero.getters.getIntellect() * data.modifierOfIntellect + data.initalValue;
         poisinValue = applyPowerSkill(poisinValue, hero.getters.getPowerSkill());
         if (data.intellect_3_1.isOpen) {
           poisinValue += Math.floor(hero.getters.getIntellect() * data.intellect_3_1.modifierOfIntellect);
@@ -119,20 +122,13 @@ const SKILLS_COOK: heroSkills[] = [
         if (data.intellect_4_1.isOpen) {
           goFreeze(target, data.intellect_4_1.modifierOfFreeze, data.duration);
         }
+        if (data.intellect_4_2.isOpen) {
+          goDarkCurse(target, 1, data.intellect_4_2.duration);
+        }
       }
     },
   },
-  {
-    label: "Техника боя",
-    descr: function () {
-      return `Шанс критического удара: ${this.data?.chanceCritDamage}%, Шанс уклонения: ${this.data?.chanceEvade}% `;
-    },
-    img: "/assets/skill/chances.png",
-    data: {
-      chanceCritDamage: CHANCE_CRITICAL_DAMAGE,
-      chanceEvade: CHANCE_EVADE,
-    },
-  },
+  getСombatTechniquesSkill(),
 ];
 
 export default SKILLS_COOK;

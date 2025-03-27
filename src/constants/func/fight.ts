@@ -13,6 +13,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
   // clearText();
   console.log(skillHeroTrigger);
   goSkillTrigger("inBeginFight", hero, enemy);
+  goSkillTrigger("inBeginFight", enemy, hero);
   attackHero();
   attackEnemy();
 
@@ -32,8 +33,8 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
 
           if (enemy.status.death) {
             console.log(hero.name, "win!");
-
             getReward(hero, enemy);
+            goSkillTrigger("inEndFight", hero, enemy);
             return;
           }
           attackHero();
@@ -54,7 +55,11 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
         if (!enemy.status.death) {
           const attackInfo = enemy.attack(hero);
 
-          attackInfo.isCritical && goSkillTrigger("afterTargetCrit", hero, enemy);
+          if (attackInfo.isCritical) {
+            goSkillTrigger("afterTargetCrit", hero, enemy);
+            goSkillTrigger("afterInitiatorCrit", enemy, hero);
+          }
+
           attackInfo.isMiss && goSkillTrigger("afterTargetMiss", hero, enemy);
           attackEnemy();
           if (!attackInfo.isStunned && !attackInfo.isMiss) {
@@ -120,6 +125,7 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
 }
 
 function getDamageWithReduction(target: IHero | IEnemy, value: number) {
+  // console.log(value, Math.floor(value * target.buffs.getBuffDef()));
   return Math.floor(value * target.buffs.getBuffDef());
 }
 
@@ -153,20 +159,23 @@ export function goDamage(
   switch (damageInfo.type) {
     case "physical":
       damageValue = getPhysicalDamage(initiator, target, damageInfo.value, options);
-      damageValue = getDamageWithReduction(target, damageValue);
+      // damageValue = getDamageWithReduction(target, damageValue);
       break;
     case "magical":
       damageValue = getMagicalDamage(target, damageInfo.value);
-      damageValue = getDamageWithReduction(target, damageValue);
+      // damageValue = getDamageWithReduction(target, damageValue);
       break;
     case "pure":
       damageValue = getPureDamage(target, damageInfo.value);
+      break;
+    case "sacrifice":
+      damageValue = damageInfo.value;
       break;
     default:
       damageValue = 0;
   }
 
-  if (target.barrier) {
+  if (target.barrier && damageInfo.type !== "sacrifice") {
     damageToBarrier(target, damageValue);
   } else {
     damageToHP(target, damageValue);
@@ -181,15 +190,20 @@ function getPhysicalDamage(
   value: number,
   options?: attackOptions
 ) {
-  const damage = getDamageWithDef(initiator, value, target.getters.getDef(), options);
+  let damage = getDamageWithDef(initiator, value, target.getters.getDef(), options);
+  damage = getDamageWithReduction(target, damage);
   return damage;
 }
 
 function getMagicalDamage(target: IHero | IEnemy, value: number) {
-  const damage = getDamageWithMagicDef(value, target.getters.getMagicDef());
+  let damage = getDamageWithMagicDef(value, target.getters.getMagicDef());
+  damage = getDamageWithReduction(target, damage);
   return damage;
 }
 function getPureDamage(target: IHero | IEnemy, value: number) {
+  if (target.buffs.getBuffDef() > 1) {
+    return getDamageWithReduction(target, value);
+  }
   return value;
 }
 
@@ -197,7 +211,11 @@ function getDamageWithOptions(damage: number, options?: attackOptions) {
   if (!options) {
     return damage;
   }
-  return Math.floor(damage * (options.modifier ? options.modifier : 1));
+  let bonusDamage = 0;
+  if (options.bonusDamage) {
+    bonusDamage += options.bonusDamage;
+  }
+  return Math.floor(damage * (options.modifier ? options.modifier : 1) + bonusDamage);
 }
 
 function getDamageWithBuffs(attacker: IHero | IEnemy) {
@@ -255,6 +273,41 @@ export function damageToHP(target: IHero | IEnemy, dmg: number) {
   }
 }
 
+function createTimeoutHeal() {
+  // let timeoutId: any;
+  // let intervalId: any;
+
+  return function startTimeout(
+    hero: IHero | IEnemy,
+    target: IHero | IEnemy,
+    healValue: number,
+    healPercent: number,
+    tick = 1,
+    duration = 999
+  ) {
+    // if (timeoutId) {
+    //   clearTimeout(timeoutId);
+    // }
+    // if (intervalId) {
+    //   clearInterval(intervalId);
+    // }
+
+    let intervalId = setInterval(() => {
+      if (target.status.death || hero.status.death) {
+        clearInterval(intervalId);
+      } else {
+        const heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
+        console.log("heal-tick", hero.getHeal(heal));
+      }
+    }, tick * 1000);
+
+    setTimeout(() => {
+      clearInterval(intervalId);
+      console.log("heal-tick закончился");
+    }, duration * 1000);
+  };
+}
+
 function createTimeoutFreeze() {
   let timeoutId: any;
 
@@ -271,6 +324,23 @@ function createTimeoutFreeze() {
       target.status.isFreeze = false;
       target.buffs.incAttackSpeed(value);
       console.log("мороз закончился");
+    }, duration * 1000);
+  };
+}
+function createTimeoutDarkCurse() {
+  // let timeoutId;
+
+  return function startTimeout(target: IHero | IEnemy, stack = 1, duration: number) {
+    // target.status.severeWound.isSevereWound = true;
+    target.status.darkСurse.stack += stack;
+
+    // if (timeoutId) {
+    //   clearTimeout(timeoutId);
+    // }
+
+    setTimeout(() => {
+      target.status.darkСurse.stack -= stack;
+      console.log("Темное проклятие закончились");
     }, duration * 1000);
   };
 }
@@ -311,8 +381,11 @@ function createTimeoutDot(type: "posion" | "bleed") {
 }
 
 export const goFreeze = createTimeoutFreeze();
+export const goDarkCurse = createTimeoutDarkCurse();
 export const goPosionDmg = createTimeoutDot("posion");
 export const goBleedDmg = createTimeoutDot("bleed");
+
+export const goHealTick = createTimeoutHeal();
 
 export function goStun(target: IHero | IEnemy, duration: number) {
   if (!checkForStun(target)) {
