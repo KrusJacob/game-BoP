@@ -39,7 +39,9 @@ const HomeField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => 
             {heroResources?.skillPoints}
           </Tooltip>
         </div>
-        <Button className={styles.castle}>В Замок</Button>
+        <Button disabled className={styles.castle}>
+          В Замок
+        </Button>
         <Button onClick={onGoWay} className={styles.way}>
           В Путь
         </Button>
