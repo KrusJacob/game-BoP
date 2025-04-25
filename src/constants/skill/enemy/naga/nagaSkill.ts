@@ -1,9 +1,8 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { enemySkills, IEnemy } from "@/types/enemy.types";
 import { IHero } from "@/types/hero.types";
 import { getIgnoreDefSkill, getLockSkill, getСombatTechniquesSkill } from "../../utils";
 import { getRandom } from "@/utils/getRandom";
-import { goStun } from "@/constants/func/fight";
+import { goStun } from "@/constants/func/effects";
 
 export const SKILLS_NAGA: enemySkills[] = [
   getLockSkill(),

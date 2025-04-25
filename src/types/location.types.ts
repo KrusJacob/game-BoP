@@ -2,6 +2,7 @@ export type LOCATION = "darkForest" | "hiddenCave" | "azureCoast" | "snowMountai
 export interface locationItem {
   name: LOCATION;
   label: string;
-  reqLevel: number;
+  minLevel: number;
+  maxLevel: number;
   img: string;
 }

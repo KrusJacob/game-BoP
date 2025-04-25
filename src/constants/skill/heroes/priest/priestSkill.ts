@@ -9,7 +9,7 @@ import {
   getHealOfSkill,
   goPureDamage,
 } from "../../utils";
-import { goHealTick } from "@/constants/func/fight";
+import { goHealTick } from "@/constants/func/effects";
 
 const SKILLS_PRIEST: heroSkills[] = [
   {

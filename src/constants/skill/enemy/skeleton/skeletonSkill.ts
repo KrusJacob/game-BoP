@@ -1,8 +1,6 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { enemySkills, IEnemy } from "@/types/enemy.types";
 import { IHero } from "@/types/hero.types";
 import { getIgnoreDefSkill, getLockSkill, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
-import { getPercent } from "@/utils/getPercent";
 import { getRandom } from "@/utils/getRandom";
 
 export const SKILLS_SKELETON: enemySkills[] = [

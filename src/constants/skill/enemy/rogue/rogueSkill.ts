@@ -3,7 +3,7 @@ import { IEnemy, enemySkills } from "@/types/enemy.types";
 import { getLockSkill, getСombatTechniquesSkill } from "../../utils";
 import { IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
-import { goPosionDmg } from "@/constants/func/fight";
+import { goPosionDmg } from "@/constants/func/effects";
 
 export const SKILLS_ROGUE: enemySkills[] = [
   getLockSkill(),

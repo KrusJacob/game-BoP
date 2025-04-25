@@ -6,7 +6,7 @@ import img from "@assets/bg_shop.jpg";
 import { useState } from "react";
 import ShopSelectItem from "./ShopSelectItem";
 import { shopItemType } from "@/types/shop.types";
-import { byeShopItem } from "@/constants/shop";
+import { byeShopItem } from "@/constants/shop/actions";
 import ShopHeader from "./ShopHeader";
 import HeroBagList from "@/components/Hero/HeroBag/HeroBagList";
 

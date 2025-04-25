@@ -1,9 +1,9 @@
 import { IHero } from "@/types/hero.types";
 import { HP_REST, HP_REST_PERCENT, PARAMETER_POINT_LEVEL } from "../setup";
-import { getTalent } from "../talent";
 import { IEnemy, enemyType } from "@/types/enemy.types";
-import { EnemyClass } from "../class";
-import { HERO_REWARD } from "../resources";
+import { EnemyClass } from "../inital/class";
+import { HERO_REWARD } from "../enemy/enemyResources";
+import { getTalent } from "../talent/actions";
 
 function getGold(hero: IHero, goldValue: number) {
   if (hero.boost.gold) {
@@ -25,7 +25,6 @@ function getParameterPoint(hero: IHero, parameterPoints = 0) {
 export function getReward(hero: IHero, enemy: IEnemy | IHero) {
   if (enemy instanceof EnemyClass) {
     const goldReward = getGold(hero, enemy.resources.gold);
-
     const skillPointReward = getSkillPoint(hero, enemy.resources.skillPoints);
     const parameterPointReward = getParameterPoint(hero, enemy.resources.skillPoints);
 
@@ -99,9 +98,7 @@ function incLevel(this: IHero) {
 
   HERO_REWARD.talent = getTalent(this);
 
-  // if (this.level.value % 2 == 0) {
   getSkillPoint(this, 1);
-  // }
 }
 
 export function setMaxLevelExp(exp: number) {

@@ -1,6 +1,5 @@
 import { enemySkills } from "@/types/enemy.types";
 import { TypeSkillTrigger, heroSkills } from "@/types/hero.types";
-import { skillHeroTrigger } from "../heroes";
 
 export const skillEnemyTrigger: TypeSkillTrigger = {
   active: [],

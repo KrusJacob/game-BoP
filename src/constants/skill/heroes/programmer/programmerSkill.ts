@@ -9,7 +9,7 @@ import {
   getСombatTechniquesSkill,
   getHealOfSkill,
 } from "../../utils";
-import { goDarkCurse, goHealTick, goPosionDmg } from "@/constants/func/fight";
+import { goDarkCurse, goHealTick, goPosionDmg } from "@/constants/func/effects";
 import { getPercent } from "@/utils/getPercent";
 
 const SKILLS_PROGRAMMER: heroSkills[] = [

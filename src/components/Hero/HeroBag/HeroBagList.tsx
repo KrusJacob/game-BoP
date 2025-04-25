@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MdArrowBack, MdOutlineKeyboardDoubleArrowUp } from "react-icons/md";
 import HeroBagItem from "./HeroBagItem";
 import styles from "./styles.module.css";
-import { moveBagItem } from "@/constants/shop";
+import { moveBagItem } from "@/constants/shop/actions";
 import { bagItemType } from "@/types/shop.types";
 import { PiMouseRightClickFill } from "react-icons/pi";
 

@@ -1,4 +1,4 @@
-import { LOCATIONS } from "@/constants/location";
+import { LOCATIONS } from "@/constants/location/locations";
 import LocationItem from "./LocationItem";
 import styles from "./styles.module.css";
 import { locationItem } from "@/types/location.types";
@@ -31,8 +31,9 @@ const LocationList = ({ heroLevel, onSelectLocation }: Props) => {
             <LocationItem
               location={location}
               onSelectLocation={onSelectLocation}
-              disabled={heroLevel < location.reqLevel}
-              reqLevel={location.reqLevel}
+              disabled={heroLevel > location.maxLevel || heroLevel < location.minLevel}
+              minLevel={location.minLevel}
+              maxLevel={location.maxLevel}
               key={location.name}
             />
           </SwiperSlide>

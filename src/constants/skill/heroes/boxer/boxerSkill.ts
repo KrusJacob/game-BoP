@@ -2,7 +2,8 @@ import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";
 import { applyPowerSkill, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
-import { goStun } from "@/constants/func/fight";
+import { goStun } from "@/constants/func/effects";
+import { getEnergy } from "@/constants/func/getters";
 
 const SKILLS_BOXER: heroSkills[] = [
   {
@@ -77,7 +78,7 @@ const SKILLS_BOXER: heroSkills[] = [
         isOpen: false,
         modifierHeal: 0,
       },
-      power_3_2: {
+      intellect_3_2: {
         isOpen: false,
         valueEnergy: 0,
       },
@@ -96,8 +97,8 @@ const SKILLS_BOXER: heroSkills[] = [
           if (data.intellect_3_1.isOpen) {
             healValue += hero.getters.getIntellect() * data.intellect_3_1.modifierHeal;
           }
-          if (data.power_3_2.isOpen) {
-            hero.energy.value += data.power_3_2.valueEnergy;
+          if (data.intellect_3_2.isOpen) {
+            getEnergy(hero, data.intellect_3_2.valueEnergy);
           }
           goHealHeroOfSkill(hero, healValue, data.healPercent);
           const totalBarrier = applyPowerSkill(data.barrierValue, hero.getters.getPowerSkill());
@@ -111,12 +112,14 @@ const SKILLS_BOXER: heroSkills[] = [
     descr: function () {
       return `После атаки героя есть ${this.data?.chance}% шанс провести доп. атаку c ${
         this.data.modifier * 100
-      }% урона`;
+      }% урона. Перезарядка: ${this.data.cooldownCount} с.`;
     },
     img: "/assets/skill/skill_boxer_3.png",
     data: {
       chance: 20,
       modifier: 0.5,
+      cooldownCount: 3,
+      isCooldown: false,
       power_3_1: {
         isOpen: false,
         stunChance: 0,
@@ -133,7 +136,7 @@ const SKILLS_BOXER: heroSkills[] = [
     fn: function (this: heroSkills[], hero: IHero, target: IHero | IEnemy) {
       const data = this[2].data;
       const chance = getRandom(1, 100);
-      if (chance <= data.chance && !target.status.death) {
+      if (chance <= data.chance && !target.status.death && !data.isCooldown) {
         setTimeout(() => {
           hero.pushSkillText(this[2].label);
           hero.attack(target, { modifier: data.modifier });
@@ -142,8 +145,12 @@ const SKILLS_BOXER: heroSkills[] = [
             if (stunChance <= data.power_3_1.stunChance) {
               goStun(target, data.power_3_1.stunDuration);
             }
-            hero.energy.value += data.power_3_1.energy;
+            getEnergy(hero, data.power_3_1.valueEnergy);
           }
+          data.isCooldown = true;
+          setTimeout(() => {
+            data.isCooldown = false;
+          }, data.cooldownCount * 1000);
 
           if (data.agility_5_1.isOpen) {
             const chance = getRandom(1, 100);

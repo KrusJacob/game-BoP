@@ -1,8 +1,9 @@
 import { IEnemy, enemySkills } from "@/types/enemy.types";
 import { IHero, attackOptions } from "@/types/hero.types";
 import { getPercent } from "@/utils/getPercent";
-import { goDamage, magicalDamageAction, physicalDamageAction, pureDamageAction } from "../func/fight";
+import { goDamage } from "../func/fight";
 import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "../setup";
+import { magicalDamageAction, physicalDamageAction, pureDamageAction } from "../func/damageAction";
 
 export function applyPowerSkill(value: number, powerSkill: number) {
   return Math.round(value * (powerSkill / 100 + 1));
@@ -47,17 +48,6 @@ export function getHealOfSkill(hero: IHero | IEnemy, healValue = 0, healPercent 
   return heal;
 }
 
-export function getLockSkill(): enemySkills {
-  return {
-    label: "",
-    descr: function () {
-      return `Описание способности. В разработке...`;
-    },
-    img: "/assets/skill/lock.png",
-    data: {},
-  };
-}
-
 export function getIgnoreDefSkill(ignoreDef: number): enemySkills {
   return {
     label: "Жестокие удары",
@@ -66,13 +56,23 @@ export function getIgnoreDefSkill(ignoreDef: number): enemySkills {
     },
     fn: function (this: enemySkills[], hero: IHero | IEnemy, target: IHero | IEnemy) {
       hero.setters.incIgnoreDef(this[2].data.ignoreDef);
-      // hero.buffs.nextAttack.ignoreDef = this[2].data.ignoreDef;
     },
     trigger: "inBeginFight",
     img: "/assets/skill/enemies/skill_boss_3.png",
     data: {
       ignoreDef: ignoreDef,
     },
+  };
+}
+
+export function getLockSkill(): enemySkills {
+  return {
+    label: "",
+    descr: function () {
+      return `Описание способности. В разработке...`;
+    },
+    img: "/assets/skill/lock.png",
+    data: {},
   };
 }
 

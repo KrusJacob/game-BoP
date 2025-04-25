@@ -112,10 +112,10 @@ export const upgradeBoxerSkills: UpgradeSkills = {
           const energy = getText.call(this, "energy");
           return {
             current: chance.current
-              ? `"Хук левой" с шансом ${chance.current}% оглушит противника на ${duration.current} секунды и восстановит ${energy.current}% энергии герою`
+              ? `"Хук левой" с шансом ${chance.current}% оглушит противника на ${duration.current} секунды и восстановит ${energy.current} энергии герою`
               : "",
             next: chance.next
-              ? `"Хук левой" с шансом ${chance.next}% оглушит противника на ${duration.next} секунды и восстановит ${energy.next}% энергии герою`
+              ? `"Хук левой" с шансом ${chance.next}% оглушит противника на ${duration.next} секунды и восстановит ${energy.next} энергии герою`
               : "",
           };
         },
@@ -126,9 +126,9 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          chance: [40, 55, 70],
+          chance: [50, 60, 70],
           duration: [2, 2, 2],
-          energy: [10, 15, 20],
+          energy: [5, 10, 15],
         },
         fn() {
           SKILLS_BOXER[2].data.power_3_1.isOpen = true;
@@ -161,7 +161,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         branch: "power",
         data: {
           value: [30, 60, 90],
-          debuff: [-0.14, -0.28, -0.42],
+          debuff: [-0.13, -0.26, -0.39],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));
@@ -191,8 +191,8 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "power",
         data: {
-          modifierValue: [75, 110, 145],
-          modifierPower: [75, 110, 145],
+          modifierValue: [75, 100, 135],
+          modifierPower: [75, 100, 135],
         },
         fn(hero) {
           SKILLS_BOXER[0].data.modifier += getValue(this, "modifierValue") / 100;
@@ -324,7 +324,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [2, 4, 6, 8, 10],
+          value: [3, 6, 9, 12, 15],
         },
         fn() {
           SKILLS_BOXER[3].data.chanceCritDamage += getValue(this);
@@ -348,7 +348,7 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         open: false,
         branch: "agility",
         data: {
-          value: [3, 5, 7],
+          value: [4, 6, 8],
         },
         fn() {
           SKILLS_BOXER[2].data.chance += getValue(this);
@@ -519,8 +519,8 @@ export const upgradeBoxerSkills: UpgradeSkills = {
         },
         fn() {
           console.log(SKILLS_BOXER[0].data);
-          SKILLS_BOXER[1].data.power_3_2.isOpen = true;
-          SKILLS_BOXER[1].data.power_3_2.valueEnergy += getValue(this);
+          SKILLS_BOXER[1].data.intellect_3_2.isOpen = true;
+          SKILLS_BOXER[1].data.intellect_3_2.valueEnergy += getValue(this);
         },
       },
     ],

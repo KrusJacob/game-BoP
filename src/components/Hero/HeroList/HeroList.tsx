@@ -1,7 +1,7 @@
 import { IHero, heroName } from "@/types/hero.types";
 import HeroCard from "../HeroCard/HeroCard";
 import styles from "./heroList.module.css";
-import { HeroClass } from "@/constants/class";
+import { HeroClass } from "@/constants/inital/class";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 

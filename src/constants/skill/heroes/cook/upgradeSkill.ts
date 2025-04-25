@@ -4,7 +4,6 @@ import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
 import { goPureDamage, goHealHeroOfSkill, goPhysicalDamage } from "../../utils";
 import { IEnemy } from "@/types/enemy.types";
-import { get } from "http";
 import { getPercent } from "@/utils/getPercent";
 
 export const upgradeCookSkills: UpgradeSkills = {

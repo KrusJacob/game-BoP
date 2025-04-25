@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { heroName } from "@/types/hero.types";
 import { useGameStore } from "@/store/gameStore";
 import { enemyName } from "@/types/enemy.types";
-import { EnemyClass, HeroClass } from "@/constants/class";
+import { EnemyClass, HeroClass } from "@/constants/inital/class";
 import { fight } from "@/constants/func/fight";
 
 const TestField = () => {
@@ -39,12 +39,12 @@ const TestField = () => {
         <Button
           onClick={() => {
             if (hero) {
-              hero?.level.incExp.call(hero, 200);
+              hero?.level.incExp.call(hero, 300);
               setHero(hero);
             }
           }}
         >
-          Дать 200 опыта
+          Дать 300 опыта
         </Button>
       </div>
       <div>

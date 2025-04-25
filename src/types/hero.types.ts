@@ -1,8 +1,9 @@
-import { ALL_HEROES } from "../constants/hero";
+import { ALL_HEROES } from "@/constants/hero/index";
 import { IEnemy, enemyName, enemyType } from "./enemy.types";
 import { bagItemType } from "./shop.types";
 import { talentType } from "./talent.types";
 
+export type ICharacter = IHero | IEnemy;
 export interface IHero {
   type: heroType;
   name: heroName;

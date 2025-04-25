@@ -4,8 +4,10 @@ import { getText, incPoint, getValue, registerSkill } from "..";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
 import { goHealHeroOfSkill, goMagicalDamage, goPureDamage } from "../../utils";
-import { damageToHP, goDamage, goDarkCurse, goStun } from "@/constants/func/fight";
+import { goDarkCurse, goStun } from "@/constants/func/effects";
 import { getRandom } from "@/utils/getRandom";
+import { getEnergy } from "@/constants/func/getters";
+import { goDamage } from "@/constants/func/fight";
 
 export const upgradePriestSkills: UpgradeSkills = {
   power: {
@@ -211,7 +213,8 @@ export const upgradePriestSkills: UpgradeSkills = {
               hero.pushSkillText(this.name);
               const cooldown = getValue(this, "cooldown", true) * 1000;
               goHealHeroOfSkill(hero, getValue(this, "healValue", true), getValue(this, "healPercent", true));
-              hero.energy.value += getValue(this, "energy", true);
+              const energy = getValue(this, "energy", true);
+              getEnergy(hero, energy);
               this.data.isCooldown = true;
               setTimeout(() => {
                 this.data.isCooldown = false;
@@ -423,8 +426,8 @@ export const upgradePriestSkills: UpgradeSkills = {
             function skill(this: UpSkill, hero: IHero, target: IEnemy) {
               hero.pushSkillText(this.name);
               goHealHeroOfSkill(hero, 0, getValue(this, "healPercent", true));
-              console.log(getValue(this, "energy", true), "- energy");
-              hero.energy.value += getValue(this, "energy", true);
+              const energy = getValue(this, "energy", true);
+              getEnergy(hero, energy);
             }
           }
         },
@@ -738,7 +741,8 @@ export const upgradePriestSkills: UpgradeSkills = {
               const chance = getRandom(1, 100);
               if (chance <= getValue(this, "chance", true)) {
                 hero.pushSkillText(this.name);
-                hero.energy.value += getValue(this, "energy", true);
+                const energy = getValue(this, "energy", true);
+                getEnergy(hero, energy);
                 goDarkCurse(target, 1, getValue(this, "duration", true));
               }
             }

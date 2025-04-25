@@ -1,8 +1,7 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy, enemySkills } from "@/types/enemy.types";
 import { getLockSkill, getСombatTechniquesSkill, getIgnoreDefSkill } from "../../utils";
 import { IHero } from "@/types/hero.types";
-import { goHealTick } from "@/constants/func/fight";
+import { goHealTick } from "@/constants/func/effects";
 
 export const SKILLS_SEA_MONSTER: enemySkills[] = [
   {
