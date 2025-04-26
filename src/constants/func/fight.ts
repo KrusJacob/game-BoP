@@ -1,17 +1,21 @@
-import { IEnemy } from "@/types/enemy.types";
-import { IHero, attackOptions, IAttackInfo } from "@/types/hero.types";
-import { battleText } from "../text";
-import { getPercent } from "@/utils/getPercent";
-import { getRandom } from "@/utils/getRandom";
-import { MULTIPLIER_CRITICAL_DAMAGE, STUN_COOLDOWN_SEC } from "../setup";
+import { IHero, attackOptions, IAttackInfo, ICharacter } from "@/types/hero.types";
+import { battleText } from "../text/battleText";
 import { getReward } from "./reward";
-import { goSkillTrigger } from "../skill";
-import { skillEnemyTrigger } from "../skill/enemy";
-import { skillHeroTrigger } from "../skill/heroes";
+import { checkForCrit, checkForDeath, checkForEvade, checkForStun } from "./checks";
+import { goEvade, goSkillTrigger } from "./effects";
+import {
+  getCriticalDamage,
+  getDamageWithBuffs,
+  getDamageWithOptions,
+  getEnergy,
+  getMagicalDamage,
+  getPhysicalDamage,
+  getPureDamage,
+} from "./getters";
+import { physicalDamageAction } from "./damageAction";
 
-export function fight(hero: IHero, enemy: IHero | IEnemy) {
-  // clearText();
-  console.log(skillHeroTrigger);
+export function fight(hero: IHero, enemy: ICharacter) {
+  // console.log(skillHeroTrigger);
   goSkillTrigger("inBeginFight", hero, enemy);
   goSkillTrigger("inBeginFight", enemy, hero);
   attackHero();
@@ -26,13 +30,12 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
       } else {
         goSkillTrigger("beforeInitiatorAttack", hero, enemy);
 
-        if (!hero.status.death) {
+        if (!checkForDeath(hero)) {
           const attackInfo = hero.attack(enemy);
 
           attackInfo.isCritical && goSkillTrigger("afterInitiatorCrit", hero, enemy);
 
-          if (enemy.status.death) {
-            console.log(hero.name, "win!");
+          if (checkForDeath(enemy)) {
             getReward(hero, enemy);
             goSkillTrigger("inEndFight", hero, enemy);
             return;
@@ -48,11 +51,12 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
 
   function attackEnemy() {
     setTimeout(() => {
-      if (hero.status.death) {
+      if (checkForDeath(hero)) {
         console.log(enemy.name, "win!");
+        return;
       } else {
         goSkillTrigger("beforeInitiatorAttack", enemy, hero);
-        if (!enemy.status.death) {
+        if (!checkForDeath(enemy)) {
           const attackInfo = enemy.attack(hero);
 
           if (attackInfo.isCritical) {
@@ -72,14 +76,7 @@ export function fight(hero: IHero, enemy: IHero | IEnemy) {
   }
 }
 
-function getEnergy(hero: IHero | IEnemy) {
-  hero.energy.value += hero.energy.incValue;
-  if (hero.energy.value > hero.energy.max) {
-    hero.energy.value = hero.energy.max;
-  }
-}
-
-export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?: attackOptions): IAttackInfo {
+export function goAttack(this: ICharacter, target: ICharacter, options?: attackOptions): IAttackInfo {
   const attackInfo = {
     initiatorType: this.type,
     damage: physicalDamageAction(0),
@@ -88,7 +85,7 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
     isStunned: false,
   } as IAttackInfo;
 
-  if (this.status.death) {
+  if (checkForDeath(this)) {
     return attackInfo;
   }
 
@@ -98,19 +95,15 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
   }
 
   if (checkForEvade(target.skills[3].data.chanceEvade) && !options?.isIgnoreAvade) {
-    attackInfo.isMiss = true;
     console.log(`${this.name} промахнулся`);
-
-    battleText.pushTextBattle(attackInfo);
-
-    return attackInfo;
+    return goEvade(attackInfo);
   }
 
   attackInfo.damage.value = getDamageWithBuffs(this);
   attackInfo.damage.value = getDamageWithOptions(attackInfo.damage.value, options);
   if (checkForCrit(this.skills[3].data.chanceCritDamage)) {
     attackInfo.isCritical = true;
-    attackInfo.damage.value = goCriticalDamage(attackInfo.damage.value);
+    attackInfo.damage.value = getCriticalDamage(attackInfo.damage.value);
   }
 
   attackInfo.damage.value = goDamage(this, target, attackInfo.damage, options);
@@ -124,33 +117,9 @@ export function goAttack(this: IHero | IEnemy, target: IHero | IEnemy, options?:
   return attackInfo;
 }
 
-function getDamageWithReduction(target: IHero | IEnemy, value: number) {
-  // console.log(value, Math.floor(value * target.buffs.getBuffDef()));
-  return Math.floor(value * target.buffs.getBuffDef());
-}
-
-export function physicalDamageAction(value: number): IAttackInfo["damage"] {
-  return {
-    type: "physical",
-    value,
-  };
-}
-export function magicalDamageAction(value: number): IAttackInfo["damage"] {
-  return {
-    type: "magical",
-    value,
-  };
-}
-export function pureDamageAction(value: number): IAttackInfo["damage"] {
-  return {
-    type: "pure",
-    value,
-  };
-}
-
 export function goDamage(
-  initiator: IHero | IEnemy,
-  target: IHero | IEnemy,
+  initiator: ICharacter,
+  target: ICharacter,
   damageInfo: IAttackInfo["damage"],
   options?: attackOptions
 ) {
@@ -159,11 +128,9 @@ export function goDamage(
   switch (damageInfo.type) {
     case "physical":
       damageValue = getPhysicalDamage(initiator, target, damageInfo.value, options);
-      // damageValue = getDamageWithReduction(target, damageValue);
       break;
     case "magical":
       damageValue = getMagicalDamage(target, damageInfo.value);
-      // damageValue = getDamageWithReduction(target, damageValue);
       break;
     case "pure":
       damageValue = getPureDamage(target, damageInfo.value);
@@ -184,79 +151,7 @@ export function goDamage(
   return damageValue;
 }
 
-function getPhysicalDamage(
-  initiator: IHero | IEnemy,
-  target: IHero | IEnemy,
-  value: number,
-  options?: attackOptions
-) {
-  let damage = getDamageWithDef(initiator, value, target.getters.getDef(), options);
-  damage = getDamageWithReduction(target, damage);
-  return damage;
-}
-
-function getMagicalDamage(target: IHero | IEnemy, value: number) {
-  let damage = getDamageWithMagicDef(value, target.getters.getMagicDef());
-  damage = getDamageWithReduction(target, damage);
-  return damage;
-}
-function getPureDamage(target: IHero | IEnemy, value: number) {
-  if (target.buffs.getBuffDef() > 1) {
-    return getDamageWithReduction(target, value);
-  }
-  return value;
-}
-
-function getDamageWithOptions(damage: number, options?: attackOptions) {
-  if (!options) {
-    return damage;
-  }
-  let bonusDamage = 0;
-  if (options.bonusDamage) {
-    bonusDamage += options.bonusDamage;
-  }
-  return Math.floor(damage * (options.modifier ? options.modifier : 1) + bonusDamage);
-}
-
-function getDamageWithBuffs(attacker: IHero | IEnemy) {
-  return attacker.getters.getAttack() * attacker.buffs.getBuffDamage();
-}
-
-function getDamageWithMagicDef(damage: number, magicDef: number, hero?: IHero | IEnemy, options?: attackOptions) {
-  return getPercent(damage, 100 - magicDef);
-}
-
-function getDamageWithDef(hero: IHero | IEnemy, damage: number, def: number, options?: attackOptions) {
-  if (!options?.ignoreDef && !hero.buffs.nextAttack.ignoreDef && hero.getters.getIgnoreDef() === 0) {
-    return getDamageAfterDef(damage, def);
-  }
-  let ignoreDef = options?.ignoreDef || 0;
-  ignoreDef += hero.getters.getIgnoreDef();
-  if (hero.buffs.nextAttack.ignoreDef) {
-    ignoreDef += hero.buffs.nextAttack.ignoreDef;
-    hero.buffs.nextAttack.ignoreDef = 0;
-  }
-  console.log(ignoreDef, "%", "ignoreDef");
-  return getDamageAfterDef(damage, def - getPercent(def, ignoreDef));
-}
-
-function getDamageAfterDef(damage: number, def: number) {
-  let res = Math.max(1, damage - def);
-  if (def > 0 && def <= 15) {
-    res = res * 0.95;
-  } else if (def > 15 && def <= 30) {
-    res = res * 0.9;
-  } else if (def > 30 && def <= 50) {
-    res = res * 0.8;
-  } else if (def > 50 && def <= 65) {
-    res = res * 0.7;
-  } else if (def > 65) {
-    res = res * 0.6;
-  }
-  return Math.round(res);
-}
-
-export function damageToBarrier(target: IHero | IEnemy, dmg: number) {
+export function damageToBarrier(target: ICharacter, dmg: number) {
   if (target.barrier - dmg <= 0) {
     target.barrier = 0;
   } else {
@@ -264,171 +159,11 @@ export function damageToBarrier(target: IHero | IEnemy, dmg: number) {
   }
 }
 
-export function damageToHP(target: IHero | IEnemy, dmg: number) {
+export function damageToHP(target: ICharacter, dmg: number) {
   if (target.HP - dmg <= 0) {
     target.HP = 0;
     target.status.death = true;
   } else {
     target.HP -= dmg;
   }
-}
-
-function createTimeoutHeal() {
-  // let timeoutId: any;
-  // let intervalId: any;
-
-  return function startTimeout(
-    hero: IHero | IEnemy,
-    target: IHero | IEnemy,
-    healValue: number,
-    healPercent: number,
-    tick = 1,
-    duration = 999
-  ) {
-    // if (timeoutId) {
-    //   clearTimeout(timeoutId);
-    // }
-    // if (intervalId) {
-    //   clearInterval(intervalId);
-    // }
-
-    let intervalId = setInterval(() => {
-      if (target.status.death || hero.status.death) {
-        clearInterval(intervalId);
-      } else {
-        const heal = healValue + getPercent(hero.getters.getMaxHp(), healPercent);
-        console.log("heal-tick", hero.getHeal(heal));
-      }
-    }, tick * 1000);
-
-    setTimeout(() => {
-      clearInterval(intervalId);
-      console.log("heal-tick закончился");
-    }, duration * 1000);
-  };
-}
-
-function createTimeoutFreeze() {
-  let timeoutId: any;
-
-  return function startTimeout(target: IHero | IEnemy, value: number, duration: number) {
-    if (!target.status.isFreeze) {
-      target.status.isFreeze = true;
-      target.buffs.incAttackSpeed(-value);
-    }
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    timeoutId = setTimeout(() => {
-      target.status.isFreeze = false;
-      target.buffs.incAttackSpeed(value);
-      console.log("мороз закончился");
-    }, duration * 1000);
-  };
-}
-function createTimeoutDarkCurse() {
-  // let timeoutId;
-
-  return function startTimeout(target: IHero | IEnemy, stack = 1, duration: number) {
-    // target.status.severeWound.isSevereWound = true;
-    target.status.darkСurse.stack += stack;
-
-    // if (timeoutId) {
-    //   clearTimeout(timeoutId);
-    // }
-
-    setTimeout(() => {
-      target.status.darkСurse.stack -= stack;
-      console.log("Темное проклятие закончились");
-    }, duration * 1000);
-  };
-}
-
-function createTimeoutDot(type: "posion" | "bleed") {
-  const statusType = type === "posion" ? "isPoisoned" : "isBleeded";
-  let timeoutId: any;
-  let intervalId: any;
-
-  return function startTimeout(hero: IHero | IEnemy, target: IHero | IEnemy, value: number, duration: number) {
-    if (!target.status[statusType]) {
-      target.status[statusType] = true;
-    }
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    if (intervalId) {
-      clearInterval(intervalId);
-    }
-
-    intervalId = setInterval(() => {
-      if (target.status.death || hero.status.death) {
-        target.status[statusType] = false;
-        clearInterval(intervalId);
-      } else {
-        const posionValue = goDamage(hero, target, magicalDamageAction(value));
-        console.log("dot damage", posionValue);
-      }
-    }, 1000);
-
-    timeoutId = setTimeout(() => {
-      clearInterval(intervalId);
-      target.status[statusType] = false;
-      // target.update();
-      console.log("дот закончился");
-    }, duration * 1000);
-  };
-}
-
-export const goFreeze = createTimeoutFreeze();
-export const goDarkCurse = createTimeoutDarkCurse();
-export const goPosionDmg = createTimeoutDot("posion");
-export const goBleedDmg = createTimeoutDot("bleed");
-
-export const goHealTick = createTimeoutHeal();
-
-export function goStun(target: IHero | IEnemy, duration: number) {
-  if (!checkForStun(target)) {
-    goStunCooldown(target);
-    goStunEffect(target, duration);
-
-    battleText.pushTextBattle({
-      damage: {
-        type: "physical",
-        value: 0,
-      },
-      isStunned: true,
-      initiatorType: target.type,
-    });
-  }
-}
-
-function goStunEffect(target: IHero | IEnemy, duration: number) {
-  target.status.stun.isStun = true;
-  setTimeout(() => {
-    target.status.stun.isStun = false;
-  }, duration * 1000);
-}
-
-function goStunCooldown(target: IHero | IEnemy) {
-  target.status.stun.isCooldown = true;
-  setTimeout(() => {
-    target.status.stun.isCooldown = false;
-  }, STUN_COOLDOWN_SEC * 1000);
-}
-
-function goCriticalDamage(value: number) {
-  return value * MULTIPLIER_CRITICAL_DAMAGE;
-}
-
-function checkForCrit(chance: number) {
-  return chance >= getRandom(1, 100);
-}
-
-function checkForEvade(chance: number) {
-  return chance >= getRandom(1, 100);
-}
-
-function checkForStun(hero: IHero | IEnemy) {
-  return hero.status.stun.isStun;
 }

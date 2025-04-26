@@ -1,4 +1,3 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { IEnemy, enemySkills } from "@/types/enemy.types";
 import { getIgnoreDefSkill, getLockSkill, goMagicalDamage, getСombatTechniquesSkill } from "../../utils";
 import { IHero } from "@/types/hero.types";

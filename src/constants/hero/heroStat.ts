@@ -1,6 +1,4 @@
-import { heroBaseStats } from "../types/hero.types";
-
-const ALL_HEROES = ["boxer", "programmer", "cook", "hairdresser", "priest"] as const;
+import { heroBaseStats } from "@/types/hero.types";
 
 const STATS_BOXER: heroBaseStats = {
   img: "/assets/hero/boxer.png",
@@ -68,4 +66,4 @@ const STATS_PRIEST: heroBaseStats = {
   powerSkill: 0,
 };
 
-export { ALL_HEROES, STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER, STATS_PRIEST };
+export { STATS_PROGRAMMER, STATS_COOK, STATS_BOXER, STATS_HAIRDRESSER, STATS_PRIEST };

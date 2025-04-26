@@ -1,5 +1,4 @@
-import { goDarkCurse, goFreeze, goPosionDmg } from "@/constants/func/fight";
-
+import { goDarkCurse, goFreeze, goPosionDmg } from "@/constants/func/effects";
 import { IEnemy } from "@/types/enemy.types";
 import { heroSkills, IHero } from "@/types/hero.types";
 import { getRandom } from "@/utils/getRandom";

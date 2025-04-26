@@ -4,7 +4,7 @@ import Button from "@/components/UI/Button/Button";
 import Badge from "@/components/UI/Badge/Badge";
 import { IEnemy, enemySkills } from "@/types/enemy.types";
 import { useState } from "react";
-import { HeroClass } from "@/constants/class";
+import { HeroClass } from "@/constants/inital/class";
 import Tooltip from "@/components/UI/Tooltip/Tooltip";
 import { useGameStore } from "@/store/gameStore";
 import HeroStatusBar from "./HeroStatusBar";

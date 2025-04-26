@@ -1,4 +1,4 @@
-import { ALL_ENEMIES } from "@/constants/enemies";
+import { ALL_ENEMIES } from "@/constants/enemy";
 import {
   IHero,
   IAttackInfo,
@@ -13,7 +13,6 @@ import {
   heroStatus,
   heroType,
 } from "./hero.types";
-import { bagItemType } from "./shop.types";
 
 export interface IEnemy {
   type: heroType;

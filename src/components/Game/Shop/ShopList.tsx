@@ -1,8 +1,9 @@
 import { shopItemType } from "@/types/shop.types";
 import ShopItem from "./ShopItem";
 import styles from "./styles.module.css";
-import { ALL_SHOP_ITEMS } from "@/constants/shop";
+
 import { memo } from "react";
+import { ALL_SHOP_ITEMS } from "@/constants/shop/shopItems";
 
 const ShopList = memo(({ onSelectItem }: { onSelectItem: (item: shopItemType) => void }) => {
   return (

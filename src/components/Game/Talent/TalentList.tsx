@@ -1,4 +1,4 @@
-import { ALL_TALENTS } from "@/constants/talent";
+import { ALL_TALENTS } from "@/constants/talent/talentItems";
 import TalentItem from "./TalentItem";
 import styles from "./styles.module.css";
 

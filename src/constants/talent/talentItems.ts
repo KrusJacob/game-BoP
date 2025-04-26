@@ -1,11 +1,12 @@
-import { IHero, TypeSkillTrigger, heroSkills } from "@/types/hero.types";
+import { IHero } from "@/types/hero.types";
 import { talentType } from "@/types/talent.types";
 import { getRandom } from "@/utils/getRandom";
 import { IEnemy } from "@/types/enemy.types";
 import { getPercent } from "@/utils/getPercent";
-import { goHealTick, goStun } from "../func/fight";
-import { registerSkill } from "../skill/heroes";
+import { goHealTick, goStun } from "../func/effects";
 import { goPureDamage } from "../skill/utils";
+import { getEnergy } from "../func/getters";
+import { getText, getValue, registerTalent } from "./actions";
 
 export const ALL_TALENTS: talentType[] = [
   {
@@ -40,7 +41,7 @@ export const ALL_TALENTS: talentType[] = [
       };
     },
     data: {
-      value: [10, 18, 26, 32, 40],
+      value: [8, 14, 20, 26, 32],
     },
     fn(hero: IHero) {
       hero.setters.incDef(getValue(this));
@@ -59,7 +60,7 @@ export const ALL_TALENTS: talentType[] = [
       };
     },
     data: {
-      value: [8, 13, 18, 23, 28],
+      value: [10, 15, 20, 25, 30],
     },
     fn(hero: IHero) {
       hero.setters.incMagicDef(getValue(this));
@@ -288,7 +289,7 @@ export const ALL_TALENTS: talentType[] = [
         registerTalent(this, activeTalent, this.trigger!);
         function activeTalent(this: talentType, hero: IHero, target: IHero | IEnemy) {
           const energyValue = getValue(this);
-          hero.energy.value += Math.min(energyValue, hero.energy.max - energyValue);
+          getEnergy(hero, energyValue);
         }
       }
     },
@@ -402,39 +403,3 @@ export const ALL_TALENTS: talentType[] = [
     },
   },
 ];
-
-function registerTalent(talent: talentType, fn: Function, trigger: keyof TypeSkillTrigger) {
-  registerSkill(fn.bind(talent), trigger);
-}
-
-function getText(this: talentType, value: string) {
-  if (this.level === 0) {
-    return {
-      current: "",
-      next: this.data[value][this.level],
-    };
-  }
-  return {
-    current: this.data[value][this.level - 1],
-    next: this.data[value][this.level],
-  };
-}
-function getValue(talent: talentType, field = "value") {
-  if (talent.level === 1) {
-    return talent.data[field][talent.level - 1];
-  }
-  return talent.data[field][talent.level - 1] - talent.data[field][talent.level - 2];
-}
-
-export function getTalent(hero: IHero): talentType {
-  const arrTalents = ALL_TALENTS.filter((item) => item.level !== 5);
-  const indexRandomTalent = getRandom(0, arrTalents.length - 1);
-  const nameTalent = arrTalents[indexRandomTalent].name;
-  const findedTalent = ALL_TALENTS.find((item) => item.name === nameTalent);
-  if (findedTalent) {
-    findedTalent.level += 1;
-    findedTalent.fn(hero);
-  }
-
-  return findedTalent as talentType;
-}

@@ -3,7 +3,7 @@ import { getText, incPoint, getValue, registerSkill } from "..";
 import SKILLS_HAIRDRESSER from "./hairdresserSkill";
 import { IHero } from "@/types/hero.types";
 import { IEnemy } from "@/types/enemy.types";
-import { goStun } from "@/constants/func/fight";
+import { goStun } from "@/constants/func/effects";
 
 export const upgradeHairdresserSkills: UpgradeSkills = {
   power: {

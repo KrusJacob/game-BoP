@@ -1,8 +1,7 @@
-import { CHANCE_CRITICAL_DAMAGE, CHANCE_EVADE } from "@/constants/setup";
 import { enemySkills, IEnemy } from "@/types/enemy.types";
 import { IHero } from "@/types/hero.types";
 import { getIgnoreDefSkill, getLockSkill, getСombatTechniquesSkill } from "../../utils";
-import { goBleedDmg } from "@/constants/func/fight";
+import { goBleedDmg } from "@/constants/func/effects";
 
 export const SKILLS_GOBLIN: enemySkills[] = [
   getLockSkill(),

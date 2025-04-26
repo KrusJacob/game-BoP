@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.css";
 import { IEnemy, enemyToTomb, enemyType } from "@/types/enemy.types";
 import cn from "classnames";
-import { EnemyClass } from "@/constants/class";
+import { EnemyClass } from "@/constants/inital/class";
 import Button from "@/components/UI/Button/Button";
 import lockImg from "@assets/enemy/lock.png";
 import { tombProgress } from "@/types/hero.types";

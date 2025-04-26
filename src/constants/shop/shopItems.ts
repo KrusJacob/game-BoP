@@ -1,24 +1,24 @@
 import { IHero } from "@/types/hero.types";
 import { shopItemType } from "@/types/shop.types";
 import { bagItemType } from "@/types/shop.types";
-import { EMPTY_BAG_SLOT } from "../bag";
 import { IEnemy } from "@/types/enemy.types";
-import { goBleedDmg, goPosionDmg, goFreeze, goStun, goDarkCurse } from "../func/fight";
+import { goBleedDmg, goPosionDmg, goFreeze, goStun, goDarkCurse } from "../func/effects";
 import { goPureDamage } from "../skill/utils";
+import { decreaseQuantity } from "../shop/actions";
 
 export const ALL_SHOP_ITEMS: shopItemType[] = [
   {
     id: 1,
     name: "Пузырек лечебного зелья",
     img: "/assets/shop/heal_potion_1.png",
-    cost: 200,
+    cost: 230,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
     },
     data: {
-      value: 300,
+      value: 350,
     },
     fn: function (this: bagItemType, hero: IHero) {
       hero.getHeal(this.data.value);
@@ -29,14 +29,14 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 2,
     name: "Флакон лечебного зелья",
     img: "/assets/shop/heal_potion_2.png",
-    cost: 400,
+    cost: 460,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
     },
     data: {
-      value: 625,
+      value: 725,
     },
     fn: function (this: bagItemType, hero: IHero) {
       hero.getHeal(this.data.value);
@@ -47,14 +47,14 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 3,
     name: "Бутыль лечебного зелья",
     img: "/assets/shop/heal_potion_3.png",
-    cost: 800,
+    cost: 900,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Исцеляет героя на ${text} единиц здоровья`;
     },
     data: {
-      value: 1250,
+      value: 1450,
     },
     fn: function (this: bagItemType, hero: IHero) {
       hero.getHeal(this.data.value);
@@ -65,7 +65,7 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 4,
     name: "Кирпич",
     img: "/assets/shop/brick.png",
-    cost: 575,
+    cost: 580,
     quantity: 1,
     descr: function () {
       const text = this.data.duration;
@@ -102,15 +102,15 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 6,
     name: "Зелье c ядом",
     img: "/assets/shop/posion_potion.png",
-    cost: 350,
+    cost: 360,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Отравляет врага, нанося ему ${text} урона в секунду ядом в течении ${this.data.duration} cекунд`;
     },
     data: {
-      value: 75,
-      duration: 8,
+      value: 90,
+      duration: 7,
     },
     fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
       goPosionDmg(hero, enemy, this.data.value, this.data.duration);
@@ -160,14 +160,14 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     id: 9,
     name: "Зелье удушения",
     img: "/assets/shop/potion.png",
-    cost: 700,
+    cost: 650,
     quantity: 1,
     descr: function () {
       const text = this.data.value;
       return `Отравляет врага, нанося ему ${text} урона в секунду кровотечением в течении ${this.data.duration} cекунд`;
     },
     data: {
-      value: 120,
+      value: 130,
       duration: 10,
     },
     fn: function (this: bagItemType, hero: IHero, enemy: IHero | IEnemy) {
@@ -198,72 +198,3 @@ export const ALL_SHOP_ITEMS: shopItemType[] = [
     },
   },
 ];
-
-function decreaseQuantity(resources: IHero["resources"], bagSlotId: number) {
-  if (resources.bagActivePanel[bagSlotId].quantity > 1) {
-    resources.bagActivePanel[bagSlotId].quantity -= 1;
-  } else {
-    resources.bagActivePanel[bagSlotId] = EMPTY_BAG_SLOT;
-  }
-}
-
-export function byeShopItem(resources: IHero["resources"], item: shopItemType) {
-  if (resources.gold < item.cost) {
-    return false;
-  }
-  const isSuccess = addItemToBag(resources, item);
-  if (isSuccess) {
-    resources.gold -= item.cost;
-  }
-  return isSuccess;
-}
-
-export function addItemToBag(resources: IHero["resources"], item: shopItemType | bagItemType, place = "begin") {
-  const bagItem = { ...item, quantity: item.quantity, empty: false, isActiveBag: false };
-
-  for (let i = 0; i < resources.bag.length; i++) {
-    let index = place === "begin" ? i : resources.bag.length - i - 1;
-    if (resources.bag[index].name === bagItem.name) {
-      resources.bag[index].quantity += bagItem.quantity;
-      return true;
-    }
-    if (resources.bag[index].empty) {
-      resources.bag[index] = { ...bagItem, bagSlotId: i, isMoved: place === "begin" ? true : false };
-      return true;
-    }
-  }
-  return false;
-}
-
-export function moveBagItem(resources: IHero["resources"], item: bagItemType) {
-  const itemIsActvePanel = item.isActiveBag;
-  if (itemIsActvePanel) {
-    moveFromActivePanel(resources, item);
-  } else {
-    moveToActivePanel(resources, item);
-  }
-}
-
-function moveToActivePanel(resources: IHero["resources"], bagItem: bagItemType) {
-  // if (!bagItem.isMoved) {
-  //   return;
-  // }
-  const indexSameItem = resources.bagActivePanel.findIndex((item) => item.name === bagItem.name);
-  if (indexSameItem >= 0) {
-    resources.bagActivePanel[indexSameItem].quantity += bagItem.quantity;
-    resources.bag[bagItem.bagSlotId] = EMPTY_BAG_SLOT;
-  } else {
-    const indexItem = resources.bagActivePanel.findIndex((item) => item.empty);
-    if (indexItem >= 0) {
-      resources.bagActivePanel[indexItem] = { ...bagItem, isActiveBag: true, bagSlotId: indexItem };
-      resources.bag[bagItem.bagSlotId] = EMPTY_BAG_SLOT;
-    }
-  }
-}
-function moveFromActivePanel(resources: IHero["resources"], bagItem: bagItemType) {
-  const indexItem = resources.bag.findIndex((item) => item.empty);
-  if (indexItem >= 0) {
-    resources.bag[indexItem] = { ...bagItem, isActiveBag: false, bagSlotId: indexItem };
-    resources.bagActivePanel[bagItem.bagSlotId] = EMPTY_BAG_SLOT;
-  }
-}

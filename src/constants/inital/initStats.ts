@@ -7,9 +7,9 @@ import {
   heroStatus,
   heroStatistics,
   IHero,
+  ICharacter,
 } from "@/types/hero.types";
 
-import { STATS_BOXER, STATS_PROGRAMMER, STATS_COOK, STATS_HAIRDRESSER, STATS_PRIEST } from "./hero";
 import {
   SKILLS_ROGUE,
   SKILLS_GNOME,
@@ -22,38 +22,38 @@ import {
   SKILLS_BEAST,
   SKILLS_BEAST_BOSS,
   SKILLS_TREASURE_BOX,
-} from "./skill/enemySkills";
+} from "../skill/enemy/enemySkills";
 import {
   SKILLS_BOXER,
   SKILLS_PROGRAMMER,
   SKILLS_COOK,
   SKILLS_HAIRDRESSER,
   SKILLS_PRIEST,
-} from "./skill/heroSkills";
-import { statsBeast, statsGnome, statsGoblin, statsLegend, statsNaga, statsRogue, statsSkeleton } from "./enemy";
-import { enemiesResources } from "./resources";
+} from "../skill/heroes/heroSkills";
 import {
-  getBuffAttackSpeed,
-  getBuffDamage,
-  getBuffDef,
-  incHeroAttackSpeed,
-  incHeroDamage,
-  incHeroDef,
-} from "./fn";
-import { START_STATISTICS } from "./setup";
-import { SKILLS_ROGUE_BOSS } from "./skill/enemy/rogue/rogueSkill";
-import { SKILLS_GOBLIN_BOSS } from "./skill/enemy/goblin/goblinSkill";
-import { SKILLS_GNOME_BOSS } from "./skill/enemy/gnome/gnomeSkill";
-import { SKILLS_NAGA_BOSS } from "./skill/enemy/naga/nagaSkill";
-import { SKILLS_SKELETON_BOSS } from "./skill/enemy/skeleton/skeletonSkill";
-import { SKILLS_CAVE_HORROR } from "./skill/enemy/legends/caveHorror";
-import { SKILLS_SWAMP_MONSTER } from "./skill/enemy/legends/swampMonster";
-
-import { upgradeBoxerSkills } from "./skill/heroes/boxer/upgradeSkill";
-import { upgradeProgrammerSkills } from "./skill/heroes/programmer/upgradeSkill";
-import { upgradeCookSkills } from "./skill/heroes/cook/upgradeSkill";
-import { upgradeHairdresserSkills } from "./skill/heroes/hairdresser/upgradeSkill";
-import { upgradePriestSkills } from "./skill/heroes/priest/upgradeSkill";
+  statsBeast,
+  statsGnome,
+  statsGoblin,
+  statsLegend,
+  statsNaga,
+  statsRogue,
+  statsSkeleton,
+} from "../enemy/enemyStat";
+import { enemiesResources } from "../enemy/enemyResources";
+import { START_STATISTICS } from "../setup";
+import { SKILLS_ROGUE_BOSS } from "../skill/enemy/rogue/rogueSkill";
+import { SKILLS_GOBLIN_BOSS } from "../skill/enemy/goblin/goblinSkill";
+import { SKILLS_GNOME_BOSS } from "../skill/enemy/gnome/gnomeSkill";
+import { SKILLS_NAGA_BOSS } from "../skill/enemy/naga/nagaSkill";
+import { SKILLS_SKELETON_BOSS } from "../skill/enemy/skeleton/skeletonSkill";
+import { SKILLS_CAVE_HORROR } from "../skill/enemy/legends/caveHorror";
+import { SKILLS_SWAMP_MONSTER } from "../skill/enemy/legends/swampMonster";
+import { upgradeBoxerSkills } from "../skill/heroes/boxer/upgradeSkill";
+import { upgradeProgrammerSkills } from "../skill/heroes/programmer/upgradeSkill";
+import { upgradeCookSkills } from "../skill/heroes/cook/upgradeSkill";
+import { upgradeHairdresserSkills } from "../skill/heroes/hairdresser/upgradeSkill";
+import { upgradePriestSkills } from "../skill/heroes/priest/upgradeSkill";
+import { STATS_BOXER, STATS_COOK, STATS_HAIRDRESSER, STATS_PRIEST, STATS_PROGRAMMER } from "../hero/heroStat";
 
 export function getStatsToEnemy(type: enemyName): enemyBaseStats {
   switch (type) {
@@ -399,4 +399,45 @@ export function getStatisticsToHero(): heroStatistics {
       skeleton: START_STATISTICS.skeleton,
     },
   };
+}
+
+export function getBuffDamage(this: ICharacter["buffs"]) {
+  return this._damage / 100 + 1;
+}
+export function getBuffDef(this: ICharacter["buffs"]) {
+  return (100 - this._def) / 100;
+}
+export function getBuffAttackSpeed(this: ICharacter["buffs"]) {
+  return this._attackSpeed / 100 + 1;
+}
+
+export function incHeroDamage(this: IHero["buffs"], value: number, duration?: number) {
+  if (!duration) {
+    this._damage += value;
+  } else {
+    this._damage += value;
+    setTimeout(() => {
+      this._damage -= value;
+    }, duration * 1000);
+  }
+}
+export function incHeroDef(this: IHero["buffs"], value: number, duration?: number) {
+  if (!duration) {
+    this._def += value;
+  } else {
+    this._def += value;
+    setTimeout(() => {
+      this._def -= value;
+    }, duration * 1000);
+  }
+}
+export function incHeroAttackSpeed(this: IHero["buffs"], value: number, durationSec?: number) {
+  if (!durationSec) {
+    this._attackSpeed += value;
+  } else {
+    this._attackSpeed += value;
+    setTimeout(() => {
+      this._attackSpeed -= value;
+    }, durationSec * 1000);
+  }
 }

@@ -8,7 +8,7 @@ import { BiSolidCoinStack } from "react-icons/bi";
 import { GiFlowerEmblem } from "react-icons/gi";
 import { TabsWithFight } from "../GameField/GameField";
 import styles from "./styles.module.css";
-import { HERO_REWARD } from "@/constants/resources";
+import { HERO_REWARD } from "@/constants/enemy/enemyResources";
 import TalentItem from "../Talent/TalentItem";
 import { useBattleTextStore } from "@/store/battleTextStore";
 import { TbSquareRoundedPlusFilled } from "react-icons/tb";

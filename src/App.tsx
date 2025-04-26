@@ -10,8 +10,8 @@ import { registerAllSkills } from "./constants/skill/heroes";
 import { useSkillUpgradeStore } from "./store/skillUpgradeStore";
 import { useSkillTextStore } from "./store/skillTextStore";
 import { useBattleTextStore } from "./store/battleTextStore";
-import { battleText } from "./constants/text";
-import { getUpgradeSkills } from "./constants/initStats";
+import { battleText } from "./constants/text/battleText";
+import { getUpgradeSkills } from "./constants/inital/initStats";
 import Footer from "./components/UI/Footer/Footer";
 
 function App() {

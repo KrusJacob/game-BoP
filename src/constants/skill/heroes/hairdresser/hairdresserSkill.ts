@@ -1,6 +1,6 @@
 import { heroSkills, IHero } from "@/types/hero.types";
 import { applyPowerSkill, goMagicalDamage, goHealHeroOfSkill, getСombatTechniquesSkill } from "../../utils";
-import { goBleedDmg, goStun } from "@/constants/func/fight";
+import { goBleedDmg, goStun } from "@/constants/func/effects";
 import { IEnemy } from "@/types/enemy.types";
 import { getPercent } from "@/utils/getPercent";
 import { getRandom } from "@/utils/getRandom";

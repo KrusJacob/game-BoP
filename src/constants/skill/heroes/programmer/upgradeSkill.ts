@@ -129,13 +129,13 @@ export const upgradeProgrammerSkills: UpgradeSkills = {
           };
         },
         img: "/assets/skill/programmer/skillPower_3_1.png",
-        maxPoints: 3,
+        maxPoints: 2,
         currentPoint: 0,
         inc: incPoint,
         open: false,
         branch: "power",
         data: {
-          value: [9, 18, 27],
+          value: [10, 18],
         },
         fn(hero) {
           hero.setters.incAttack(getValue(this));

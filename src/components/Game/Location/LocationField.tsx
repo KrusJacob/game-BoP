@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import LocationList from "./LocationList";
 import { locationItem } from "@/types/location.types";
-import { searchEnemy } from "@/constants/enemies";
-import { EnemyClass } from "@/constants/class";
+import { EnemyClass } from "@/constants/inital/class";
 import { useGameStore } from "@/store/gameStore";
 import { TabsWithFight } from "../GameField/GameField";
 import { IEnemy } from "@/types/enemy.types";
 import FoundEnemies from "../Fight/FoundEnemies";
 import HeroPanel from "@/components/Hero/HeroPanel/HeroPanel";
+import { searchEnemy } from "@/constants/location/actions";
 
 const LocationField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const [enemies, setEnemies] = useState<IEnemy[]>([]);

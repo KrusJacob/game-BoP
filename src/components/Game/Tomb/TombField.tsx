@@ -1,4 +1,3 @@
-import { ENEMIES_TO_TOBM } from "@/constants/enemies";
 import styles from "./styles.module.css";
 import TombItem from "./TombItem";
 import { useGameStore } from "@/store/gameStore";
@@ -9,6 +8,7 @@ import Button from "@/components/UI/Button/Button";
 import { useState } from "react";
 import { clearEnemySkills, registerAllEnemySkills } from "@/constants/skill/enemy";
 import { useSkillTextStore } from "@/store/skillTextStore";
+import { ENEMIES_TO_TOBM } from "@/constants/enemy/enemiesTomb";
 
 const TombField = ({ onSetTab }: { onSetTab: (tab: TabsWithFight) => void }) => {
   const { setEnemy, hero, enemy } = useGameStore((state) => state);

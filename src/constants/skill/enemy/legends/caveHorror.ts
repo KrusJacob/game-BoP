@@ -1,7 +1,7 @@
 import { IEnemy, enemySkills } from "@/types/enemy.types";
 import { getLockSkill, getСombatTechniquesSkill, goMagicalDamage, getIgnoreDefSkill } from "../../utils";
 import { IHero } from "@/types/hero.types";
-import { goStun } from "@/constants/func/fight";
+import { goStun } from "@/constants/func/effects";
 
 export const SKILLS_CAVE_HORROR: enemySkills[] = [
   {

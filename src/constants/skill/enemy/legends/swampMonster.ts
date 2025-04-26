@@ -1,7 +1,7 @@
 import { IEnemy, enemySkills } from "@/types/enemy.types";
-import { getLockSkill, getСombatTechniquesSkill, getIgnoreDefSkill } from "../../utils";
+import { getLockSkill, getСombatTechniquesSkill } from "../../utils";
 import { IHero } from "@/types/hero.types";
-import { goPosionDmg } from "@/constants/func/fight";
+import { goPosionDmg } from "@/constants/func/effects";
 
 export const SKILLS_SWAMP_MONSTER: enemySkills[] = [
   {
