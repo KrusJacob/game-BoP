@@ -1,6 +1,6 @@
 import { VERSION_APP } from "@/constants/setup";
 import styles from "./header.module.css";
-import logo from "@assets/game-logo.png";
+import logo from "@assets/logo.png";
 import GuideInfo from "../../Game/Guide/GuideInfo";
 
 const Header = () => {
