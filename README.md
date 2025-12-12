@@ -1,30 +1,19 @@
-# React + TypeScript + Vite
+## The Battle of Professions - https://gamebop.vercel.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Технологии: Next.js, TypeScript,
 
-Currently, two official plugins are available:
+The Battle of Professions - RPG roguelike игра, где герои символизируют разные профессии и имеют уникальные способности.
+* Выбор героя: Перед началом приключения игроку предлагается выбрать героя. У каждого героя есть различные навыки и характеристики.
+* Выбор локации: Исследуйте разные территории и отправляйтесь в бой! 
+           Бой происходит автоматически, но игрок может использовать активный навык героя и предметы для влияния на исход.
+           Активные навыки тратят энергию героя, которую он получает в бою.
+* Награды: За победу вы получите опыт и монеты. За повышение уровня герой получает очки характеристик и навыков.
+           За очки характеристик можно увеличить силу, ловкость и интеллект.
+           За очки навыков можно усилить героя и его навыки.
+* Магазин: Приобретайте расходники за монеты, которые можно использовать в бою.
+           Расходники попадают в инвентарь героя. В бой можно взять не более 3 предметов.       
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+P.S. Игра была вдохновлена моим из 1-ых проектов, которая написана на чистом JS - https://krusjacob.github.io/projects/project_X/
