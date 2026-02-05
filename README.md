@@ -1,6 +1,6 @@
 ## The Battle of Professions - https://gamebop.vercel.app/
 
-# Технологии: Next.js, TypeScript,
+# Технологии: React, TypeScript, Zustand
 
 The Battle of Professions - RPG roguelike игра, где герои символизируют разные профессии и имеют уникальные способности.
 * Выбор героя: Перед началом приключения игроку предлагается выбрать героя. У каждого героя есть различные навыки и характеристики.
